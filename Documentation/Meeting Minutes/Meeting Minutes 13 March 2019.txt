@@ -1,0 +1,15 @@
+Meeting 13/3/2019 19:37
+In attendance Brodie, Jack, Matthew and Aaron
+Team discussing What has been done: Decide on a 'push' communication mechanism for the team.
+Establish a version control repository for the entire team, and give your subject supervisor access to it.
+Create a team charter, and upload a copy of it to version control.
+Create a project proposal and upload a copy of it to version control.
+Create a home page for your project in your team wiki.
+Outstanding tasks: create First iteration plan
+Create PMAS on Wiki
+upload project proposal to repository
+Discussion on Changing Source to BitBucket Decision was turned down
+Discussion on how to formulate iteration plan
+Discussion on which key milestones should be captured in this fortnights iteration plan
+Iteration plan completed
+Meeting adjurned 21:02
