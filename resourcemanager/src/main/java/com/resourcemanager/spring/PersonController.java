@@ -23,6 +23,11 @@ public class PersonController {
 		this.personService = ps;
 	}
 	
+	@RequestMapping({"/index", "/"})
+	public String welcome() {
+		return "index";
+	}
+	
 	@RequestMapping(value = "/persons", method = RequestMethod.GET)
 	public String listPersons(Model model) {
 		model.addAttribute("person", new Person());
