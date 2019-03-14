@@ -56,8 +56,14 @@
 	<beans:bean id="personDAO" class="com.resourcemanager.spring.dao.PersonDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	<beans:bean id="skillDAO" class="com.resourcemanager.spring.dao.SkillDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 	<beans:bean id="personService" class="com.resourcemanager.spring.service.PersonServiceImpl">
 		<beans:property name="personDAO" ref="personDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="skillService" class="com.resourcemanager.spring.service.SkillServiceImpl">
+		<beans:property name="skillDAO" ref="skillDAO"></beans:property>
 	</beans:bean>
 	<context:component-scan base-package="com.resourcemanager.spring" />
 	

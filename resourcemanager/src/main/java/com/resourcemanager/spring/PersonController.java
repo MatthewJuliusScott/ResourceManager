@@ -11,27 +11,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.resourcemanager.spring.model.Person;
 import com.resourcemanager.spring.service.PersonService;
+import com.resourcemanager.spring.service.SkillService;
 
 @Controller
 public class PersonController {
 	
 	private PersonService personService;
+	private SkillService skillService;
 	
 	@Autowired(required=true)
 	@Qualifier(value="personService")
-	public void setPersonService(PersonService ps){
-		this.personService = ps;
+	public void setPersonService(PersonService personService){
+		this.personService = personService;
 	}
 	
-	@RequestMapping({"/index", "/"})
-	public String welcome() {
-		return "index";
+	@Autowired(required=true)
+	@Qualifier(value="skillService")
+	public void setSSkillService(SkillService skillService){
+		this.skillService = skillService;
 	}
 	
-	@RequestMapping(value = "/persons", method = RequestMethod.GET)
+	@RequestMapping(value = {"/persons", "/index", "/"}, method = RequestMethod.GET)
 	public String listPersons(Model model) {
 		model.addAttribute("person", new Person());
 		model.addAttribute("listPersons", this.personService.listPersons());
+		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "person";
 	}
 	
@@ -62,6 +66,7 @@ public class PersonController {
     public String editPerson(@PathVariable("id") int id, Model model){
         model.addAttribute("person", this.personService.getPersonById(id));
         model.addAttribute("listPersons", this.personService.listPersons());
+        model.addAttribute("listSkills", this.skillService.listSkills());
         return "person";
     }
 	

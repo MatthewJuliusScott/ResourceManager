@@ -10,7 +10,11 @@
 		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
 		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
 		.tg .tg-4eph{background-color:#f9f9f9}
+		td {vertical-align:top;}
+		.left-arrow {float:left;}
+		.right-arrow {float:right;}
 	</style>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </head>
 <body>
 <h1>
@@ -21,52 +25,88 @@
 
 <form:form action="${addAction}" commandName="person">
 <table>
-	<c:if test="${!empty person.firstName}">
 	<tr>
 		<td>
-			<form:label path="id">
-				<spring:message text="ID"/>
-			</form:label>
+			<table>
+				<c:if test="${!empty person.firstName}">
+				<tr>
+					<td>
+						<form:label path="id">
+							<spring:message text="ID"/>
+						</form:label>
+					</td>
+					<td>
+						<form:input path="id" readonly="true" size="8"  disabled="true" />
+						<form:hidden path="id" />
+					</td> 
+				</tr>
+				</c:if>
+				<tr>
+					<td>
+						<form:label path="firstName">
+							<spring:message text="First Name"/>
+						</form:label>
+					</td>
+					<td>
+						<form:input path="firstName" />
+					</td> 
+				</tr>
+				<tr>
+					<td>
+						<form:label path="lastName">
+							<spring:message text="Last Name"/>
+						</form:label>
+					</td>
+					<td>
+						<form:input path="lastName" />
+					</td> 
+				</tr>
+				<tr>
+					<td colspan="2">
+						<c:if test="${!empty person.firstName}">
+							<input type="submit"
+								value="<spring:message text="Edit Person"/>" />
+						</c:if>
+						<c:if test="${empty person.firstName}">
+							<input type="submit"
+								value="<spring:message text="Add Person"/>" />
+						</c:if>
+					</td>
+				</tr>
+			</table>
 		</td>
 		<td>
-			<form:input path="id" readonly="true" size="8"  disabled="true" />
-			<form:hidden path="id" />
-		</td> 
-	</tr>
-	</c:if>
-	<tr>
-		<td>
-			<form:label path="firstName">
-				<spring:message text="First Name"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="firstName" />
-		</td> 
-	</tr>
-	<tr>
-		<td>
-			<form:label path="lastName">
-				<spring:message text="Last Name"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="lastName" />
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="2">
-			<c:if test="${!empty person.firstName}">
-				<input type="submit"
-					value="<spring:message text="Edit Person"/>" />
-			</c:if>
-			<c:if test="${empty person.firstName}">
-				<input type="submit"
-					value="<spring:message text="Add Person"/>" />
-			</c:if>
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<th>Person Skills</th>
+							</tr>
+						<c:forEach items="${person.skills}" var="skill">
+							<tr>
+								<td>${skill.name}<button class="right-arrow"><i class="fas fa-angle-double-right"></i></button></td>
+							</tr>
+						</c:forEach>
+						</table>
+					</td>
+					<td>
+						<table>
+							<tr>
+								<th>All Skills</th>
+							</tr>
+						<c:forEach items="${listSkills}" var="skill">
+							<tr>
+								<td><button class="left-arrow"><i class="fas fa-angle-double-left"></i></button>${skill.name}</td>
+							</tr>
+						</c:forEach>
+						</table>
+					</td>
+				</tr>
+			</table>
 		</td>
 	</tr>
-</table>	
+</table>
 </form:form>
 <br>
 <h3>Persons List</h3>
