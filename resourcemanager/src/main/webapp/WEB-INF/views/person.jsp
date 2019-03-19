@@ -24,7 +24,7 @@
 	
 	<c:url var="addAction" value="/person/add" ></c:url>
 	
-	<form:form action="${addAction}" commandName="person">
+	<form:form action="${addAction}" commandName="person" method="POST">
 	<table>
 		<tr>
 			<td>
@@ -86,7 +86,7 @@
 								</tr>
 								<tr>
 									<td>
-			                  			<form:select path = "skills" id = "personSkills" items = "${person.skills}" itemValue="id" itemLabel="name" multiple = "true" />
+			                  			<form:select path="skills" id="personSkills" items="${person.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple = "true" />
 			               			</td>
 			               		</tr>
 							</table>
@@ -98,7 +98,7 @@
 								</tr>
 								<tr>
 									<td>
-										<select onchange="addSkill(this)" multiple = "multiple">
+										<select onchange="addSkill(this)" id="allSkills" multiple = "multiple">
 											<c:forEach items="${listSkills}" var="skill">
 												<option value="${skill.id}">${skill.name}</option>
 					                  		</c:forEach>
@@ -145,7 +145,18 @@
 				var optionObject = selectObject.options[selectObject.selectedIndex];
 				var personSkills = document.getElementById("personSkills");
 				personSkills.add(optionObject);
-				// alert(optionObject.value + " " + optionObject.text);
+				for (i = 0; i < personSkills.options.length; i++) {
+					personSkills.options[i].selected = true;
+				}
+			}
+			
+			function removeSkill(selectObject) {
+				var optionObject = selectObject.options[selectObject.selectedIndex];
+				var allSkills = document.getElementById("allSkills");
+				allSkills.add(optionObject);
+				for (i = 0; i < allSkills.options.length; i++) {
+					personSkills.options[i].selected = false;
+				}
 			}
 		</script>
 	</footer>
