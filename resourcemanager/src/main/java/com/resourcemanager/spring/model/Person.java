@@ -1,14 +1,16 @@
 
 package com.resourcemanager.spring.model;
 
+import java.util.Arrays;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -34,48 +36,50 @@ public class Person {
 
 	/** The skills. */
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@OrderColumn(name = "order")
 	@JoinTable(
-        name = "person_skill", 
-        joinColumns = { @JoinColumn(name = "person_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "skill_id") }
-    )
+		name = "person_skill",
+		joinColumns = { @JoinColumn(name = "person_id") },
+		inverseJoinColumns = { @JoinColumn(name = "skill_id") })
+	@OrderColumn(name = "order_col")
 	private Skill[]	skills;
 
-	/**
-	 * Gets the last name.
-	 *
-	 * @return the lastName
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * Sets the last name.
-	 *
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(int id) {
-		this.id = id;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Person other = (Person) obj;
+		if (firstName == null) {
+			if (other.firstName != null) {
+				return false;
+			}
+		} else if (!firstName.equals(other.firstName)) {
+			return false;
+		}
+		if (id != other.id) {
+			return false;
+		}
+		if (lastName == null) {
+			if (other.lastName != null) {
+				return false;
+			}
+		} else if (!lastName.equals(other.lastName)) {
+			return false;
+		}
+		if (!Arrays.equals(skills, other.skills)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -88,23 +92,21 @@ public class Person {
 	}
 
 	/**
-	 * Sets the first name.
+	 * Gets the id.
 	 *
-	 * @param firstName the new first name
+	 * @return the id
 	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public int getId() {
+		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * Gets the last name.
+	 *
+	 * @return the lastName
 	 */
-	@Override
-	public String toString() {
-		return "id=" + id + ", firstName=" + firstName + ", lastName="
-		        + lastName;
+	public String getLastName() {
+		return lastName;
 	}
 
 	/**
@@ -116,12 +118,68 @@ public class Person {
 		return skills;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + Arrays.hashCode(skills);
+		return result;
+	}
+
+	/**
+	 * Sets the first name.
+	 *
+	 * @param firstName
+	 *            the new first name
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * Sets the last name.
+	 *
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	/**
 	 * Sets the skills.
 	 *
-	 * @param skills the new skills
+	 * @param skills
+	 *            the new skills
 	 */
 	public void setSkills(Skill[] skills) {
 		this.skills = skills;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "id=" + id + ", firstName=" + firstName + ", lastName="
+			+ lastName;
 	}
 }

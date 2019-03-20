@@ -53,6 +53,15 @@
 		</beans:property>
 	</beans:bean>
 	
+	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<beans:property name="formatters">
+        	<beans:bean class="com.resourcemanager.spring.formatter.SkillFormatter"/>
+        </beans:property>
+        <beans:property name="converters">
+        	<beans:bean class="com.resourcemanager.spring.converter.SkillConverter"/>
+        </beans:property>
+    </beans:bean>
+	
 	<beans:bean id="personDAO" class="com.resourcemanager.spring.dao.PersonDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
