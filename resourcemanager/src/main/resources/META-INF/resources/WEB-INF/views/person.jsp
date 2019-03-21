@@ -18,9 +18,18 @@
 	</head>
 	
 	<body>
-	<h1>
-		Add a Person
-	</h1>
+	<c:if test="${!empty person.firstName}">
+		<h1>
+			Edit a Person
+		</h1>
+		<div><a href="/persons">Back to Add</a></div>
+	</c:if>
+	<c:if test="${empty person.firstName}">
+		<h1>
+			Add a Person
+		</h1>
+	</c:if>
+	
 	
 	<c:url var="addAction" value="/person/add" ></c:url>
 	
