@@ -28,21 +28,15 @@ public class SkillDAOImpl implements SkillDAO {
 
 	@Override
 	public void addSkill(Skill skill) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.persist(skill);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		session.persist(skill);
 		logger.info("Skill saved successfully, Skill Details=" + skill);
 	}
 
 	@Override
 	public Skill getSkillById(int id) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		Skill skill = entityManager.find(Skill.class, id);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Skill skill = session.find(Skill.class, id);
 		return skill;
 	}
 
@@ -63,22 +57,15 @@ public class SkillDAOImpl implements SkillDAO {
 	@Override
 	public void removeSkill(int id) {
 		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Skill skill = entityManager.find(Skill.class, id);
-		entityManager.getTransaction().begin();
-		entityManager.remove(skill);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Skill skill = session.find(Skill.class, id);
+		session.remove(skill);
 		logger.info("Skill deleted successfully, skill details=" + skill);
 	}
 
 	@Override
 	public void updateSkill(Skill skill) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(skill);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		session.merge(skill);
 		logger.info("Skill updated successfully, Skill Details=" + skill);
 	}
 

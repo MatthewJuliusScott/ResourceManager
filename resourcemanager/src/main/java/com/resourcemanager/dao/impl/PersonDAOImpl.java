@@ -28,21 +28,15 @@ public class PersonDAOImpl implements PersonDAO {
 
 	@Override
 	public void addPerson(Person person) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.persist(person);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		session.persist(person);
 		logger.info("Person saved successfully, Person Details=" + person);
 	}
 
 	@Override
 	public Person getPersonById(int id) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		Person person = entityManager.find(Person.class, id);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Person person = session.find(Person.class, id);
 		return person;
 	}
 
@@ -63,22 +57,15 @@ public class PersonDAOImpl implements PersonDAO {
 	@Override
 	public void removePerson(int id) {
 		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Person person = entityManager.find(Person.class, id);
-		entityManager.getTransaction().begin();
-		entityManager.remove(person);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Person person = session.find(Person.class, id);
+		session.remove(person);
 		logger.info("Person deleted successfully, person details=" + person);
 	}
 
 	@Override
 	public void updatePerson(Person person) {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(person);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		session.merge(person);
 		logger.info("Person updated successfully, Person Details=" + person);
 	}
 
