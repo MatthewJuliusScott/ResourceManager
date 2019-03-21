@@ -20,7 +20,7 @@ public class Skill {
 	/** The skill id. */
 	@Id
 	@Column(name = "skill_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int		id;
 
 	/** The name. */

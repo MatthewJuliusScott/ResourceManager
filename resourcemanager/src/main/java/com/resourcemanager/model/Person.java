@@ -37,7 +37,7 @@ public class Person {
 	private String	lastName;
 
 	/** The skills. */
-	@OneToMany(cascade = { CascadeType.MERGE })
+	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(
 		name = "person_skill",
 		joinColumns = { @JoinColumn(name = "person_id") },
