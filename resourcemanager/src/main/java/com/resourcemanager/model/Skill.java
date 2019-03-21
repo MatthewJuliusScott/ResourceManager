@@ -2,6 +2,7 @@
 package com.resourcemanager.model;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +14,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "SKILL")
+@Embeddable
 public class Skill {
 
 	/** The skill id. */
 	@Id
 	@Column(name = "skill_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int		id;
 
 	/** The name. */
