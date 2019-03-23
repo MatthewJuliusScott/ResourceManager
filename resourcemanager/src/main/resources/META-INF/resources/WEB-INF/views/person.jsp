@@ -164,7 +164,7 @@
 				var allSkills = document.getElementById("allSkills");
 				allSkills.add(optionObject);
 				for (i = 0; i < allSkills.options.length; i++) {
-					personSkills.options[i].selected = false;
+					personSkills.options[i].selected = true;
 				}
 			}
 		</script>
