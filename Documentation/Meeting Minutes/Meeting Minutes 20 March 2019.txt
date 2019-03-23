@@ -1,0 +1,10 @@
+plan:
+update milestones
+another other iteration plan  updates, such as work items (as we do them), time spent, estimates.
+Tasks to put in, gather erquirements from key stakeholders (Aaron), research technologies (Matt)
+discussed work item dependencies, only waiting on requirement model
+discussed potential architecture
+discussed moving iteration date to meeting days (Aaron emailed Jim)
+Jack not present for meeting, work priority
+Requirement model eta. Friday > architecture > quiz
+risk + vision
