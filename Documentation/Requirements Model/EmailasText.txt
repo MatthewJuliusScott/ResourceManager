@@ -1,0 +1,84 @@
+Hi Aaron,
+
+Have answered as best I can below – might be my understanding of the question leading to confused responses, but let me know if you need more or have questions.
+
+Thanks,
+Jon.
+
+Consulting Manager, Professional Services
+Micro Focus
+Chandler Building, Level 2, Suite 2.1
+40 Cameron Avenue, Belconnen, ACT, 2617
+
+(M): +61 419 353 004
+jon.rogers@microfocus.com
+
+Planned Leave
+
+________________________________________
+ 
+
+Entco Australia Pty Ltd | Registered Office: Level 8, 76 Berry Street, North Sydney NSW 2060  | ABN 73 614 548 346 |
+
+This e-mail may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosure by others is strictly prohibited. If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply e-mail and delete all copies of this message.
+
+From: Aaron Brody 
+Sent: Tuesday, 19 March 2019 11:57 AM
+To: Jon Rogers <jon.rogers@microfocus.com>
+Subject: ITC303 Resource Manager - Requirement Questionnaire 
+
+Jon,
+
+Could you please answer the questions below with your best estimates so we can build requirements documentation for the project.
+
+What do you consider the Critical and Core components of the system?
+-                      Ease of ability to enter and consume data/information around individual availability
+-                      Ability to quickly see / identify ‘white space’ around resources
+-                      Understand individuals skills and experience
+Are there maximum limits to processing or response times?
+-                      No, obviously a performant system that doesn’t take too long to load pages / provide right information
+Are there maximum limits to reporting or audit times?
+-                      Similar to above, as long as reporting is provided in a timely manager that will be fine.
+How many transactions should the system store?
+-          Assume system is scaled for between 60-100 users, each will have around 3-4 allocations per year
+How much data does the system need to be able to communicate in a short space of time? 
+-          As much as needed by the user, will vary based on usage patterns and demand
+When does the system need to be available? 
+-          Ideally 24x7 given we are a global organisation and will have multiple inputs.
+Where does the system need to be accessible from?
+-          Anywhere, assume web
+What is an acceptable mean time between failures?
+-          Depends on what we define ‘failure’ as, ideally zero failures for inputs and reporting, the solution needs to be stable and performant 
+What is an acceptable mean time to recovery?
+-          Whilst it’s not a business critical system it is important, the business could survive offline for numerous days
+How important is it that I/O failures are handled? 
+-          Depends on what we define failure as within this eco-system
+How long should the recovery process take? 
+-          Depends on how the application is hosted i.e. public cloud, then it might be highly available with VM fail over. 
+How often should the data be backed up? 
+-          Daily as a minimum, a lot can change within a day so data impact would be significant but manageable. 
+What other systems does the solution need to be compatible with? 
+-          Other than common browsers none.
+Will the entire project team be able to access these systems?
+Does the system need to be able to run on multiple platforms?
+            If so, which platforms? Assume common web browsers, and mobile browser
+Are there any conformance to certain standards requirements?
+-          Other than data privacy, protection and retention standards of Micro Focus, none others are known.
+Are there any look and feel standards that need to be adhered to?
+-          None
+What documentation is required?
+-          User guides are important, depending on support model High Level Design, As Built Guides.
+
+Thanks,
+Aaron Brody
+Technical Consultant, Professional Services
+Micro Focus
+40 Cameron Ave Belconnen, ACT, 2617
+(M)+61 400 788 555
+Aaron.Brody@microfocus.com
+
+ 
+
+Entco Australia Pty Ltd | Registered Office: Level 8, 76 Berry Street, North Sydney NSW 2060 | ABN 73 614 548 346 |
+This e-mail may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosure by others is strictly prohibited. If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply e-mail and delete all copies of this message
+
