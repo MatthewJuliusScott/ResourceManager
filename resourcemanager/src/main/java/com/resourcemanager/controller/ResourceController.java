@@ -41,16 +41,18 @@ public class ResourceController {
 	}
 	
 	@RequestMapping("resources/add")
-	public String addResource(@PathVariable("id") int id, Model model) {
-		model.addAttribute("resource", new Resource());
-		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "resources/edit/0";
+	public String addResource() {
+		return "redirect:/resources/edit/0";
 	}
 
 	
-	@RequestMapping("/edit/{id}")
+	@RequestMapping("resources/edit/{id}")
 	public String editResource(@PathVariable("id") int id, Model model) {
-		model.addAttribute("resource", this.resourceService.getResourceById(id));
+		if (id > 0) {
+			model.addAttribute("resource", this.resourceService.getResourceById(id));
+		} else {
+			model.addAttribute("resource", new Resource());
+		}
 		model.addAttribute("listResources", this.resourceService.listResources());
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "resources/edit";
