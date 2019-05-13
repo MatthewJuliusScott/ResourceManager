@@ -33,42 +33,42 @@ public class ResourceDAOImpl implements ResourceDAO {
     private EntityManagerFactory entityManager;
 
 	@Override
-	public void addPerson(Resource resource) {
+	public void addResource(Resource resource) {
 		getCurrentSession().persist(resource);
-		logger.info("Person saved successfully, Person Details=" + resource);
+		logger.info("Resource saved successfully, Resource Details=" + resource);
 	}
 
 	@Override
-	public Resource getPersonById(int id) {
+	public Resource getResourceById(int id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
-		logger.info("Person retrieved successfully, resource details=" + resource);
+		logger.info("Resource retrieved successfully, resource details=" + resource);
 		return resource;
 	}
 
 	@Override
-	public List<Resource> listPersons() {
+	public List<Resource> listResources() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
 		CriteriaQuery criteria = builder.createQuery(Resource.class);
 		Root contactRoot = criteria.from(Resource.class);
 		criteria.select(contactRoot);
 		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Resource resource : resourcesList) {
-			logger.info("Person List::" + resource);
+			logger.info("Resource List::" + resource);
 		}
 		return resourcesList;
 	}
 
 	@Override
-	public void removePerson(int id) {
+	public void removeResource(int id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
 		getCurrentSession().remove(resource);
-		logger.info("Person deleted successfully, resource details=" + resource);
+		logger.info("Resource deleted successfully, resource details=" + resource);
 	}
 
 	@Override
-	public void updatePerson(Resource resource) {
+	public void updateResource(Resource resource) {
 		getCurrentSession().merge(resource);
-		logger.info("Person updated successfully, Person Details=" + resource);
+		logger.info("Resource updated successfully, Resource Details=" + resource);
 	}
 
 }

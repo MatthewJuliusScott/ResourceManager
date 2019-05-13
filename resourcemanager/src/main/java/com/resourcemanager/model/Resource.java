@@ -27,10 +27,28 @@ public class Resource {
 	@Id
 	@Column(name = "resource_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int			id;
+	private int		id;
 
 	/** The name. */
-	private String		name;
+	private String	name;
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	/** The skills. */
 	@ManyToMany(cascade = {CascadeType.MERGE})

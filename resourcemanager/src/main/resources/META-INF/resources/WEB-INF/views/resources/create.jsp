@@ -118,8 +118,7 @@
 		<table class="tg">
 		<tr>
 			<th width="80">Resource ID</th>
-			<th width="120">First Name</th>
-			<th width="120">Last Name</th>
+			<th width="120">Name</th>
 			<th width="300">Skills</th>
 			<th width="60">Edit</th>
 			<th width="60">Delete</th>
@@ -127,8 +126,7 @@
 		<c:forEach items="${listResources}" var="resource">
 			<tr>
 				<td>${resource.id}</td>
-				<td>${resource.firstName}</td>
-				<td>${resource.lastName}</td>
+				<td>${resource.name}</td>
 				<td><c:forEach items="${resource.skills}" var="skill">${skill.name} </c:forEach></td>
 				<td><a href="<c:url value='/edit/${resource.id}' />" >Edit</a></td>
 				<td><a href="<c:url value='/remove/${resource.id}' />" >Delete</a></td>
@@ -136,17 +134,7 @@
 		</c:forEach>
 		</table>
 	</c:if>
-	
-	<h1>
-		Bookings
-	</h1>
-	
-	<c:if test="${!empty resource.firstName}">
-		<h2>Create a Booking</h2>
-		<p>Start Date: <input name="startDate" id="startDate" type="text" class="datepicker"></p>
-		<p>End Date: <input name="endDate" id="endDate" type="text" class="datepicker"></p>
-	</c:if>
-	
+		
 	</body>
 	
 	<footer>
@@ -168,25 +156,6 @@
 					resourceSkills.options[i].selected = true;
 				}
 			}
-			
-			$(function() {   
-			    $( "#startDate" ).datepicker({   
-			      defaultDate: "+1w",  
-			      changeMonth: true,   
-			      numberOfMonths: 1,  
-			      onClose: function( selectedDate ) {  
-			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
-			      }
-			    });  
-			    $( "#startDate" ).datepicker({
-			      defaultDate: "+1w",
-			      changeMonth: true,
-			      numberOfMonths: 1,
-			      onClose: function( selectedDate ) {
-			        $( "#endDate" ).datepicker( "option", "maxDate", selectedDate );
-			      }
-			    });  
-			  });  
 		</script>
 	</footer>
 	

@@ -51,18 +51,17 @@ public class ResourceController {
 		return "resource";
 	}
 
-	@RequestMapping(value = { "/resources", "/index", "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/resources" }, method = RequestMethod.GET)
 	public String listResources(Model model) {
 		model.addAttribute("resource", new Resource());
 		model.addAttribute("listResources", this.resourceService.listResources());
-		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "resource";
 	}
 
-	@RequestMapping("/remove/{id}")
-	public String removeResource(@PathVariable("id") int id) {
+	@RequestMapping("/delete/{id}")
+	public String deleteResource(@PathVariable("id") int id) {
 
-		this.resourceService.removeResource(id);
+		this.resourceService.deleteResource(id);
 		return "redirect:/resources";
 	}
 }

@@ -12,7 +12,7 @@ public interface ResourceService {
 
 	public List<Resource> listResources();
 
-	public void removeResource(int id);
+	public void deleteResource(int id);
 
 	public void updateResource(Resource p);
 

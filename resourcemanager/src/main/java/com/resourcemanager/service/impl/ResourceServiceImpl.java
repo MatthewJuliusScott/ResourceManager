@@ -19,35 +19,35 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	@Transactional
 	public void addResource(Resource p) {
-		this.resourceDAO.addPerson(p);
+		this.resourceDAO.addResource(p);
 	}
 
 	@Override
 	@Transactional
 	public Resource getResourceById(int id) {
-		return this.resourceDAO.getPersonById(id);
+		return this.resourceDAO.getResourceById(id);
 	}
 
 	@Override
 	@Transactional
 	public List<Resource> listResources() {
-		return this.resourceDAO.listPersons();
+		return this.resourceDAO.listResources();
 	}
 
 	@Override
 	@Transactional
-	public void removeResource(int id) {
-		this.resourceDAO.removePerson(id);
+	public void deleteResource(int id) {
+		this.resourceDAO.removeResource(id);
 	}
 
-	public void setPersonDAO(ResourceDAO resourceDAO) {
+	public void setResourceDAO(ResourceDAO resourceDAO) {
 		this.resourceDAO = resourceDAO;
 	}
 
 	@Override
 	@Transactional
 	public void updateResource(Resource p) {
-		this.resourceDAO.updatePerson(p);
+		this.resourceDAO.updateResource(p);
 	}
 
 }
