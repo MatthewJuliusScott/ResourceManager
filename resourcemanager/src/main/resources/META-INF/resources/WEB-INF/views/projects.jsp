@@ -11,32 +11,37 @@
 	<body>
 	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
-	
-		<h1>Projects</h1>
 		
-		<h2>Create Project</h2>
-		<a class="btn btn-primary" href="/projects/add" role="button">Create Project</a>
-		
-		<h2>Project List</h2>
-		<c:if test="${!empty listProjects}">
-			<table class="tg">
-			<tr>
-				<th width="80">Project ID</th>
-				<th width="120">Name</th>
-				<th width="60">Edit</th>
-				<th width="60">Delete</th>
-			</tr>
-			<c:forEach items="${listProjects}" var="project">
-				<tr>
-					<td>${resource.id}</td>
-					<td>${resource.name}</td>
-					<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button">Link</a></td>
-					<td><a class="btn btn-primary btn-sm" href="/resources/delete/${resource.id}" role="button">Link</a></td>
-				</tr>
-			</c:forEach>
-			</table>
-		</c:if>
-	
+		<div class="container-fluid">
+			<h1>Projects</h1>
+			
+			<div class="container-fluid">
+				<h2>Create Project</h2>
+				<a class="btn btn-primary" href="/projects/add" role="button">Create Project</a>
+			</div>
+			
+			<div class="container-fluid">
+				<h2>Project List</h2>
+				<c:if test="${!empty listProjects}">
+					<table class="tg">
+					<tr>
+						<th width="80">Project ID</th>
+						<th width="120">Name</th>
+						<th width="60">Edit</th>
+						<th width="60">Delete</th>
+					</tr>
+					<c:forEach items="${listProjects}" var="project">
+						<tr>
+							<td>${resource.id}</td>
+							<td>${resource.name}</td>
+							<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button">Link</a></td>
+							<td><a class="btn btn-primary btn-sm" href="/resources/delete/${resource.id}" role="button">Link</a></td>
+						</tr>
+					</c:forEach>
+					</table>
+				</c:if>
+			</div>
+		</div>
 	</body>
 	
 	<footer>
