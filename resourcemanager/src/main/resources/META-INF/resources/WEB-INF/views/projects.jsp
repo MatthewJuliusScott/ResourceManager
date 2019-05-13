@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 	<head>
-		<title>Manage Project</title>
+		<title>Project</title>
 		<style type="text/css">
 			.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
@@ -14,29 +14,36 @@
 			.left-arrow {float:left;}
 			.right-arrow {float:right;}
 		</style>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
 	</head>
 	
 	<body>
 	
-	<h1>Projects</h1>
-	<a class="btn btn-primary" href="/projects/add" role="button">Create Project</a>
-	
-	<a class="btn btn-primary" href="/projects/edit/{project.id}" role="button">Manage Project</a>
-	
-	<h1>Manage Project</h1>
-	
-	<c:if test="${!empty project.name}">
-		<h2>Add a Requirement</h2>
-		<p>Start Date: <input name="startDate" id="startDate" type="text" class="datepicker"></p>
-		<p>End Date: <input name="endDate" id="endDate" type="text" class="datepicker"></p>
-		<p>Skill</p>
-		<select onchange="addResource(this)" id="allSkills">
-			<c:forEach items="${listSkills}" var="skill">
-				<option value="${skill.id}">${skill.name}</option>
-   			</c:forEach>
-		</select>
-	</c:if>
+		<h1>Projects</h1>
+		
+		<h2>Create Project</h2>
+		<a class="btn btn-primary" href="/projects/add" role="button">Create Project</a>
+		
+		<h2>Project List</h2>
+		<c:if test="${!empty listProjects}">
+			<table class="tg">
+			<tr>
+				<th width="80">Project ID</th>
+				<th width="120">Name</th>
+				<th width="60">Edit</th>
+				<th width="60">Delete</th>
+			</tr>
+			<c:forEach items="${listProjects}" var="project">
+				<tr>
+					<td>${resource.id}</td>
+					<td>${resource.name}</td>
+					<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button">Link</a></td>
+					<td><a class="btn btn-primary btn-sm" href="/resources/delete/${resource.id}" role="button">Link</a></td>
+				</tr>
+			</c:forEach>
+			</table>
+		</c:if>
 	
 	</body>
 	

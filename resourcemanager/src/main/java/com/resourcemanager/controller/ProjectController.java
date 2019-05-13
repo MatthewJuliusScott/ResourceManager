@@ -23,7 +23,7 @@ public class ProjectController {
 	private SkillService	skillService;
 
 	// For add and update project both
-	@RequestMapping(value = "/project/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/projects/add", method = RequestMethod.POST)
 	public String addProject(@ModelAttribute("project") Project p, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -56,7 +56,7 @@ public class ProjectController {
 		model.addAttribute("project", new Project());
 		model.addAttribute("listProjects", this.projectService.listProjects());
 		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "project";
+		return "projects";
 	}
 
 	@RequestMapping("/project/delete/{id}")

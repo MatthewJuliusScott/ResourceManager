@@ -21,15 +21,15 @@ public class ResourceController {
 
 	@Autowired
 	private SkillService	skillService;
+	
+	
 
 	// For add and update resource both
-	@RequestMapping(value = "/resource/add", method = RequestMethod.POST)
-	public String addResource(@ModelAttribute("resource") Resource p, BindingResult result) {
-
+	@RequestMapping(value = "/resources/save", method = RequestMethod.POST)
+	public String saveResource(@ModelAttribute("resource") Resource p, BindingResult result) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
-
 		if (p.getId() == 0) {
 			// new resource, add it
 			this.resourceService.addResource(p);
@@ -37,9 +37,14 @@ public class ResourceController {
 			// existing resource, call update
 			this.resourceService.updateResource(p);
 		}
-
 		return "redirect:/resources";
-
+	}
+	
+	@RequestMapping("resources/add")
+	public String addResource(@PathVariable("id") int id, Model model) {
+		model.addAttribute("resource", new Resource());
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "resources/edit/0";
 	}
 
 	
@@ -48,14 +53,14 @@ public class ResourceController {
 		model.addAttribute("resource", this.resourceService.getResourceById(id));
 		model.addAttribute("listResources", this.resourceService.listResources());
 		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "resource";
+		return "resources/edit";
 	}
 
 	@RequestMapping(value = { "/resources" }, method = RequestMethod.GET)
 	public String listResources(Model model) {
 		model.addAttribute("resource", new Resource());
 		model.addAttribute("listResources", this.resourceService.listResources());
-		return "resource";
+		return "resources";
 	}
 
 	@RequestMapping("/delete/{id}")
