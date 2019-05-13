@@ -59,7 +59,7 @@ public class SkillDAOImpl implements SkillDAO {
 	}
 
 	@Override
-	public void removeSkill(int id) {
+	public void deleteSkill(int id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
 		getCurrentSession().remove(skill);
 		logger.info("Skill deleted successfully, skill details=" + skill);

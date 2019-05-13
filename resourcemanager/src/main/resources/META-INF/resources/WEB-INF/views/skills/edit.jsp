@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 	<head>
-		<title>Resource Page</title>
+		<title>Skill Page</title>
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 	</head>
 	
@@ -12,26 +12,26 @@
 	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<c:if test="${!empty resource.name}">
+		<c:if test="${!empty skill.name}">
 			<h1>
-				Edit a Resource
+				Edit a Skill
 			</h1>
 		</c:if>
-		<c:if test="${empty resource.name}">
+		<c:if test="${empty skill.name}">
 			<h1>
-				Add a Resource
+				Add a Skill
 			</h1>
 		</c:if>
 		
 		
-		<c:url var="addAction" value="/resource/add" ></c:url>
+		<c:url var="addAction" value="/skill/add" ></c:url>
 		
-		<form:form action="${addAction}" modelAttribute="resource" method="POST">
+		<form:form action="${addAction}" modelAttribute="skill" method="POST">
 		<table>
 			<tr>
 				<td>
 					<table>
-						<c:if test="${!empty resource.name}">
+						<c:if test="${!empty skill.name}">
 						<tr>
 							<td>
 								<form:label path="id">
@@ -62,40 +62,6 @@
 						</tr>
 					</table>
 				</td>
-				<td>
-					<table>
-						<tr>
-							<td>
-								<table>
-									<tr>
-										<th>Resource Skills</th>
-									</tr>
-									<tr>
-										<td>
-				                  			<form:select path="skills" id="resourceSkills" items="${resource.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple = "true" />
-				               			</td>
-				               		</tr>
-								</table>
-							</td>
-							<td>
-								<table>
-									<tr>
-										<th>All Skills</th>
-									</tr>
-									<tr>
-										<td>
-											<select onchange="addSkill(this)" id="allSkills" multiple = "multiple">
-												<c:forEach items="${listSkills}" var="skill">
-													<option value="${skill.id}">${skill.name}</option>
-						                  		</c:forEach>
-					               			</select>
-				               			</td>
-				               		</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</td>
 			</tr>
 		</table>
 		</form:form>
@@ -107,10 +73,10 @@
 		<script>
 			function addSkill(selectObject) {
 				var optionObject = selectObject.options[selectObject.selectedIndex];
-				var resourceSkills = document.getElementById("resourceSkills");
-				resourceSkills.add(optionObject);
-				for (i = 0; i < resourceSkills.options.length; i++) {
-					resourceSkills.options[i].selected = true;
+				var skillSkills = document.getElementById("skillSkills");
+				skillSkills.add(optionObject);
+				for (i = 0; i < skillSkills.options.length; i++) {
+					skillSkills.options[i].selected = true;
 				}
 			}
 			
@@ -119,7 +85,7 @@
 				var allSkills = document.getElementById("allSkills");
 				allSkills.add(optionObject);
 				for (i = 0; i < allSkills.options.length; i++) {
-					resourceSkills.options[i].selected = true;
+					skillSkills.options[i].selected = true;
 				}
 			}
 		</script>

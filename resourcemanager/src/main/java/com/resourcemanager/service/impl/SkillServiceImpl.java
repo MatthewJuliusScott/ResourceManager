@@ -36,8 +36,8 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	@Transactional
-	public void removeSkill(int id) {
-		this.skillDAO.removeSkill(id);
+	public void deleteSkill(int id) {
+		this.skillDAO.deleteSkill(id);
 	}
 
 	public void setSkillDAO(SkillDAO skillDAO) {

@@ -12,7 +12,7 @@ public interface SkillService {
 
 	public List<Skill> listSkills();
 
-	public void removeSkill(int id);
+	public void deleteSkill(int id);
 
 	public void updateSkill(Skill skill);
 }

@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 	<head>
-		<title>Resources</title>
+		<title>Skills</title>
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 	</head>
 	
@@ -13,29 +13,29 @@
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
 		<div class="container-fluid">
-			<h1>Resources</h1>
+			<h1>Skills</h1>
 			
 			<div class="container-fluid">
-				<h2>Create Resource</h2>
-				<a class="btn btn-primary" href="/resources/add" role="button">Create Resource</a>
+				<h2>Create Skill</h2>
+				<a class="btn btn-primary" href="/skills/add" role="button">Create Skill</a>
 			</div>
 			
 			<div class="container-fluid">
-				<h2>Resource List</h2>
-				<c:if test="${!empty listResources}">
+				<h2>Skills List</h2>
+				<c:if test="${!empty listSkills}">
 					<table class=".table">
-					<tr>
-						<th scope="col">Resource ID</th>
+					<tr>s
+						<th scope="col">Skill ID</th>
 						<th scope="col">Name</th>
 						<th scope="col">Edit</th>
 						<th scope="col">Delete</th>
 					</tr>
-					<c:forEach items="${listResources}" var="resource">
+					<c:forEach items="${listSkills}" var="skill">
 						<tr>
-							<td>${resource.id}</td>
-							<td>${resource.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button">Edit</a></td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/delete/${resource.id}" role="button">Delete</a></td>
+							<td>${skill.id}</td>
+							<td>${skill.name}</td>
+							<td><a class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button">Edit</a></td>
+							<td><a class="btn btn-primary btn-sm" href="/skills/delete/${skill.id}" role="button">Delete</a></td>
 						</tr>
 					</c:forEach>
 					</table>

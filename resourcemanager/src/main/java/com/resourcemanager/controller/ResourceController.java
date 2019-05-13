@@ -22,8 +22,6 @@ public class ResourceController {
 	@Autowired
 	private SkillService	skillService;
 	
-	
-
 	// For add and update resource both
 	@RequestMapping(value = "/resources/save", method = RequestMethod.POST)
 	public String saveResource(@ModelAttribute("resource") Resource p, BindingResult result) {
