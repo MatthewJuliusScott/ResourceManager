@@ -45,7 +45,18 @@ public class Person {
 	@OrderColumn(name = "order_col")
 	@Embedded
 	private Skill[]	skills;
+	
+	/** The bookings. */
+	@ManyToMany(cascade = { CascadeType.MERGE })
+	@JoinTable(
+		name = "person_booking",
+		joinColumns = { @JoinColumn(name = "person_id") },
+		inverseJoinColumns = { @JoinColumn(name = "booking_id") })
+	@OrderColumn(name = "order_col")
+	@Embedded
+	private Booking[]	bookings;
 
+	
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -83,6 +94,13 @@ public class Person {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * @return the bookings
+	 */
+	public Booking[] getBookings() {
+		return bookings;
 	}
 
 	/**
@@ -134,6 +152,13 @@ public class Person {
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + Arrays.hashCode(skills);
 		return result;
+	}
+
+	/**
+	 * @param bookings the bookings to set
+	 */
+	public void setBookings(Booking[] bookings) {
+		this.bookings = bookings;
 	}
 
 	/**
