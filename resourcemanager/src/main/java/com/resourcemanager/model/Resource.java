@@ -27,87 +27,33 @@ public class Resource {
 	@Id
 	@Column(name = "resource_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int		id;
+	private int				id;
 
 	/** The name. */
-	private String	name;
-
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 *
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	private String			name;
 
 	/** The skills. */
-	@ManyToMany(cascade = {CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(name = "resource_skill", joinColumns = {
-	        @JoinColumn(name = "resource_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "skill_id")})
+			@JoinColumn(name = "resource_id") },
+		inverseJoinColumns = {
+				@JoinColumn(name = "skill_id") })
 	@OrderColumn(name = "order_col")
 	@Embedded
-	private Skill[]		skills;
+	private Skill[]			skills;
 
-	/** The bookings. */
-	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(name = "resource_booking", joinColumns = {
-	        @JoinColumn(name = "resource_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "booking_id")})
+	/** The allocations. */
+	@ManyToMany(cascade = { CascadeType.MERGE })
+	@JoinTable(name = "resource_allocation", joinColumns = {
+			@JoinColumn(name = "resource_id") },
+		inverseJoinColumns = {
+				@JoinColumn(name = "allocation_id") })
 	@OrderColumn(name = "order_col")
 	@Embedded
-	private Booking[]	bookings;
-
-	/**
-	 * Gets the bookings.
-	 *
-	 * @return the bookings
-	 */
-	public Booking[] getBookings() {
-		return bookings;
-	}
+	private Allocation[]	allocations;
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", skills="
-		        + Arrays.toString(skills) + ", bookings="
-		        + Arrays.toString(bookings) + "]";
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(bookings);
-		result = prime * result + id;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + Arrays.hashCode(skills);
-		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -122,7 +68,7 @@ public class Resource {
 			return false;
 		}
 		Resource other = (Resource) obj;
-		if (!Arrays.equals(bookings, other.bookings)) {
+		if (!Arrays.equals(allocations, other.allocations)) {
 			return false;
 		}
 		if (id != other.id) {
@@ -142,12 +88,30 @@ public class Resource {
 	}
 
 	/**
+	 * Gets the allocations.
+	 *
+	 * @return the allocations
+	 */
+	public Allocation[] getAllocations() {
+		return allocations;
+	}
+
+	/**
 	 * Gets the id.
 	 *
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -159,30 +123,69 @@ public class Resource {
 		return skills;
 	}
 
-	/**
-	 * Sets the bookings.
-	 *
-	 * @param bookings the bookings to set
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
-	public void setBookings(Booking[] bookings) {
-		this.bookings = bookings;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(allocations);
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + Arrays.hashCode(skills);
+		return result;
+	}
+
+	/**
+	 * Sets the allocations.
+	 *
+	 * @param allocations
+	 *            the allocations to set
+	 */
+	public void setAllocations(Allocation[] allocations) {
+		this.allocations = allocations;
 	}
 
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
+	 * Sets the name.
+	 *
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
 	 * Sets the skills.
 	 *
-	 * @param skills the new skills
+	 * @param skills
+	 *            the new skills
 	 */
 	public void setSkills(Skill[] skills) {
 		this.skills = skills;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Resource [id=" + id + ", name=" + name + ", skills="
+			+ Arrays.toString(skills) + ", allocations="
+			+ Arrays.toString(allocations) + "]";
 	}
 }

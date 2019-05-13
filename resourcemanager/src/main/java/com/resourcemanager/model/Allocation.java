@@ -13,17 +13,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * The Class Booking. Represents a period of time for which something can be
- * reserved.
+ * The Class Allocation. Represents a period of time for which something can be reserved.
  */
 @Entity
-@Table(name = "BOOKING")
+@Table(name = "ALLOCATION")
 @Embeddable
-public class Booking {
+public class Allocation {
 
-	/** The booking id. */
+	/** The allocation id. */
 	@Id
-	@Column(name = "booking_id")
+	@Column(name = "allocation_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int			id;
 
@@ -37,7 +36,6 @@ public class Booking {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -48,10 +46,10 @@ public class Booking {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Booking)) {
+		if (!(obj instanceof Allocation)) {
 			return false;
 		}
-		Booking other = (Booking) obj;
+		Allocation other = (Allocation) obj;
 		if (endDate == null) {
 			if (other.endDate != null) {
 				return false;
@@ -101,7 +99,6 @@ public class Booking {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -111,14 +108,15 @@ public class Booking {
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + id;
 		result = prime * result
-		        + ((startDate == null) ? 0 : startDate.hashCode());
+			+ ((startDate == null) ? 0 : startDate.hashCode());
 		return result;
 	}
 
 	/**
 	 * Sets the end date.
 	 *
-	 * @param endDate the endDate to set
+	 * @param endDate
+	 *            the endDate to set
 	 */
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
@@ -127,7 +125,8 @@ public class Booking {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -136,7 +135,8 @@ public class Booking {
 	/**
 	 * Sets the start date.
 	 *
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
@@ -144,13 +144,12 @@ public class Booking {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", startDate=" + startDate + ", endDate="
-		        + endDate + "]";
+		return "Allocation [id=" + id + ", startDate=" + startDate + ", endDate="
+			+ endDate + "]";
 	}
 
 }

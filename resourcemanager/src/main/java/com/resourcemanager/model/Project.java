@@ -30,22 +30,22 @@ public class Project {
 	/** The name. */
 	private String		name;
 
-	/** The bookings. */
+	/** The allocations. */
 	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(name = "resource_booking", joinColumns = {
+	@JoinTable(name = "resource_allocation", joinColumns = {
 	        @JoinColumn(name = "project_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "booking_id")})
+	                @JoinColumn(name = "allocation_id")})
 	@OrderColumn(name = "order_col")
 	@Embedded
-	private Booking[]	bookings;
+	private Allocation[]	allocations;
 
 	/**
-	 * Gets the bookings.
+	 * Gets the allocations.
 	 *
-	 * @return the bookings
+	 * @return the allocations
 	 */
-	public Booking[] getBookings() {
-		return bookings;
+	public Allocation[] getAllocations() {
+		return allocations;
 	}
 
 	/**
@@ -58,12 +58,12 @@ public class Project {
 	}
 
 	/**
-	 * Sets the bookings.
+	 * Sets the allocations.
 	 *
-	 * @param bookings the bookings to set
+	 * @param allocations the allocations to set
 	 */
-	public void setBookings(Booking[] bookings) {
-		this.bookings = bookings;
+	public void setAllocations(Allocation[] allocations) {
+		this.allocations = allocations;
 	}
 
 	/**
