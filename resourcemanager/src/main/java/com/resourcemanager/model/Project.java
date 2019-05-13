@@ -1,8 +1,6 @@
 
 package com.resourcemanager.model;
 
-import java.util.Arrays;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -13,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
@@ -28,23 +25,23 @@ public class Project {
 	@Id
 	@Column(name = "project_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int		id;
+	private int			id;
 
 	/** The name. */
-	private String	name;
-	
+	private String		name;
+
 	/** The bookings. */
-	@ManyToMany(cascade = { CascadeType.MERGE })
-	@JoinTable(
-		name = "person_booking",
-		joinColumns = { @JoinColumn(name = "project_id") },
-		inverseJoinColumns = { @JoinColumn(name = "booking_id") })
+	@ManyToMany(cascade = {CascadeType.MERGE})
+	@JoinTable(name = "resource_booking", joinColumns = {
+	        @JoinColumn(name = "project_id")}, inverseJoinColumns = {
+	                @JoinColumn(name = "booking_id")})
 	@OrderColumn(name = "order_col")
 	@Embedded
 	private Booking[]	bookings;
 
-	
 	/**
+	 * Gets the bookings.
+	 *
 	 * @return the bookings
 	 */
 	public Booking[] getBookings() {
@@ -61,6 +58,8 @@ public class Project {
 	}
 
 	/**
+	 * Sets the bookings.
+	 *
 	 * @param bookings the bookings to set
 	 */
 	public void setBookings(Booking[] bookings) {
@@ -70,10 +69,27 @@ public class Project {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id
-	 *            the new id
+	 * @param id the new id
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the new name
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 }

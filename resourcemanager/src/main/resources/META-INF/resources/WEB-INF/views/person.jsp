@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 	<head>
-		<title>Person Page</title>
+		<title>Resource Page</title>
 		<style type="text/css">
 			.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
@@ -18,27 +18,27 @@
 	</head>
 	
 	<body>
-	<c:if test="${!empty person.firstName}">
+	<c:if test="${!empty resource.name}">
 		<h1>
-			Edit a Person
+			Edit a Resource
 		</h1>
-		<div><a href="/persons">Back to Add</a></div>
+		<div><a href="/resources">Back to Add</a></div>
 	</c:if>
-	<c:if test="${empty person.firstName}">
+	<c:if test="${empty resource.name}">
 		<h1>
-			Add a Person
+			Add a Resource
 		</h1>
 	</c:if>
 	
 	
-	<c:url var="addAction" value="/person/add" ></c:url>
+	<c:url var="addAction" value="/resource/add" ></c:url>
 	
-	<form:form action="${addAction}" modelAttribute="person" method="POST">
+	<form:form action="${addAction}" modelAttribute="resource" method="POST">
 	<table>
 		<tr>
 			<td>
 				<table>
-					<c:if test="${!empty person.firstName}">
+					<c:if test="${!empty resource.name}">
 					<tr>
 						<td>
 							<form:label path="id">
@@ -53,33 +53,23 @@
 					</c:if>
 					<tr>
 						<td>
-							<form:label path="firstName">
-								<spring:message text="First Name"/>
+							<form:label path="name">
+								<spring:message text="Name"/>
 							</form:label>
 						</td>
 						<td>
-							<form:input path="firstName" />
-						</td> 
-					</tr>
-					<tr>
-						<td>
-							<form:label path="lastName">
-								<spring:message text="Last Name"/>
-							</form:label>
-						</td>
-						<td>
-							<form:input path="lastName" />
+							<form:input path="name" />
 						</td> 
 					</tr>
 					<tr>
 						<td colspan="2">
-							<c:if test="${!empty person.firstName}">
+							<c:if test="${!empty resource.name}">
 								<input type="submit"
-									value="<spring:message text="Edit Person"/>" />
+									value="<spring:message text="Edit Resource"/>" />
 							</c:if>
-							<c:if test="${empty person.firstName}">
+							<c:if test="${empty resource.name}">
 								<input type="submit"
-									value="<spring:message text="Add Person"/>" />
+									value="<spring:message text="Add Resource"/>" />
 							</c:if>
 						</td>
 					</tr>
@@ -91,11 +81,11 @@
 						<td>
 							<table>
 								<tr>
-									<th>Person Skills</th>
+									<th>Resource Skills</th>
 								</tr>
 								<tr>
 									<td>
-			                  			<form:select path="skills" id="personSkills" items="${person.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple = "true" />
+			                  			<form:select path="skills" id="resourceSkills" items="${resource.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple = "true" />
 			               			</td>
 			               		</tr>
 							</table>
@@ -123,25 +113,25 @@
 	</table>
 	</form:form>
 	<br>
-	<h3>Persons List</h3>
-	<c:if test="${!empty listPersons}">
+	<h3>Resources List</h3>
+	<c:if test="${!empty listResources}">
 		<table class="tg">
 		<tr>
-			<th width="80">Person ID</th>
+			<th width="80">Resource ID</th>
 			<th width="120">First Name</th>
 			<th width="120">Last Name</th>
 			<th width="300">Skills</th>
 			<th width="60">Edit</th>
 			<th width="60">Delete</th>
 		</tr>
-		<c:forEach items="${listPersons}" var="person">
+		<c:forEach items="${listResources}" var="resource">
 			<tr>
-				<td>${person.id}</td>
-				<td>${person.firstName}</td>
-				<td>${person.lastName}</td>
-				<td><c:forEach items="${person.skills}" var="skill">${skill.name} </c:forEach></td>
-				<td><a href="<c:url value='/edit/${person.id}' />" >Edit</a></td>
-				<td><a href="<c:url value='/remove/${person.id}' />" >Delete</a></td>
+				<td>${resource.id}</td>
+				<td>${resource.firstName}</td>
+				<td>${resource.lastName}</td>
+				<td><c:forEach items="${resource.skills}" var="skill">${skill.name} </c:forEach></td>
+				<td><a href="<c:url value='/edit/${resource.id}' />" >Edit</a></td>
+				<td><a href="<c:url value='/remove/${resource.id}' />" >Delete</a></td>
 			</tr>
 		</c:forEach>
 		</table>
@@ -151,8 +141,10 @@
 		Bookings
 	</h1>
 	
-	<c:if test="${!empty person.firstName}">
-		
+	<c:if test="${!empty resource.firstName}">
+		<h2>Create a Booking</h2>
+		<p>Start Date: <input name="startDate" id="startDate" type="text" class="datepicker"></p>
+		<p>End Date: <input name="endDate" id="endDate" type="text" class="datepicker"></p>
 	</c:if>
 	
 	</body>
@@ -161,10 +153,10 @@
 		<script>
 			function addSkill(selectObject) {
 				var optionObject = selectObject.options[selectObject.selectedIndex];
-				var personSkills = document.getElementById("personSkills");
-				personSkills.add(optionObject);
-				for (i = 0; i < personSkills.options.length; i++) {
-					personSkills.options[i].selected = true;
+				var resourceSkills = document.getElementById("resourceSkills");
+				resourceSkills.add(optionObject);
+				for (i = 0; i < resourceSkills.options.length; i++) {
+					resourceSkills.options[i].selected = true;
 				}
 			}
 			
@@ -173,9 +165,28 @@
 				var allSkills = document.getElementById("allSkills");
 				allSkills.add(optionObject);
 				for (i = 0; i < allSkills.options.length; i++) {
-					personSkills.options[i].selected = true;
+					resourceSkills.options[i].selected = true;
 				}
 			}
+			
+			$(function() {   
+			    $( "#startDate" ).datepicker({   
+			      defaultDate: "+1w",  
+			      changeMonth: true,   
+			      numberOfMonths: 1,  
+			      onClose: function( selectedDate ) {  
+			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
+			      }
+			    });  
+			    $( "#startDate" ).datepicker({
+			      defaultDate: "+1w",
+			      changeMonth: true,
+			      numberOfMonths: 1,
+			      onClose: function( selectedDate ) {
+			        $( "#endDate" ).datepicker( "option", "maxDate", selectedDate );
+			      }
+			    });  
+			  });  
 		</script>
 	</footer>
 	
