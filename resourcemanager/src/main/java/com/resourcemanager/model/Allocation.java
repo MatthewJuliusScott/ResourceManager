@@ -58,7 +58,7 @@ public class Allocation {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Allocation)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Allocation other = (Allocation) obj;
@@ -69,7 +69,17 @@ public class Allocation {
 		} else if (!endDate.equals(other.endDate)) {
 			return false;
 		}
+		if (hours != other.hours) {
+			return false;
+		}
 		if (id != other.id) {
+			return false;
+		}
+		if (skill == null) {
+			if (other.skill != null) {
+				return false;
+			}
+		} else if (!skill.equals(other.skill)) {
 			return false;
 		}
 		if (startDate == null) {
@@ -136,9 +146,10 @@ public class Allocation {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + hours;
 		result = prime * result + id;
-		result = prime * result
-			+ ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((skill == null) ? 0 : skill.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		return result;
 	}
 
@@ -198,8 +209,8 @@ public class Allocation {
 	 */
 	@Override
 	public String toString() {
-		return "Allocation [id=" + id + ", startDate=" + startDate + ", endDate="
-			+ endDate + "]";
+		return "Allocation [id=" + id + ", skill=" + skill + ", startDate=" + startDate + ", endDate=" + endDate + ", hours="
+			+ hours + "]";
 	}
 
 }
