@@ -3,6 +3,7 @@ package com.resourcemanager.model;
 
 import java.util.Arrays;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -26,7 +27,7 @@ public class Resource {
 	/** The id. */
 	@Id
 	@Column(name = "resource_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int				id;
 
 	/** The name. */
@@ -51,6 +52,10 @@ public class Resource {
 	@OrderColumn(name = "order_col")
 	@Embedded
 	private Allocation[]	allocations;
+
+	/** The hours. */
+	@Basic
+	private int				hours;
 
 	/*
 	 * (non-Javadoc)
@@ -94,6 +99,15 @@ public class Resource {
 	 */
 	public Allocation[] getAllocations() {
 		return allocations;
+	}
+
+	/**
+	 * Gets the hours.
+	 *
+	 * @return the hours
+	 */
+	public int getHours() {
+		return hours;
 	}
 
 	/**
@@ -146,6 +160,16 @@ public class Resource {
 	 */
 	public void setAllocations(Allocation[] allocations) {
 		this.allocations = allocations;
+	}
+
+	/**
+	 * Sets the hours.
+	 *
+	 * @param hours
+	 *            the new hours
+	 */
+	public void setHours(int hours) {
+		this.hours = hours;
 	}
 
 	/**

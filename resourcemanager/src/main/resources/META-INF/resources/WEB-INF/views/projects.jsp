@@ -32,10 +32,10 @@
 					</tr>
 					<c:forEach items="${listProjects}" var="project">
 						<tr>
-							<td>${resource.id}</td>
-							<td>${resource.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button">Link</a></td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/delete/${resource.id}" role="button">Link</a></td>
+							<td>${project.id}</td>
+							<td>${project.name}</td>
+							<td><a class="btn btn-primary btn-sm" href="/projects/edit/${project.id}" role="button"><i class="far fa-edit"></i></a></td>
+							<td><a class="btn btn-primary btn-sm" href="/projects/delete/${project.id}" role="button"><i class="fas fa-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 					</table>
@@ -45,26 +45,6 @@
 	</body>
 	
 	<footer>
-		<script>			
-			$(function() {   
-			    $( "#startDate" ).datepicker({   
-			      defaultDate: "+1w",  
-			      changeMonth: true,   
-			      numberOfMonths: 1,  
-			      onClose: function( selectedDate ) {  
-			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
-			      }
-			    });  
-			    $( "#startDate" ).datepicker({
-			      defaultDate: "+1w",
-			      changeMonth: true,
-			      numberOfMonths: 1,
-			      onClose: function( selectedDate ) {
-			        $( "#endDate" ).datepicker( "option", "maxDate", selectedDate );
-			      }
-			    });  
-			  });  
-		</script>
 	</footer>
 	
 </html>

@@ -24,8 +24,7 @@
 		</c:if>
 		
 		
-		<c:url var="addAction" value="/resource/add" ></c:url>
-		
+		<c:url var="addAction" value="/resources/save" ></c:url>
 		<form:form action="${addAction}" modelAttribute="resource" method="POST">
 		<table>
 			<tr>
@@ -52,6 +51,16 @@
 							</td>
 							<td>
 								<form:input path="name" />
+							</td> 
+						</tr>
+						<tr>
+							<td>
+								<form:label path="hours">
+									<spring:message text="hours"/>
+								</form:label>
+							</td>
+							<td>
+								<form:input path="hours" />
 							</td> 
 						</tr>
 						<tr>
@@ -117,6 +126,7 @@
 			function removeSkill(selectObject) {
 				var optionObject = selectObject.options[selectObject.selectedIndex];
 				var allSkills = document.getElementById("allSkills");
+				var resourceSkills = document.getElementById("resourceSkills");
 				allSkills.add(optionObject);
 				for (i = 0; i < allSkills.options.length; i++) {
 					resourceSkills.options[i].selected = true;

@@ -5,34 +5,71 @@
 <html>
 	<head>
 		<title>Manage Project</title>
-		<style type="text/css">
-			.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-			.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-			.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
-			.tg .tg-4eph{background-color:#f9f9f9}
-			td {vertical-align:top;}
-			.left-arrow {float:left;}
-			.right-arrow {float:right;}
-		</style>
-		<script src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 	</head>
 	
 	<body>
-			
-	<h1>Manage Project</h1>
 	
-	<c:if test="${!empty project.name}">
-		<h2>Add a Requirement</h2>
-		<p>Start Date: <input name="startDate" id="startDate" type="text" class="datepicker"></p>
-		<p>End Date: <input name="endDate" id="endDate" type="text" class="datepicker"></p>
-		<p>Skill</p>
-		<select onchange="addResource(this)" id="allSkills">
-			<c:forEach items="${listSkills}" var="skill">
-				<option value="${skill.id}">${skill.name}</option>
-   			</c:forEach>
-		</select>
-	</c:if>
-	
+		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
+		
+		<div class="container-fluid">
+			<h1>Manage Project</h1>
+						
+			<div class="container-fluid">
+				<c:url var="addAction" value="/projects/save" ></c:url>
+		<form:form action="${addAction}" modelAttribute="project" method="POST">
+				
+					<form:hidden path="id" />
+								
+					<div class="form-group">
+						<form:label path="name">
+							<spring:message text="Name"/>
+						</form:label>
+						<form:input path="name" class="form-control"/>
+					</div>
+					<h2>Requirements</h2>
+					<table class="table">
+						<tr>
+							<th>Id</th>
+							<th>Skill</th>
+							<th>Allocated To</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+						<c:forEach items="${project.allocations}" var="allocation">
+							<tr>
+								<td>${allocation.id}</td>
+								<td>${allocation.skill.name}</td>
+								<td>${allocation.resource.name}</td>
+								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
+								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
+							</tr>
+	                	</c:forEach>
+                	</table>
+					
+					<h3>Add Requirement</h3>
+					
+					<div class="form-group">
+						<label for="startDate">Start Date</label>
+						<input type="text" class="form-control datepicker" name="startDate" id="startDate">
+						<label for="endDate">End Date</label>
+						<input type="text" class="form-control datepicker" name="endDate" id="endDate">
+						
+						<label for="allSkills">Skill</label>
+						<select id="allSkills" name="skillId" class="form-control">
+							<c:forEach items="${listSkills}" var="skill">
+								<option value="${skill.id}">${skill.name}</option>
+	                		</c:forEach>
+	           			</select>
+	           			
+	           			<label for="hours">Hours</label>
+						<input type="number" class="form-control" name="hours" id="hours">
+					</div>
+           			
+           			<button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Save</button>
+           		</form:form>
+			</div>
+		</div>
 	</body>
 	
 	<footer>
@@ -46,15 +83,15 @@
 			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
 			      }
 			    });  
-			    $( "#startDate" ).datepicker({
+			    $( "#endDate" ).datepicker({
 			      defaultDate: "+1w",
 			      changeMonth: true,
 			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {
-			        $( "#endDate" ).datepicker( "option", "maxDate", selectedDate );
+			        $( "#startDate" ).datepicker( "option", "maxDate", selectedDate );
 			      }
 			    });  
-			  });  
+			  });
 		</script>
 	</footer>
 	

@@ -1,4 +1,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
+<script src="/resources/js/jquery-3.4.1.min.js"></script>
+<script src="/resources/js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/resources/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<script src="/resources/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/resources/css/all.min.css">
+

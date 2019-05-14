@@ -7,9 +7,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +36,20 @@ public class Allocation {
 	/** The end date. */
 	@Basic
 	private LocalDate	endDate;
+
+	/** The skill. */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "skill_id")
+	private Skill		skill;
+
+	/** The resource. */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "resource_id")
+	private Resource	resource;
+
+	/** The hours. */
+	@Basic
+	private int			hours;
 
 	/*
 	 * (non-Javadoc)
@@ -88,6 +105,14 @@ public class Allocation {
 		return id;
 	}
 
+	public Resource getResource() {
+		return resource;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
 	/**
 	 * Gets the start date.
 	 *
@@ -130,6 +155,14 @@ public class Allocation {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
 	/**

@@ -1,3 +1,4 @@
+
 package com.resourcemanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,42 @@ public class ProjectController {
 	@Autowired
 	private SkillService	skillService;
 
-	// For add and update project both
-	@RequestMapping(value = "/projects/add", method = RequestMethod.POST)
-	public String addProject(@ModelAttribute("project") Project p, BindingResult result) {
+	@RequestMapping("projects/add")
+	public String addProject() {
+		return "redirect:/projects/edit/0";
+	}
 
+	@RequestMapping("/projects/delete/{id}")
+	public String deleteProject(@PathVariable("id") int id) {
+
+		this.projectService.deleteProject(id);
+		return "redirect:/projects";
+	}
+
+	@RequestMapping("projects/edit/{id}")
+	public String editProject(@PathVariable("id") int id, Model model) {
+		if (id > 0) {
+			model.addAttribute("project", this.projectService.getProjectById(id));
+		} else {
+			model.addAttribute("project", new Project());
+		}
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "projects/edit";
+	}
+
+	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
+	public String listProjects(Model model) {
+		model.addAttribute("listProjects", this.projectService.listProjects());
+		return "projects";
+	}
+
+	// For add and update project both
+	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
+	public String saveProject(@ModelAttribute("project") Project p,
+		BindingResult result) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
-
 		if (p.getId() == 0) {
 			// new project, add it
 			this.projectService.addProject(p);
@@ -37,32 +66,6 @@ public class ProjectController {
 			// existing project, call update
 			this.projectService.updateProject(p);
 		}
-
-		return "redirect:/projects";
-
-	}
-
-	
-	@RequestMapping("/project/edit/{id}")
-	public String editProject(@PathVariable("id") int id, Model model) {
-		model.addAttribute("project", this.projectService.getProjectById(id));
-		model.addAttribute("listProjects", this.projectService.listProjects());
-		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "project";
-	}
-
-	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
-	public String listProjects(Model model) {
-		model.addAttribute("project", new Project());
-		model.addAttribute("listProjects", this.projectService.listProjects());
-		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "projects";
-	}
-
-	@RequestMapping("/project/delete/{id}")
-	public String removeProject(@PathVariable("id") int id) {
-
-		this.projectService.deleteProject(id);
 		return "redirect:/projects";
 	}
 }

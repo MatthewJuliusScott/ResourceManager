@@ -24,17 +24,18 @@ public class Project {
 	/** The id. */
 	@Id
 	@Column(name = "project_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int			id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int				id;
 
 	/** The name. */
-	private String		name;
+	private String			name;
 
 	/** The allocations. */
-	@ManyToMany(cascade = {CascadeType.MERGE})
+	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(name = "resource_allocation", joinColumns = {
-	        @JoinColumn(name = "project_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "allocation_id")})
+			@JoinColumn(name = "project_id") },
+		inverseJoinColumns = {
+				@JoinColumn(name = "allocation_id") })
 	@OrderColumn(name = "order_col")
 	@Embedded
 	private Allocation[]	allocations;
@@ -58,24 +59,6 @@ public class Project {
 	}
 
 	/**
-	 * Sets the allocations.
-	 *
-	 * @param allocations the allocations to set
-	 */
-	public void setAllocations(Allocation[] allocations) {
-		this.allocations = allocations;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
 	 * Gets the name.
 	 *
 	 * @return the name
@@ -85,9 +68,30 @@ public class Project {
 	}
 
 	/**
+	 * Sets the allocations.
+	 *
+	 * @param allocations
+	 *            the allocations to set
+	 */
+	public void setAllocations(Allocation[] allocations) {
+		this.allocations = allocations;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;

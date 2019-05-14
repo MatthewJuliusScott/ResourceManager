@@ -24,8 +24,7 @@
 		</c:if>
 		
 		
-		<c:url var="addAction" value="/skill/add" ></c:url>
-		
+		<c:url var="addAction" value="/skills/save" ></c:url>
 		<form:form action="${addAction}" modelAttribute="skill" method="POST">
 		<table>
 			<tr>
