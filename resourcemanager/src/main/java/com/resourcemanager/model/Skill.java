@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * The Class Skill.
  */
 @Entity
-@Table(name = "SKILL")
+@Table(name = "skill")
 @Embeddable
 public class Skill {
 

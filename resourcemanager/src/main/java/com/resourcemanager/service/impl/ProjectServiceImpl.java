@@ -24,6 +24,12 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
+	public void deleteProject(int id) {
+		this.projectDAO.removeProject(id);
+	}
+
+	@Override
+	@Transactional
 	public Project getProjectById(int id) {
 		return this.projectDAO.getProjectById(id);
 	}
@@ -32,12 +38,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public List<Project> listProjects() {
 		return this.projectDAO.listProjects();
-	}
-
-	@Override
-	@Transactional
-	public void deleteProject(int id) {
-		this.projectDAO.removeProject(id);
 	}
 
 	public void setPersonDAO(ProjectDAO resourceDAO) {

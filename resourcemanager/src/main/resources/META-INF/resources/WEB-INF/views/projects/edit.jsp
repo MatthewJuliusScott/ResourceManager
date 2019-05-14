@@ -17,7 +17,7 @@
 						
 			<div class="container-fluid">
 				<c:url var="addAction" value="/projects/save" ></c:url>
-		<form:form action="${addAction}" modelAttribute="project" method="POST">
+				<form:form action="${addAction}" modelAttribute="project" method="POST">
 				
 					<form:hidden path="id" />
 								
@@ -77,8 +77,9 @@
 			$(function() {   
 			    $( "#startDate" ).datepicker({   
 			      defaultDate: "+1w",  
-			      changeMonth: true,   
-			      numberOfMonths: 1,  
+			      changeMonth: true,
+			      dateFormat: 'dd/mm/yy',
+			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {  
 			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
 			      }
@@ -86,6 +87,7 @@
 			    $( "#endDate" ).datepicker({
 			      defaultDate: "+1w",
 			      changeMonth: true,
+			      dateFormat: 'dd/mm/yy',
 			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {
 			        $( "#startDate" ).datepicker( "option", "maxDate", selectedDate );

@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * The Class Allocation. Represents a period of time for which something can be reserved.
  */
 @Entity
-@Table(name = "ALLOCATION")
+@Table(name = "allocation")
 @Embeddable
 public class Allocation {
 
@@ -29,6 +29,11 @@ public class Allocation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int			id;
 
+	/** The skill. */
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(columnDefinition = "integer", name = "skill_id", nullable = true)
+	private Skill		skill;
+
 	/** The start date. */
 	@Basic
 	private LocalDate	startDate;
@@ -36,16 +41,6 @@ public class Allocation {
 	/** The end date. */
 	@Basic
 	private LocalDate	endDate;
-
-	/** The skill. */
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "skill_id")
-	private Skill		skill;
-
-	/** The resource. */
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "resource_id")
-	private Resource	resource;
 
 	/** The hours. */
 	@Basic
@@ -97,6 +92,15 @@ public class Allocation {
 	}
 
 	/**
+	 * Gets the hours.
+	 *
+	 * @return the hours
+	 */
+	public int getHours() {
+		return hours;
+	}
+
+	/**
 	 * Gets the id.
 	 *
 	 * @return the id
@@ -105,10 +109,11 @@ public class Allocation {
 		return id;
 	}
 
-	public Resource getResource() {
-		return resource;
-	}
-
+	/**
+	 * Gets the skill.
+	 *
+	 * @return the skill
+	 */
 	public Skill getSkill() {
 		return skill;
 	}
@@ -148,6 +153,16 @@ public class Allocation {
 	}
 
 	/**
+	 * Sets the hours.
+	 *
+	 * @param hours
+	 *            the new hours
+	 */
+	public void setHours(int hours) {
+		this.hours = hours;
+	}
+
+	/**
 	 * Sets the id.
 	 *
 	 * @param id
@@ -157,10 +172,12 @@ public class Allocation {
 		this.id = id;
 	}
 
-	public void setResource(Resource resource) {
-		this.resource = resource;
-	}
-
+	/**
+	 * Sets the skill.
+	 *
+	 * @param skill
+	 *            the new skill
+	 */
 	public void setSkill(Skill skill) {
 		this.skill = skill;
 	}

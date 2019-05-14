@@ -1,6 +1,10 @@
 
 package com.resourcemanager.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.SkillService;
@@ -55,10 +61,29 @@ public class ProjectController {
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
 	public String saveProject(@ModelAttribute("project") Project p,
-		BindingResult result) {
+		BindingResult result, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
+		@RequestParam("skillId") String skillId, @RequestParam("hours") String hours) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
+
+		// if adding a new resource requirement, add that to the project
+		if (skillId != null) {
+			Allocation allocation = new Allocation();
+			skillService.getSkillById(Integer.parseInt(skillId));
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+			allocation.setStartDate(LocalDate.parse(startDate, dateTimeFormatter));
+			allocation.setEndDate(LocalDate.parse(endDate, dateTimeFormatter));
+			allocation.setHours(Integer.parseInt(hours));
+			Allocation[] allocations = p.getAllocations();
+			if (allocations == null) {
+				allocations = new Allocation[0];
+			}
+			allocations = Arrays.copyOf(allocations, allocations.length + 1);
+			allocations[allocations.length - 1] = allocation;
+			p.setAllocations(allocations);
+		}
+
 		if (p.getId() == 0) {
 			// new project, add it
 			this.projectService.addProject(p);

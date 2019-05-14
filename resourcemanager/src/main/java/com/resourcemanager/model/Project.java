@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * The Class Project.
  */
 @Entity
-@Table(name = "PROJECT")
+@Table(name = "project")
 public class Project {
 
 	/** The id. */
@@ -31,11 +31,11 @@ public class Project {
 	private String			name;
 
 	/** The allocations. */
-	@ManyToMany(cascade = { CascadeType.MERGE })
+	@ManyToOne(optional = true, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "project_resource_allocation", joinColumns = {
-			@JoinColumn(name = "project_id") },
+			@JoinColumn(columnDefinition = "integer", name = "project_id", nullable = true) },
 		inverseJoinColumns = {
-				@JoinColumn(name = "allocation_id") })
+				@JoinColumn(columnDefinition = "integer", name = "allocation_id", nullable = true) })
 	@OrderColumn(name = "order_col")
 	@Embedded
 	private Allocation[]	allocations;
