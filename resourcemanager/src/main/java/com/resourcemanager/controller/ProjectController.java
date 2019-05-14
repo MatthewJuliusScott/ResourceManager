@@ -68,7 +68,7 @@ public class ProjectController {
 		}
 
 		// if adding a new resource requirement, add that to the project
-		if (skillId != null) {
+		try {
 			Allocation allocation = new Allocation();
 			skillService.getSkillById(Integer.parseInt(skillId));
 			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
@@ -82,6 +82,8 @@ public class ProjectController {
 			allocations = Arrays.copyOf(allocations, allocations.length + 1);
 			allocations[allocations.length - 1] = allocation;
 			p.setAllocations(allocations);
+		} catch (Exception e) {
+			// do nothing
 		}
 
 		if (p.getId() == 0) {
