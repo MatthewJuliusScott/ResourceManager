@@ -45,7 +45,7 @@ public class Resource {
 
 	/** The allocations. */
 	@ManyToMany(cascade = { CascadeType.MERGE })
-	@JoinTable(name = "resource_allocation", joinColumns = {
+	@JoinTable(name = "project_resource_allocation", joinColumns = {
 			@JoinColumn(name = "resource_id") },
 		inverseJoinColumns = {
 				@JoinColumn(name = "allocation_id") })
