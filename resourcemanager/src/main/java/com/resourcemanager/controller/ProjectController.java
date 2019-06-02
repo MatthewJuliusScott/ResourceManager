@@ -3,8 +3,6 @@ package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
-import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.SkillService;
 
@@ -77,7 +74,8 @@ public class ProjectController {
 			for (Allocation allocation : allocations) {
 				p.addAllocation(allocation.getSkill(), allocation.getStartDate(), allocation.getEndDate(), allocation.getHours());
 			}
-			p.addAllocation(skillService.getSkillById(Long.parseLong(skillId)), LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours));
+			p.addAllocation(skillService.getSkillById(Long.parseLong(skillId)), LocalDate.parse(startDate, dateTimeFormatter),
+				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours));
 		} catch (Exception e) {
 			// do nothing
 			e.printStackTrace();
@@ -91,6 +89,6 @@ public class ProjectController {
 			// existing project, call update
 			this.projectService.updateProject(p);
 		}
-		return "redirect:/projects";
+		return "redirect:/projects/edit/" + p.getId();
 	}
 }
