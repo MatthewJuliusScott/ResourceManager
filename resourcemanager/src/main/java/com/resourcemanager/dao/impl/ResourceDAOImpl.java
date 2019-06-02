@@ -39,7 +39,7 @@ public class ResourceDAOImpl implements ResourceDAO {
 	}
 
 	@Override
-	public Resource getResourceById(int id) {
+	public Resource getResourceById(Long id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
 		logger.info("Resource retrieved successfully, resource details=" + resource);
 		return resource;
@@ -59,7 +59,7 @@ public class ResourceDAOImpl implements ResourceDAO {
 	}
 
 	@Override
-	public void removeResource(int id) {
+	public void removeResource(Long id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
 		getCurrentSession().remove(resource);
 		logger.info("Resource deleted successfully, resource details=" + resource);

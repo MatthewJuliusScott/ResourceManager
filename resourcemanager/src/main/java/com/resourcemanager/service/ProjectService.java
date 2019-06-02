@@ -8,11 +8,11 @@ public interface ProjectService {
 
 	public void addProject(Project p);
 
-	public Project getProjectById(int id);
+	public Project getProjectById(Long id);
 
 	public List<Project> listProjects();
 
-	public void deleteProject(int id);
+	public void deleteProject(Long id);
 
 	public void updateProject(Project p);
 

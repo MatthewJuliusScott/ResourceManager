@@ -3,7 +3,9 @@ package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
+import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.SkillService;
 
@@ -35,14 +38,14 @@ public class ProjectController {
 	}
 
 	@RequestMapping("/projects/delete/{id}")
-	public String deleteProject(@PathVariable("id") int id) {
+	public String deleteProject(@PathVariable("id") Long id) {
 
 		this.projectService.deleteProject(id);
 		return "redirect:/projects";
 	}
 
 	@RequestMapping("projects/edit/{id}")
-	public String editProject(@PathVariable("id") int id, Model model) {
+	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project", this.projectService.getProjectById(id));
 		} else {
@@ -67,23 +70,18 @@ public class ProjectController {
 			System.err.println(result.toString());
 		}
 
-		// if adding a new resource requirement, add that to the project
+		// if adding a new skill requirement, add that to the project
 		try {
-			Allocation allocation = new Allocation();
-			skillService.getSkillById(Integer.parseInt(skillId));
 			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-			allocation.setStartDate(LocalDate.parse(startDate, dateTimeFormatter));
-			allocation.setEndDate(LocalDate.parse(endDate, dateTimeFormatter));
-			allocation.setHours(Integer.parseInt(hours));
-			Allocation[] allocations = p.getAllocations();
-			if (allocations == null) {
-				allocations = new Allocation[0];
+			List<Allocation> allocations = projectService.getProjectById(p.getId()).getAllocations();
+			for (Allocation allocation : allocations) {
+				p.addAllocation(allocation.getSkill(), allocation.getStartDate(), allocation.getEndDate(), allocation.getHours());
 			}
-			allocations = Arrays.copyOf(allocations, allocations.length + 1);
-			allocations[allocations.length - 1] = allocation;
-			p.setAllocations(allocations);
+			p.addAllocation(skillService.getSkillById(Long.parseLong(skillId)), LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours));
 		} catch (Exception e) {
 			// do nothing
+			e.printStackTrace();
+			// TODO : friendly error reporting
 		}
 
 		if (p.getId() == 0) {

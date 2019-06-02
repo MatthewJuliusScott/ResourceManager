@@ -24,7 +24,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional
-	public Resource getResourceById(int id) {
+	public Resource getResourceById(Long id) {
 		return this.resourceDAO.getResourceById(id);
 	}
 
@@ -36,7 +36,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional
-	public void deleteResource(int id) {
+	public void deleteResource(Long id) {
 		this.resourceDAO.removeResource(id);
 	}
 

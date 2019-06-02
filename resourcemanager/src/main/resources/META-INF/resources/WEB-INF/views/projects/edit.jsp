@@ -30,19 +30,21 @@
 					<h2>Requirements</h2>
 					<table class="table">
 						<tr>
-							<th>Id</th>
 							<th>Skill</th>
+							<th>Start Date</th>
+							<th>End Date</th>
 							<th>Allocated To</th>
 							<th>Edit</th>
 							<th>Delete</th>
 						</tr>
 						<c:forEach items="${project.allocations}" var="allocation">
 							<tr>
-								<td>${allocation.id}</td>
 								<td>${allocation.skill.name}</td>
+								<td>${allocation.startDate}</td>
+								<td>${allocation.endDate}</td>
 								<td>${allocation.resource.name}</td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
+								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.skill.id}" role="button"><i class="far fa-edit"></i></a></td>
+								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.skill.id}" role="button"><i class="fas fa-trash"></i></a></
 							</tr>
 	                	</c:forEach>
                 	</table>

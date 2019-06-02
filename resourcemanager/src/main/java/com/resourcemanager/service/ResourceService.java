@@ -8,11 +8,11 @@ public interface ResourceService {
 
 	public void addResource(Resource p);
 
-	public Resource getResourceById(int id);
+	public Resource getResourceById(Long id);
 
 	public List<Resource> listResources();
 
-	public void deleteResource(int id);
+	public void deleteResource(Long id);
 
 	public void updateResource(Resource p);
 

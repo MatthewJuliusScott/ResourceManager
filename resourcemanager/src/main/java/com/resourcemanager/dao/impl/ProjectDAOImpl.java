@@ -39,7 +39,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public Project getProjectById(int id) {
+	public Project getProjectById(Long id) {
 		Project project = getCurrentSession().find(Project.class, id);
 		logger.info("Project retrieved successfully, project details=" + project);
 		return project;
@@ -59,7 +59,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public void removeProject(int id) {
+	public void removeProject(Long id) {
 		Project project = getCurrentSession().find(Project.class, id);
 		getCurrentSession().remove(project);
 		logger.info("Project deleted successfully, project details=" + project);

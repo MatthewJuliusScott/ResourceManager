@@ -24,13 +24,13 @@ public class AllocationServiceImpl implements AllocationService {
 
 	@Override
 	@Transactional
-	public void deleteAllocation(int id) {
+	public void deleteAllocation(Long id) {
 		this.allocationDAO.deleteAllocation(id);
 	}
 
 	@Override
 	@Transactional
-	public Allocation getAllocationById(int id) {
+	public Allocation getAllocationById(Long id) {
 		return this.allocationDAO.getAllocationById(id);
 	}
 

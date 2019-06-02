@@ -8,9 +8,9 @@ public interface AllocationDAO {
 
 	public void addAllocation(Allocation allocation);
 
-	public void deleteAllocation(int id);
+	public void deleteAllocation(Long id);
 
-	public Allocation getAllocationById(int id);
+	public Allocation getAllocationById(Long id);
 
 	public List<Allocation> listAllocations();
 

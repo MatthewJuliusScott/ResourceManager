@@ -32,14 +32,14 @@ public class AllocationDAOImpl implements AllocationDAO {
 	}
 
 	@Override
-	public void deleteAllocation(int id) {
+	public void deleteAllocation(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
 		getCurrentSession().remove(allocation);
 		logger.info("Allocation deleted successfully, allocation details=" + allocation);
 	}
 
 	@Override
-	public Allocation getAllocationById(int id) {
+	public Allocation getAllocationById(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
 		logger.info("Allocation retrieved successfully, allocation details=" + allocation);
 		return allocation;

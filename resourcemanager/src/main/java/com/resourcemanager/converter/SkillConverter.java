@@ -24,7 +24,7 @@ public class SkillConverter implements Converter<String, Skill> {
 	 */
 	@Override
 	public Skill convert(String skillIdStr) {
-		int skillId = Integer.parseInt(skillIdStr);
+		Long skillId = Long.parseLong(skillIdStr);
 		return skillService.getSkillById(skillId);
 	}
 }

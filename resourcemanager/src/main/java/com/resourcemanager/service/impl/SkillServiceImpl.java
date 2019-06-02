@@ -24,7 +24,7 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	@Transactional
-	public Skill getSkillById(int id) {
+	public Skill getSkillById(Long id) {
 		return this.skillDAO.getSkillById(id);
 	}
 
@@ -36,7 +36,7 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	@Transactional
-	public void deleteSkill(int id) {
+	public void deleteSkill(Long id) {
 		this.skillDAO.deleteSkill(id);
 	}
 

@@ -2,94 +2,93 @@
 package com.resourcemanager.model;
 
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Objects;
 
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 /**
- * The Class Allocation. Represents a period of time for which something can be reserved.
+ * The Class Allocation.
  */
-@Entity
-@Table(name = "allocation")
-@Embeddable
+@Entity(name = "Allocation")
+@Table(name = "project_skill")
 public class Allocation {
 
-	/** The allocation id. */
-	@Id
-	@Column(name = "allocation_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int			id;
+	/** The id. */
+	@EmbeddedId
+	private AllocationId	id;
+
+	/** The project. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@MapsId("projectId")
+	private Project			project;
 
 	/** The skill. */
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(columnDefinition = "integer", name = "skill_id", nullable = true)
-	private Skill		skill;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@MapsId("skillId")
+	private Skill			skill;
 
 	/** The start date. */
-	@Basic
-	private LocalDate	startDate;
+	@Column(name = "start_date")
+	private LocalDate		startDate;
 
 	/** The end date. */
-	@Basic
-	private LocalDate	endDate;
+	@Column(name = "end_date")
+	private LocalDate		endDate;
 
 	/** The hours. */
-	@Basic
-	private int			hours;
+	private int				hours;
+
+	/** The resource. */
+	@ManyToOne(cascade = {CascadeType.MERGE})
+	@JoinColumn(name = "resource_id")
+	@OrderColumn(name = "order_col")
+	private Resource		resource;
+
+	/**
+	 * Instantiates a new allocation.
+	 */
+	public Allocation() {
+	}
+
+	/**
+	 * Instantiates a new allocation.
+	 *
+	 * @param project the project
+	 * @param skill   the skill
+	 */
+	public Allocation(Project project, Skill skill) {
+		this.project = project;
+		this.skill = skill;
+		this.id = new AllocationId(project.getId(), skill.getId());
+	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object o) {
+		if (this == o)
 			return true;
-		}
-		if (obj == null) {
+
+		if (o == null || getClass() != o.getClass())
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Allocation other = (Allocation) obj;
-		if (endDate == null) {
-			if (other.endDate != null) {
-				return false;
-			}
-		} else if (!endDate.equals(other.endDate)) {
-			return false;
-		}
-		if (hours != other.hours) {
-			return false;
-		}
-		if (id != other.id) {
-			return false;
-		}
-		if (skill == null) {
-			if (other.skill != null) {
-				return false;
-			}
-		} else if (!skill.equals(other.skill)) {
-			return false;
-		}
-		if (startDate == null) {
-			if (other.startDate != null) {
-				return false;
-			}
-		} else if (!startDate.equals(other.startDate)) {
-			return false;
-		}
-		return true;
+
+		Allocation that = (Allocation) o;
+		return Objects.equals(project, that.project)
+		        && Objects.equals(skill, that.skill);
 	}
 
 	/**
@@ -115,8 +114,26 @@ public class Allocation {
 	 *
 	 * @return the id
 	 */
-	public int getId() {
+	public AllocationId getId() {
 		return id;
+	}
+
+	/**
+	 * Gets the project.
+	 *
+	 * @return the project
+	 */
+	public Project getProject() {
+		return project;
+	}
+
+	/**
+	 * Gets the resource.
+	 *
+	 * @return the resource
+	 */
+	public Resource getResource() {
+		return resource;
 	}
 
 	/**
@@ -139,25 +156,18 @@ public class Allocation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + hours;
-		result = prime * result + id;
-		result = prime * result + ((skill == null) ? 0 : skill.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		return result;
+		return Objects.hash(project, skill);
 	}
 
 	/**
 	 * Sets the end date.
 	 *
-	 * @param endDate
-	 *            the endDate to set
+	 * @param endDate the endDate to set
 	 */
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
@@ -166,8 +176,7 @@ public class Allocation {
 	/**
 	 * Sets the hours.
 	 *
-	 * @param hours
-	 *            the new hours
+	 * @param hours the new hours
 	 */
 	public void setHours(int hours) {
 		this.hours = hours;
@@ -176,18 +185,34 @@ public class Allocation {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(AllocationId id) {
 		this.id = id;
+	}
+
+	/**
+	 * Sets the project.
+	 *
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	/**
+	 * Sets the resource.
+	 *
+	 * @param resource the resource to set
+	 */
+	public void setResource(Resource resource) {
+		this.resource = resource;
 	}
 
 	/**
 	 * Sets the skill.
 	 *
-	 * @param skill
-	 *            the new skill
+	 * @param skill the skill to set
 	 */
 	public void setSkill(Skill skill) {
 		this.skill = skill;
@@ -196,21 +221,9 @@ public class Allocation {
 	/**
 	 * Sets the start date.
 	 *
-	 * @param startDate
-	 *            the startDate to set
+	 * @param startDate the startDate to set
 	 */
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Allocation [id=" + id + ", skill=" + skill + ", startDate=" + startDate + ", endDate=" + endDate + ", hours="
-			+ hours + "]";
-	}
-
 }

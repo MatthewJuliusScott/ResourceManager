@@ -45,7 +45,7 @@ public class ResourceController {
 
 	
 	@RequestMapping("resources/edit/{id}")
-	public String editResource(@PathVariable("id") int id, Model model) {
+	public String editResource(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("resource", this.resourceService.getResourceById(id));
 		} else {
@@ -64,7 +64,7 @@ public class ResourceController {
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String deleteResource(@PathVariable("id") int id) {
+	public String deleteResource(@PathVariable("id") Long id) {
 
 		this.resourceService.deleteResource(id);
 		return "redirect:/resources";

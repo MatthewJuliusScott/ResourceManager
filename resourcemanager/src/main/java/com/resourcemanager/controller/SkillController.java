@@ -42,7 +42,7 @@ public class SkillController {
 	}
 
 	@RequestMapping("skills/edit/{id}")
-	public String editSkill(@PathVariable("id") int id, Model model) {
+	public String editSkill(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("skill", this.skillService.getSkillById(id));
 		} else {
@@ -59,7 +59,7 @@ public class SkillController {
 	}
 
 	@RequestMapping("/skill/delete/{id}")
-	public String removeSkill(@PathVariable("id") int id) {
+	public String removeSkill(@PathVariable("id") Long id) {
 
 		this.skillService.deleteSkill(id);
 		return "redirect:/skills";
