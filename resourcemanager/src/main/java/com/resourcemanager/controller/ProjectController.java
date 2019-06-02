@@ -34,11 +34,23 @@ public class ProjectController {
 		return "redirect:/projects/edit/0";
 	}
 
+	@RequestMapping("/project/{projectId}/allocation/delete/{allocationId}")
+	public String deleteAllocation(@PathVariable("projectId") Long projectId, @PathVariable("allocationId") Long allocationId,
+		Model model) {
+		return "redirect:/projects/edit/" + projectId;
+	}
+
 	@RequestMapping("/projects/delete/{id}")
 	public String deleteProject(@PathVariable("id") Long id) {
 
 		this.projectService.deleteProject(id);
 		return "redirect:/projects";
+	}
+
+	@RequestMapping("/project/{projectId}/allocation/edit/{allocationId}")
+	public String editAllocation(@PathVariable("projectId") Long projectId, @PathVariable("allocationId") Long allocationId,
+		Model model) {
+		return "redirect:/projects/edit/" + projectId;
 	}
 
 	@RequestMapping("projects/edit/{id}")
@@ -70,14 +82,22 @@ public class ProjectController {
 		// if adding a new skill requirement, add that to the project
 		try {
 			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+
+			// TODO : check that hours does not exceed the duration in hours from start to end date, and add to front end as well
+			// in a friendly error report
+
+			// add the existing allocations from the persisted project to the project we are saving
 			List<Allocation> allocations = projectService.getProjectById(p.getId()).getAllocations();
 			for (Allocation allocation : allocations) {
 				p.addAllocation(allocation);
 			}
+
+			// include the new allocation
 			Allocation allocation = new Allocation(0L, p, skillService.getSkillById(Long.parseLong(skillId)),
 				LocalDate.parse(startDate, dateTimeFormatter),
 				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
 			p.addAllocation(allocation);
+
 		} catch (Exception e) {
 			// do nothing
 			e.printStackTrace();

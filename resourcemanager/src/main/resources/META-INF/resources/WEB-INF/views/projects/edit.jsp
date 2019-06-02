@@ -45,8 +45,8 @@
 								<td>${allocation.endDate}</td>
 								<td>${allocation.hours}</td>
 								<td>${allocation.resource.name}</td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
+								<td><a class="btn btn-primary btn-sm" href="/project/${project.id}/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
+								<td><a class="btn btn-primary btn-sm" href="/project/${project.id}/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
 							</tr>
 	                	</c:forEach>
                 	</table>
