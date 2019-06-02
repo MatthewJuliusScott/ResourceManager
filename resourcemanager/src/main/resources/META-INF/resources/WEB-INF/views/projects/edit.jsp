@@ -33,6 +33,7 @@
 							<th>Skill</th>
 							<th>Start Date</th>
 							<th>End Date</th>
+							<th>Hours</th>
 							<th>Allocated To</th>
 							<th>Edit</th>
 							<th>Delete</th>
@@ -42,9 +43,10 @@
 								<td>${allocation.skill.name}</td>
 								<td>${allocation.startDate}</td>
 								<td>${allocation.endDate}</td>
+								<td>${allocation.hours}</td>
 								<td>${allocation.resource.name}</td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.skill.id}" role="button"><i class="fas fa-trash"></i></a></
+								<td><a class="btn btn-primary btn-sm" href="/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
+								<td><a class="btn btn-primary btn-sm" href="/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
 							</tr>
 	                	</c:forEach>
                 	</table>

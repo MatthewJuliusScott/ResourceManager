@@ -72,10 +72,12 @@ public class ProjectController {
 			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 			List<Allocation> allocations = projectService.getProjectById(p.getId()).getAllocations();
 			for (Allocation allocation : allocations) {
-				p.addAllocation(allocation.getSkill(), allocation.getStartDate(), allocation.getEndDate(), allocation.getHours());
+				p.addAllocation(allocation);
 			}
-			p.addAllocation(skillService.getSkillById(Long.parseLong(skillId)), LocalDate.parse(startDate, dateTimeFormatter),
-				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours));
+			Allocation allocation = new Allocation(0L, p, skillService.getSkillById(Long.parseLong(skillId)),
+				LocalDate.parse(startDate, dateTimeFormatter),
+				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
+			p.addAllocation(allocation);
 		} catch (Exception e) {
 			// do nothing
 			e.printStackTrace();

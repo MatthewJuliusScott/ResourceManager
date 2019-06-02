@@ -2,18 +2,18 @@
 package com.resourcemanager.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
@@ -21,39 +21,43 @@ import javax.persistence.Table;
  * The Class Allocation.
  */
 @Entity(name = "Allocation")
-@Table(name = "project_skill")
+@Table(name = "allocation")
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name = "allocation_id"))
+})
 public class Allocation {
 
 	/** The id. */
-	@EmbeddedId
-	private AllocationId	id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long		id;
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@MapsId("projectId")
-	private Project			project;
+	@JoinColumn(name = "project_id")
+	private Project		project;
 
 	/** The skill. */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@MapsId("skillId")
-	private Skill			skill;
+	@JoinColumn(name = "skill_id")
+	private Skill		skill;
 
 	/** The start date. */
 	@Column(name = "start_date")
-	private LocalDate		startDate;
+	private LocalDate	startDate;
 
 	/** The end date. */
 	@Column(name = "end_date")
-	private LocalDate		endDate;
+	private LocalDate	endDate;
 
 	/** The hours. */
-	private int				hours;
+	private int			hours;
 
 	/** The resource. */
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
-	private Resource		resource;
+	private Resource	resource;
 
 	/**
 	 * Instantiates a new allocation.
@@ -64,31 +68,50 @@ public class Allocation {
 	/**
 	 * Instantiates a new allocation.
 	 *
-	 * @param project the project
-	 * @param skill   the skill
+	 * @param id
+	 *            the id
+	 * @param project
+	 *            the project
+	 * @param skill
+	 *            the skill
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
+	 * @param hours
+	 *            the hours
+	 * @param resource
+	 *            the resource
 	 */
-	public Allocation(Project project, Skill skill) {
+	public Allocation(Long id, Project project, Skill skill, LocalDate startDate, LocalDate endDate, int hours,
+		Resource resource) {
+		super();
+		this.id = id;
 		this.project = project;
 		this.skill = skill;
-		this.id = new AllocationId(project.getId(), skill.getId());
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.hours = hours;
+		this.resource = resource;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
+		}
 
-		if (o == null || getClass() != o.getClass())
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 
 		Allocation that = (Allocation) o;
 		return Objects.equals(project, that.project)
-		        && Objects.equals(skill, that.skill);
+			&& Objects.equals(skill, that.skill);
 	}
 
 	/**
@@ -114,7 +137,7 @@ public class Allocation {
 	 *
 	 * @return the id
 	 */
-	public AllocationId getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -156,7 +179,6 @@ public class Allocation {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -167,7 +189,8 @@ public class Allocation {
 	/**
 	 * Sets the end date.
 	 *
-	 * @param endDate the endDate to set
+	 * @param endDate
+	 *            the endDate to set
 	 */
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
@@ -176,7 +199,8 @@ public class Allocation {
 	/**
 	 * Sets the hours.
 	 *
-	 * @param hours the new hours
+	 * @param hours
+	 *            the new hours
 	 */
 	public void setHours(int hours) {
 		this.hours = hours;
@@ -185,16 +209,18 @@ public class Allocation {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the id to set
+	 * @param id
+	 *            the new id
 	 */
-	public void setId(AllocationId id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
 	 * Sets the project.
 	 *
-	 * @param project the project to set
+	 * @param project
+	 *            the project to set
 	 */
 	public void setProject(Project project) {
 		this.project = project;
@@ -203,7 +229,8 @@ public class Allocation {
 	/**
 	 * Sets the resource.
 	 *
-	 * @param resource the resource to set
+	 * @param resource
+	 *            the resource to set
 	 */
 	public void setResource(Resource resource) {
 		this.resource = resource;
@@ -212,7 +239,8 @@ public class Allocation {
 	/**
 	 * Sets the skill.
 	 *
-	 * @param skill the skill to set
+	 * @param skill
+	 *            the skill to set
 	 */
 	public void setSkill(Skill skill) {
 		this.skill = skill;
@@ -221,7 +249,8 @@ public class Allocation {
 	/**
 	 * Sets the start date.
 	 *
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
