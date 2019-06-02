@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login Page</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+</head>
+<body>
+    <form id="frmLoginPage">
+        <div>
+            <table class="loginTable" cellpadding="0" cellspacing="0">
+                <!-- Logo -->
+                <tr>
+                    <td>
+                        <img src="logo.png" alt="Resource Manager Logo" class="centerImg">
+                    </td>
+                </tr>
+
+                <!-- boilerplate text -->
+                <tr>
+                    <td>
+                        <p class="centerText">Please enter your username and password to use the system</p>
+                    </td>
+                </tr>
+
+                <!-- user -->
+                <tr>
+                    <td>
+                        <div class="textBox">
+                            <input type="text" placeholder="Username" id="txtUsername">
+                            <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- pass -->
+                <tr>
+                    <td>
+                        <div class="textBox">
+                            <input type="text" placeholder="Password" id="txtPassword">
+                            <i class="fa fa-unlock-alt fa-lg fa-fw" aria-hidden="true" style="padding-top: 11px;"></i>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- disclaimer text -->
+            <p class="disclaimer">Disclaimer text</p>
+        </div>
+    </form>
+</body>
+</html>
