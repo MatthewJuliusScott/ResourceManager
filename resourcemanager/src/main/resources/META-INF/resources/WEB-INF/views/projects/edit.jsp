@@ -77,27 +77,9 @@
 	                	 	</td>
 	                	</tr>
                 	</table>
-					
-					<h3>Add Requirement - Legacy, to delete as soon as above is working</h3>
-					
-					<div class="form-group">
-						<label for="startDate">Start Date</label>
-						<input type="text" autocomplete="off" class="form-control datepicker" name="startDate" id="startDate">
-						<label for="endDate">End Date</label>
-						<input type="text" autocomplete="off" class="form-control datepicker" name="endDate" id="endDate">
-						
-						<label for="allSkills">Skill</label>
-						<select id="allSkills" name="skillId" class="form-control">
-							<c:forEach items="${listSkills}" var="skill">
-								<option value="${skill.id}">${skill.name}</option>
-	                		</c:forEach>
-	           			</select>
-	           			
-	           			<label for="hours">Hours</label>
-						<input type="number" class="form-control" name="hours" id="hours">
-					</div>
-           			
+                	          			
            			<button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Save</button>
+           			
            		</form:form>
 			</div>
 		</div>

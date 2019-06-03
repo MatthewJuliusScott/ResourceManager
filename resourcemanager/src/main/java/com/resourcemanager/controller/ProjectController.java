@@ -90,13 +90,7 @@ public class ProjectController {
 			// TODO : check that hours does not exceed the duration in hours from start to end date, and add to front end as well
 			// in a friendly error report
 
-			// add the existing allocations from the persisted project to the project we are saving
-			List<Allocation> allocations = projectService.getProjectById(project.getId()).getAllocations();
-			for (Allocation allocation : allocations) {
-				project.addAllocation(allocation);
-			}
-
-			// include the new allocation
+			// get each of the new allocations
 			Allocation allocation = new Allocation(0L, project, skillService.getSkillById(Long.parseLong(skillId)),
 				LocalDate.parse(startDate, dateTimeFormatter),
 				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
