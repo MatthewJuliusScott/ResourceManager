@@ -57,12 +57,6 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 
-	@RequestMapping("/project/{projectId}/allocation/edit/{allocationId}")
-	public String editAllocation(@PathVariable("projectId") Long projectId, @PathVariable("allocationId") Long allocationId,
-		Model model) {
-		return "redirect:/projects/edit/" + projectId;
-	}
-
 	@RequestMapping("projects/edit/{id}")
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {

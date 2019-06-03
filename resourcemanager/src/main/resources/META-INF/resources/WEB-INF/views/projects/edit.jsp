@@ -35,29 +35,56 @@
 							<th>End Date</th>
 							<th>Hours</th>
 							<th>Allocated To</th>
-							<th>Edit</th>
 							<th>Delete</th>
 						</tr>
 						<c:forEach items="${project.allocations}" var="allocation">
 							<tr>
-								<td>${allocation.skill.name}</td>
-								<td>${allocation.startDate}</td>
-								<td>${allocation.endDate}</td>
-								<td>${allocation.hours}</td>
-								<td>${allocation.resource.name}</td>
-								<td><a class="btn btn-primary btn-sm" href="/project/${project.id}/allocation/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
-								<td><a class="btn btn-primary btn-sm" href="/project/${project.id}/allocation/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></
+								<td>
+									<select name="allocation${allocation.id}SkillId" class="form-control">
+										<option value="${allocation.skill.id}" selected>${allocation.skill.name}</option>
+										<c:forEach items="${listSkills}" var="skill">
+											<c:if test="${skill.id != allocation.skill.id}">
+												<option value="${skill.id}">${skill.name}</option>
+											</c:if>
+				                  		</c:forEach>
+			               			</select>
+			               		</td>
+								<td><input name="allocation${allocation.id}StartDate" autocomplete="off" type="text" value="${allocation.startDate}" class="form-control datepicker startDate"/></td>
+								<td><input name="allocation${allocation.id}EndDate" autocomplete="off" type="text" value="${allocation.endDate}" class="form-control datepicker endDate"/></td>
+								<td><input name="allocation${allocation.id}Hours" type="text" value="${allocation.hours}" class="form-control"/></td>
+								<td><input name="allocation${allocation.id}ResourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
+								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
 							</tr>
 	                	</c:forEach>
+                		<tr id="allocationTemplate" style="display: none">
+                			<td>
+								<select name="allocation${allocation.id}SkillId" class="form-control">
+									<option selected disabled>Select...</option>
+									<c:forEach items="${listSkills}" var="skill">
+										<option value="${skill.id}">${skill.name}</option>
+			                  		</c:forEach>
+		               			</select>
+		               		</td>
+							<td><input name="allocation0StartDate" autocomplete="off" type="text" class="form-control datepicker startDate"/></td>
+							<td><input name="allocation0EndDate" autocomplete="off" type="text" class="form-control datepicker endDate"/></td>
+							<td><input name="allocation0Hours" type="text" class="form-control"/></td>
+							<td><input name="allocation0ResourceId" type="hidden"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button></td>
+							<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
+                		</tr>
+	                	<tr id="addAllocationTR">
+	                		<td colspan="100%">
+	                	 		<button type="button" class="btn btn-primary btn-sm" onclick="addAllocation()"><i class="fas fa-plus"></i> Add Requirement</button>
+	                	 	</td>
+	                	</tr>
                 	</table>
 					
-					<h3>Add Requirement</h3>
+					<h3>Add Requirement - Legacy, to delete as soon as above is working</h3>
 					
 					<div class="form-group">
 						<label for="startDate">Start Date</label>
-						<input type="text" class="form-control datepicker" name="startDate" id="startDate">
+						<input type="text" autocomplete="off" class="form-control datepicker" name="startDate" id="startDate">
 						<label for="endDate">End Date</label>
-						<input type="text" class="form-control datepicker" name="endDate" id="endDate">
+						<input type="text" autocomplete="off" class="form-control datepicker" name="endDate" id="endDate">
 						
 						<label for="allSkills">Skill</label>
 						<select id="allSkills" name="skillId" class="form-control">
@@ -77,27 +104,45 @@
 	</body>
 	
 	<footer>
-		<script>			
-			$(function() {   
-			    $( "#startDate" ).datepicker({   
+		<script>
+			// dom template of new allocation
+			var allocationTemplate;
+			$(function() {
+				// copy the allocation template from the dom then remove it, only keeping in memory
+				allocationTemplate = $("#allocationTemplate")[0];
+				$(allocationTemplate).show();
+				$(allocationTemplate).attr('id', '');
+				$("#allocationTemplate").remove();
+				
+				// date picker code, make any start date datepicker set the minimum date of the next end date to the start date, and vice versa
+			    $( ".startDate" ).datepicker({   
 			      defaultDate: "+1w",  
 			      changeMonth: true,
 			      dateFormat: 'dd/mm/yy',
 			      numberOfMonths: 1,
-			      onClose: function( selectedDate ) {  
-			        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );  
+			      onClose: function( selectedDate ) {
+			    	  $(this).parent('td').next('td').children('input').first().datepicker( "option", "minDate", selectedDate );  
 			      }
 			    });  
-			    $( "#endDate" ).datepicker({
+			    $( ".endDate" ).datepicker({
 			      defaultDate: "+1w",
 			      changeMonth: true,
 			      dateFormat: 'dd/mm/yy',
 			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {
-			        $( "#startDate" ).datepicker( "option", "maxDate", selectedDate );
+			    	  $(this).parent('td').prev('td').children('input').first().datepicker( "option", "maxDate", selectedDate );
 			      }
 			    });  
-			  });
+			});
+			
+			// add in the new requirement html to the dom every time the button is clicked
+			function addAllocation() {
+				var newTr = $("#addAllocationTR").before(allocationTemplate.outerHTML);
+			}
+			
+			function deleteAllocation(buttonElement) {
+				$(buttonElement).closest('tr').remove();
+			}
 		</script>
 	</footer>
 	
