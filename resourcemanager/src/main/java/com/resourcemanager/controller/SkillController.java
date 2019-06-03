@@ -21,17 +21,17 @@ public class SkillController {
 
 	// For add and update skill both
 	@RequestMapping(value = "/skills/save", method = RequestMethod.POST)
-	public String saveSkill(@ModelAttribute("skill") Skill p,
+	public String saveSkill(@ModelAttribute("skill") Skill skill,
 	        BindingResult result) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
-		if (p.getId() == 0) {
+		if (skill.getId() == 0) {
 			// new skill, add it
-			this.skillService.addSkill(p);
+			this.skillService.addSkill(skill);
 		} else {
 			// existing skill, call update
-			this.skillService.updateSkill(p);
+			this.skillService.updateSkill(skill);
 		}
 		return "redirect:/skills";
 	}

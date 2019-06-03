@@ -1,8 +1,6 @@
 
 package com.resourcemanager.model;
 
-import java.util.Objects;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -29,7 +27,7 @@ public class Skill {
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long	id;
+	private long	id;
 
 	/** The name. */
 	@NaturalId
@@ -56,15 +54,28 @@ public class Skill {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null) {
 			return false;
 		}
-		Skill skill = (Skill) o;
-		return Objects.equals(name, skill.name);
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Skill other = (Skill) obj;
+		if (id != other.id) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -72,7 +83,7 @@ public class Skill {
 	 *
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -91,7 +102,11 @@ public class Skill {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
 	// Getters and setters omitted for brevity
@@ -102,7 +117,7 @@ public class Skill {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

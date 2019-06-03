@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -34,7 +33,7 @@ public class Resource {
 	@Id
 	@Column(name = "resource_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private long				id;
 
 	/** The name. */
 	private String				name;
@@ -93,11 +92,7 @@ public class Resource {
 		if (hours != other.hours) {
 			return false;
 		}
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		if (id != other.id) {
 			return false;
 		}
 		if (name == null) {
@@ -136,7 +131,7 @@ public class Resource {
 	 *
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -164,7 +159,14 @@ public class Resource {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((allocations == null) ? 0 : allocations.hashCode());
+		result = prime * result + hours;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + Arrays.hashCode(skills);
+		return result;
 	}
 
 	/**
@@ -188,8 +190,8 @@ public class Resource {
 	/**
 	 * Sets the allocations.
 	 *
-	 * @param skills
-	 *            the skills to set
+	 * @param allocations
+	 *            the new allocations
 	 */
 	public void setAllocations(List<Allocation> allocations) {
 		this.allocations = allocations;
@@ -211,7 +213,7 @@ public class Resource {
 	 * @param id
 	 *            the new id
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

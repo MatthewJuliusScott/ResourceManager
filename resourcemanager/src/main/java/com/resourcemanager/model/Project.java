@@ -31,7 +31,7 @@ public class Project {
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private long				id;
 
 	/** The name. */
 	private String				name;
@@ -101,7 +101,7 @@ public class Project {
 	 *
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -157,7 +157,7 @@ public class Project {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -31,7 +31,7 @@ public class Allocation {
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long		id;
+	private long		id;
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -138,7 +138,7 @@ public class Allocation {
 	 *
 	 * @return the id
 	 */
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -229,7 +229,7 @@ public class Allocation {
 	 * @param id
 	 *            the new id
 	 */
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
