@@ -1,7 +1,10 @@
 
 package com.resourcemanager.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Basic;
@@ -31,31 +34,41 @@ public class Resource {
 	@Id
 	@Column(name = "resource_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long			id;
+	private Long				id;
 
 	/** The name. */
-	private String			name;
+	private String				name;
 
 	/** The skills. */
-	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "resource_skill", joinColumns = {
-	        @JoinColumn(name = "resource_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "skill_id")})
+			@JoinColumn(name = "resource_id") },
+		inverseJoinColumns = {
+				@JoinColumn(name = "skill_id") })
 	@OrderColumn(name = "order_col")
 	@Embedded
-	private Skill[]			skills;
+	private Skill[]				skills;
 
 	/** The allocations. */
-	@OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_id")
-	@OrderColumn(name = "order_col")
-	private Allocation[]	allocations;
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/** The hours. */
 	@Basic
-	private int				hours;
+	private int					hours;
 
-	/* (non-Javadoc)
+	/**
+	 * Adds the allocation.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void addAllocation(Allocation allocation) {
+		allocations.add(allocation);
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -66,11 +79,15 @@ public class Resource {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Resource)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Resource other = (Resource) obj;
-		if (!Arrays.equals(allocations, other.allocations)) {
+		if (allocations == null) {
+			if (other.allocations != null) {
+				return false;
+			}
+		} else if (!allocations.equals(other.allocations)) {
 			return false;
 		}
 		if (hours != other.hours) {
@@ -97,11 +114,11 @@ public class Resource {
 	}
 
 	/**
-	 * Gets the allocations.
+	 * Gets the skills.
 	 *
-	 * @return the allocations
+	 * @return the skills
 	 */
-	public Allocation[] getAllocations() {
+	public List<Allocation> getAllocations() {
 		return allocations;
 	}
 
@@ -143,7 +160,6 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -152,18 +168,38 @@ public class Resource {
 	}
 
 	/**
+	 * Removes the skill.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void removeAllocation(Allocation allocation) {
+		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
+			.hasNext();) {
+			Allocation i = iterator.next();
+
+			if (i.getProject().equals(this)
+				&& i.equals(allocation)) {
+				iterator.remove();
+			}
+		}
+	}
+
+	/**
 	 * Sets the allocations.
 	 *
-	 * @param allocations the allocations to set
+	 * @param skills
+	 *            the skills to set
 	 */
-	public void setAllocations(Allocation[] allocations) {
+	public void setAllocations(List<Allocation> allocations) {
 		this.allocations = allocations;
 	}
 
 	/**
 	 * Sets the hours.
 	 *
-	 * @param hours the new hours
+	 * @param hours
+	 *            the new hours
 	 */
 	public void setHours(int hours) {
 		this.hours = hours;
@@ -172,7 +208,8 @@ public class Resource {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -181,7 +218,8 @@ public class Resource {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -190,7 +228,8 @@ public class Resource {
 	/**
 	 * Sets the skills.
 	 *
-	 * @param skills the new skills
+	 * @param skills
+	 *            the new skills
 	 */
 	public void setSkills(Skill[] skills) {
 		this.skills = skills;
@@ -198,13 +237,12 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", skills="
-		        + Arrays.toString(skills) + ", allocations="
-		        + Arrays.toString(allocations) + "]";
+		return "Resource [id=" + id + ", name=" + name + ", skills=" + Arrays.toString(skills) + ", allocations=" + allocations
+			+ ", hours=" + hours + "]";
 	}
+
 }

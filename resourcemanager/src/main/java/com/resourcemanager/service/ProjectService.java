@@ -6,14 +6,14 @@ import com.resourcemanager.model.Project;
 
 public interface ProjectService {
 
-	public void addProject(Project p);
+	public void addProject(Project project);
+
+	public void deleteProject(Long id);
 
 	public Project getProjectById(Long id);
 
 	public List<Project> listProjects();
 
-	public void deleteProject(Long id);
-
-	public void updateProject(Project p);
+	public void updateProject(Project project);
 
 }

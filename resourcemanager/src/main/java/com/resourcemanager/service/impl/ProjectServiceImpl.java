@@ -18,8 +18,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public void addProject(Project p) {
-		this.projectDAO.addProject(p);
+	public void addProject(Project project) {
+		this.projectDAO.addProject(project);
 	}
 
 	@Override

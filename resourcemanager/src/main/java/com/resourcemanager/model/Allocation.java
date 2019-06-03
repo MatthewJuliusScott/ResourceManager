@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -184,6 +185,22 @@ public class Allocation {
 	@Override
 	public int hashCode() {
 		return Objects.hash(project, skill);
+	}
+
+	/**
+	 * Pre remove. This removes the object from associations to let hibernate delete persist correctly.
+	 */
+	@PreRemove
+	public void preRemove() {
+		if (getProject() != null) {
+			getProject().removeAllocation(this);
+		}
+		setProject(null);
+		if (getResource() != null) {
+			getResource().removeAllocation(this);
+		}
+		setResource(null);
+		setSkill(null);
 	}
 
 	/**

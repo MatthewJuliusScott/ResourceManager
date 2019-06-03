@@ -64,7 +64,9 @@ public class Project {
 	 */
 	public void addAllocation(Allocation allocation) {
 		allocations.add(allocation);
-		allocation.getSkill().getProjects().add(allocation);
+		if (allocation.getResource() != null) {
+			allocation.getResource().addAllocation(allocation);
+		}
 	}
 
 	/*
@@ -127,19 +129,26 @@ public class Project {
 	 * @param skill
 	 *            the skill
 	 */
-	public void removeSkill(Skill skill) {
+	public void removeAllocation(Allocation allocation) {
 		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
 			.hasNext();) {
-			Allocation allocation = iterator.next();
+			Allocation i = iterator.next();
 
-			if (allocation.getProject().equals(this)
-				&& allocation.getSkill().equals(skill)) {
+			if (i.getProject().equals(this)
+				&& i.equals(allocation)) {
 				iterator.remove();
-				allocation.getSkill().getProjects().remove(allocation);
-				allocation.setProject(null);
-				allocation.setSkill(null);
 			}
 		}
+	}
+
+	/**
+	 * Sets the allocations.
+	 *
+	 * @param allocations
+	 *            the new allocations
+	 */
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
 	}
 
 	/**
@@ -160,15 +169,5 @@ public class Project {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Sets the skills.
-	 *
-	 * @param skills
-	 *            the skills to set
-	 */
-	public void setSkills(List<Allocation> allocations) {
-		this.allocations = allocations;
 	}
 }

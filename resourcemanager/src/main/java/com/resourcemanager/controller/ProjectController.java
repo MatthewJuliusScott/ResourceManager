@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
+import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.SkillService;
 
@@ -24,10 +25,13 @@ import com.resourcemanager.service.SkillService;
 public class ProjectController {
 
 	@Autowired
-	private ProjectService	projectService;
+	private ProjectService		projectService;
 
 	@Autowired
-	private SkillService	skillService;
+	private SkillService		skillService;
+
+	@Autowired
+	private AllocationService	allocationService;
 
 	@RequestMapping("projects/add")
 	public String addProject() {
@@ -37,6 +41,12 @@ public class ProjectController {
 	@RequestMapping("/project/{projectId}/allocation/delete/{allocationId}")
 	public String deleteAllocation(@PathVariable("projectId") Long projectId, @PathVariable("allocationId") Long allocationId,
 		Model model) {
+		if (projectId > 0) {
+			Project project = projectService.getProjectById(projectId);
+			Allocation allocation = allocationService.getAllocationById(allocationId);
+			project.removeAllocation(allocation);
+			this.projectService.updateProject(project);
+		}
 		return "redirect:/projects/edit/" + projectId;
 	}
 
@@ -72,7 +82,7 @@ public class ProjectController {
 
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
-	public String saveProject(@ModelAttribute("project") Project p,
+	public String saveProject(@ModelAttribute("project") Project project,
 		BindingResult result, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
 		@RequestParam("skillId") String skillId, @RequestParam("hours") String hours) {
 		if (result.hasErrors()) {
@@ -87,16 +97,16 @@ public class ProjectController {
 			// in a friendly error report
 
 			// add the existing allocations from the persisted project to the project we are saving
-			List<Allocation> allocations = projectService.getProjectById(p.getId()).getAllocations();
+			List<Allocation> allocations = projectService.getProjectById(project.getId()).getAllocations();
 			for (Allocation allocation : allocations) {
-				p.addAllocation(allocation);
+				project.addAllocation(allocation);
 			}
 
 			// include the new allocation
-			Allocation allocation = new Allocation(0L, p, skillService.getSkillById(Long.parseLong(skillId)),
+			Allocation allocation = new Allocation(0L, project, skillService.getSkillById(Long.parseLong(skillId)),
 				LocalDate.parse(startDate, dateTimeFormatter),
 				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
-			p.addAllocation(allocation);
+			project.addAllocation(allocation);
 
 		} catch (Exception e) {
 			// do nothing
@@ -104,13 +114,13 @@ public class ProjectController {
 			// TODO : friendly error reporting
 		}
 
-		if (p.getId() == 0) {
+		if (project.getId() == 0) {
 			// new project, add it
-			this.projectService.addProject(p);
+			this.projectService.addProject(project);
 		} else {
 			// existing project, call update
-			this.projectService.updateProject(p);
+			this.projectService.updateProject(project);
 		}
-		return "redirect:/projects/edit/" + p.getId();
+		return "redirect:/projects/edit/" + project.getId();
 	}
 }
