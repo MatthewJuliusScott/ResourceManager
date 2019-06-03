@@ -19,23 +19,6 @@ public class SkillController {
 	@Autowired
 	private SkillService skillService;
 
-	// For add and update skill both
-	@RequestMapping(value = "/skills/save", method = RequestMethod.POST)
-	public String saveSkill(@ModelAttribute("skill") Skill skill,
-	        BindingResult result) {
-		if (result.hasErrors()) {
-			System.err.println(result.toString());
-		}
-		if (skill.getId() == 0) {
-			// new skill, add it
-			this.skillService.addSkill(skill);
-		} else {
-			// existing skill, call update
-			this.skillService.updateSkill(skill);
-		}
-		return "redirect:/skills";
-	}
-
 	@RequestMapping("skills/add")
 	public String addSkill() {
 		return "redirect:/skills/edit/0";
@@ -51,17 +34,34 @@ public class SkillController {
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "skills/edit";
 	}
-	
+
 	@RequestMapping(value = { "/skills" }, method = RequestMethod.GET)
 	public String listSkills(Model model) {
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "skills";
 	}
 
-	@RequestMapping("/skill/delete/{id}")
+	@RequestMapping("/skills/delete/{id}")
 	public String removeSkill(@PathVariable("id") Long id) {
 
 		this.skillService.deleteSkill(id);
+		return "redirect:/skills";
+	}
+
+	// For add and update skill both
+	@RequestMapping(value = "/skills/save", method = RequestMethod.POST)
+	public String saveSkill(@ModelAttribute("skill") Skill skill,
+		BindingResult result) {
+		if (result.hasErrors()) {
+			System.err.println(result.toString());
+		}
+		if (skill.getId() == 0) {
+			// new skill, add it
+			this.skillService.addSkill(skill);
+		} else {
+			// existing skill, call update
+			this.skillService.updateSkill(skill);
+		}
 		return "redirect:/skills";
 	}
 }
