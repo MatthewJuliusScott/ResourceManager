@@ -3,7 +3,10 @@ package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
@@ -77,8 +79,7 @@ public class ProjectController {
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
 	public String saveProject(@ModelAttribute("project") Project project,
-		BindingResult result, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
-		@RequestParam("skillId") String skillId, @RequestParam("hours") String hours) {
+		BindingResult result, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
@@ -90,11 +91,36 @@ public class ProjectController {
 			// TODO : check that hours does not exceed the duration in hours from start to end date, and add to front end as well
 			// in a friendly error report
 
-			// get each of the new allocations
-			Allocation allocation = new Allocation(0L, project, skillService.getSkillById(Long.parseLong(skillId)),
-				LocalDate.parse(startDate, dateTimeFormatter),
-				LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
-			project.addAllocation(allocation);
+			ArrayList<String> ids = new ArrayList<String>();
+
+			// extract each id
+			for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+				String key = entry.getKey();
+
+				if (key.startsWith("allocation")) {
+
+					String[] composite = key.split("_");
+					if (composite.length == 3) {
+						ids.add(composite[1]);
+					}
+
+				}
+
+			}
+			for (String id : ids) {
+
+				// get each of the allocations
+				String skillId = "0";
+				String startDate = "05/09/1986";
+				String endDate = "06/09/1986";
+				String hours = "20";
+
+				Allocation allocation =
+					new Allocation(Long.parseLong(id), project, skillService.getSkillById(Long.parseLong(skillId)),
+						LocalDate.parse(startDate, dateTimeFormatter),
+						LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
+				project.addAllocation(allocation);
+			}
 
 		} catch (Exception e) {
 			// do nothing

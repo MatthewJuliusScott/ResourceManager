@@ -40,7 +40,7 @@
 						<c:forEach items="${project.allocations}" var="allocation">
 							<tr>
 								<td>
-									<select name="allocation${allocation.id}SkillId" class="form-control">
+									<select name="allocation_${allocation.id}_skillId" class="form-control">
 										<option value="${allocation.skill.id}" selected>${allocation.skill.name}</option>
 										<c:forEach items="${listSkills}" var="skill">
 											<c:if test="${skill.id != allocation.skill.id}">
@@ -49,27 +49,27 @@
 				                  		</c:forEach>
 			               			</select>
 			               		</td>
-								<td><input name="allocation${allocation.id}StartDate" autocomplete="off" type="text" value="${allocation.startDate}" class="form-control datepicker startDate"/></td>
-								<td><input name="allocation${allocation.id}EndDate" autocomplete="off" type="text" value="${allocation.endDate}" class="form-control datepicker endDate"/></td>
-								<td><input name="allocation${allocation.id}Hours" type="text" value="${allocation.hours}" class="form-control"/></td>
-								<td><input name="allocation${allocation.id}ResourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
+								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDate}" class="form-control datepicker startDate"/></td>
+								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDate}" class="form-control datepicker endDate"/></td>
+								<td><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control"/></td>
+								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
 								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
 							</tr>
 	                	</c:forEach>
                 		<tr id="allocationTemplate" style="display: none">
                 			<td>
-								<select name="allocation${allocation.id}SkillId" class="form-control">
+								<select name="allocation_${allocation.id}_skillId" class="form-control">
 									<option selected disabled>Select...</option>
 									<c:forEach items="${listSkills}" var="skill">
 										<option value="${skill.id}">${skill.name}</option>
 			                  		</c:forEach>
 		               			</select>
 		               		</td>
-							<td><input name="allocation0StartDate" autocomplete="off" type="text" class="form-control datepicker startDate"/></td>
-							<td><input name="allocation0EndDate" autocomplete="off" type="text" class="form-control datepicker endDate"/></td>
-							<td><input name="allocation0Hours" type="text" class="form-control"/></td>
-							<td><input name="allocation0ResourceId" type="hidden"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button></td>
-							<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
+							<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate"/></td>
+							<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate"/></td>
+							<td><input name="allocation_0_hours" type="text" class="form-control"/></td>
+							<td><input name="allocation_0_resourceId" type="hidden"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button></td>
+							<td></td>
                 		</tr>
 	                	<tr id="addAllocationTR">
 	                		<td colspan="100%">
