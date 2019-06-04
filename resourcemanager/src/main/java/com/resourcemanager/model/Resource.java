@@ -2,14 +2,12 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -39,14 +37,17 @@ public class Resource {
 	private String				name;
 
 	/** The skills. */
-	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "resource_skill", joinColumns = {
-			@JoinColumn(name = "resource_id") },
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "resource_skill",
+		joinColumns = {
+				@JoinColumn(
+					name = "resource_id")
+		},
 		inverseJoinColumns = {
-				@JoinColumn(name = "skill_id") })
-	@OrderColumn(name = "order_col")
-	@Embedded
-	private Skill[]				skills;
+				@JoinColumn(
+					name = "skill_id")
+		})
+	private List<Skill>			skills		= new ArrayList<>();
 
 	/** The allocations. */
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -64,6 +65,17 @@ public class Resource {
 	 */
 	public void addAllocation(Allocation allocation) {
 		allocations.add(allocation);
+	}
+
+	/**
+	 * Adds the skill.
+	 *
+	 * @param skill
+	 *            the skill
+	 */
+	public void addSkill(Skill skill) {
+		skills.add(skill);
+		skill.getResources().add(this);
 	}
 
 	/*
@@ -102,16 +114,20 @@ public class Resource {
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (!Arrays.equals(skills, other.skills)) {
+		if (skills == null) {
+			if (other.skills != null) {
+				return false;
+			}
+		} else if (!skills.equals(other.skills)) {
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * Gets the skills.
+	 * Gets the allocations.
 	 *
-	 * @return the skills
+	 * @return the allocations
 	 */
 	public List<Allocation> getAllocations() {
 		return allocations;
@@ -149,7 +165,7 @@ public class Resource {
 	 *
 	 * @return the skills
 	 */
-	public Skill[] getSkills() {
+	public List<Skill> getSkills() {
 		return skills;
 	}
 
@@ -165,12 +181,25 @@ public class Resource {
 		result = prime * result + hours;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + Arrays.hashCode(skills);
+		result = prime * result + ((skills == null) ? 0 : skills.hashCode());
 		return result;
 	}
 
 	/**
-	 * Removes the skill.
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		for (Skill skill : new ArrayList<Skill>(skills)) {
+			removeSkill(skill);
+		}
+		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
+			removeAllocation(allocation);
+		}
+	}
+
+	/**
+	 * Removes the allocation.
 	 *
 	 * @param allocation
 	 *            the allocation
@@ -180,11 +209,31 @@ public class Resource {
 			.hasNext();) {
 			Allocation i = iterator.next();
 
-			if (i.getProject().equals(this)
+			if (i.getResource().equals(this)
 				&& i.equals(allocation)) {
 				iterator.remove();
 			}
 		}
+	}
+
+	/**
+	 * Removes the skill.
+	 *
+	 * @param skill
+	 *            the skill
+	 */
+	public void removeSkill(Skill skill) {
+		for (Iterator<Skill> iterator = skills.iterator(); iterator
+			.hasNext();) {
+			Skill i = iterator.next();
+			for (Resource resource : i.getResources()) {
+				if (resource.equals(this)
+					&& i.equals(skill)) {
+					iterator.remove();
+				}
+			}
+		}
+		skill.getResources().remove(this);
 	}
 
 	/**
@@ -233,7 +282,7 @@ public class Resource {
 	 * @param skills
 	 *            the new skills
 	 */
-	public void setSkills(Skill[] skills) {
+	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
 
@@ -243,8 +292,8 @@ public class Resource {
 	 */
 	@Override
 	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", skills=" + Arrays.toString(skills) + ", allocations=" + allocations
-			+ ", hours=" + hours + "]";
+		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="
+			+ hours + "]";
 	}
 
 }

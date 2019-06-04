@@ -1,13 +1,20 @@
 
 package com.resourcemanager.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
@@ -27,11 +34,24 @@ public class Skill {
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long	id;
+	private long			id;
 
 	/** The name. */
 	@NaturalId
-	private String	name;
+	private String			name;
+
+	/** The resources. */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "resource_skill",
+		joinColumns = {
+				@JoinColumn(
+					name = "skill_id")
+		},
+		inverseJoinColumns = {
+				@JoinColumn(
+					name = "resource_id")
+		})
+	private List<Resource>	resources	= new ArrayList<Resource>();
 
 	/**
 	 * Instantiates a new skill.
@@ -96,6 +116,15 @@ public class Skill {
 		return name;
 	}
 
+	/**
+	 * Gets the resources.
+	 *
+	 * @return the resources
+	 */
+	public List<Resource> getResources() {
+		return resources;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -109,8 +138,6 @@ public class Skill {
 		return result;
 	}
 
-	// Getters and setters omitted for brevity
-
 	/**
 	 * Sets the id.
 	 *
@@ -120,6 +147,8 @@ public class Skill {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	// Getters and setters omitted for brevity
 
 	/**
 	 * Sets the name.

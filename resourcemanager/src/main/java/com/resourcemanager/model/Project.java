@@ -38,7 +38,7 @@ public class Project {
 
 	/** The allocations. */
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private List<Allocation>	allocations	= new ArrayList<>();
+	private List<Allocation>	allocations	= new ArrayList<Allocation>();
 
 	/**
 	 * Instantiates a new project.
