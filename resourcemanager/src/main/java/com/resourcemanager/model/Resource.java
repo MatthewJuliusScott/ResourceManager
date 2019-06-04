@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
@@ -47,6 +48,7 @@ public class Resource {
 				@JoinColumn(
 					name = "skill_id")
 		})
+	@OrderColumn(name = "order_col")
 	private List<Skill>			skills		= new ArrayList<>();
 
 	/** The allocations. */
