@@ -22,23 +22,14 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.google.common.base.Preconditions;
 import com.resourcemanager.converter.SkillConverter;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(
-	        SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
-
+	
 	@Configuration
 	@EnableAutoConfiguration(exclude=HibernateJpaAutoConfiguration.class)
 	@EnableTransactionManagement
@@ -47,44 +38,33 @@ public class Application extends SpringBootServletInitializer {
 		@Lazy
 		@Autowired
 		SkillConverter skillConverter;
-
-		@Override
-		public void addFormatters(FormatterRegistry registry) {
-			registry.addConverter(skillConverter);
-		}
-
-		@Bean
-		public LocalSessionFactoryBean sessionFactory() {
-			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-			sessionFactory.setDataSource(dataSource());
-			sessionFactory.setPackagesToScan(
-			        "com.resourcemanager.model");
-			sessionFactory.setHibernateProperties(hibernateProperties());
-
-			return sessionFactory;
-		}
 		
 		@Value("${spring.datasource.driver-class-name}")
 	    private String jdbcDriverClassName;
-		
+
 		@Value("${spring.datasource.url}")
 	    private String jdbcURl;
 
 		@Value("${spring.datasource.username}")
 		    private String dbUsername;
-	
+		
 		@Value("${spring.datasource.password}")
 		    private String dbPassword;
 		
 		@Value("${hibernate.hbm2ddl.auto}")
 	    private String hbm2ddlAuto;
-		
+
 		@Value("${hibernate.hbm2ddl.import_files}")
 	    private String hbm2ddlImport_files;
-		
+	
 		@Value("${hibernate.dialect}")
 	    private String dialect;
 		
+		@Override
+		public void addFormatters(FormatterRegistry registry) {
+			registry.addConverter(skillConverter);
+		}
+				
 		@Bean
 	    public DataSource dataSource() {
 	        final BasicDataSource dataSource = new BasicDataSource();
@@ -95,6 +75,15 @@ public class Application extends SpringBootServletInitializer {
 
 	        return dataSource;
 	    }
+		
+		private final Properties hibernateProperties() {
+	        final Properties hibernateProperties = new Properties();
+	        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", Preconditions.checkNotNull(hbm2ddlAuto));
+	        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", Preconditions.checkNotNull(hbm2ddlImport_files));
+	        hibernateProperties.setProperty("hibernate.dialect", Preconditions.checkNotNull(dialect));
+
+	        return hibernateProperties;
+	    }
 
 		@Bean
 		public PlatformTransactionManager hibernateTransactionManager() {
@@ -103,13 +92,25 @@ public class Application extends SpringBootServletInitializer {
 			return transactionManager;
 		}
 		
-	    private final Properties hibernateProperties() {
-	        final Properties hibernateProperties = new Properties();
-	        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", Preconditions.checkNotNull(hbm2ddlAuto));
-	        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", Preconditions.checkNotNull(hbm2ddlImport_files));
-	        hibernateProperties.setProperty("hibernate.dialect", Preconditions.checkNotNull(dialect));
+	    @Bean
+		public LocalSessionFactoryBean sessionFactory() {
+			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+			sessionFactory.setDataSource(dataSource());
+			sessionFactory.setPackagesToScan(
+			        "com.resourcemanager.model");
+			sessionFactory.setHibernateProperties(hibernateProperties());
 
-	        return hibernateProperties;
-	    }
+			return sessionFactory;
+		}
+	}
+    
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(
+	        SpringApplicationBuilder application) {
+		return application.sources(Application.class);
 	}
 }

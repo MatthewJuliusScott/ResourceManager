@@ -1,30 +1,73 @@
 
 package com.resourcemanager.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
 /**
  * The Class Skill.
  */
-@Entity
-@Table(name = "SKILL")
-@Embeddable
+@Entity(name = "Skill")
+@Table(name = "skill")
+@NaturalIdCache
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name = "skill_id"))
+})
 public class Skill {
 
-	/** The skill id. */
+	/** The id. */
 	@Id
-	@Column(name = "skill_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int		id;
+	private long			id;
 
 	/** The name. */
-	private String	name;
+	@NaturalId
+	private String			name;
+
+	/** The resources. */
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "resource_skill",
+		joinColumns = {
+				@JoinColumn(
+					name = "skill_id")
+		},
+		inverseJoinColumns = {
+				@JoinColumn(
+					name = "resource_id")
+		})
+	private List<Resource>	resources	= new ArrayList<Resource>();
+
+	/**
+	 * Instantiates a new skill.
+	 */
+	public Skill() {
+	}
+
+	/**
+	 * Instantiates a new skill.
+	 *
+	 * @param name
+	 *            the name
+	 */
+	public Skill(String name) {
+		this.name = name;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -60,7 +103,7 @@ public class Skill {
 	 *
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -73,6 +116,15 @@ public class Skill {
 		return name;
 	}
 
+	/**
+	 * Gets the resources.
+	 *
+	 * @return the resources
+	 */
+	public List<Resource> getResources() {
+		return resources;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -81,7 +133,7 @@ public class Skill {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -92,9 +144,11 @@ public class Skill {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
+
+	// Getters and setters omitted for brevity
 
 	/**
 	 * Sets the name.
@@ -105,14 +159,4 @@ public class Skill {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Skill [id=" + id + ", name=" + name + "]";
-	}
-
 }

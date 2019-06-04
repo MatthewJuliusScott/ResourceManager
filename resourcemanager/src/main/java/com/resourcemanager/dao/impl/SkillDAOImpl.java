@@ -39,7 +39,7 @@ public class SkillDAOImpl implements SkillDAO {
 	}
 
 	@Override
-	public Skill getSkillById(int id) {
+	public Skill getSkillById(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
 		logger.info("Skill retrieved successfully, skill details=" + skill);
 		return skill;
@@ -59,7 +59,7 @@ public class SkillDAOImpl implements SkillDAO {
 	}
 
 	@Override
-	public void removeSkill(int id) {
+	public void deleteSkill(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
 		getCurrentSession().remove(skill);
 		logger.info("Skill deleted successfully, skill details=" + skill);

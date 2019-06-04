@@ -9,6 +9,6 @@ public interface SkillDAO {
 	public void addSkill(Skill skill);
 	public void updateSkill(Skill skill);
 	public List<Skill> listSkills();
-	public Skill getSkillById(int id);
-	public void removeSkill(int id);
+	public Skill getSkillById(Long id);
+	public void deleteSkill(Long id);
 }
