@@ -3,8 +3,9 @@ package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
+import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ProjectService;
+import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 
 @Controller
@@ -31,6 +34,9 @@ public class ProjectController {
 
 	@Autowired
 	private SkillService		skillService;
+
+	@Autowired
+	private ResourceService		resourceService;
 
 	@Autowired
 	private AllocationService	allocationService;
@@ -91,38 +97,65 @@ public class ProjectController {
 			// TODO : check that hours does not exceed the duration in hours from start to end date, and add to front end as well
 			// in a friendly error report
 
-			ArrayList<String> ids = new ArrayList<String>();
-
-			// extract each id
+			// extract each id, and store in a set so we don't have duplicates
+			HashSet<String> ids = new HashSet<String>();
 			for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 				String key = entry.getKey();
 
-				if (key.startsWith("allocation")) {
+				if (Pattern.compile("allocation_\\d_\\w*").matcher(key).matches()) {
 
+					// the input names we are looking for is allocation_*id*_*fieldname*
 					String[] composite = key.split("_");
 					if (composite.length == 3) {
 						ids.add(composite[1]);
 					}
-
 				}
-
 			}
+
 			for (String id : ids) {
 
-				// get each of the allocations
-				String skillId = "0";
-				String startDate = "05/09/1986";
-				String endDate = "06/09/1986";
-				String hours = "20";
+				String[] skillIds = request.getParameterValues("allocation_" + id + "_skillId");
+				String[] startDates = request.getParameterValues("allocation_" + id + "_startDate");
+				String[] endDates = request.getParameterValues("allocation_" + id + "_endDate");
+				String[] hourss = request.getParameterValues("allocation_" + id + "_hours");
+				String[] resourceIds = request.getParameterValues("allocation_" + id + "_resourceId");
 
-				Allocation allocation =
-					new Allocation(Long.parseLong(id), project, skillService.getSkillById(Long.parseLong(skillId)),
-						LocalDate.parse(startDate, dateTimeFormatter),
-						LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), null);
-				project.addAllocation(allocation);
+				// Assert that all required form data was submitted, prevent saving corrupt data
+				if (skillIds == null || startDates == null || endDates == null || hourss == null
+					|| skillIds.length != startDates.length || startDates.length != endDates.length
+					|| endDates.length != hourss.length) {
+
+					// TODO : friendly error reporting
+
+					continue;
+				}
+
+				for (int i = 0; i < skillIds.length; i++) {
+
+					// get each of the allocations
+					String skillId = skillIds[i];
+					String startDate = startDates[i];
+					String endDate = endDates[i];
+					String hours = hourss[i];
+					String resourceId = resourceIds[i];
+
+					Resource resource = null;
+					if (resourceId != null && !resourceId.equals("") && !resourceId.equals("0")) {
+						resource = resourceService.getResourceById(Long.parseLong(resourceId));
+					}
+
+					Allocation allocation =
+						new Allocation(Long.parseLong(id), project, skillService.getSkillById(Long.parseLong(skillId)),
+							LocalDate.parse(startDate, dateTimeFormatter),
+							LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), resource);
+					project.addAllocation(allocation);
+
+				}
 			}
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			// do nothing
 			e.printStackTrace();
 			// TODO : friendly error reporting

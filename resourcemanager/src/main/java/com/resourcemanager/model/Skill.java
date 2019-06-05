@@ -2,6 +2,7 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -9,6 +10,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,11 +36,11 @@ public class Skill {
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long			id;
+	private long				id;
 
 	/** The name. */
 	@NaturalId
-	private String			name;
+	private String				name;
 
 	/** The resources. */
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -51,7 +53,11 @@ public class Skill {
 				@JoinColumn(
 					name = "resource_id")
 		})
-	private List<Resource>	resources	= new ArrayList<Resource>();
+	private List<Resource>		resources	= new ArrayList<Resource>();
+
+	/** The allocations. */
+	@ManyToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/**
 	 * Instantiates a new skill.
@@ -139,6 +145,26 @@ public class Skill {
 	}
 
 	/**
+	 * Removes the allocation.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void removeAllocation(Allocation allocation) {
+		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
+			.hasNext();) {
+			Allocation i = iterator.next();
+
+			if (i.getSkill().equals(this)
+				&& i.equals(allocation)) {
+				iterator.remove();
+			}
+		}
+	}
+
+	// Getters and setters omitted for brevity
+
+	/**
 	 * Sets the id.
 	 *
 	 * @param id
@@ -147,8 +173,6 @@ public class Skill {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	// Getters and setters omitted for brevity
 
 	/**
 	 * Sets the name.

@@ -49,8 +49,8 @@
 				                  		</c:forEach>
 			               			</select>
 			               		</td>
-								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDate}" class="form-control datepicker startDate"/></td>
-								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDate}" class="form-control datepicker endDate"/></td>
+								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
+								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
 								<td><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control"/></td>
 								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
 								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
@@ -58,18 +58,18 @@
 	                	</c:forEach>
                 		<tr id="allocationTemplate" style="display: none">
                 			<td>
-								<select name="allocation_${allocation.id}_skillId" class="form-control">
+								<select name="allocation_0_skillId" class="form-control" required>
 									<option selected disabled>Select...</option>
 									<c:forEach items="${listSkills}" var="skill">
 										<option value="${skill.id}">${skill.name}</option>
 			                  		</c:forEach>
 		               			</select>
 		               		</td>
-							<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate"/></td>
-							<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate"/></td>
-							<td><input name="allocation_0_hours" type="text" class="form-control"/></td>
+							<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate" required/></td>
+							<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate" required/></td>
+							<td><input name="allocation_0_hours" type="text" class="form-control" required/></td>
 							<td><input name="allocation_0_resourceId" type="hidden"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button></td>
-							<td></td>
+							<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
                 		</tr>
 	                	<tr id="addAllocationTR">
 	                		<td colspan="100%">
@@ -94,8 +94,12 @@
 				allocationTemplate = $("#allocationTemplate")[0];
 				$(allocationTemplate).show();
 				$(allocationTemplate).attr('id', '');
-				$("#allocationTemplate").remove();
+				allocationTemplate.remove();
 				
+				setupDatePickers();
+			});
+			
+			function setupDatePickers() {
 				// date picker code, make any start date datepicker set the minimum date of the next end date to the start date, and vice versa
 			    $( ".startDate" ).datepicker({   
 			      defaultDate: "+1w",  
@@ -114,12 +118,13 @@
 			      onClose: function( selectedDate ) {
 			    	  $(this).parent('td').prev('td').children('input').first().datepicker( "option", "maxDate", selectedDate );
 			      }
-			    });  
-			});
+			    });
+			}
 			
 			// add in the new requirement html to the dom every time the button is clicked
 			function addAllocation() {
 				var newTr = $("#addAllocationTR").before(allocationTemplate.outerHTML);
+				setupDatePickers();
 			}
 			
 			function deleteAllocation(buttonElement) {

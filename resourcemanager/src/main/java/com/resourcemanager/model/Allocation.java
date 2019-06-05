@@ -2,6 +2,7 @@
 package com.resourcemanager.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
@@ -28,37 +29,40 @@ import javax.persistence.Table;
 })
 public class Allocation {
 
+	/** The Constant formatter. */
+	public static final DateTimeFormatter	formatter	= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long		id;
+	private long							id;
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
-	private Project		project;
+	private Project							project;
 
 	/** The skill. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "skill_id")
-	private Skill		skill;
+	private Skill							skill;
 
 	/** The start date. */
 	@Column(name = "start_date")
-	private LocalDate	startDate;
+	private LocalDate						startDate;
 
 	/** The end date. */
 	@Column(name = "end_date")
-	private LocalDate	endDate;
+	private LocalDate						endDate;
 
 	/** The hours. */
-	private int			hours;
+	private int								hours;
 
 	/** The resource. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
-	private Resource	resource;
+	private Resource						resource;
 
 	/**
 	 * Instantiates a new allocation.
@@ -125,6 +129,15 @@ public class Allocation {
 	}
 
 	/**
+	 * Gets the end date.
+	 *
+	 * @return the endDate formatted as a String
+	 */
+	public String getEndDateAsString() {
+		return endDate.format(formatter);
+	}
+
+	/**
 	 * Gets the hours.
 	 *
 	 * @return the hours
@@ -178,6 +191,15 @@ public class Allocation {
 		return startDate;
 	}
 
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the startDate formatted as a String
+	 */
+	public String getStartDateAsString() {
+		return startDate.format(formatter);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -200,6 +222,9 @@ public class Allocation {
 			getResource().removeAllocation(this);
 		}
 		setResource(null);
+		if (getSkill() != null) {
+			getSkill().removeAllocation(this);
+		}
 		setSkill(null);
 	}
 
