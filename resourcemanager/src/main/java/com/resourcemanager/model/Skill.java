@@ -14,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -43,16 +41,7 @@ public class Skill {
 	private String				name;
 
 	/** The resources. */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "resource_skill",
-		joinColumns = {
-				@JoinColumn(
-					name = "skill_id")
-		},
-		inverseJoinColumns = {
-				@JoinColumn(
-					name = "resource_id")
-		})
+	@ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Resource>		resources	= new ArrayList<Resource>();
 
 	/** The allocations. */
