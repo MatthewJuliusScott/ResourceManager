@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
@@ -134,6 +135,19 @@ public class Skill {
 	}
 
 	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		for (Resource resource : new ArrayList<Resource>(resources)) {
+			removeResource(resource);
+		}
+		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
+			removeAllocation(allocation);
+		}
+	}
+
+	/**
 	 * Removes the allocation.
 	 *
 	 * @param allocation
@@ -147,6 +161,26 @@ public class Skill {
 			if (i.getSkill().equals(this)
 				&& i.equals(allocation)) {
 				iterator.remove();
+			}
+		}
+	}
+
+	/**
+	 * Removes the resource.
+	 *
+	 * @param resource
+	 *            the resource
+	 */
+	private void removeResource(Resource resource) {
+		for (Iterator<Resource> iterator = resources.iterator(); iterator
+			.hasNext();) {
+			Resource r = iterator.next();
+
+			for (Skill skill : r.getSkills()) {
+				if (skill.equals(this)
+					&& r.equals(resource)) {
+					iterator.remove();
+				}
 			}
 		}
 	}
