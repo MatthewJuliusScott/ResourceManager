@@ -38,7 +38,7 @@ public class Resource {
 	private String				name;
 
 	/** The skills. */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(cascade = CascadeType.DETACH)
 	@JoinTable(name = "resource_skill",
 		joinColumns = {
 				@JoinColumn(

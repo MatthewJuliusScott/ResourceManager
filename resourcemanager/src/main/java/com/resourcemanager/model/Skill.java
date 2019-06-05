@@ -42,7 +42,7 @@ public class Skill {
 	private String				name;
 
 	/** The resources. */
-	@ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "skills", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	private List<Resource>		resources	= new ArrayList<Resource>();
 
 	/** The allocations. */
@@ -172,14 +172,13 @@ public class Skill {
 	 *            the resource
 	 */
 	private void removeResource(Resource resource) {
-		for (Iterator<Resource> iterator = resources.iterator(); iterator
-			.hasNext();) {
-			Resource r = iterator.next();
-
-			for (Skill skill : r.getSkills()) {
+		for (Resource r : resources) {
+			for (Iterator<Skill> is = r.getSkills().iterator(); is
+				.hasNext();) {
+				Skill skill = is.next();
 				if (skill.equals(this)
 					&& r.equals(resource)) {
-					iterator.remove();
+					is.remove();
 				}
 			}
 		}
