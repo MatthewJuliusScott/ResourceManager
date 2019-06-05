@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class Allocation {
 	private Project							project;
 
 	/** The skill. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "skill_id")
 	private Skill							skill;
 
@@ -59,7 +60,7 @@ public class Allocation {
 	private int								hours;
 
 	/** The resource. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
 	private Resource						resource;

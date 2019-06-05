@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
@@ -42,11 +44,13 @@ public class Skill {
 	private String				name;
 
 	/** The resources. */
-	@ManyToMany(mappedBy = "skills", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "skills", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Resource>		resources	= new ArrayList<Resource>();
 
 	/** The allocations. */
 	@ManyToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/**
@@ -160,6 +164,7 @@ public class Skill {
 
 			if (i.getSkill().equals(this)
 				&& i.equals(allocation)) {
+				allocation.setSkill(null);
 				iterator.remove();
 			}
 		}
