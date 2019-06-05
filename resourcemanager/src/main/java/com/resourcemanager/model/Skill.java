@@ -151,8 +151,6 @@ public class Skill {
 		}
 	}
 
-	// Getters and setters omitted for brevity
-
 	/**
 	 * Sets the id.
 	 *
