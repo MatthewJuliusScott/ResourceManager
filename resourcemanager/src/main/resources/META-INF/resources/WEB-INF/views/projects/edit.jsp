@@ -17,7 +17,7 @@
 						
 			<div class="container-fluid">
 				<c:url var="addAction" value="/projects/save" ></c:url>
-				<form:form action="${addAction}" modelAttribute="project" method="POST">
+				<form:form action="${addAction}" modelAttribute="project" method="POST" id="projectForm">
 				
 					<form:hidden path="id" />
 								
@@ -77,18 +77,50 @@
 	                	 	</td>
 	                	</tr>
                 	</table>
-                	          			
-           			<button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Save</button>
+					<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
+           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
            			
            		</form:form>
+           		
+           		<!-- Modal -->
+				<div id="resourceModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Available Resources</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table">
+									<tr>
+										<th>Name</th>
+										<th>Hours</th>
+										<th></th>
+									</tr>
+									<tr id="resourceTemplate">
+										<td>name</td>
+										<td>hours</td>
+										<td><input type="radio" name="resource" value="id"></td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" onclick="save()"><i class="far fa-save"></i> Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</body>
 	
 	<footer>
 		<script>
-			// dom template of new allocation
+			// dom templates of new allocation and resource
 			var allocationTemplate;
+			var resourceTemplate;
 			$(function() {
 				// copy the allocation template from the dom then remove it, only keeping in memory
 				allocationTemplate = $("#allocationTemplate")[0];
@@ -96,8 +128,14 @@
 				$(allocationTemplate).attr('id', '');
 				allocationTemplate.remove();
 				
+				// copy the resource template from the dom then remove it, only keeping in memory
+				resourceTemplate = $("#resourceTemplate")[0];
+				$(resourceTemplate).show();
+				$(resourceTemplate).attr('id', '');
+				resourceTemplate.remove();
+				
 				setupDatePickers();
-			});
+			});			
 			
 			function setupDatePickers() {
 				// date picker code, make any start date datepicker set the minimum date of the next end date to the start date, and vice versa
@@ -129,6 +167,46 @@
 			
 			function deleteAllocation(buttonElement) {
 				$(buttonElement).closest('tr').remove();
+			}
+			
+			function editAllocation(buttonElement) {
+				
+				if(! $("#projectForm")[0].checkValidity()) {
+				  // If the form is invalid, submit it. The form won't actually submit;
+				  // this will just cause the browser to display the native HTML5 error messages.
+				  $("#projectForm").find(':submit').click();
+				  return;
+				}
+				
+				var td = $(buttonElement).parent();
+				
+				var skillId = 0;
+				var startDate = "";
+				var endDate = "";
+				var hours = "";
+				
+				$(td).siblings().each(function( index ) {
+					if (typeof $(this).children('input').first().attr('name') !== "undefined") {
+						if ($(this).children('input').first().attr('name').includes("startDate")) {
+							startDate = $(this).children('input').first().val();
+						} else if ($(this).children('input').first().attr('name').includes("endDate")) {
+							endDate = $(this).children('input').first().val();
+						} else if ($(this).children('input').first().attr('name').includes("hours")) {
+							hours = $(this).children('input').first().val();
+						}	
+					} else if (typeof $(this).children('select').first().attr('name') !== "undefined") {
+						if ($(this).children('select').first().attr('name').includes("skillId")) {
+							skillId = $(this).children('select').first().children("option:selected").val()
+						}
+					}
+				})
+								
+				$.get( "/resources/search", { skillId: skillId, startDate: startDate, endDate: endDate, hours: hours } )
+				  .done(function( data ) {
+				    alert( "Data Loaded: " + data );
+				  });
+				
+				$("#resourceModal").modal();
 			}
 		</script>
 	</footer>
