@@ -50,8 +50,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 	@Override
 	public List<Resource> listResources() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Resource.class);
-		Root contactRoot = criteria.from(Resource.class);
+		CriteriaQuery<Resource> criteria = builder.createQuery(Resource.class);
+		Root<Resource> contactRoot = criteria.from(Resource.class);
 		criteria.select(contactRoot);
 		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Resource resource : resourcesList) {
@@ -70,8 +70,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 	@Override
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Resource.class);
-		Root contactRoot = criteria.from(Resource.class);
+		CriteriaQuery<Resource> criteria = builder.createQuery(Resource.class);
+		Root<Resource> contactRoot = criteria.from(Resource.class);
 		criteria.select(contactRoot);
 		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Resource resource : resourcesList) {

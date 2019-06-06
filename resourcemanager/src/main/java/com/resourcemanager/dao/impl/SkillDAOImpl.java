@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.resourcemanager.dao.SkillDAO;
 import com.resourcemanager.model.Skill;
 
@@ -21,21 +22,28 @@ public class SkillDAOImpl implements SkillDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(SkillDAOImpl.class);
 
-	protected Session getCurrentSession() {
-        return entityManager.unwrap(SessionFactory.class).getCurrentSession();
-    }
-	
-	protected SessionFactory getCurrentSessionFactory() {
-        return entityManager.unwrap(SessionFactory.class);
-    }
-
 	@Autowired
-    private EntityManagerFactory entityManager;
+	private EntityManagerFactory	entityManager;
 
 	@Override
 	public void addSkill(Skill skill) {
 		getCurrentSession().persist(skill);
 		logger.info("Skill saved successfully, Skill Details=" + skill);
+	}
+
+	@Override
+	public void deleteSkill(Long id) {
+		Skill skill = getCurrentSession().find(Skill.class, id);
+		getCurrentSession().remove(skill);
+		logger.info("Skill deleted successfully, skill details=" + skill);
+	}
+
+	protected Session getCurrentSession() {
+		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+		return entityManager.unwrap(SessionFactory.class);
 	}
 
 	@Override
@@ -48,21 +56,14 @@ public class SkillDAOImpl implements SkillDAO {
 	@Override
 	public List<Skill> listSkills() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Skill.class);
-		Root contactRoot = criteria.from(Skill.class);
+		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
+		Root<Skill> contactRoot = criteria.from(Skill.class);
 		criteria.select(contactRoot);
 		List<Skill> skillsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Skill skill : skillsList) {
 			logger.info("Skill List::" + skill);
 		}
 		return skillsList;
-	}
-
-	@Override
-	public void deleteSkill(Long id) {
-		Skill skill = getCurrentSession().find(Skill.class, id);
-		getCurrentSession().remove(skill);
-		logger.info("Skill deleted successfully, skill details=" + skill);
 	}
 
 	@Override
