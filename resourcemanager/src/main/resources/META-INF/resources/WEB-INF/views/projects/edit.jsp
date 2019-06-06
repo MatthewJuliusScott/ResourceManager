@@ -59,7 +59,7 @@
                 		<tr id="allocationTemplate" style="display: none">
                 			<td>
 								<select name="allocation_0_skillId" class="form-control" required>
-									<option selected disabled>Select...</option>
+									<option value="" disabled selected>Select...</option>
 									<c:forEach items="${listSkills}" var="skill">
 										<option value="${skill.id}">${skill.name}</option>
 			                  		</c:forEach>
@@ -91,18 +91,7 @@
 								<h4 class="modal-title">Available Resources</h4>
 							</div>
 							<div class="modal-body">
-								<table class="table">
-									<tr>
-										<th>Name</th>
-										<th>Hours</th>
-										<th></th>
-									</tr>
-									<tr id="resourceTemplate">
-										<td>name</td>
-										<td>hours</td>
-										<td><input type="radio" name="resource" value="id"></td>
-									</tr>
-								</table>
+								
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
@@ -120,19 +109,12 @@
 		<script>
 			// dom templates of new allocation and resource
 			var allocationTemplate;
-			var resourceTemplate;
 			$(function() {
 				// copy the allocation template from the dom then remove it, only keeping in memory
 				allocationTemplate = $("#allocationTemplate")[0];
 				$(allocationTemplate).show();
 				$(allocationTemplate).attr('id', '');
 				allocationTemplate.remove();
-				
-				// copy the resource template from the dom then remove it, only keeping in memory
-				resourceTemplate = $("#resourceTemplate")[0];
-				$(resourceTemplate).show();
-				$(resourceTemplate).attr('id', '');
-				resourceTemplate.remove();
 				
 				setupDatePickers();
 			});			
@@ -203,9 +185,10 @@
 								
 				$.get( "/resources/search", { skillId: skillId, startDate: startDate, endDate: endDate, hours: hours } )
 				  .done(function( data ) {
-				    alert( "Data Loaded: " + data );
+					$("#resourceModal .modal-body").empty();
+					$("#resourceModal .modal-body").html(data)
 				  });
-				
+
 				$("#resourceModal").modal();
 			}
 		</script>

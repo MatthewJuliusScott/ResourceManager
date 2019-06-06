@@ -68,4 +68,11 @@ public class ResourceController {
 		}
 		return "redirect:/resources";
 	}
+
+	@RequestMapping(value = { "/resources/search" }, method = RequestMethod.GET)
+	public String searchResources(Model model) {
+		model.addAttribute("resource", new Resource());
+		model.addAttribute("listResources", this.resourceService.listResources());
+		return "resources/searchResult";
+	}
 }
