@@ -1,5 +1,6 @@
 package com.resourcemanager.dao.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.resourcemanager.dao.ResourceDAO;
 import com.resourcemanager.model.Resource;
 
@@ -20,22 +22,22 @@ import com.resourcemanager.model.Resource;
 public class ResourceDAOImpl implements ResourceDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(ResourceDAOImpl.class);
-	
-	protected Session getCurrentSession() {
-        return entityManager.unwrap(SessionFactory.class).getCurrentSession();
-    }
-	
-	protected SessionFactory getCurrentSessionFactory() {
-        return entityManager.unwrap(SessionFactory.class);
-    }
 
 	@Autowired
-    private EntityManagerFactory entityManager;
+	private EntityManagerFactory	entityManager;
 
 	@Override
 	public void addResource(Resource resource) {
 		getCurrentSession().persist(resource);
 		logger.info("Resource saved successfully, Resource Details=" + resource);
+	}
+
+	protected Session getCurrentSession() {
+		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+		return entityManager.unwrap(SessionFactory.class);
 	}
 
 	@Override
@@ -63,6 +65,19 @@ public class ResourceDAOImpl implements ResourceDAO {
 		Resource resource = getCurrentSession().find(Resource.class, id);
 		getCurrentSession().remove(resource);
 		logger.info("Resource deleted successfully, resource details=" + resource);
+	}
+
+	@Override
+	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery criteria = builder.createQuery(Resource.class);
+		Root contactRoot = criteria.from(Resource.class);
+		criteria.select(contactRoot);
+		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
+		for (Resource resource : resourcesList) {
+			logger.info("Resource List::" + resource);
+		}
+		return resourcesList;
 	}
 
 	@Override

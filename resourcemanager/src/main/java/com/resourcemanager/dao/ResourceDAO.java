@@ -1,5 +1,6 @@
 package com.resourcemanager.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.resourcemanager.model.Resource;
@@ -7,8 +8,14 @@ import com.resourcemanager.model.Resource;
 public interface ResourceDAO {
 
 	public void addResource(Resource p);
-	public void updateResource(Resource p);
-	public List<Resource> listResources();
+
 	public Resource getResourceById(Long id);
+
+	public List<Resource> listResources();
+
 	public void removeResource(Long id);
+
+	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours);
+
+	public void updateResource(Resource p);
 }

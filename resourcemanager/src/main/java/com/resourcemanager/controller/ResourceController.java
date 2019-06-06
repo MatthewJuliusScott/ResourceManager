@@ -1,5 +1,10 @@
 package com.resourcemanager.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.ResourceService;
@@ -70,9 +76,24 @@ public class ResourceController {
 	}
 
 	@RequestMapping(value = { "/resources/search" }, method = RequestMethod.GET)
-	public String searchResources(Model model) {
+	public String searchResources(Model model, @RequestParam("skillId") String skillId,
+		@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,
+		@RequestParam("hours") String hours) {
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+
+		List<Resource> resources = new ArrayList<Resource>();
+
+		try {
+			resources = this.resourceService.searchResources(Long.parseLong(skillId),
+				LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter),
+				Integer.parseInt(hours));
+		} catch (Exception e) {
+			// TODO : friendly error reporting
+		}
+
 		model.addAttribute("resource", new Resource());
-		model.addAttribute("listResources", this.resourceService.listResources());
+		model.addAttribute("listResources", resources);
 		return "resources/searchResult";
 	}
 }

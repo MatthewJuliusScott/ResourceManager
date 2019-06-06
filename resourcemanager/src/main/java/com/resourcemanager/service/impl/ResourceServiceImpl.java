@@ -1,5 +1,6 @@
 package com.resourcemanager.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional
+	public void deleteResource(Long id) {
+		this.resourceDAO.removeResource(id);
+	}
+
+	@Override
+	@Transactional
 	public Resource getResourceById(Long id) {
 		return this.resourceDAO.getResourceById(id);
 	}
@@ -36,8 +43,8 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional
-	public void deleteResource(Long id) {
-		this.resourceDAO.removeResource(id);
+	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
+		return this.resourceDAO.searchResources(skillId, startDate, endDate, hours);
 	}
 
 	public void setResourceDAO(ResourceDAO resourceDAO) {
