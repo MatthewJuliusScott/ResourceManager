@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -51,8 +52,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 	public List<Resource> listResources() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
 		CriteriaQuery<Resource> criteria = builder.createQuery(Resource.class);
-		Root<Resource> contactRoot = criteria.from(Resource.class);
-		criteria.select(contactRoot);
+		Root<Resource> root = criteria.from(Resource.class);
+		criteria.select(root);
 		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Resource resource : resourcesList) {
 			logger.info("Resource List::" + resource);
@@ -71,9 +72,24 @@ public class ResourceDAOImpl implements ResourceDAO {
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
 		CriteriaQuery<Resource> criteria = builder.createQuery(Resource.class);
-		Root<Resource> contactRoot = criteria.from(Resource.class);
-		criteria.select(contactRoot);
+		Root<Resource> root = criteria.from(Resource.class);
+
+		try {
+
+			Predicate skillIdMatch = builder.isMember(skillId, root.get("skills"));
+
+			Predicate greaterThanOrEqualHours = builder.ge(root.get("hours"), hours);
+
+			criteria.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours));
+
+			criteria.orderBy(builder.desc(root.get("hours")));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
+
 		for (Resource resource : resourcesList) {
 			logger.info("Resource List::" + resource);
 		}

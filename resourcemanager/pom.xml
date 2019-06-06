@@ -21,6 +21,9 @@
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
+                    <compilerArguments>
+			        	<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+			        </compilerArguments>
                 </configuration>
             </plugin>
             
@@ -43,6 +46,10 @@
     </parent>
     
     <dependencies>
+	    <dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-jpamodelgen</artifactId>
+		</dependency>
 	    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>

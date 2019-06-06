@@ -50,8 +50,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public List<Project> listProjects() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
 		CriteriaQuery<Project> criteria = builder.createQuery(Project.class);
-		Root<Project> contactRoot = criteria.from(Project.class);
-		criteria.select(contactRoot);
+		Root<Project> root = criteria.from(Project.class);
+		criteria.select(root);
 		List<Project> projectsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Project project : projectsList) {
 			logger.info("Project List::" + project);

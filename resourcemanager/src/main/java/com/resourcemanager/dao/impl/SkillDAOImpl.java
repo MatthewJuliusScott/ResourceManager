@@ -57,8 +57,8 @@ public class SkillDAOImpl implements SkillDAO {
 	public List<Skill> listSkills() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
 		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
-		Root<Skill> contactRoot = criteria.from(Skill.class);
-		criteria.select(contactRoot);
+		Root<Skill> root = criteria.from(Skill.class);
+		criteria.select(root);
 		List<Skill> skillsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Skill skill : skillsList) {
 			logger.info("Skill List::" + skill);
