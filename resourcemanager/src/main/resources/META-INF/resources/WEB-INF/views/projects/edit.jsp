@@ -52,7 +52,7 @@
 								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
 								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
 								<td><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control"/></td>
-								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
+								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button>${allocation.resource.name}</td>
 								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
 							</tr>
 	                	</c:forEach>
@@ -68,7 +68,7 @@
 							<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate" required/></td>
 							<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate" required/></td>
 							<td><input name="allocation_0_hours" type="text" class="form-control" required/></td>
-							<td><input name="allocation_0_resourceId" type="hidden"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(this)"><i class="fas fa-edit"></i></button></td>
+							<td></td>
 							<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
                 		</tr>
 	                	<tr id="addAllocationTR">
@@ -90,12 +90,13 @@
 							<div class="modal-header">
 								<h4 class="modal-title">Available Resources</h4>
 							</div>
+							<input type="hidden" name="allocationId" id="allocationId">
 							<div class="modal-body">
 								
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
-								<button type="button" class="btn btn-success" data-dismiss="modal" onclick="save()"><i class="far fa-save"></i> Save</button>
+								<button type="button" class="btn btn-success" data-dismiss="modal" onclick="allocate()"><i class="far fa-save"></i> Save</button>
 							</div>
 						</div>
 					</div>
@@ -151,7 +152,7 @@
 				$(buttonElement).closest('tr').remove();
 			}
 			
-			function editAllocation(buttonElement) {
+			function editAllocation(allocationId, buttonElement) {
 				
 				if(! $("#projectForm")[0].checkValidity()) {
 				  // If the form is invalid, submit it. The form won't actually submit;
@@ -159,6 +160,8 @@
 				  $("#projectForm").find(':submit').click();
 				  return;
 				}
+				
+				$('#allocationId').val(allocationId);
 				
 				var td = $(buttonElement).parent();
 				
@@ -190,6 +193,21 @@
 				  });
 
 				$("#resourceModal").modal();
+			}
+			
+			function save() {
+				$("#projectForm").find(':submit').click();
+			}
+			
+			function allocate() {
+				var val = $(".modal-body").find('input[type="radio"]:checked').val();
+				var id = $('#allocationId').val();
+				var string = "allocation_" + id + "_resourceId";
+				var resource = $('input[name=' + string + ']');
+				console.log(resource);
+				console.log(val);
+				$(resource).val(val);
+				//save();
 			}
 		</script>
 	</footer>

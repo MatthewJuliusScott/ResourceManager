@@ -211,7 +211,7 @@ public class Resource {
 			.hasNext();) {
 			Allocation i = iterator.next();
 
-			if (i.getResource().equals(this)
+			if (i.getResource() != null && i.getResource().equals(this)
 				&& i.equals(allocation)) {
 				iterator.remove();
 			}

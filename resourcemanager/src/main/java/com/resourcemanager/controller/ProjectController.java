@@ -46,18 +46,6 @@ public class ProjectController {
 		return "redirect:/projects/edit/0";
 	}
 
-	@RequestMapping("/project/{projectId}/allocation/delete/{allocationId}")
-	public String deleteAllocation(@PathVariable("projectId") Long projectId, @PathVariable("allocationId") Long allocationId,
-		Model model) {
-		if (projectId > 0) {
-			Project project = projectService.getProjectById(projectId);
-			Allocation allocation = allocationService.getAllocationById(allocationId);
-			project.removeAllocation(allocation);
-			this.projectService.updateProject(project);
-		}
-		return "redirect:/projects/edit/" + projectId;
-	}
-
 	@RequestMapping("/projects/delete/{id}")
 	public String deleteProject(@PathVariable("id") Long id) {
 
@@ -137,7 +125,7 @@ public class ProjectController {
 					String startDate = startDates[i];
 					String endDate = endDates[i];
 					String hours = hourss[i];
-					String resourceId = resourceIds[i];
+					String resourceId = resourceIds != null ? resourceIds[i] : null;
 
 					Resource resource = null;
 					if (resourceId != null && !resourceId.equals("") && !resourceId.equals("0")) {
@@ -148,6 +136,9 @@ public class ProjectController {
 						new Allocation(Long.parseLong(id), project, skillService.getSkillById(Long.parseLong(skillId)),
 							LocalDate.parse(startDate, dateTimeFormatter),
 							LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), resource);
+					if (resource != null) {
+						resource.addAllocation(allocation);
+					}
 					project.addAllocation(allocation);
 
 				}
