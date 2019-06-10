@@ -2,6 +2,7 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -9,14 +10,16 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
@@ -27,31 +30,27 @@ import org.hibernate.annotations.NaturalIdCache;
 @Table(name = "skill")
 @NaturalIdCache
 @AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name = "skill_id"))
-})
+        @AttributeOverride(name = "id", column = @Column(name = "skill_id"))})
 public class Skill {
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long			id;
+	private long				id;
 
 	/** The name. */
 	@NaturalId
-	private String			name;
+	private String				name;
 
 	/** The resources. */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "resource_skill",
-		joinColumns = {
-				@JoinColumn(
-					name = "skill_id")
-		},
-		inverseJoinColumns = {
-				@JoinColumn(
-					name = "resource_id")
-		})
-	private List<Resource>	resources	= new ArrayList<Resource>();
+	@ManyToMany(mappedBy = "skills", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Resource>		resources	= new ArrayList<Resource>();
+
+	/** The allocations. */
+	@ManyToMany(mappedBy = "project", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/**
 	 * Instantiates a new skill.
@@ -62,8 +61,7 @@ public class Skill {
 	/**
 	 * Instantiates a new skill.
 	 *
-	 * @param name
-	 *            the name
+	 * @param name the name
 	 */
 	public Skill(String name) {
 		this.name = name;
@@ -71,6 +69,7 @@ public class Skill {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -127,6 +126,7 @@ public class Skill {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -139,24 +139,76 @@ public class Skill {
 	}
 
 	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		for (Resource resource : new ArrayList<Resource>(resources)) {
+			removeResource(resource);
+		}
+		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
+			removeAllocation(allocation);
+		}
+	}
+
+	/**
+	 * Removes the allocation.
+	 *
+	 * @param allocation the allocation
+	 */
+	public void removeAllocation(Allocation allocation) {
+		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
+		        .hasNext();) {
+			Allocation i = iterator.next();
+
+			if (i.getSkill().equals(this) && i.equals(allocation)) {
+				allocation.setSkill(null);
+				iterator.remove();
+			}
+		}
+	}
+
+	/**
+	 * Removes the resource.
+	 *
+	 * @param resource the resource
+	 */
+	private void removeResource(Resource resource) {
+		for (Resource r : resources) {
+			for (Iterator<Skill> is = r.getSkills().iterator(); is.hasNext();) {
+				Skill skill = is.next();
+				if (skill.equals(this) && r.equals(resource)) {
+					is.remove();
+				}
+			}
+		}
+	}
+
+	/**
 	 * Sets the id.
 	 *
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	// Getters and setters omitted for brevity
-
 	/**
 	 * Sets the name.
 	 *
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Skill [id=" + id + ", name=" + name + "]";
 	}
 }

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.resourcemanager.dao.ProjectDAO;
 import com.resourcemanager.model.Project;
 
@@ -20,22 +21,22 @@ import com.resourcemanager.model.Project;
 public class ProjectDAOImpl implements ProjectDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(ProjectDAOImpl.class);
-	
-	protected Session getCurrentSession() {
-        return entityManager.unwrap(SessionFactory.class).getCurrentSession();
-    }
-	
-	protected SessionFactory getCurrentSessionFactory() {
-        return entityManager.unwrap(SessionFactory.class);
-    }
 
 	@Autowired
-    private EntityManagerFactory entityManager;
+	private EntityManagerFactory	entityManager;
 
 	@Override
 	public void addProject(Project project) {
 		getCurrentSession().persist(project);
 		logger.info("Project saved successfully, Project Details=" + project);
+	}
+
+	protected Session getCurrentSession() {
+		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+		return entityManager.unwrap(SessionFactory.class);
 	}
 
 	@Override
@@ -48,9 +49,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public List<Project> listProjects() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Project.class);
-		Root contactRoot = criteria.from(Project.class);
-		criteria.select(contactRoot);
+		CriteriaQuery<Project> criteria = builder.createQuery(Project.class);
+		Root<Project> root = criteria.from(Project.class);
+		criteria.select(root);
 		List<Project> projectsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Project project : projectsList) {
 			logger.info("Project List::" + project);

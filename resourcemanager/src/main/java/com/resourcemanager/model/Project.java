@@ -24,21 +24,20 @@ import javax.persistence.Table;
 @Entity(name = "Project")
 @Table(name = "project")
 @AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name = "project_id"))
-})
+        @AttributeOverride(name = "id", column = @Column(name = "project_id"))})
 public class Project {
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long				id;
+	private long	id;
 
 	/** The name. */
-	private String				name;
+	private String	name;
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private List<Allocation>	allocations	= new ArrayList<Allocation>();
+	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+	private List<Allocation> allocations = new ArrayList<Allocation>();
 
 	/**
 	 * Instantiates a new project.
@@ -49,8 +48,7 @@ public class Project {
 	/**
 	 * Instantiates a new project.
 	 *
-	 * @param title
-	 *            the title
+	 * @param title the title
 	 */
 	public Project(String title) {
 		this.name = title;
@@ -59,8 +57,7 @@ public class Project {
 	/**
 	 * Adds the allocation.
 	 *
-	 * @param allocation
-	 *            the allocation
+	 * @param allocation the allocation
 	 */
 	public void addAllocation(Allocation allocation) {
 		allocations.add(allocation);
@@ -71,6 +68,7 @@ public class Project {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -116,6 +114,7 @@ public class Project {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -126,16 +125,14 @@ public class Project {
 	/**
 	 * Removes the skill.
 	 *
-	 * @param skill
-	 *            the skill
+	 * @param allocation the allocation
 	 */
 	public void removeAllocation(Allocation allocation) {
 		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
-			.hasNext();) {
+		        .hasNext();) {
 			Allocation i = iterator.next();
 
-			if (i.getProject().equals(this)
-				&& i.equals(allocation)) {
+			if (i.getProject().equals(this) && i.equals(allocation)) {
 				iterator.remove();
 			}
 		}
@@ -144,8 +141,7 @@ public class Project {
 	/**
 	 * Sets the allocations.
 	 *
-	 * @param allocations
-	 *            the new allocations
+	 * @param allocations the new allocations
 	 */
 	public void setAllocations(List<Allocation> allocations) {
 		this.allocations = allocations;
@@ -154,8 +150,7 @@ public class Project {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -164,10 +159,19 @@ public class Project {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + "]";
 	}
 }

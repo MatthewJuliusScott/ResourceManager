@@ -56,9 +56,9 @@ public class AllocationDAOImpl implements AllocationDAO {
 	@Override
 	public List<Allocation> listAllocations() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Allocation.class);
-		Root contactRoot = criteria.from(Allocation.class);
-		criteria.select(contactRoot);
+		CriteriaQuery<Allocation> criteria = builder.createQuery(Allocation.class);
+		Root<Allocation> root = criteria.from(Allocation.class);
+		criteria.select(root);
 		List<Allocation> allocationsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Allocation allocation : allocationsList) {
 			logger.info("Allocation List::" + allocation);

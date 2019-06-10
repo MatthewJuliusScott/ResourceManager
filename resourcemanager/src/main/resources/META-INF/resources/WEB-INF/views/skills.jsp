@@ -35,7 +35,7 @@
 							<td>${skill.id}</td>
 							<td>${skill.name}</td>
 							<td><a class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-							<td><a class="btn btn-primary btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
+							<td><a class="btn btn-danger btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 					</table>
