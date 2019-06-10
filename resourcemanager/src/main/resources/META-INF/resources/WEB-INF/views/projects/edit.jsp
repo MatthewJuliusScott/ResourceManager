@@ -52,7 +52,7 @@
 								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
 								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
 								<td><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control"/></td>
-								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> ${allocation.resource.name}</td>
+								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> <span>${allocation.resource.name}</span></td>
 								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
 							</tr>
 	                	</c:forEach>
@@ -200,11 +200,14 @@
 			}
 			
 			function allocate() {
-				var val = $(".modal-body").find('input[type="radio"]:checked').val();
+				var key = $(".modal-body").find('input[type="radio"]:checked').val();
+				var value = $(".modal-body").find('input[type="radio"]:checked').parent().siblings().first().text();
 				var id = $('#allocationId').val();
 				var string = "allocation_" + id + "_resourceId";
 				var resource = $('input[name=' + string + ']');
-				$(resource).val(val);
+				$(resource).val(key);
+				$(resource).parent().children('span').first().text(value);
+				save();
 			}
 		</script>
 	</footer>
