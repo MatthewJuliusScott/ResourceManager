@@ -30,14 +30,74 @@
 			<plugin>
 			    <groupId>org.springframework.boot</groupId>
 			    <artifactId>spring-boot-maven-plugin</artifactId>
+			    <executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+			    <artifactId>maven-compiler-plugin</artifactId>
 			    <configuration>
-			        <executable>true</executable>
+			        <source>${java-version}</source>
+			        <target>${java-version}</target>
+			        <compilerArgument>-proc:none</compilerArgument>
 			    </configuration>
 			</plugin>
-
+	
+			<plugin>
+			    <groupId>org.bsc.maven</groupId>
+			    <artifactId>maven-processor-plugin</artifactId>
+			    <version>2.0.5</version>
+			    <executions>
+			        <execution>
+			            <id>process</id>
+			            <goals>
+			                <goal>process</goal>
+			            </goals>
+			            <phase>generate-sources</phase>
+			            <configuration>
+			                <processors>
+			                    <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+			                </processors>
+			            </configuration>
+			        </execution>
+			    </executions>
+			    <dependencies>
+			        <dependency>
+			            <groupId>org.hibernate</groupId>
+			            <artifactId>hibernate-jpamodelgen</artifactId>
+			            <version>${hibernate-version}</version>
+			        </dependency>
+			    </dependencies>
+			</plugin>
+			
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target\generated-sources\apt</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+	
         </plugins>
     </build>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     
 	<parent>
         <groupId>org.springframework.boot</groupId>
@@ -46,9 +106,12 @@
     </parent>
     
     <dependencies>
-	    <dependency>
+	    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
+		<dependency>
 		    <groupId>org.hibernate</groupId>
 		    <artifactId>hibernate-jpamodelgen</artifactId>
+		    <version>${hibernate-version}</version>
+		    <scope>provided</scope>
 		</dependency>
 	    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
 		<dependency>

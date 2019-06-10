@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -76,11 +77,18 @@ public class ResourceDAOImpl implements ResourceDAO {
 
 		try {
 
+			// get resources that have the skill
+			// and have greater than or equal to hours
 			Predicate skillIdMatch = builder.isMember(skillId, root.get("skills"));
-
 			Predicate greaterThanOrEqualHours = builder.ge(root.get("hours"), hours);
-
 			criteria.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours));
+			
+			// get sub query for allocations in the same time period
+			Subquery<Resource> sub = criteria.subquery(Resource.class);
+			Root<Resource> subRoot = criteria.from(Resource.class);
+			
+			// exclude resources that are in sub query (have prior allocations in that period)
+			
 
 			criteria.orderBy(builder.desc(root.get("hours")));
 
