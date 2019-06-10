@@ -44,7 +44,7 @@ public class Allocation {
 	private Project							project;
 
 	/** The skill. */
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "skill_id")
 	private Skill							skill;
 
@@ -60,7 +60,7 @@ public class Allocation {
 	private int								hours;
 
 	/** The resource. */
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
 	private Resource						resource;

@@ -37,7 +37,7 @@ public class Project {
 	private String				name;
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation>	allocations	= new ArrayList<Allocation>();
 
 	/**

@@ -140,6 +140,8 @@ public class ProjectController {
 						resource.addAllocation(allocation);
 					}
 					project.addAllocation(allocation);
+					
+					allocationService.updateAllocation(allocation);
 
 				}
 			}
