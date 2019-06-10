@@ -6,19 +6,26 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.resourcemanager.dao.ResourceDAO;
+import com.resourcemanager.model.Allocation;
+import com.resourcemanager.model.Allocation_;
 import com.resourcemanager.model.Resource;
+import com.resourcemanager.model.Resource_;
 
 @Repository
 public class ResourceDAOImpl implements ResourceDAO {
@@ -72,31 +79,36 @@ public class ResourceDAOImpl implements ResourceDAO {
 	@Override
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery<Resource> criteria = builder.createQuery(Resource.class);
-		Root<Resource> root = criteria.from(Resource.class);
+		CriteriaQuery<Resource> query = builder.createQuery(Resource.class);
+		Root<Resource> root = query.from(Resource.class);
 
 		try {
 
 			// get resources that have the skill
 			// and have greater than or equal to hours
 			Predicate skillIdMatch = builder.isMember(skillId, root.get("skills"));
-			Predicate greaterThanOrEqualHours = builder.ge(root.get("hours"), hours);
-			criteria.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours));
+			Predicate greaterThanOrEqualHours = builder.ge(root.get(Resource_.hours), hours);
 			
-			// get sub query for allocations in the same time period
-			Subquery<Resource> sub = criteria.subquery(Resource.class);
-			Root<Resource> subRoot = criteria.from(Resource.class);
+			// create a subquery to get resources that have allocations in the time period specified between startDate and endDate
+			Subquery<Long> sub = query.subquery(Long.class);
+			Root<Allocation> subRoot = sub.from(Allocation.class);
+			Join<Allocation, Resource> allocations = subRoot.join(Allocation_.resource, JoinType.INNER);
+			Predicate startNoAllocationsInTimePeriod = builder.between(subRoot.get(Allocation_.startDate), startDate, endDate);
+			Predicate endNoAllocationsInTimePeriod = builder.between(subRoot.get(Allocation_.endDate), startDate, endDate);
+			sub.select(allocations.get(Resource_.id));
+			sub.where(builder.and(startNoAllocationsInTimePeriod, endNoAllocationsInTimePeriod));
 			
-			// exclude resources that are in sub query (have prior allocations in that period)
-			
-
-			criteria.orderBy(builder.desc(root.get("hours")));
+			// exclude resources who have allocations during the specified time period 
+			Predicate priorAllocations = root.get(Resource_.id).in(sub).not();
+					
+			query.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours, priorAllocations));
+			query.orderBy(builder.desc(root.get("hours")));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		List<Resource> resourcesList = getCurrentSession().createQuery(criteria).getResultList();
+		List<Resource> resourcesList = getCurrentSession().createQuery(query).getResultList();
 
 		for (Resource resource : resourcesList) {
 			logger.info("Resource List::" + resource);
