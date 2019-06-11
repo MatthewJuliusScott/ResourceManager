@@ -4,4 +4,4 @@ A web-based application which allows consultants to enter their skill-set and ha
 Import the project in to eclipse and run it.
 It will then launch an embedded tomcat server which you can access in your web browser at http://localhost:8080
 
-If you have any errors you might be missing a maven connector (eclipse may show an error and provide a quick fix to find missing connectors), and you will need to run maven update project and mvn compile to generate the missing generated class files.
+If you have any errors you might be missing a maven connector (eclipse may show an error in pom.xml and provide a quick fix to find missing connectors), and you will need to run maven update project and mvn compile to generate the missing generated class files and then another maven update project to link those new source files.
