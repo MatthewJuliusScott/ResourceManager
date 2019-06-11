@@ -105,4 +105,4 @@ INSERT INTO resource_skill(`skill_id`, `resource_id`, `order_col`) VALUES((FLOOR
 INSERT INTO resource_skill(`skill_id`, `resource_id`, `order_col`) VALUES((FLOOR(1 + RAND() * (SELECT MAX(skill_id) FROM `skill` WHERE skill_id NOT IN (SELECT * FROM(SELECT skill_id FROM `resource_skill` WHERE `resource_id` = 22) AS tmp1)) )),22,(SELECT * FROM (SELECT IFNULL(MAX(order_col) + 1, 0) FROM `resource_skill` WHERE `resource_id` = 22 ) AS tmp));
 INSERT INTO resource_skill(`skill_id`, `resource_id`, `order_col`) VALUES((FLOOR(1 + RAND() * (SELECT MAX(skill_id) FROM `skill` WHERE skill_id NOT IN (SELECT * FROM(SELECT skill_id FROM `resource_skill` WHERE `resource_id` = 22) AS tmp1)) )),22,(SELECT * FROM (SELECT IFNULL(MAX(order_col) + 1, 0) FROM `resource_skill` WHERE `resource_id` = 22 ) AS tmp));
 
-INSERT INTO userdetails(email,name,password) VALUES ('user@gmail.com','user','password');
+INSERT INTO userdetails(email,name,password) VALUES ('user@gmail.com','user','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
