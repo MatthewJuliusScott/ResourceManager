@@ -51,12 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.permitAll();
 	}
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/*.css");
-		web.ignoring().antMatchers("/*.js");
-	}
-
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService);

@@ -9,7 +9,7 @@
 	<div class="container" style="margin:50px">
 		<h3>ResourceManager Login</h3>
 		
-		<div class="container"><img src="/resources/images/logo.png" alt="Logo"></div>
+		<div class="container"><img src="resources/images/logo.png" alt="Logo"></div>
 		
 		<c:if test="${param.error ne null}">
 			<div style="color: red">Invalid credentials.</div>
