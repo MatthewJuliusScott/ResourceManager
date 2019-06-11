@@ -4,6 +4,7 @@
 <script src="/resources/js/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="/resources/css/jquery-ui.min.css">
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/style.css">
 <script src="/resources/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/all.min.css">
 <link rel="icon" href="/resources/images/favicon.png" type="image/x-icon"/>
