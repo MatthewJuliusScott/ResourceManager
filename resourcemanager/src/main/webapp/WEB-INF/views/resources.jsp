@@ -17,7 +17,7 @@
 			
 			<div class="container-fluid">
 				<h2>Create Resource</h2>
-				<a class="btn btn-primary" href="/resources/add" role="button">Create Resource</a>
+				<a class="btn btn-primary" href="/ResourceManager/resources/add" role="button">Create Resource</a>
 			</div>
 			
 			<div class="container-fluid">
@@ -34,8 +34,8 @@
 						<tr>
 							<td>${resource.id}</td>
 							<td>${resource.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
-							<td><a class="btn btn-danger btn-sm" href="/resources/delete/${resource.id}" role="button"><i class="fas fa-trash"></i></a></td>
+							<td><a class="btn btn-primary btn-sm" href="/ResourceManager/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
+							<td><a class="btn btn-danger btn-sm" href="/ResourceManager/resources/delete/${resource.id}" role="button"><i class="fas fa-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 					</table>

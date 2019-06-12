@@ -14,9 +14,9 @@
 		
 		<div class="container-fluid">
 			<h1>Resource Manager</h1>
-			<a class="btn btn-primary" href="/projects" role="button">Projects</a>
-			<a class="btn btn-primary" href="/resources" role="button">Resources</a>
-			<a class="btn btn-primary" href="/skills" role="button">Skills</a>
+			<a class="btn btn-primary" href="/ResourceManager/projects" role="button">Projects</a>
+			<a class="btn btn-primary" href="/ResourceManager/resources" role="button">Resources</a>
+			<a class="btn btn-primary" href="/ResourceManager/skills" role="button">Skills</a>
 		</div>
 	</body>
 	
