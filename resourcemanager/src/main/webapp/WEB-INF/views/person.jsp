@@ -22,7 +22,7 @@
 		<h1>
 			Edit a Person
 		</h1>
-		<div><a href="/ResourceManager/persons">Back to Add</a></div>
+		<div><a href="/persons">Back to Add</a></div>
 	</c:if>
 	<c:if test="${empty person.firstName}">
 		<h1>
@@ -140,8 +140,8 @@
 				<td>${person.firstName}</td>
 				<td>${person.lastName}</td>
 				<td><c:forEach items="${person.skills}" var="skill">${skill.name} </c:forEach></td>
-				<td><a href="<c:url value='/ResourceManager/edit/${person.id}' />" >Edit</a></td>
-				<td><a href="<c:url value='/ResourceManager/remove/${person.id}' />" >Delete</a></td>
+				<td><a href="<c:url value='/edit/${person.id}' />" >Edit</a></td>
+				<td><a href="<c:url value='/remove/${person.id}' />" >Delete</a></td>
 			</tr>
 		</c:forEach>
 		</table>

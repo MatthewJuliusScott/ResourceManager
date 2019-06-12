@@ -3,19 +3,19 @@
   <!-- Links -->
   <ul class="navbar-nav" style="width: 100%">
     <li class="nav-item">
-      <a class="nav-link" href="/ResourceManager/">Index</a>
+      <a class="nav-link" href="/">Index</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/ResourceManager/projects">Projects</a>
+      <a class="nav-link" href="/projects">Projects</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/ResourceManager/resources">Resources</a>
+      <a class="nav-link" href="/resources">Resources</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/ResourceManager/skills">Skills</a>
+      <a class="nav-link" href="/skills">Skills</a>
     </li>
     <li class="nav-item" style="margin-left: auto;">
-    	<form action="/ResourceManager/logout" method="post">
+    	<form action="/logout" method="post">
 			<button type="submit" class="btn btn-danger">Log Out</button>
 			<input type="hidden" name="${_csrf.parameterName}"
 				   value="${_csrf.token}"/>

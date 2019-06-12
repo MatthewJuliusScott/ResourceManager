@@ -14,7 +14,7 @@
 		<c:if test="${param.error ne null}">
 			<div style="color: red">Invalid credentials.</div>
 		</c:if>
-		<form action="/ResourceManager/login" method="post">
+		<form action="/login" method="post">
 			<div class="form-group">
 				<label for="username">Username: <input type="text"
 					class="form-control" id="username" name="username">

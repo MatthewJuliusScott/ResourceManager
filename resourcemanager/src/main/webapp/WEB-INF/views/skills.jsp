@@ -17,7 +17,7 @@
 			
 			<div class="container-fluid">
 				<h2>Create Skill</h2>
-				<a class="btn btn-primary" href="/ResourceManager/skills/add" role="button">Create Skill</a>
+				<a class="btn btn-primary" href="/skills/add" role="button">Create Skill</a>
 			</div>
 			
 			<div class="container-fluid">
@@ -34,8 +34,8 @@
 						<tr>
 							<td>${skill.id}</td>
 							<td>${skill.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/ResourceManager/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-							<td><a class="btn btn-danger btn-sm" href="/ResourceManager/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
+							<td><a class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
+							<td><a class="btn btn-danger btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 					</table>
