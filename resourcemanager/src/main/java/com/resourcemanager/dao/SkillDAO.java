@@ -7,8 +7,8 @@ import com.resourcemanager.model.Skill;
 public interface SkillDAO {
 
 	public void addSkill(Skill skill);
-	public void updateSkill(Skill skill);
-	public List<Skill> listSkills();
-	public Skill getSkillById(Long id);
 	public void deleteSkill(Long id);
+	public Skill getSkillById(Long id);
+	public List<Skill> listSkills();
+	public void updateSkill(Skill skill);
 }

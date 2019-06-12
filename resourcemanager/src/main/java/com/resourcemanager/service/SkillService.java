@@ -8,11 +8,11 @@ public interface SkillService {
 
 	public void addSkill(Skill skill);
 
+	public void deleteSkill(Long id);
+
 	public Skill getSkillById(Long id);
 
 	public List<Skill> listSkills();
-
-	public void deleteSkill(Long id);
 
 	public void updateSkill(Skill skill);
 }
