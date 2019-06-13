@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +29,7 @@ import org.hibernate.annotations.NaturalIdCache;
 @Table(name = "skill")
 @NaturalIdCache
 @AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name = "skill_id"))})
+		@AttributeOverride(name = "id", column = @Column(name = "skill_id")) })
 public class Skill {
 
 	/** The id. */
@@ -61,7 +60,8 @@ public class Skill {
 	/**
 	 * Instantiates a new skill.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
 	public Skill(String name) {
 		this.name = name;
@@ -69,7 +69,6 @@ public class Skill {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -126,7 +125,6 @@ public class Skill {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -154,11 +152,12 @@ public class Skill {
 	/**
 	 * Removes the allocation.
 	 *
-	 * @param allocation the allocation
+	 * @param allocation
+	 *            the allocation
 	 */
 	public void removeAllocation(Allocation allocation) {
 		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
-		        .hasNext();) {
+			.hasNext();) {
 			Allocation i = iterator.next();
 
 			if (i.getSkill().equals(this) && i.equals(allocation)) {
@@ -171,7 +170,8 @@ public class Skill {
 	/**
 	 * Removes the resource.
 	 *
-	 * @param resource the resource
+	 * @param resource
+	 *            the resource
 	 */
 	private void removeResource(Resource resource) {
 		for (Resource r : resources) {
@@ -187,7 +187,8 @@ public class Skill {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -196,7 +197,8 @@ public class Skill {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -204,7 +206,6 @@ public class Skill {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
