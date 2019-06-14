@@ -9,107 +9,100 @@
 	</head>
 	
 	<body>
-	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<c:if test="${!empty resource.name}">
-			<h1>
-				Edit a Resource
-			</h1>
-		</c:if>
-		<c:if test="${empty resource.name}">
-			<h1>
-				Add a Resource
-			</h1>
-		</c:if>
-		
-		
-		<c:url var="addAction" value="/resources/save" ></c:url>
-		<form:form action="${addAction}" modelAttribute="resource" method="POST">
-		<table>
-			<tr>
-				<td>
-					<table>
+		<div class="formContent">
+			<table cellpadding="0" cellspacing="0" class="tbl">
+				<tr>
+					<td>
 						<c:if test="${!empty resource.name}">
-						<tr>
-							<td>
-								<form:label path="id">
-									<spring:message text="ID"/>
-								</form:label>
-							</td>
-							<td>
-								<form:input path="id" readonly="true" size="8"  disabled="true" />
-								<form:hidden path="id" />
-							</td> 
-						</tr>
+							<h1>Edit Resource</h1>
 						</c:if>
+						<c:if test="${empty resource.name}">
+							<h1>Create Resource</h1>
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<c:url var="addAction" value="/resources/save" ></c:url>
+					<form:form action="${addAction}" modelAttribute="resource" method="POST">
+					
+					<table cellpadding="0" cellspacing="0" class="tbl">
 						<tr>
 							<td>
-								<form:label path="name">
-									<spring:message text="Name"/>
-								</form:label>
-							</td>
-							<td>
-								<form:input path="name" />
-							</td> 
-						</tr>
-						<tr>
-							<td>
-								<form:label path="hours">
-									<spring:message text="hours"/>
-								</form:label>
-							</td>
-							<td>
-								<form:input path="hours" />
-							</td> 
-						</tr>
-						<tr>
-							<td colspan="2">
-								<input type="submit" class="btn btn-primary"
-									value="<spring:message text="Save"/>" />
-							</td>
-						</tr>
-					</table>
-				</td>
-				<td>
-					<table>
-						<tr>
-							<td>
-								<table>
+								<table cellpadding="0" cellspacing="0" style="width: 350px;">
+									<c:if test="${!empty resource.name}">
+										<tr>
+											<td style="width: 65px;">
+												<form:label path="id" style="font-weight: bold; width: 5px;">
+													<spring:message text="ID"/>
+												</form:label>
+											</td>
+											<td style="width: 500px;">
+												<form:input path="id" readonly="true" size="8" disabled="true"/>
+												<form:hidden path="id" />
+											</td> 
+										</tr>
+									</c:if>
 									<tr>
-										<th>Resource Skills</th>
+										<td style="width: 65px;">
+											<form:label path="name" style="font-weight: bold;">
+												<spring:message text="Name"/>
+											</form:label>
+										</td>
+										<td style="width: 500px;">
+											<form:input path="name" />
+										</td> 
 									</tr>
 									<tr>
-										<td>
-				                  			<form:select path="skills" id="resourceSkills" items="${resource.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple = "true" />
-				               			</td>
-				               		</tr>
+										<td style="width: 65px;">
+											<form:label path="hours" style="font-weight: bold;">
+												<spring:message text="Hours"/>
+											</form:label>
+										</td>
+										<td style="width: 500px;">
+											<form:input path="hours" />
+										</td> 
+									</tr>
 								</table>
 							</td>
+						</tr>
+						<tr>
 							<td>
-								<table>
+								<table cellpadding="0" cellspacing="0" style="width: 350px;">
 									<tr>
-										<th>All Skills</th>
+										<td>
+											<label style="padding-top: 16px;">Resource Skills</label>
+										</td>	
+										<td>
+											<label style="padding-top: 16px;">All Skills</label>
+										</td>	
 									</tr>
 									<tr>
 										<td>
-											<select onchange="addSkill(this)" id="allSkills" multiple = "multiple">
+				                  			<form:select style="min-width: 100px; min-height: 200px;" path="skills" id="resourceSkills" items="${resource.skills}" onchange="removeSkill(this)" itemValue="id" itemLabel="name" multiple="true"/>
+				               			</td>
+				               			<td>
+				               				<select style="min-width: 100px; min-height: 200px;" onchange="addSkill(this)" id="allSkills" multiple="multiple">
 												<c:forEach items="${listSkills}" var="skill">
 													<option value="${skill.id}">${skill.name}</option>
 						                  		</c:forEach>
 					               			</select>
-				               			</td>
-				               		</tr>
+				               			</td>	
+									</tr>
 								</table>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="2" style="padding-top: 20px;">
+								<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+							</td>
+						</tr>
 					</table>
-				</td>
-			</tr>
-		</table>
-		</form:form>
-		<br>
-		
+					</form:form>
+				</tr>
+			</table>
+		</div>		
 	</body>
 	
 	<footer>

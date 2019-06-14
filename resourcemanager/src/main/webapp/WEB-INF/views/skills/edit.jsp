@@ -9,63 +9,68 @@
 	</head>
 	
 	<body>
-	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<c:if test="${!empty skill.name}">
-			<h1>
-				Edit a Skill
-			</h1>
-		</c:if>
-		<c:if test="${empty skill.name}">
-			<h1>
-				Add a Skill
-			</h1>
-		</c:if>
-		
-		
-		<c:url var="addAction" value="/skills/save" ></c:url>
-		<form:form action="${addAction}" modelAttribute="skill" method="POST">
-		<table>
-			<tr>
-				<td>
-					<table>
+		<div class="formContent">
+			<table cellpadding="0" cellspacing="0" class="tbl">
+				<tr>
+					<td>
 						<c:if test="${!empty skill.name}">
-						<tr>
-							<td>
-								<form:label path="id">
-									<spring:message text="ID"/>
-								</form:label>
-							</td>
-							<td>
-								<form:input path="id" readonly="true" size="8"  disabled="true" />
-								<form:hidden path="id" />
-							</td> 
-						</tr>
+							<h1>
+								Update Skill
+							</h1>
 						</c:if>
-						<tr>
-							<td>
-								<form:label path="name">
-									<spring:message text="Name"/>
-								</form:label>
-							</td>
-							<td>
-								<form:input path="name" />
-							</td> 
-						</tr>
-						<tr>
-							<td colspan="2">
-								<input type="submit" class="btn btn-primary"
-									value="<spring:message text="Save"/>" />
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-		</form:form>
-		<br>
-		
+						<c:if test="${empty skill.name}">
+							<h1>
+								Create Skill
+							</h1>
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<c:url var="addAction" value="/skills/save" ></c:url>
+					<form:form action="${addAction}" modelAttribute="skill" method="POST">
+					
+						<table cellpadding="0" cellspacing="0" class="tbl">
+							<tr>
+								<td>
+									<table cellpadding="0" cellspacing="0" style="width: 350px;">
+										<c:if test="${!empty skill.name}">
+											<tr>
+												<td style="width: 65px;">
+													<form:label path="id" style="font-weight: bold; width: 5px;">
+														<spring:message text="ID"/>
+													</form:label>
+												</td>
+												<td style="width: 500px;">
+													<form:input path="id" readonly="true" size="8"  disabled="true" />
+													<form:hidden path="id" />
+												</td> 
+											</tr>
+										</c:if>
+										<tr>
+											<td style="width: 65px;">
+												<form:label path="name" style="font-weight: bold;">
+													<spring:message text="Name"/>
+												</form:label>
+											</td>
+											<td style="width: 500px;">
+												<form:input path="name" />
+											</td> 
+										</tr>
+										<tr>
+											<td colspan="2" style="padding-top: 20px;">
+												<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</form:form>
+				</tr>
+			</table>									
+		</div>		
 	</body>
 	
 	<footer>

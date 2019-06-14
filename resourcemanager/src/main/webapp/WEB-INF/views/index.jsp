@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
+
 <html>
 	<head>
 		<title>Index</title>
@@ -12,16 +13,11 @@
 	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<div class="container-fluid">
+		<div class="formContent">
 			<h1>Resource Manager</h1>
-			<a class="btn btn-primary" href="/projects" role="button">Projects</a>
-			<a class="btn btn-primary" href="/resources" role="button">Resources</a>
-			<a class="btn btn-primary" href="/skills" role="button">Skills</a>
+			<a class="tblButton" href="/projects" role="button">Projects</a>
+			<a class="tblButton" href="/resources" role="button">Resources</a>
+			<a class="tblButton" href="/skills" role="button">Skills</a>
 		</div>
-	</body>
-	
-	<footer>
-	
-	</footer>
-	
+	</body>	
 </html>
