@@ -9,4 +9,5 @@
 <link rel="stylesheet" href="/resources/css/all.min.css">
 <link rel="icon" href="/resources/images/favicon.png" type="image/x-icon"/>
 <link rel="shortcut icon" href="/resources/images/favicon.png" type="image/x-icon"/>
+<style> <%@ include file="/WEB-INF/css/styles.css" %> </style>
 

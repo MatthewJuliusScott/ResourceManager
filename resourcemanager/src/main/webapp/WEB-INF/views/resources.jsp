@@ -9,43 +9,45 @@
 	</head>
 	
 	<body>
-	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<div class="container-fluid">
-			<h1>Resources</h1>
-			
-			<div class="container-fluid">
-				<h2>Create Resource</h2>
-				<a class="btn btn-primary" href="/resources/add" role="button">Create Resource</a>
-			</div>
-			
-			<div class="container-fluid">
-				<h2>Resource List</h2>
+		<div class="formContent">
+			<table cellpadding="0" cellspacing="0" class="tbl">
+				<tr>
+					<td>
+						<h1>Resources</h1>
+					</td>	
+				</tr>
+				
+				<tr>
+					<td>
+						<a class="tblButton" href="/resources/add" role="button">Create Resource</a>
+					</td>	
+				</tr>
+			</table>
+		
+			<div style="padding-top: 30px;">
 				<c:if test="${!empty listResources}">
-					<table class=".table">
-					<tr>
-						<th scope="col">Resource ID</th>
-						<th scope="col">Name</th>
-						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
-					</tr>
-					<c:forEach items="${listResources}" var="resource">
+					<table cellpadding="0" cellspacing="0" class="tblHeaderScroll">
 						<tr>
-							<td>${resource.id}</td>
-							<td>${resource.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
-							<td><a class="btn btn-danger btn-sm" href="/resources/delete/${resource.id}" role="button"><i class="fas fa-trash"></i></a></td>
+							<th style="width: 300px;" class="tblHeaderCenter" scope="col">Resource ID</th>
+							<th style="width: 65%;" class="tblHeader" scope="col">Name</th>
+							<th style="width: 10%;" class="tblHeaderCenter" scope="col">Edit</th>
+							<th style="width: 10%;" class="tblHeaderCenter" scope="col">Delete</th>
 						</tr>
-					</c:forEach>
+						<table cellpadding="0" cellspacing="0" class="tblList">
+							<c:forEach items="${listResources}" var="resource">
+									<tr>
+										<td style="width: 300px;" class="tblDefCenter">${resource.id}</td>
+										<td style="width: 65%;" class="tblDef">${resource.name}</td>
+										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/resources/delete/${resource.id}" role="button"><i class="fas fa-trash"></i></a></td>
+									</tr>
+							</c:forEach>
+						</table>
 					</table>
-				</c:if>
-			</div>
+				</c:if>		
+			</div>	
 		</div>
-	
-	</body>
-	
-	<footer>
-	</footer>
-	
+	</body>	
 </html>

@@ -9,43 +9,45 @@
 	</head>
 	
 	<body>
-	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<div class="container-fluid">
-			<h1>Skills</h1>
-			
-			<div class="container-fluid">
-				<h2>Create Skill</h2>
-				<a class="btn btn-primary" href="/skills/add" role="button">Create Skill</a>
-			</div>
-			
-			<div class="container-fluid">
-				<h2>Skills List</h2>
+		<div class="formContent">
+			<table cellpadding="0" cellspacing="0" class="tbl">
+				<tr>
+					<td>
+						<h1>Skills</h1>
+					</td>	
+				</tr>
+				
+				<tr>
+					<td>
+						<a class="tblButton" href="/skills/add" role="button">Create Skill</a>
+					</td>	
+				</tr>
+			</table>
+		
+			<div style="padding-top: 30px;">
 				<c:if test="${!empty listSkills}">
-					<table class=".table">
-					<tr>s
-						<th scope="col">Skill ID</th>
-						<th scope="col">Name</th>
-						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
-					</tr>
-					<c:forEach items="${listSkills}" var="skill">
+					<table cellpadding="0" cellspacing="0" class="tblHeaderScroll">
 						<tr>
-							<td>${skill.id}</td>
-							<td>${skill.name}</td>
-							<td><a class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-							<td><a class="btn btn-danger btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
+							<th style="width: 300px;" class="tblHeaderCenter" scope="col">Skill ID</th>
+							<th style="width: 65%;" class="tblHeader" scope="col">Name</th>
+							<th style="width: 10%;" class="tblHeaderCenter" scope="col">Edit</th>
+							<th style="width: 10%;" class="tblHeaderCenter" scope="col">Delete</th>
 						</tr>
-					</c:forEach>
+						<table cellpadding="0" cellspacing="0" class="tblList">
+							<c:forEach items="${listSkills}" var="skill">
+									<tr>
+										<td style="width: 300px;" class="tblDefCenter">${skill.id}</td>
+										<td style="width: 65%;" class="tblDef">${skill.name}</td>
+										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
+									</tr>
+							</c:forEach>
+						</table>
 					</table>
-				</c:if>
-			</div>
-		</div>
-	
+				</c:if>		
+			</div>	
+		</div>	
 	</body>
-	
-	<footer>
-	</footer>
-	
 </html>

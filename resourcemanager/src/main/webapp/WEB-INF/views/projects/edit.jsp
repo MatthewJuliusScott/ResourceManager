@@ -9,99 +9,118 @@
 	</head>
 	
 	<body>
-	
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
-		<div class="container-fluid">
-			<h1>Manage Project</h1>
-						
-			<div class="container-fluid">
-				<c:url var="addAction" value="/projects/save" ></c:url>
-				<form:form action="${addAction}" modelAttribute="project" method="POST" id="projectForm">
+		<div class="formContent">
+			<table cellpadding="0" cellspacing="0" class="tbl">
+				<tr>
+					<td>
+						<h1>Manage Project</h1>
+					</td>	
+				</tr>
 				
-					<form:hidden path="id" />
-								
-					<div class="form-group">
-						<form:label path="name">
-							<spring:message text="Name"/>
-						</form:label>
-						<form:input path="name" class="form-control"/>
-					</div>
-					<h2>Requirements</h2>
-					<table class="table">
-						<tr>
-							<th>Skill</th>
-							<th>Start Date</th>
-							<th>End Date</th>
-							<th>Hours</th>
-							<th>Allocated To</th>
-							<th>Delete</th>
-						</tr>
-						<c:forEach items="${project.allocations}" var="allocation">
-							<tr>
-								<td>
-									<select name="allocation_${allocation.id}_skillId" class="form-control">
-										<option value="${allocation.skill.id}" selected>${allocation.skill.name}</option>
-										<c:forEach items="${listSkills}" var="skill">
-											<c:if test="${skill.id != allocation.skill.id}">
+				<tr>
+					<td>
+						<div>
+						<c:url var="addAction" value="/projects/save" ></c:url>
+						<form:form action="${addAction}" modelAttribute="project" method="POST" id="projectForm">
+							<form:hidden path="id" />
+										
+							<table>
+								<tr>
+									<td>
+										<form:label path="name" style="font-weight: bold;">
+											<spring:message text="Project Name:"/>
+										</form:label>
+									</td>
+									<td>
+										<form:input path="name" style="margin-bottom: 15px; margin-left: 5px;"/>
+									</td>
+								</tr>
+							</table>							
+							
+							<h2>Requirements</h2>
+							<table class="tbl">
+								<tr>
+									<th class="tblHeader" style="padding-left: 5px;">Skill</th>
+									<th class="tblHeader">Start Date</th>
+									<th class="tblHeader">End Date</th>
+									<th class="tblHeader">Hours</th>
+									<th class="tblHeaderCenter">Allocated To</th>
+									<th class="tblHeaderCenter">Delete</th>
+								</tr>
+								<c:forEach items="${project.allocations}" var="allocation">
+									<tr>
+										<td class="tblDef">
+											<select name="allocation_${allocation.id}_skillId" class="form-control">
+												<option value="${allocation.skill.id}" selected>${allocation.skill.name}</option>
+												<c:forEach items="${listSkills}" var="skill">
+													<c:if test="${skill.id != allocation.skill.id}">
+														<option value="${skill.id}">${skill.name}</option>
+													</c:if>
+						                  		</c:forEach>
+					               			</select>
+					               		</td>
+										<td class="tblDef"><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
+										<td class="tblDef"><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
+										<td class="tblDef"><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control" style="width: 120px;"/></td>
+										<td class="tblDefCenter"><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> <span>${allocation.resource.name}</span></td>
+										<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
+									</tr>
+			                	</c:forEach>
+		                		<tr id="allocationTemplate" style="display: none">
+		                			<td>
+										<select name="allocation_0_skillId" class="form-control" required>
+											<option value="" disabled selected>Select...</option>
+											<c:forEach items="${listSkills}" var="skill">
 												<option value="${skill.id}">${skill.name}</option>
-											</c:if>
-				                  		</c:forEach>
-			               			</select>
-			               		</td>
-								<td><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
-								<td><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
-								<td><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control"/></td>
-								<td><input name="allocation_${allocation.id}_resourceId" type="hidden" value="${allocation.resource.id}"/><button type="button" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> <span>${allocation.resource.name}</span></td>
-								<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
-							</tr>
-	                	</c:forEach>
-                		<tr id="allocationTemplate" style="display: none">
-                			<td>
-								<select name="allocation_0_skillId" class="form-control" required>
-									<option value="" disabled selected>Select...</option>
-									<c:forEach items="${listSkills}" var="skill">
-										<option value="${skill.id}">${skill.name}</option>
-			                  		</c:forEach>
-		               			</select>
-		               		</td>
-							<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate" required/></td>
-							<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate" required/></td>
-							<td><input name="allocation_0_hours" type="text" class="form-control" required/></td>
-							<td></td>
-							<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
-                		</tr>
-	                	<tr id="addAllocationTR">
-	                		<td colspan="100%">
-	                	 		<button type="button" class="btn btn-primary btn-sm" onclick="addAllocation()"><i class="fas fa-plus"></i> Add Requirement</button>
-	                	 	</td>
-	                	</tr>
-                	</table>
-					<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
-           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
-           			
-           		</form:form>
-           		
-           		<!-- Modal -->
-				<div id="resourceModal" class="modal fade" role="dialog">
-					<div class="modal-dialog">
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">Available Resources</h4>
-							</div>
-							<input type="hidden" name="allocationId" id="allocationId">
-							<div class="modal-body">
-								
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
-								<button type="button" class="btn btn-success" data-dismiss="modal" onclick="allocate()"><i class="far fa-save"></i> Save</button>
-							</div>
+					                  		</c:forEach>
+				               			</select>
+				               		</td>
+									<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate" required/></td>
+									<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate" required/></td>
+									<td><input name="allocation_0_hours" type="text" class="form-control" required/></td>
+									<td></td>
+									<td><button type="button" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
+		                		</tr>
+		                		
+		                		<!-- Add Requirement button -->
+			                	<tr id="addAllocationTR">
+			                		<td colspan="100%">
+			                	 		<button type="button" class="tblButton" style="margin: 10px 0px;" onclick="addAllocation()"><i class="fas fa-plus"></i> Add Requirement</button>
+			                	 	</td>
+			                	</tr>
+		                	</table>
+		                	
+		                	<!-- Cancel/Save buttons -->
+							<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
+		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+						</form:form>
+						
+						
 						</div>
+					</td>	
+				</tr>
+			</table>
+		</div>
+           		
+    	<!-- Modal Popup -->
+		<div id="resourceModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Available Resources</h4>
+					</div>
+					<input type="hidden" name="allocationId" id="allocationId">
+					<div class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal" onclick="allocate()"><i class="far fa-save"></i> Save</button>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</body>
