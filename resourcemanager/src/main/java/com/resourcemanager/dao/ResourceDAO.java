@@ -3,8 +3,11 @@ package com.resourcemanager.dao;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.resourcemanager.model.Resource;
 
+@Repository
 public interface ResourceDAO {
 
 	public void addResource(Resource p);

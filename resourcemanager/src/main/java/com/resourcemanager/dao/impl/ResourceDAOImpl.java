@@ -84,7 +84,7 @@ public class ResourceDAOImpl implements ResourceDAO {
 			// and have greater than or equal to hours
 			Predicate skillIdMatch = builder.isMember(skillId, root.get("skills"));
 			Predicate greaterThanOrEqualHours = builder.ge(root.get("hours"), hours);
-			
+
 			// create a subquery to get resources that have allocations in the time period specified between startDate and endDate
 			Subquery<Long> sub = query.subquery(Long.class);
 			Root<Allocation> subRoot = sub.from(Allocation.class);
@@ -93,10 +93,10 @@ public class ResourceDAOImpl implements ResourceDAO {
 			Predicate endNoAllocationsInTimePeriod = builder.between(subRoot.get("endDate"), startDate, endDate);
 			sub.select(allocations.get("id"));
 			sub.where(builder.and(startNoAllocationsInTimePeriod, endNoAllocationsInTimePeriod));
-			
-			// exclude resources who have allocations during the specified time period 
+
+			// exclude resources who have allocations during the specified time period
 			Predicate priorAllocations = root.get("id").in(sub).not();
-					
+
 			query.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours, priorAllocations));
 			query.orderBy(builder.desc(root.get("hours")));
 
