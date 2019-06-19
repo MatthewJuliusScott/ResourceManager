@@ -12,6 +12,7 @@
 		<hibernate-version>5.4.2.Final</hibernate-version>
 		<mysql-version>8.0.15</mysql-version>
 		<tomcat-version>9.0.17</tomcat-version>
+		<start-class>com.resourcemanager.Application</start-class>
 	</properties>
     <build>
         <plugins>
@@ -21,9 +22,6 @@
                 <configuration>
                     <source>${java-version}</source>
                     <target>${java-version}</target>
-                    <compilerArguments>
-			        	<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-			        </compilerArguments>
                 </configuration>
             </plugin>
             
@@ -38,62 +36,15 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
-			    <artifactId>maven-compiler-plugin</artifactId>
+            
+            <plugin>
+			    <artifactId>maven-war-plugin</artifactId>
+			    <version>2.6</version>
 			    <configuration>
-			        <source>${java-version}</source>
-			        <target>${java-version}</target>
-			        <compilerArgument>-proc:none</compilerArgument>
+			    	 <warName>ResourceManager</warName>
+			         <failOnMissingWebXml>false</failOnMissingWebXml>
 			    </configuration>
 			</plugin>
-	
-			<plugin>
-			    <groupId>org.bsc.maven</groupId>
-			    <artifactId>maven-processor-plugin</artifactId>
-			    <version>2.0.5</version>
-			    <executions>
-			        <execution>
-			            <id>process</id>
-			            <goals>
-			                <goal>process</goal>
-			            </goals>
-			            <phase>generate-sources</phase>
-			            <configuration>
-			                <processors>
-			                    <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-			                </processors>
-			            </configuration>
-			        </execution>
-			    </executions>
-			    <dependencies>
-			        <dependency>
-			            <groupId>org.hibernate</groupId>
-			            <artifactId>hibernate-jpamodelgen</artifactId>
-			            <version>${hibernate-version}</version>
-			        </dependency>
-			    </dependencies>
-			</plugin>
-			
-			<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>target\generated-sources\apt</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 	
         </plugins>
     </build>
@@ -126,6 +77,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -177,6 +132,96 @@
 		    <artifactId>guava</artifactId>
 		    <version>27.1-jre</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+		<dependency>
+		    <groupId>org.mockito</groupId>
+		    <artifactId>mockito-all</artifactId>
+		    <version>2.0.2-beta</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-module-junit4</artifactId>
+		    <version>2.0.0</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+		<dependency>
+		    <groupId>org.powermock</groupId>
+		    <artifactId>powermock-api-mockito</artifactId>
+		    <version>1.7.4</version>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit-addons</groupId>
+			<artifactId>junit-addons</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.4.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>2.0.2-beta</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>2.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.7.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<version>2.1</version>
+			<scope>test</scope>
+		</dependency>		
     </dependencies>
 
 </project>
