@@ -20,12 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.resourcemanager.service.ResourceService;
+import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.SkillService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ResourceControllerTest {
+public class ProjectControllerTest {
 
 	@Autowired
 	private WebApplicationContext	context;
@@ -33,7 +33,7 @@ public class ResourceControllerTest {
 	private MockMvc					mvc;
 
 	@MockBean
-	private ResourceService			resourceService;
+	private ProjectService			projectService;
 
 	@MockBean
 	private SkillService			skillService;
@@ -43,10 +43,21 @@ public class ResourceControllerTest {
 	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources/delete/0")
+		mvc.perform(get("/projects/delete/0")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/resources"));
+			.andExpect(redirectedUrl("/projects"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	public void givenRequestMapping_whenEditProject0_thenForwardToEditJSP()
+		throws Exception {
+
+		mvc.perform(get("/projects/edit/0")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/projects/edit.jsp"));
 	}
 
 	@Test
@@ -62,13 +73,13 @@ public class ResourceControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
-	public void givenRequestMapping_whenGetResources_thenForwardToResourcesJSP()
+	public void givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources")
+		mvc.perform(get("/projects")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/resources.jsp"));
+			.andExpect(forwardedUrl("/WEB-INF/views/projects.jsp"));
 	}
 
 	@Before
