@@ -1,10 +1,8 @@
 package com.resourcemanager.controller;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -48,9 +46,8 @@ public class ResourceControllerTest {
 		given(resourceService.listResources()).willReturn(allResources);
 
 		mvc.perform(get("/resources")
-			.contentType(MediaType.APPLICATION_JSON))
+			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$", hasSize(1)))
-			.andExpect(jsonPath("$[0].name", is(expected.getName())));
+			.andExpect(forwardedUrl("/WEB-INF/views/resources.jsp"));
 	}
 }
