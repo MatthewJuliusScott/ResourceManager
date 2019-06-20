@@ -20,7 +20,7 @@ public class SecurityTest {
 	private ProjectService service;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenAuthenticated_whenCallServiceWithSecured_thenOk() {
 		assertThat(service.listProjects()).isNotEmpty();
 	}

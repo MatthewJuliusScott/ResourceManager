@@ -29,7 +29,7 @@ public class SkillControllerTest {
 	private MockMvc					mvc;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -40,7 +40,7 @@ public class SkillControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenEditResource0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -51,7 +51,7 @@ public class SkillControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenEditSkill0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -62,7 +62,7 @@ public class SkillControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP()
 		throws Exception {
 

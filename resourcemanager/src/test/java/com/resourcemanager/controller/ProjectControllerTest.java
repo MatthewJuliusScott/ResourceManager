@@ -32,7 +32,7 @@ public class ProjectControllerTest {
 	private MockMvc					mvc;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP()
 		throws Exception {
 
@@ -43,7 +43,7 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenEditProject0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -54,7 +54,7 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenEditResource0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -65,7 +65,7 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
 	public void givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP()
 		throws Exception {
 
