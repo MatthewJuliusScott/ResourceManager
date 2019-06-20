@@ -1,13 +1,9 @@
 package com.resourcemanager.controller;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 
@@ -44,15 +39,19 @@ public class ResourceControllerTest {
 
 	@Test
 	@WithMockUser(username = "user", password = "password", roles = "ADMIN")
-	public void givenResources_whenGetResources_thenReturnJsonArray()
+	public void givenRequestMapping_whenEditResource0_thenForwardToEditJSP()
 		throws Exception {
 
-		Resource expected = new Resource();
-		expected.setName("Test Person");
+		mvc.perform(get("/resources/edit/0")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/resources/edit.jsp"));
+	}
 
-		List<Resource> allResources = Arrays.asList(expected);
-
-		given(resourceService.listResources()).willReturn(allResources);
+	@Test
+	@WithMockUser(username = "user", password = "password", roles = "ADMIN")
+	public void givenRequestMapping_whenGetResources_thenForwardToResourcesJSP()
+		throws Exception {
 
 		mvc.perform(get("/resources")
 			.contentType(MediaType.TEXT_HTML))
