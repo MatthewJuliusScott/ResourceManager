@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ProjectControllerTest {
+public class SkillControllerTest {
 
 	@Autowired
 	private WebApplicationContext	context;
@@ -30,24 +30,13 @@ public class ProjectControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
-	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
+	public void givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/projects/delete/1")
+		mvc.perform(get("/skills/delete/1")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/projects"));
-	}
-
-	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
-	public void givenRequestMapping_whenEditProject0_thenForwardToEditJSP()
-		throws Exception {
-
-		mvc.perform(get("/projects/edit/0")
-			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/projects/edit.jsp"));
+			.andExpect(redirectedUrl("/skills"));
 	}
 
 	@Test
@@ -63,13 +52,24 @@ public class ProjectControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
-	public void givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP()
+	public void givenRequestMapping_whenEditSkill0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/projects")
+		mvc.perform(get("/skills/edit/0")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/projects.jsp"));
+			.andExpect(forwardedUrl("/WEB-INF/views/skills/edit.jsp"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	public void givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP()
+		throws Exception {
+
+		mvc.perform(get("/skills")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/skills.jsp"));
 	}
 
 	@Before

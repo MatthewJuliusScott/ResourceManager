@@ -12,16 +12,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.resourcemanager.service.ResourceService;
-import com.resourcemanager.service.SkillService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -32,18 +28,12 @@ public class ResourceControllerTest {
 
 	private MockMvc					mvc;
 
-	@MockBean
-	private ResourceService			resourceService;
-
-	@MockBean
-	private SkillService			skillService;
-
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
 	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources/delete/0")
+		mvc.perform(get("/resources/delete/1")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(redirectedUrl("/resources"));
