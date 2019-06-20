@@ -40,7 +40,7 @@ public class ResourceController {
 		return "redirect:/resources";
 	}
 
-	@RequestMapping("resources/edit/{id}")
+	@RequestMapping(value = { "/resources/edit/{id}" }, method = RequestMethod.GET)
 	public String editResource(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("resource", this.resourceService.getResourceById(id));

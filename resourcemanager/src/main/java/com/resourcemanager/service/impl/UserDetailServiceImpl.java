@@ -21,7 +21,8 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService {
 	private UserDAO userDao;
 
 	private List<GrantedAuthority> getAuthority() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
+		// TODO : will need to implement different role levels and include that in our UserDetail model
 	}
 
 	@Override

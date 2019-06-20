@@ -30,6 +30,17 @@ public class ResourceControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
+	public void givenRequestMapping_whenAddProject_thenForwardToEditJSP()
+		throws Exception {
+
+		mvc.perform(get("/resources/add")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrl("/resources/edit/0"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
 	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
 		throws Exception {
 

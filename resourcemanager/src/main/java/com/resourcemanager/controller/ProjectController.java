@@ -41,19 +41,19 @@ public class ProjectController {
 	@Autowired
 	private AllocationService	allocationService;
 
-	@RequestMapping("projects/add")
+	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String addProject() {
 		return "redirect:/projects/edit/0";
 	}
 
-	@RequestMapping("/projects/delete/{id}")
+	@RequestMapping(value = { "/projects/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteProject(@PathVariable("id") Long id) {
 
 		this.projectService.deleteProject(id);
 		return "redirect:/projects";
 	}
 
-	@RequestMapping("projects/edit/{id}")
+	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project", this.projectService.getProjectById(id));
@@ -140,7 +140,7 @@ public class ProjectController {
 						resource.addAllocation(allocation);
 					}
 					project.addAllocation(allocation);
-					
+
 					allocationService.updateAllocation(allocation);
 
 				}

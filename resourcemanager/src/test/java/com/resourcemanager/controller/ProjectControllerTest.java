@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,8 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.resourcemanager.config.SpringSecurityConfig;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@Import(SpringSecurityConfig.class)
 public class ProjectControllerTest {
 
 	@Autowired
@@ -30,7 +33,7 @@ public class ProjectControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = "ADMIN")
-	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
+	public void givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP()
 		throws Exception {
 
 		mvc.perform(get("/projects/delete/1")
