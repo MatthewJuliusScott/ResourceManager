@@ -1,4 +1,4 @@
-package com.resourcemanager.controller;
+package com.resourcemanager.functionality.tests;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,9 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.resourcemanager.config.SpringSecurityConfig;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ResourceControllerTest {
+@SpringBootTest
+@Import(SpringSecurityConfig.class)
+public class ProjectControllerTest {
 
 	@Autowired
 	private WebApplicationContext	context;
@@ -30,24 +33,24 @@ public class ResourceControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenAddProject_thenForwardToEditJSP()
+	public void givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources/add")
+		mvc.perform(get("/projects/delete/1")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/resources/edit/0"));
+			.andExpect(redirectedUrl("/projects"));
 	}
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
+	public void givenRequestMapping_whenEditProject0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources/delete/1")
+		mvc.perform(get("/projects/edit/0")
 			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/resources"));
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/projects/edit.jsp"));
 	}
 
 	@Test
@@ -63,13 +66,13 @@ public class ResourceControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenGetResources_thenForwardToResourcesJSP()
+	public void givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP()
 		throws Exception {
 
-		mvc.perform(get("/resources")
+		mvc.perform(get("/projects")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/resources.jsp"));
+			.andExpect(forwardedUrl("/WEB-INF/views/projects.jsp"));
 	}
 
 	@Before

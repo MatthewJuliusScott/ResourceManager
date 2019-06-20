@@ -1,5 +1,5 @@
 
-package com.resourcemanager.controller;
+package com.resourcemanager.functionality.tests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

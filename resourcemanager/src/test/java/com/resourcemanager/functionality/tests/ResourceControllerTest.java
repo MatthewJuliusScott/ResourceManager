@@ -1,4 +1,4 @@
-package com.resourcemanager.controller;
+package com.resourcemanager.functionality.tests;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SkillControllerTest {
+public class ResourceControllerTest {
 
 	@Autowired
 	private WebApplicationContext	context;
@@ -29,14 +29,25 @@ public class SkillControllerTest {
 	private MockMvc					mvc;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
-	public void givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP()
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	public void givenRequestMapping_whenAddProject_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/skills/delete/1")
+		mvc.perform(get("/resources/add")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/skills"));
+			.andExpect(redirectedUrl("/resources/edit/0"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
+		throws Exception {
+
+		mvc.perform(get("/resources/delete/1")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrl("/resources"));
 	}
 
 	@Test
@@ -52,24 +63,13 @@ public class SkillControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenEditSkill0_thenForwardToEditJSP()
+	public void givenRequestMapping_whenGetResources_thenForwardToResourcesJSP()
 		throws Exception {
 
-		mvc.perform(get("/skills/edit/0")
+		mvc.perform(get("/resources")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/skills/edit.jsp"));
-	}
-
-	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP()
-		throws Exception {
-
-		mvc.perform(get("/skills")
-			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/skills.jsp"));
+			.andExpect(forwardedUrl("/WEB-INF/views/resources.jsp"));
 	}
 
 	@Before

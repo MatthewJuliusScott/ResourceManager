@@ -1,4 +1,4 @@
-package com.resourcemanager.controller;
+package com.resourcemanager.functionality.tests;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

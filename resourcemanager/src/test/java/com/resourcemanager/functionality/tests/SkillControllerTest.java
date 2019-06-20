@@ -1,4 +1,4 @@
-package com.resourcemanager.controller;
+package com.resourcemanager.functionality.tests;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,12 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.resourcemanager.config.SpringSecurityConfig;
-
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@Import(SpringSecurityConfig.class)
-public class ProjectControllerTest {
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class SkillControllerTest {
 
 	@Autowired
 	private WebApplicationContext	context;
@@ -32,25 +29,14 @@ public class ProjectControllerTest {
 	private MockMvc					mvc;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP()
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
+	public void givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/projects/delete/1")
+		mvc.perform(get("/skills/delete/1")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/projects"));
-	}
-
-	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenEditProject0_thenForwardToEditJSP()
-		throws Exception {
-
-		mvc.perform(get("/projects/edit/0")
-			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/projects/edit.jsp"));
+			.andExpect(redirectedUrl("/skills"));
 	}
 
 	@Test
@@ -66,13 +52,24 @@ public class ProjectControllerTest {
 
 	@Test
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
-	public void givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP()
+	public void givenRequestMapping_whenEditSkill0_thenForwardToEditJSP()
 		throws Exception {
 
-		mvc.perform(get("/projects")
+		mvc.perform(get("/skills/edit/0")
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/projects.jsp"));
+			.andExpect(forwardedUrl("/WEB-INF/views/skills/edit.jsp"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	public void givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP()
+		throws Exception {
+
+		mvc.perform(get("/skills")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/skills.jsp"));
 	}
 
 	@Before
