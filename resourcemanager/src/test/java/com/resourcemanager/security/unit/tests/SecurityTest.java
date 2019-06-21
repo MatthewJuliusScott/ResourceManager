@@ -1,4 +1,4 @@
-package com.resourcemanager.security.tests;
+package com.resourcemanager.security.unit.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

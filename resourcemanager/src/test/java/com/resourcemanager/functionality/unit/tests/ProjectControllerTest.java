@@ -1,4 +1,4 @@
-package com.resourcemanager.functionality.tests;
+package com.resourcemanager.functionality.unit.tests;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
