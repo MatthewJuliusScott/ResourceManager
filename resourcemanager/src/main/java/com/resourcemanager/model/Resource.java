@@ -40,8 +40,9 @@ public class Resource {
 	/** The skills. */
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(name = "resource_skill", joinColumns = {
-	        @JoinColumn(name = "resource_id")}, inverseJoinColumns = {
-	                @JoinColumn(name = "skill_id")})
+			@JoinColumn(name = "resource_id") },
+		inverseJoinColumns = {
+				@JoinColumn(name = "skill_id") })
 	@OrderColumn(name = "order_col")
 	private List<Skill>			skills		= new ArrayList<>();
 
@@ -54,9 +55,31 @@ public class Resource {
 	private int					hours;
 
 	/**
+	 * Instantiates a new resource.
+	 */
+	public Resource() {
+		super();
+	}
+
+	/**
+	 * Instantiates a new resource.
+	 *
+	 * @param name
+	 *            the name
+	 * @param hours
+	 *            the hours
+	 */
+	public Resource(String name, int hours) {
+		super();
+		this.name = name;
+		this.hours = hours;
+	}
+
+	/**
 	 * Adds the allocation.
 	 *
-	 * @param allocation the allocation
+	 * @param allocation
+	 *            the allocation
 	 */
 	public void addAllocation(Allocation allocation) {
 		allocations.add(allocation);
@@ -65,7 +88,8 @@ public class Resource {
 	/**
 	 * Adds the skill.
 	 *
-	 * @param skill the skill
+	 * @param skill
+	 *            the skill
 	 */
 	public void addSkill(Skill skill) {
 		skills.add(skill);
@@ -74,7 +98,6 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -93,7 +116,7 @@ public class Resource {
 			if (other.allocations != null) {
 				return false;
 			}
-		} else if (!allocations.equals(other.allocations)) {
+		} else if (!allocations.containsAll(other.allocations)) {
 			return false;
 		}
 		if (hours != other.hours) {
@@ -166,15 +189,13 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-		        + ((allocations == null) ? 0 : allocations.hashCode());
+		result = prime * result + ((allocations == null) ? 0 : allocations.hashCode());
 		result = prime * result + hours;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -198,15 +219,16 @@ public class Resource {
 	/**
 	 * Removes the allocation.
 	 *
-	 * @param allocation the allocation
+	 * @param allocation
+	 *            the allocation
 	 */
 	public void removeAllocation(Allocation allocation) {
 		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
-		        .hasNext();) {
+			.hasNext();) {
 			Allocation i = iterator.next();
 
 			if (i.getResource() != null && i.getResource().equals(this)
-			        && i.equals(allocation)) {
+				&& i.equals(allocation)) {
 				iterator.remove();
 			}
 		}
@@ -215,11 +237,12 @@ public class Resource {
 	/**
 	 * Removes the skill.
 	 *
-	 * @param skill the skill
+	 * @param skill
+	 *            the skill
 	 */
 	public void removeSkill(Skill skill) {
 		for (Iterator<Skill> iterator = skills.iterator(); iterator
-		        .hasNext();) {
+			.hasNext();) {
 			Skill i = iterator.next();
 			for (Resource resource : i.getResources()) {
 				if (resource.equals(this) && i.equals(skill)) {
@@ -233,7 +256,8 @@ public class Resource {
 	/**
 	 * Sets the allocations.
 	 *
-	 * @param allocations the new allocations
+	 * @param allocations
+	 *            the new allocations
 	 */
 	public void setAllocations(List<Allocation> allocations) {
 		this.allocations = allocations;
@@ -242,7 +266,8 @@ public class Resource {
 	/**
 	 * Sets the hours.
 	 *
-	 * @param hours the new hours
+	 * @param hours
+	 *            the new hours
 	 */
 	public void setHours(int hours) {
 		this.hours = hours;
@@ -251,7 +276,8 @@ public class Resource {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -260,7 +286,8 @@ public class Resource {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -269,7 +296,8 @@ public class Resource {
 	/**
 	 * Sets the skills.
 	 *
-	 * @param skills the new skills
+	 * @param skills
+	 *            the new skills
 	 */
 	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
@@ -277,13 +305,12 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Resource [id=" + id + ", name=" + name + ", hours=" + hours
-		        + "]";
+			+ "]";
 	}
 
 }
