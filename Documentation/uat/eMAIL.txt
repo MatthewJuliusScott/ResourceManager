@@ -1,0 +1,131 @@
+RE: UAT Script - Locate and assign resource.docx
+Jon Rogers
+Thu 6/20/2019 1:17 PM
+Hi Aaron,
+
+ 
+
+Tests completed, some comments included.
+
+ 
+
+Thanks,
+
+Jon.
+
+
+Delivery Manager, Professional Services
+
+Micro Focus
+
+Level 2, Building 4 Equinox
+
+70 Kent Street
+
+Deakin ACT 2600
+
+ 
+
+(M): +61 419 353 004
+jon.rogers@microfocus.com
+
+ 
+
+Planned Leave
+
+-          8th – 23rd August
+
+ cid:image003.png@01D3227F.64D1FA30
+
+ 
+
+Entco Australia Pty Ltd | Registered Office: Level 8, 76 Berry Street, North Sydney NSW 2060  | ABN 73 614 548 346 |
+
+ 
+
+This e-mail may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosure by others is strictly prohibited. If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply e-mail and delete all copies of this message.
+
+ 
+
+From: Aaron Brody 
+Sent: Wednesday, 19 June 2019 8:20 PM
+To: Jon Rogers <jon.rogers@microfocus.com>
+Subject: Re: UAT Script - Locate and assign resource.docx
+
+ 
+
+Jon,
+
+ 
+
+Have you had any progress getting this done?
+
+ 
+
+Thanks,
+
+Aaron
+
+From: Aaron Brody
+Sent: Saturday, June 15, 2019 9:03 AM
+To: Jon Rogers
+Subject: UAT Script - Locate and assign resource.docx
+
+ 
+
+Jon,
+
+ 
+
+Please find attached UAT script.
+
+ 
+
+Connect to https://ms.havealookdemo.com.au .
+
+ 
+
+User: user@gmail.com
+
+ 
+
+Password: password
+
+ 
+
+Currently we don’t have a method for creating users so every user has the same password.
+
+Also anything not on the scripts is not necessarily functional so may not work as intended
+
+ 
+
+If you need help let me know.
+
+ 
+
+ 
+
+Aaron Brody
+
+Technical Consultant, Professional Services
+
+Micro Focus
+
+Level 2, Building 4 Equinox
+
+70 Kent Street
+
+Deakin ACT 2600
+
+(M)+61 400 788 555
+
+Aaron.Brody@microfocus.com
+
+
+ 
+
+Entco Australia Pty Ltd | Registered Office: Level 8, 76 Berry Street, North Sydney NSW 2060 | ABN 73 614 548 346 |
+
+This e-mail may contain confidential and privileged material for the sole use of the intended recipient. Any review, use, distribution or disclosure by others is strictly prohibited. If you are not the intended recipient (or authorized to receive for the recipient), please contact the sender by reply e-mail and delete all copies of this message
+
+ 
