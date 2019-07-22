@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Resource.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.model</a> &gt; <span class="el_source">Resource.java</span></div><h1>Resource.java</h1><pre class="source lang-java linenums">
+package com.resourcemanager.model;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
+import javax.persistence.Table;
+
+/**
+ * The Class Resource.
+ */
+@Entity
+@Table(name = &quot;resource&quot;)
+public class Resource {
+
+	/** The id. */
+	@Id
+	@Column(name = &quot;resource_id&quot;)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long				id;
+
+	/** The name. */
+	private String				name;
+
+	/** The skills. */
+<span class="fc" id="L41">	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)</span>
+	@JoinTable(name = &quot;resource_skill&quot;, joinColumns = {
+			@JoinColumn(name = &quot;resource_id&quot;) },
+		inverseJoinColumns = {
+				@JoinColumn(name = &quot;skill_id&quot;) })
+	@OrderColumn(name = &quot;order_col&quot;)
+	private List&lt;Skill&gt;			skills		= new ArrayList&lt;&gt;();
+
+	/** The allocations. */
+<span class="fc" id="L50">	@OneToMany(mappedBy = &quot;project&quot;, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)</span>
+	private List&lt;Allocation&gt;	allocations	= new ArrayList&lt;&gt;();
+
+	/** The hours. */
+	@Basic
+	private int					hours;
+
+	/**
+	 * Instantiates a new resource.
+	 */
+	public Resource() {
+<span class="fc" id="L61">		super();</span>
+<span class="fc" id="L62">	}</span>
+
+	/**
+	 * Instantiates a new resource.
+	 *
+	 * @param name
+	 *            the name
+	 * @param hours
+	 *            the hours
+	 */
+	public Resource(String name, int hours) {
+<span class="fc" id="L73">		super();</span>
+<span class="fc" id="L74">		this.name = name;</span>
+<span class="fc" id="L75">		this.hours = hours;</span>
+<span class="fc" id="L76">	}</span>
+
+	/**
+	 * Adds the allocation.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void addAllocation(Allocation allocation) {
+<span class="nc" id="L85">		allocations.add(allocation);</span>
+<span class="nc" id="L86">	}</span>
+
+	/**
+	 * Adds the skill.
+	 *
+	 * @param skill
+	 *            the skill
+	 */
+	public void addSkill(Skill skill) {
+<span class="fc" id="L95">		skills.add(skill);</span>
+<span class="fc" id="L96">		skill.getResources().add(this);</span>
+<span class="fc" id="L97">	}</span>
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (this == obj) {</span>
+<span class="fc" id="L106">			return true;</span>
+		}
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (obj == null) {</span>
+<span class="nc" id="L109">			return false;</span>
+		}
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L112">			return false;</span>
+		}
+<span class="fc" id="L114">		Resource other = (Resource) obj;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (allocations == null) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (other.allocations != null) {</span>
+<span class="nc" id="L117">				return false;</span>
+			}
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		} else if (!allocations.containsAll(other.allocations)) {</span>
+<span class="nc" id="L120">			return false;</span>
+		}
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (hours != other.hours) {</span>
+<span class="fc" id="L123">			return false;</span>
+		}
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (id != other.id) {</span>
+<span class="fc" id="L126">			return false;</span>
+		}
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (name == null) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (other.name != null) {</span>
+<span class="nc" id="L130">				return false;</span>
+			}
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		} else if (!name.equals(other.name)) {</span>
+<span class="nc" id="L133">			return false;</span>
+		}
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (skills == null) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (other.skills != null) {</span>
+<span class="nc" id="L137">				return false;</span>
+			}
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		} else if (!skills.equals(other.skills)) {</span>
+<span class="nc" id="L140">			return false;</span>
+		}
+<span class="fc" id="L142">		return true;</span>
+	}
+
+	/**
+	 * Gets the allocations.
+	 *
+	 * @return the allocations
+	 */
+	public List&lt;Allocation&gt; getAllocations() {
+<span class="nc" id="L151">		return allocations;</span>
+	}
+
+	/**
+	 * Gets the hours.
+	 *
+	 * @return the hours
+	 */
+	public int getHours() {
+<span class="nc" id="L160">		return hours;</span>
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public long getId() {
+<span class="nc" id="L169">		return id;</span>
+	}
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+<span class="fc" id="L178">		return name;</span>
+	}
+
+	/**
+	 * Gets the skills.
+	 *
+	 * @return the skills
+	 */
+	public List&lt;Skill&gt; getSkills() {
+<span class="fc" id="L187">		return skills;</span>
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+<span class="nc" id="L196">		final int prime = 31;</span>
+<span class="nc" id="L197">		int result = 1;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		result = prime * result + ((allocations == null) ? 0 : allocations.hashCode());</span>
+<span class="nc" id="L199">		result = prime * result + hours;</span>
+<span class="nc" id="L200">		result = prime * result + (int) (id ^ (id &gt;&gt;&gt; 32));</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">		result = prime * result + ((name == null) ? 0 : name.hashCode());</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		result = prime * result + ((skills == null) ? 0 : skills.hashCode());</span>
+<span class="nc" id="L203">		return result;</span>
+	}
+
+	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (Skill skill : new ArrayList&lt;Skill&gt;(skills)) {</span>
+<span class="fc" id="L212">			removeSkill(skill);</span>
+<span class="fc" id="L213">		}</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		for (Allocation allocation : new ArrayList&lt;Allocation&gt;(allocations)) {</span>
+<span class="nc" id="L215">			removeAllocation(allocation);</span>
+<span class="nc" id="L216">		}</span>
+<span class="fc" id="L217">	}</span>
+
+	/**
+	 * Removes the allocation.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void removeAllocation(Allocation allocation) {
+<span class="nc" id="L226">		for (Iterator&lt;Allocation&gt; iterator = allocations.iterator(); iterator</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">			.hasNext();) {</span>
+<span class="nc" id="L228">			Allocation i = iterator.next();</span>
+
+<span class="nc bnc" id="L230" title="All 4 branches missed.">			if (i.getResource() != null &amp;&amp; i.getResource().equals(this)</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">				&amp;&amp; i.equals(allocation)) {</span>
+<span class="nc" id="L232">				iterator.remove();</span>
+			}
+<span class="nc" id="L234">		}</span>
+<span class="nc" id="L235">	}</span>
+
+	/**
+	 * Removes the skill.
+	 *
+	 * @param skill
+	 *            the skill
+	 */
+	public void removeSkill(Skill skill) {
+<span class="fc" id="L244">		for (Iterator&lt;Skill&gt; iterator = skills.iterator(); iterator</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			.hasNext();) {</span>
+<span class="fc" id="L246">			Skill i = iterator.next();</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			for (Resource resource : i.getResources()) {</span>
+<span class="fc bfc" id="L248" title="All 4 branches covered.">				if (resource.equals(this) &amp;&amp; i.equals(skill)) {</span>
+<span class="fc" id="L249">					iterator.remove();</span>
+				}
+<span class="fc" id="L251">			}</span>
+<span class="fc" id="L252">		}</span>
+<span class="fc" id="L253">		skill.getResources().remove(this);</span>
+<span class="fc" id="L254">	}</span>
+
+	/**
+	 * Sets the allocations.
+	 *
+	 * @param allocations
+	 *            the new allocations
+	 */
+	public void setAllocations(List&lt;Allocation&gt; allocations) {
+<span class="nc" id="L263">		this.allocations = allocations;</span>
+<span class="nc" id="L264">	}</span>
+
+	/**
+	 * Sets the hours.
+	 *
+	 * @param hours
+	 *            the new hours
+	 */
+	public void setHours(int hours) {
+<span class="nc" id="L273">		this.hours = hours;</span>
+<span class="nc" id="L274">	}</span>
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
+	public void setId(long id) {
+<span class="fc" id="L283">		this.id = id;</span>
+<span class="fc" id="L284">	}</span>
+
+	/**
+	 * Sets the name.
+	 *
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(String name) {
+<span class="fc" id="L293">		this.name = name;</span>
+<span class="fc" id="L294">	}</span>
+
+	/**
+	 * Sets the skills.
+	 *
+	 * @param skills
+	 *            the new skills
+	 */
+	public void setSkills(List&lt;Skill&gt; skills) {
+<span class="nc" id="L303">		this.skills = skills;</span>
+<span class="nc" id="L304">	}</span>
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L312">		return &quot;Resource [id=&quot; + id + &quot;, name=&quot; + name + &quot;, hours=&quot; + hours</span>
+			+ &quot;]&quot;;
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

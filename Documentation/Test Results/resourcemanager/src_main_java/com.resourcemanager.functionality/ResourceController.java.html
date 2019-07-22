@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResourceController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.functionality</a> &gt; <span class="el_source">ResourceController.java</span></div><h1>ResourceController.java</h1><pre class="source lang-java linenums">package com.resourcemanager.functionality;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.resourcemanager.model.Resource;
+import com.resourcemanager.service.ResourceService;
+import com.resourcemanager.service.SkillService;
+
+@Controller
+<span class="fc" id="L23">public class ResourceController {</span>
+
+	@Autowired
+	private ResourceService	resourceService;
+
+	@Autowired
+	private SkillService	skillService;
+
+	@RequestMapping(&quot;resources/add&quot;)
+	public String addResource() {
+<span class="fc" id="L33">		return &quot;redirect:/resources/edit/0&quot;;</span>
+	}
+
+	@RequestMapping(&quot;resources/delete/{id}&quot;)
+	public String deleteResource(@PathVariable(&quot;id&quot;) Long id) {
+
+<span class="fc" id="L39">		this.resourceService.deleteResource(id);</span>
+<span class="fc" id="L40">		return &quot;redirect:/resources&quot;;</span>
+	}
+
+	@RequestMapping(value = { &quot;/resources/edit/{id}&quot; }, method = RequestMethod.GET)
+	public String editResource(@PathVariable(&quot;id&quot;) Long id, Model model) {
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (id &gt; 0) {</span>
+<span class="nc" id="L46">			model.addAttribute(&quot;resource&quot;, this.resourceService.getResourceById(id));</span>
+		} else {
+<span class="fc" id="L48">			model.addAttribute(&quot;resource&quot;, new Resource());</span>
+		}
+<span class="fc" id="L50">		model.addAttribute(&quot;listResources&quot;, this.resourceService.listResources());</span>
+<span class="fc" id="L51">		model.addAttribute(&quot;listSkills&quot;, this.skillService.listSkills());</span>
+<span class="fc" id="L52">		return &quot;resources/edit&quot;;</span>
+	}
+
+	@RequestMapping(value = { &quot;/resources&quot; }, method = RequestMethod.GET)
+	public String listResources(Model model) {
+<span class="fc" id="L57">		model.addAttribute(&quot;resource&quot;, new Resource());</span>
+<span class="fc" id="L58">		model.addAttribute(&quot;listResources&quot;, this.resourceService.listResources());</span>
+<span class="fc" id="L59">		return &quot;resources&quot;;</span>
+	}
+
+	// For add and update resource both
+	@RequestMapping(value = &quot;/resources/save&quot;, method = RequestMethod.POST)
+	public String saveResource(@ModelAttribute(&quot;resource&quot;) Resource p, BindingResult result) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (result.hasErrors()) {</span>
+<span class="nc" id="L66">			System.err.println(result.toString());</span>
+		}
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (p.getId() == 0) {</span>
+			// new resource, add it
+<span class="nc" id="L70">			this.resourceService.addResource(p);</span>
+		} else {
+			// existing resource, call update
+<span class="nc" id="L73">			this.resourceService.updateResource(p);</span>
+		}
+<span class="nc" id="L75">		return &quot;redirect:/resources&quot;;</span>
+	}
+
+	@RequestMapping(value = { &quot;/resources/search&quot; }, method = RequestMethod.GET)
+	public String searchResources(Model model, @RequestParam(&quot;skillId&quot;) String skillId,
+		@RequestParam(&quot;startDate&quot;) String startDate, @RequestParam(&quot;endDate&quot;) String endDate,
+		@RequestParam(&quot;hours&quot;) String hours) {
+
+<span class="nc" id="L83">		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;dd/MM/uuuu&quot;);</span>
+
+<span class="nc" id="L85">		List&lt;Resource&gt; resources = new ArrayList&lt;Resource&gt;();</span>
+
+		try {
+<span class="nc" id="L88">			resources = this.resourceService.searchResources(Long.parseLong(skillId),</span>
+<span class="nc" id="L89">				LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter),</span>
+<span class="nc" id="L90">				Integer.parseInt(hours));</span>
+<span class="nc" id="L91">		} catch (Exception e) {</span>
+			// TODO : friendly error reporting
+<span class="nc" id="L93">		}</span>
+
+<span class="nc" id="L95">		model.addAttribute(&quot;resource&quot;, new Resource());</span>
+<span class="nc" id="L96">		model.addAttribute(&quot;listResources&quot;, resources);</span>
+<span class="nc" id="L97">		return &quot;resources/searchResult&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

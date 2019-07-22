@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SkillDAOImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.dao.impl</a> &gt; <span class="el_source">SkillDAOImpl.java</span></div><h1>SkillDAOImpl.java</h1><pre class="source lang-java linenums">package com.resourcemanager.dao.impl;
+
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.resourcemanager.dao.SkillDAO;
+import com.resourcemanager.model.Skill;
+
+@Repository
+<span class="fc" id="L21">public class SkillDAOImpl implements SkillDAO {</span>
+
+<span class="fc" id="L23">	private static final Logger		logger	= LoggerFactory.getLogger(SkillDAOImpl.class);</span>
+
+	@Autowired
+	private EntityManagerFactory	entityManager;
+
+	@Override
+	public void addSkill(Skill skill) {
+<span class="nc" id="L30">		getCurrentSession().persist(skill);</span>
+<span class="nc" id="L31">		logger.info(&quot;Skill saved successfully, Skill Details=&quot; + skill);</span>
+<span class="nc" id="L32">	}</span>
+
+	@Override
+	public void deleteSkill(Long id) {
+<span class="fc" id="L36">		Skill skill = getCurrentSession().find(Skill.class, id);</span>
+<span class="fc" id="L37">		getCurrentSession().remove(skill);</span>
+<span class="fc" id="L38">		logger.info(&quot;Skill deleted successfully, skill details=&quot; + skill);</span>
+<span class="fc" id="L39">	}</span>
+
+	protected Session getCurrentSession() {
+<span class="fc" id="L42">		return entityManager.unwrap(SessionFactory.class).getCurrentSession();</span>
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+<span class="fc" id="L46">		return entityManager.unwrap(SessionFactory.class);</span>
+	}
+
+	@Override
+	public Skill getSkillById(Long id) {
+<span class="fc" id="L51">		Skill skill = getCurrentSession().find(Skill.class, id);</span>
+<span class="fc" id="L52">		logger.info(&quot;Skill retrieved successfully, skill details=&quot; + skill);</span>
+<span class="fc" id="L53">		return skill;</span>
+	}
+
+	@Override
+	public List&lt;Skill&gt; listSkills() {
+<span class="fc" id="L58">		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();</span>
+<span class="fc" id="L59">		CriteriaQuery&lt;Skill&gt; criteria = builder.createQuery(Skill.class);</span>
+<span class="fc" id="L60">		Root&lt;Skill&gt; root = criteria.from(Skill.class);</span>
+<span class="fc" id="L61">		criteria.select(root);</span>
+<span class="fc" id="L62">		List&lt;Skill&gt; skillsList = getCurrentSession().createQuery(criteria).getResultList();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (Skill skill : skillsList) {</span>
+<span class="fc" id="L64">			logger.info(&quot;Skill List::&quot; + skill);</span>
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">		return skillsList;</span>
+	}
+
+	@Override
+	public void updateSkill(Skill skill) {
+<span class="nc" id="L71">		getCurrentSession().merge(skill);</span>
+<span class="nc" id="L72">		logger.info(&quot;Skill updated successfully, Skill Details=&quot; + skill);</span>
+<span class="nc" id="L73">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

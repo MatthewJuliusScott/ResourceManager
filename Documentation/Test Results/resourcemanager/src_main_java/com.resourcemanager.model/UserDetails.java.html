@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>UserDetails.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.model</a> &gt; <span class="el_source">UserDetails.java</span></div><h1>UserDetails.java</h1><pre class="source lang-java linenums">package com.resourcemanager.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalIdCache;
+
+/**
+ * The Class UserDetails.
+ */
+@Entity(name = &quot;UserDetails&quot;)
+@Table(name = &quot;userdetails&quot;)
+@NaturalIdCache
+<span class="fc" id="L18">public class UserDetails {</span>
+
+	/** The id. */
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long	id;
+
+	/** The name. */
+	@Column
+	private String	name;
+
+	/** The email. */
+	@Column
+	private String	email;
+
+	/** The password. */
+	@Column
+	private String	password;
+
+	/**
+	 * Gets the email.
+	 *
+	 * @return the email
+	 */
+	public String getEmail() {
+<span class="nc" id="L44">		return email;</span>
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public long getId() {
+<span class="nc" id="L53">		return id;</span>
+	}
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+<span class="nc" id="L62">		return name;</span>
+	}
+
+	/**
+	 * Gets the password.
+	 *
+	 * @return the password
+	 */
+	public String getPassword() {
+<span class="nc" id="L71">		return password;</span>
+	}
+
+	/**
+	 * Sets the email.
+	 *
+	 * @param email
+	 *            the new email
+	 */
+	public void setEmail(String email) {
+<span class="nc" id="L81">		this.email = email;</span>
+<span class="nc" id="L82">	}</span>
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
+	public void setId(long id) {
+<span class="nc" id="L91">		this.id = id;</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * Sets the name.
+	 *
+	 * @param name
+	 *            the new name
+	 */
+	public void setName(String name) {
+<span class="nc" id="L101">		this.name = name;</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Sets the password.
+	 *
+	 * @param password
+	 *            the new password
+	 */
+	public void setPassword(String password) {
+<span class="nc" id="L111">		this.password = password;</span>
+<span class="nc" id="L112">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

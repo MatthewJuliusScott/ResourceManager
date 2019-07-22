@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Allocation.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.model</a> &gt; <span class="el_source">Allocation.java</span></div><h1>Allocation.java</h1><pre class="source lang-java linenums">
+package com.resourcemanager.model;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
+import javax.persistence.Table;
+
+/**
+ * The Class Allocation.
+ */
+@Entity(name = &quot;Allocation&quot;)
+@Table(name = &quot;allocation&quot;)
+@AttributeOverrides({
+        @AttributeOverride(name = &quot;id&quot;, column = @Column(name = &quot;allocation_id&quot;))})
+public class Allocation {
+
+	/** The Constant formatter. */
+<span class="fc" id="L32">	public static final DateTimeFormatter	formatter	= DateTimeFormatter</span>
+<span class="fc" id="L33">	        .ofPattern(&quot;dd/MM/yyyy&quot;);</span>
+
+	/** The id. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long							id;
+
+	/** The project. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = &quot;project_id&quot;)
+	private Project							project;
+
+	/** The skill. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = &quot;skill_id&quot;)
+	private Skill							skill;
+
+	/** The start date. */
+	@Column(name = &quot;start_date&quot;)
+	private LocalDate	startDate;
+
+	/** The end date. */
+	@Column(name = &quot;end_date&quot;)
+	private LocalDate	endDate;
+
+	/** The hours. */
+	private int			hours;
+
+	/** The resource. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = &quot;resource_id&quot;)
+	@OrderColumn(name = &quot;order_col&quot;)
+	private Resource	resource;
+
+	/**
+	 * Instantiates a new allocation.
+	 */
+<span class="fc" id="L70">	public Allocation() {</span>
+<span class="fc" id="L71">	}</span>
+
+	/**
+	 * Instantiates a new allocation.
+	 *
+	 * @param id        the id
+	 * @param project   the project
+	 * @param skill     the skill
+	 * @param startDate the start date
+	 * @param endDate   the end date
+	 * @param hours     the hours
+	 * @param resource  the resource
+	 */
+	public Allocation(Long id, Project project, Skill skill,
+	        LocalDate startDate, LocalDate endDate, int hours,
+	        Resource resource) {
+<span class="nc" id="L87">		super();</span>
+<span class="nc" id="L88">		this.id = id;</span>
+<span class="nc" id="L89">		this.project = project;</span>
+<span class="nc" id="L90">		this.skill = skill;</span>
+<span class="nc" id="L91">		this.startDate = startDate;</span>
+<span class="nc" id="L92">		this.endDate = endDate;</span>
+<span class="nc" id="L93">		this.hours = hours;</span>
+<span class="nc" id="L94">		this.resource = resource;</span>
+<span class="nc" id="L95">	}</span>
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (this == o) {</span>
+<span class="fc" id="L105">			return true;</span>
+		}
+
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L109">			return false;</span>
+		}
+
+<span class="nc" id="L112">		Allocation that = (Allocation) o;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		return Objects.equals(project, that.project)</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		        &amp;&amp; Objects.equals(skill, that.skill);</span>
+	}
+
+	/**
+	 * Gets the end date.
+	 *
+	 * @return the endDate
+	 */
+	public LocalDate getEndDate() {
+<span class="nc" id="L123">		return endDate;</span>
+	}
+
+	/**
+	 * Gets the end date.
+	 *
+	 * @return the endDate formatted as a String
+	 */
+	public String getEndDateAsString() {
+<span class="nc" id="L132">		return endDate.format(formatter);</span>
+	}
+
+	/**
+	 * Gets the hours.
+	 *
+	 * @return the hours
+	 */
+	public int getHours() {
+<span class="nc" id="L141">		return hours;</span>
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public long getId() {
+<span class="nc" id="L150">		return id;</span>
+	}
+
+	/**
+	 * Gets the project.
+	 *
+	 * @return the project
+	 */
+	public Project getProject() {
+<span class="fc" id="L159">		return project;</span>
+	}
+
+	/**
+	 * Gets the resource.
+	 *
+	 * @return the resource
+	 */
+	public Resource getResource() {
+<span class="fc" id="L168">		return resource;</span>
+	}
+
+	/**
+	 * Gets the skill.
+	 *
+	 * @return the skill
+	 */
+	public Skill getSkill() {
+<span class="fc" id="L177">		return skill;</span>
+	}
+
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the startDate
+	 */
+	public LocalDate getStartDate() {
+<span class="nc" id="L186">		return startDate;</span>
+	}
+
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the startDate formatted as a String
+	 */
+	public String getStartDateAsString() {
+<span class="nc" id="L195">		return startDate.format(formatter);</span>
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+<span class="nc" id="L205">		return Objects.hash(project, skill);</span>
+	}
+
+	/**
+	 * Pre remove. This removes the object from associations to let hibernate
+	 * delete persist correctly.
+	 */
+	@PreRemove
+	public void preRemove() {
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (getProject() != null) {</span>
+<span class="nc" id="L215">			getProject().removeAllocation(this);</span>
+		}
+<span class="nc" id="L217">		setProject(null);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (getResource() != null) {</span>
+<span class="nc" id="L219">			getResource().removeAllocation(this);</span>
+		}
+<span class="nc" id="L221">		setResource(null);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (getSkill() != null) {</span>
+<span class="nc" id="L223">			getSkill().removeAllocation(this);</span>
+		}
+<span class="nc" id="L225">		setSkill(null);</span>
+<span class="nc" id="L226">	}</span>
+
+	/**
+	 * Sets the end date.
+	 *
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(LocalDate endDate) {
+<span class="fc" id="L234">		this.endDate = endDate;</span>
+<span class="fc" id="L235">	}</span>
+
+	/**
+	 * Sets the hours.
+	 *
+	 * @param hours the new hours
+	 */
+	public void setHours(int hours) {
+<span class="fc" id="L243">		this.hours = hours;</span>
+<span class="fc" id="L244">	}</span>
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(long id) {
+<span class="fc" id="L252">		this.id = id;</span>
+<span class="fc" id="L253">	}</span>
+
+	/**
+	 * Sets the project.
+	 *
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+<span class="fc" id="L261">		this.project = project;</span>
+<span class="fc" id="L262">	}</span>
+
+	/**
+	 * Sets the resource.
+	 *
+	 * @param resource the resource to set
+	 */
+	public void setResource(Resource resource) {
+<span class="fc" id="L270">		this.resource = resource;</span>
+<span class="fc" id="L271">	}</span>
+
+	/**
+	 * Sets the skill.
+	 *
+	 * @param skill the skill to set
+	 */
+	public void setSkill(Skill skill) {
+<span class="fc" id="L279">		this.skill = skill;</span>
+<span class="fc" id="L280">	}</span>
+
+	/**
+	 * Sets the start date.
+	 *
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(LocalDate startDate) {
+<span class="fc" id="L288">		this.startDate = startDate;</span>
+<span class="fc" id="L289">	}</span>
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+<span class="fc" id="L298">		return &quot;Allocation [id=&quot; + id + &quot;, project=&quot; + project + &quot;, skill=&quot;</span>
+		        + skill + &quot;, startDate=&quot; + startDate + &quot;, endDate=&quot; + endDate
+		        + &quot;, hours=&quot; + hours + &quot;, resource=&quot; + resource + &quot;]&quot;;
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SpringSecurityConfig.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.config</a> &gt; <span class="el_source">SpringSecurityConfig.java</span></div><h1>SpringSecurityConfig.java</h1><pre class="source lang-java linenums">package com.resourcemanager.config;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+<span class="fc" id="L21">public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {</span>
+
+	@Resource(name = &quot;userDetailService&quot;)
+	private UserDetailsService userDetailsService;
+
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+<span class="fc" id="L28">		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();</span>
+<span class="fc" id="L29">		authProvider.setUserDetailsService(userDetailsService);</span>
+<span class="fc" id="L30">		authProvider.setPasswordEncoder(encoder());</span>
+<span class="fc" id="L31">		return authProvider;</span>
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth)
+		throws Exception {
+<span class="fc" id="L37">		auth.authenticationProvider(authenticationProvider());</span>
+<span class="fc" id="L38">	}</span>
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+<span class="fc" id="L42">		http</span>
+<span class="fc" id="L43">			.authorizeRequests()</span>
+<span class="fc" id="L44">			.antMatchers(&quot;/resources/**&quot;).permitAll()</span>
+<span class="fc" id="L45">			.anyRequest().authenticated()</span>
+<span class="fc" id="L46">			.and()</span>
+<span class="fc" id="L47">			.formLogin()</span>
+<span class="fc" id="L48">			.loginPage(&quot;/login&quot;)</span>
+<span class="fc" id="L49">			.permitAll()</span>
+<span class="fc" id="L50">			.and()</span>
+<span class="fc" id="L51">			.logout()</span>
+<span class="fc" id="L52">			.permitAll();</span>
+<span class="fc" id="L53">	}</span>
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+<span class="fc" id="L57">		auth.userDetailsService(userDetailsService);</span>
+<span class="fc" id="L58">	}</span>
+
+	@Bean
+	public PasswordEncoder encoder() {
+<span class="fc" id="L62">		return new BCryptPasswordEncoder(11);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

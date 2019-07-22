@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="java" project="resourcemanager" tests="53" started="53" failures="0" errors="1" ignored="0">
+  <testsuite name="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="2.416">
+    <testcase name="givenRequestMapping_whenEditSkill0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.402"/>
+    <testcase name="givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.036"/>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.07"/>
+    <testcase name="givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="1.908"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.security.unit.tests.SecurityTest" time="0.13">
+    <testcase name="givenAuthenticated_whenCallSkillServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.078"/>
+    <testcase name="givenUnauthenticated_whenCallSkillService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.002"/>
+    <testcase name="givenAuthenticated_whenCallResourceServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.034"/>
+    <testcase name="givenAuthenticated_whenCallProjectServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.011"/>
+    <testcase name="givenUnauthenticated_whenCallProjectService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.003"/>
+    <testcase name="givenUnauthenticated_whenCallResourceService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.002"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.SkillTest" time="1.107">
+    <testcase name="testRemoveAllocation" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testPreRemove" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSkill" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetResources" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetName" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSkillString" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSetName" classname="com.resourcemanager.model.SkillTest" time="1.107"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.458">
+    <testcase name="givenAuthenticationAndGetResource_whenUpdateResource_thenResourceModified" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.072"/>
+    <testcase name="givenUnallocatedResourceWithMatchingSkillAndSufficientHours_whenFindResource_thenReturnResource" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.087"/>
+    <testcase name="givenAuthentication_whenAddResourceAndListResources_thenAllResourcesContainsResource" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.02"/>
+    <testcase name="givenOnlyAllocatedResourceWithMatchingSkillAndSufficientHours_whenFindResource_thenNoResourceReturned" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.279"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="1.897">
+    <testcase name="givenAuthenticationAndGetProject_whenUpdateProject_thenProjectModified" classname="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="0.112"/>
+    <testcase name="givenAuthentication_whenAddProjectAndListProjects_thenAllProjectsContainsProject" classname="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="1.785"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.137">
+    <testcase name="givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.035"/>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.058"/>
+    <testcase name="givenRequestMapping_whenEditProject0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.026"/>
+    <testcase name="givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.018"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.ProjectTest" time="0.002">
+    <testcase name="testRemoveAllocation" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.ProjectTest" time="0.001"/>
+    <testcase name="testGetAllocations" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testProject" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetName" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testAddAllocation" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testProjectString" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testSetAllocations" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testSetName" classname="com.resourcemanager.model.ProjectTest" time="0.001"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="0.106">
+    <testcase name="givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="0.039">
+      <error>org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.IllegalStateException&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1013)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897)&#13;
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)&#13;
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:71)&#13;
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)&#13;
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:166)&#13;
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:133)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)&#13;
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)&#13;
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:100)&#13;
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:74)&#13;
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)&#13;
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)&#13;
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)&#13;
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)&#13;
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)&#13;
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:133)&#13;
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:182)&#13;
+	at com.resourcemanager.functionality.unit.tests.ResourceControllerTest.givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP(ResourceControllerTest.java:47)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+	at java.lang.reflect.Method.invoke(Method.java:498)&#13;
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)&#13;
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)&#13;
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)&#13;
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)&#13;
+	at org.springframework.test.context.junit4.statements.RunBeforeTestExecutionCallbacks.evaluate(RunBeforeTestExecutionCallbacks.java:74)&#13;
+	at org.springframework.test.context.junit4.statements.RunAfterTestExecutionCallbacks.evaluate(RunAfterTestExecutionCallbacks.java:84)&#13;
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)&#13;
+	at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75)&#13;
+	at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86)&#13;
+	at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84)&#13;
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)&#13;
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:251)&#13;
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)&#13;
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)&#13;
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)&#13;
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)&#13;
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)&#13;
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)&#13;
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)&#13;
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)&#13;
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)&#13;
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)&#13;
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:89)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:763)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:463)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)&#13;
+Caused by: java.lang.IllegalStateException&#13;
+	at java.util.ArrayList$Itr.remove(ArrayList.java:864)&#13;
+	at org.hibernate.collection.internal.AbstractPersistentCollection$IteratorProxy.remove(AbstractPersistentCollection.java:856)&#13;
+	at com.resourcemanager.model.Resource.removeSkill(Resource.java:249)&#13;
+	at com.resourcemanager.model.Resource.preRemove(Resource.java:212)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+	at java.lang.reflect.Method.invoke(Method.java:498)&#13;
+	at org.hibernate.jpa.event.internal.EntityCallback.performCallback(EntityCallback.java:32)&#13;
+	at org.hibernate.jpa.event.internal.CallbackRegistryImpl.callback(CallbackRegistryImpl.java:97)&#13;
+	at org.hibernate.jpa.event.internal.CallbackRegistryImpl.preRemove(CallbackRegistryImpl.java:81)&#13;
+	at org.hibernate.event.internal.DefaultDeleteEventListener.invokeDeleteLifecycle(DefaultDeleteEventListener.java:341)&#13;
+	at org.hibernate.event.internal.DefaultDeleteEventListener.onDelete(DefaultDeleteEventListener.java:154)&#13;
+	at org.hibernate.event.internal.DefaultDeleteEventListener.onDelete(DefaultDeleteEventListener.java:72)&#13;
+	at org.hibernate.internal.SessionImpl.fireDelete(SessionImpl.java:1011)&#13;
+	at org.hibernate.internal.SessionImpl.delete(SessionImpl.java:947)&#13;
+	at org.hibernate.internal.SessionImpl.remove(SessionImpl.java:3434)&#13;
+	at com.resourcemanager.dao.impl.ResourceDAOImpl.removeResource(ResourceDAOImpl.java:71)&#13;
+	at com.resourcemanager.dao.impl.ResourceDAOImpl$$FastClassBySpringCGLIB$$ff13a2ce.invoke(&lt;generated&gt;)&#13;
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)&#13;
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)&#13;
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:139)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)&#13;
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)&#13;
+	at com.resourcemanager.dao.impl.ResourceDAOImpl$$EnhancerBySpringCGLIB$$a0787be8.removeResource(&lt;generated&gt;)&#13;
+	at com.resourcemanager.service.impl.ResourceServiceImpl.deleteResource(ResourceServiceImpl.java:29)&#13;
+	at com.resourcemanager.service.impl.ResourceServiceImpl$$FastClassBySpringCGLIB$$c101deae.invoke(&lt;generated&gt;)&#13;
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)&#13;
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:749)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)&#13;
+	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:69)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)&#13;
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:294)&#13;
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:98)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)&#13;
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)&#13;
+	at com.resourcemanager.service.impl.ResourceServiceImpl$$EnhancerBySpringCGLIB$$a2a8df0f.deleteResource(&lt;generated&gt;)&#13;
+	at com.resourcemanager.functionality.ResourceController.deleteResource(ResourceController.java:39)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+	at java.lang.reflect.Method.invoke(Method.java:498)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:189)&#13;
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:102)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)&#13;
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:800)&#13;
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1038)&#13;
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)&#13;
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)&#13;
+	... 73 more&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="0.04"/>
+    <testcase name="givenRequestMapping_whenGetResources_thenForwardToResourcesJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="0.024"/>
+    <testcase name="givenRequestMapping_whenAddProject_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="0.003"/>
+  </testsuite>
+</testrun>

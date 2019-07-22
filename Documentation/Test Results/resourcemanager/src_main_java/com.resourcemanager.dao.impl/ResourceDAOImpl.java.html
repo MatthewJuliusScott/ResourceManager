@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResourceDAOImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.dao.impl</a> &gt; <span class="el_source">ResourceDAOImpl.java</span></div><h1>ResourceDAOImpl.java</h1><pre class="source lang-java linenums">package com.resourcemanager.dao.impl;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.resourcemanager.dao.ResourceDAO;
+import com.resourcemanager.model.Allocation;
+import com.resourcemanager.model.Resource;
+
+@Repository
+<span class="fc" id="L27">public class ResourceDAOImpl implements ResourceDAO {</span>
+
+<span class="fc" id="L29">	private static final Logger		logger	= LoggerFactory.getLogger(ResourceDAOImpl.class);</span>
+
+	@Autowired
+	private EntityManagerFactory	entityManager;
+
+	@Override
+	public void addResource(Resource resource) {
+<span class="fc" id="L36">		getCurrentSession().persist(resource);</span>
+<span class="fc" id="L37">		logger.info(&quot;Resource saved successfully, Resource Details=&quot; + resource);</span>
+<span class="fc" id="L38">	}</span>
+
+	protected Session getCurrentSession() {
+<span class="fc" id="L41">		return entityManager.unwrap(SessionFactory.class).getCurrentSession();</span>
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+<span class="fc" id="L45">		return entityManager.unwrap(SessionFactory.class);</span>
+	}
+
+	@Override
+	public Resource getResourceById(Long id) {
+<span class="fc" id="L50">		Resource resource = getCurrentSession().find(Resource.class, id);</span>
+<span class="fc" id="L51">		logger.info(&quot;Resource retrieved successfully, resource details=&quot; + resource);</span>
+<span class="fc" id="L52">		return resource;</span>
+	}
+
+	@Override
+	public List&lt;Resource&gt; listResources() {
+<span class="fc" id="L57">		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();</span>
+<span class="fc" id="L58">		CriteriaQuery&lt;Resource&gt; criteria = builder.createQuery(Resource.class);</span>
+<span class="fc" id="L59">		Root&lt;Resource&gt; root = criteria.from(Resource.class);</span>
+<span class="fc" id="L60">		criteria.select(root);</span>
+<span class="fc" id="L61">		List&lt;Resource&gt; resourcesList = getCurrentSession().createQuery(criteria).getResultList();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (Resource resource : resourcesList) {</span>
+<span class="fc" id="L63">			logger.info(&quot;Resource List::&quot; + resource);</span>
+<span class="fc" id="L64">		}</span>
+<span class="fc" id="L65">		return resourcesList;</span>
+	}
+
+	@Override
+	public void removeResource(Long id) {
+<span class="fc" id="L70">		Resource resource = getCurrentSession().find(Resource.class, id);</span>
+<span class="fc" id="L71">		getCurrentSession().remove(resource);</span>
+<span class="fc" id="L72">		logger.info(&quot;Resource deleted successfully, resource details=&quot; + resource);</span>
+<span class="fc" id="L73">	}</span>
+
+	@Override
+	public List&lt;Resource&gt; searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
+<span class="fc" id="L77">		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();</span>
+<span class="fc" id="L78">		CriteriaQuery&lt;Resource&gt; query = builder.createQuery(Resource.class);</span>
+<span class="fc" id="L79">		Root&lt;Resource&gt; root = query.from(Resource.class);</span>
+
+		try {
+
+			// get resources that have the skill
+			// and have greater than or equal to hours
+<span class="fc" id="L85">			Predicate skillIdMatch = builder.isMember(skillId, root.get(&quot;skills&quot;));</span>
+<span class="fc" id="L86">			Predicate greaterThanOrEqualHours = builder.ge(root.get(&quot;hours&quot;), hours);</span>
+
+			// create a subquery to get resources that have allocations in the time period specified between startDate and endDate
+<span class="fc" id="L89">			Subquery&lt;Long&gt; sub = query.subquery(Long.class);</span>
+<span class="fc" id="L90">			Root&lt;Allocation&gt; subRoot = sub.from(Allocation.class);</span>
+<span class="fc" id="L91">			Join&lt;Allocation, Resource&gt; allocations = subRoot.join(&quot;resource&quot;, JoinType.INNER);</span>
+<span class="fc" id="L92">			Predicate startNoAllocationsInTimePeriod = builder.between(subRoot.get(&quot;startDate&quot;), startDate, endDate);</span>
+<span class="fc" id="L93">			Predicate endNoAllocationsInTimePeriod = builder.between(subRoot.get(&quot;endDate&quot;), startDate, endDate);</span>
+<span class="fc" id="L94">			sub.select(allocations.get(&quot;id&quot;));</span>
+<span class="fc" id="L95">			sub.where(builder.and(startNoAllocationsInTimePeriod, endNoAllocationsInTimePeriod));</span>
+
+			// exclude resources who have allocations during the specified time period
+<span class="fc" id="L98">			Predicate priorAllocations = root.get(&quot;id&quot;).in(sub).not();</span>
+
+<span class="fc" id="L100">			query.select(root).where(builder.and(skillIdMatch, greaterThanOrEqualHours, priorAllocations));</span>
+<span class="fc" id="L101">			query.orderBy(builder.desc(root.get(&quot;hours&quot;)));</span>
+
+<span class="nc" id="L103">		} catch (Exception e) {</span>
+<span class="nc" id="L104">			e.printStackTrace();</span>
+<span class="fc" id="L105">		}</span>
+
+<span class="fc" id="L107">		List&lt;Resource&gt; resourcesList = getCurrentSession().createQuery(query).getResultList();</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		for (Resource resource : resourcesList) {</span>
+<span class="fc" id="L110">			logger.info(&quot;Resource List::&quot; + resource);</span>
+<span class="fc" id="L111">		}</span>
+<span class="fc" id="L112">		return resourcesList;</span>
+	}
+
+	@Override
+	public void updateResource(Resource resource) {
+<span class="fc" id="L117">		getCurrentSession().merge(resource);</span>
+<span class="fc" id="L118">		logger.info(&quot;Resource updated successfully, Resource Details=&quot; + resource);</span>
+<span class="fc" id="L119">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

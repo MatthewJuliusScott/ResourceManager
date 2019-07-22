@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectServiceTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.functionality.integration.tests</a> &gt; <span class="el_source">ProjectServiceTest.java</span></div><h1>ProjectServiceTest.java</h1><pre class="source lang-java linenums">package com.resourcemanager.functionality.integration.tests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.resourcemanager.config.SpringSecurityConfig;
+import com.resourcemanager.model.Project;
+import com.resourcemanager.service.ProjectService;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Import(SpringSecurityConfig.class)
+@TestPropertySource(
+	locations = &quot;classpath:application-integrationtest.properties&quot;)
+<span class="fc" id="L27">public class ProjectServiceTest {</span>
+
+	@Autowired
+	private ProjectService projectService;
+
+	@Test
+	@WithMockUser(username = &quot;user@gmail.com&quot;, password = &quot;password&quot;, roles = { &quot;USER&quot;, &quot;ADMIN&quot; })
+	public void givenAuthentication_whenAddProjectAndListProjects_thenAllProjectsContainsProject() throws Exception {
+
+<span class="fc" id="L36">		Project expected = new Project(&quot;Test Project&quot;);</span>
+<span class="fc" id="L37">		projectService.addProject(expected);</span>
+
+<span class="fc" id="L39">		List&lt;Project&gt; projects = projectService.listProjects();</span>
+
+<span class="fc" id="L41">		assertTrue(projects.contains(expected));</span>
+<span class="fc" id="L42">	}</span>
+
+	@Test
+	@WithMockUser(username = &quot;user@gmail.com&quot;, password = &quot;password&quot;, roles = { &quot;USER&quot;, &quot;ADMIN&quot; })
+	public void givenAuthenticationAndGetProject_whenUpdateProject_thenProjectModified() throws Exception {
+
+<span class="fc" id="L48">		Project expected = projectService.getProjectById(1L);</span>
+
+		// prove first project name is not currently &quot;Some other name&quot;
+<span class="fc" id="L51">		assertFalse(expected.getName().equals(&quot;Some other name&quot;));</span>
+
+		// udpate the project name
+<span class="fc" id="L54">		expected.setName(&quot;Some other name&quot;);</span>
+<span class="fc" id="L55">		projectService.updateProject(expected);</span>
+
+		// Assert the name has changed in the persistence layer
+<span class="fc" id="L58">		Project actual = projectService.getProjectById(1L);</span>
+<span class="fc" id="L59">		assertEquals(expected, actual);</span>
+<span class="fc" id="L60">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

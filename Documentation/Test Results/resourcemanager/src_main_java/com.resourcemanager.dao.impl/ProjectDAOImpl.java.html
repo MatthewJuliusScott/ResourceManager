@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectDAOImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.dao.impl</a> &gt; <span class="el_source">ProjectDAOImpl.java</span></div><h1>ProjectDAOImpl.java</h1><pre class="source lang-java linenums">package com.resourcemanager.dao.impl;
+
+import java.util.List;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.resourcemanager.dao.ProjectDAO;
+import com.resourcemanager.model.Project;
+
+@Repository
+<span class="fc" id="L21">public class ProjectDAOImpl implements ProjectDAO {</span>
+
+<span class="fc" id="L23">	private static final Logger		logger	= LoggerFactory.getLogger(ProjectDAOImpl.class);</span>
+
+	@Autowired
+	private EntityManagerFactory	entityManager;
+
+	@Override
+	public void addProject(Project project) {
+<span class="fc" id="L30">		getCurrentSession().persist(project);</span>
+<span class="fc" id="L31">		logger.info(&quot;Project saved successfully, Project Details=&quot; + project);</span>
+<span class="fc" id="L32">	}</span>
+
+	protected Session getCurrentSession() {
+<span class="fc" id="L35">		return entityManager.unwrap(SessionFactory.class).getCurrentSession();</span>
+	}
+
+	protected SessionFactory getCurrentSessionFactory() {
+<span class="fc" id="L39">		return entityManager.unwrap(SessionFactory.class);</span>
+	}
+
+	@Override
+	public Project getProjectById(Long id) {
+<span class="fc" id="L44">		Project project = getCurrentSession().find(Project.class, id);</span>
+<span class="fc" id="L45">		logger.info(&quot;Project retrieved successfully, project details=&quot; + project);</span>
+<span class="fc" id="L46">		return project;</span>
+	}
+
+	@Override
+	public List&lt;Project&gt; listProjects() {
+<span class="fc" id="L51">		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();</span>
+<span class="fc" id="L52">		CriteriaQuery&lt;Project&gt; criteria = builder.createQuery(Project.class);</span>
+<span class="fc" id="L53">		Root&lt;Project&gt; root = criteria.from(Project.class);</span>
+<span class="fc" id="L54">		criteria.select(root);</span>
+<span class="fc" id="L55">		List&lt;Project&gt; projectsList = getCurrentSession().createQuery(criteria).getResultList();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (Project project : projectsList) {</span>
+<span class="fc" id="L57">			logger.info(&quot;Project List::&quot; + project);</span>
+<span class="fc" id="L58">		}</span>
+<span class="fc" id="L59">		return projectsList;</span>
+	}
+
+	@Override
+	public void removeProject(Long id) {
+<span class="fc" id="L64">		Project project = getCurrentSession().find(Project.class, id);</span>
+<span class="fc" id="L65">		getCurrentSession().remove(project);</span>
+<span class="fc" id="L66">		logger.info(&quot;Project deleted successfully, project details=&quot; + project);</span>
+<span class="fc" id="L67">	}</span>
+
+	@Override
+	public void updateProject(Project project) {
+<span class="fc" id="L71">		getCurrentSession().merge(project);</span>
+<span class="fc" id="L72">		logger.info(&quot;Project updated successfully, Project Details=&quot; + project);</span>
+<span class="fc" id="L73">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

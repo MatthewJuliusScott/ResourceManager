@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResourceServiceImpl.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.service.impl</a> &gt; <span class="el_source">ResourceServiceImpl.java</span></div><h1>ResourceServiceImpl.java</h1><pre class="source lang-java linenums">package com.resourcemanager.service.impl;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.resourcemanager.dao.ResourceDAO;
+import com.resourcemanager.model.Resource;
+import com.resourcemanager.service.ResourceService;
+
+@Service
+<span class="fc" id="L15">public class ResourceServiceImpl implements ResourceService {</span>
+
+	@Autowired
+	private ResourceDAO resourceDAO;
+
+	@Override
+	@Transactional
+	public void addResource(Resource p) {
+<span class="fc" id="L23">		this.resourceDAO.addResource(p);</span>
+<span class="fc" id="L24">	}</span>
+
+	@Override
+	@Transactional
+	public void deleteResource(Long id) {
+<span class="fc" id="L29">		this.resourceDAO.removeResource(id);</span>
+<span class="fc" id="L30">	}</span>
+
+	@Override
+	@Transactional
+	public Resource getResourceById(Long id) {
+<span class="fc" id="L35">		return this.resourceDAO.getResourceById(id);</span>
+	}
+
+	@Override
+	@Transactional
+	public List&lt;Resource&gt; listResources() {
+<span class="fc" id="L41">		return this.resourceDAO.listResources();</span>
+	}
+
+	@Override
+	@Transactional
+	public List&lt;Resource&gt; searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
+<span class="fc" id="L47">		return this.resourceDAO.searchResources(skillId, startDate, endDate, hours);</span>
+	}
+
+	public void setResourceDAO(ResourceDAO resourceDAO) {
+<span class="nc" id="L51">		this.resourceDAO = resourceDAO;</span>
+<span class="nc" id="L52">	}</span>
+
+	@Override
+	@Transactional
+	public void updateResource(Resource p) {
+<span class="fc" id="L57">		this.resourceDAO.updateResource(p);</span>
+<span class="fc" id="L58">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>
