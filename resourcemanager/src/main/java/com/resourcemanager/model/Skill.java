@@ -30,7 +30,7 @@ import org.hibernate.annotations.NaturalIdCache;
 @NaturalIdCache
 @AttributeOverrides({
 		@AttributeOverride(name = "id", column = @Column(name = "skill_id")) })
-public class Skill {
+public class Skill implements Cloneable {
 
 	/** The id. */
 	@Id
@@ -51,10 +51,8 @@ public class Skill {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Allocation>	allocations	= new ArrayList<>();
 
-	/**
-	 * Instantiates a new skill.
-	 */
 	public Skill() {
+		super();
 	}
 
 	/**
@@ -65,6 +63,26 @@ public class Skill {
 	 */
 	public Skill(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Skill clone = (Skill) super.clone();
+		clone.id = id;
+		clone.name = name;
+		clone.allocations = new ArrayList<Allocation>();
+		for (Allocation allocation : allocations) {
+			clone.getAllocations().add(allocation);
+		}
+		clone.resources = new ArrayList<Resource>();
+		for (Resource resource : resources) {
+			clone.getResources().add(resource);
+		}
+		return clone;
 	}
 
 	/*
@@ -94,6 +112,15 @@ public class Skill {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Gets the allocations.
+	 *
+	 * @return the allocations
+	 */
+	public List<Allocation> getAllocations() {
+		return allocations;
 	}
 
 	/**
