@@ -65,14 +65,23 @@ public class Skill implements Cloneable {
 		this.name = name;
 	}
 
-	/**
-	 * Instantiates a new skill.
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Skill clone = (Skill) super.clone();
 		clone.id = id;
 		clone.name = name;
+		clone.allocations = new ArrayList<Allocation>();
+		for (Allocation allocation : allocations) {
+			clone.getAllocations().add(allocation);
+		}
+		clone.resources = new ArrayList<Resource>();
+		for (Resource resource : resources) {
+			clone.getResources().add(resource);
+		}
 		return clone;
 	}
 

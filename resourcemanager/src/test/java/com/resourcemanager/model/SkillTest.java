@@ -17,20 +17,43 @@ public class SkillTest {
 		expected.setId(new Random().nextLong());
 		expected.setName(UUID.randomUUID().toString());
 
+		Resource resource = new Resource();
+		resource.setId(new Random().nextLong());
+
+		Allocation allocation = new Allocation();
+		allocation.setId(new Random().nextLong());
+
+		expected.getResources().add(resource);
+		allocation.setSkill(expected);
+		expected.getAllocations().add(allocation);
+
 		Skill actual = (Skill) expected.clone();
 		assertTrue(expected.equals(actual));
-
 	}
 
 	@Test
 	public void testEquals() throws Exception {
+		Resource resource = new Resource();
+
+		Long resourceId = new Random().nextLong();
+		resource.setId(resourceId);
+
+		Allocation allocation = new Allocation();
+		Long allocationId = new Random().nextLong();
+		allocation.setId(allocationId);
+
+		Long skillId = new Random().nextLong();
 		Skill expected = new Skill();
-		expected.setId(new Random().nextLong());
-		expected.setName(UUID.randomUUID().toString());
+		expected.setId(skillId);
+		expected.getResources().add(resource);
+		allocation.setSkill(expected);
+		expected.getAllocations().add(allocation);
 
 		Skill actual = new Skill();
-		actual.setId(expected.getId());
-		actual.setName(expected.getName());
+		actual.setId(skillId);
+		actual.getResources().add(resource);
+		allocation.setSkill(actual);
+		actual.getAllocations().add(allocation);
 
 		assertTrue(expected.equals(actual));
 	}
