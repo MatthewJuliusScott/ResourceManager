@@ -1,5 +1,6 @@
 package com.resourcemanager.functionality.unit.tests;
 
+import static org.junit.Assert.assertTrue;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -111,6 +113,27 @@ public class ResourceControllerTest {
 			.params(params))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(redirectedUrl("/resources"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
+	public void givenValidRequest_whenSearchResource_thenResourceReturned() throws Exception {
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+
+		params.add("skillId", "1");
+		params.add("startDate", "21/01/2018");
+		params.add("endDate", "28/01/2018");
+		params.add("hours", "1");
+
+		MvcResult result = mvc.perform(get("/resources/search")
+			.params(params))
+			.andExpect(status().isOk())
+			.andReturn();
+
+		String response = result.getResponse().getContentAsString();
+
+		assertTrue(response != null);
 	}
 
 	@Before
