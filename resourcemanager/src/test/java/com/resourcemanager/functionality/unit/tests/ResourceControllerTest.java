@@ -2,6 +2,7 @@ package com.resourcemanager.functionality.unit.tests;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,6 +18,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
@@ -29,7 +32,7 @@ public class ResourceControllerTest {
 	private MockMvc					mvc;
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenRequestMapping_whenAddProject_thenForwardToEditJSP()
 		throws Exception {
 
@@ -40,7 +43,7 @@ public class ResourceControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -51,7 +54,7 @@ public class ResourceControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenRequestMapping_whenEditResource0_thenForwardToEditJSP()
 		throws Exception {
 
@@ -62,7 +65,7 @@ public class ResourceControllerTest {
 	}
 
 	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = {"USER", "ADMIN"})
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenRequestMapping_whenGetResources_thenForwardToResourcesJSP()
 		throws Exception {
 
@@ -70,6 +73,44 @@ public class ResourceControllerTest {
 			.contentType(MediaType.TEXT_HTML))
 			.andExpect(status().isOk())
 			.andExpect(forwardedUrl("/WEB-INF/views/resources.jsp"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
+	public void givenValidRequest_whenAddResource_thenResourceSaved() throws Exception {
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+
+		params.add("id", "0");
+		params.add("name", "Test Resource");
+		params.add("hours", "40");
+		params.add("skills", "1");
+		params.add("skills", "2");
+		params.add("skills", "3");
+
+		mvc.perform(post("/resources/save")
+			.params(params))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrl("/resources"));
+	}
+
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
+	public void givenValidRequest_whenSaveResource_thenResourceSaved() throws Exception {
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+
+		params.add("id", "1");
+		params.add("name", "Test Resource");
+		params.add("hours", "40");
+		params.add("skills", "1");
+		params.add("skills", "2");
+		params.add("skills", "3");
+
+		mvc.perform(post("/resources/save")
+			.params(params))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(redirectedUrl("/resources"));
 	}
 
 	@Before

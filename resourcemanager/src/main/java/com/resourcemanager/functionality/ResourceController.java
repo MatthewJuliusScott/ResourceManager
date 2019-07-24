@@ -33,7 +33,7 @@ public class ResourceController {
 		return "redirect:/resources/edit/0";
 	}
 
-	@RequestMapping("resources/delete/{id}")
+	@RequestMapping(value = { "resources/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteResource(@PathVariable("id") Long id) {
 
 		this.resourceService.deleteResource(id);
