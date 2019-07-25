@@ -72,15 +72,17 @@ public class Skill implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Skill clone = (Skill) super.clone();
-		clone.id = id;
-		clone.name = name;
 		clone.allocations = new ArrayList<Allocation>();
-		for (Allocation allocation : allocations) {
-			clone.getAllocations().add(allocation);
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
 		}
 		clone.resources = new ArrayList<Resource>();
-		for (Resource resource : resources) {
-			clone.getResources().add(resource);
+		if (resources != null) {
+			for (Resource resource : resources) {
+				clone.getResources().add(resource);
+			}
 		}
 		return clone;
 	}

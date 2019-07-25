@@ -26,7 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "resource")
-public class Resource {
+public class Resource implements Cloneable {
 
 	/** The id. */
 	@Id
@@ -94,6 +94,28 @@ public class Resource {
 	public void addSkill(Skill skill) {
 		skills.add(skill);
 		skill.getResources().add(this);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Resource clone = (Resource) super.clone();
+		clone.allocations = new ArrayList<Allocation>();
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
+		}
+		clone.skills = new ArrayList<Skill>();
+		if (skills != null) {
+			for (Skill skill : skills) {
+				clone.getSkills().add(skill);
+			}
+		}
+		return clone;
 	}
 
 	/*
@@ -303,14 +325,10 @@ public class Resource {
 		this.skills = skills;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", hours=" + hours
-			+ "]";
+		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="
+			+ hours + "]";
 	}
 
 }

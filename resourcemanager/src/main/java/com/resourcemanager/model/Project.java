@@ -74,11 +74,11 @@ public class Project implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Project clone = (Project) super.clone();
-		clone.id = id;
-		clone.name = name;
 		clone.allocations = new ArrayList<Allocation>();
-		for (Allocation allocation : allocations) {
-			clone.getAllocations().add(allocation);
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
 		}
 		return clone;
 	}
