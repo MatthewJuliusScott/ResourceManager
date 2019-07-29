@@ -12,10 +12,10 @@ public interface SkillService {
 	public void addSkill(Skill skill);
 
 	@Secured("ROLE_USER")
-	public void deleteSkill(Long id);
+	public void deleteSkill(Long lngSkillID);
 
 	@Secured("ROLE_USER")
-	public Skill getSkillById(Long id);
+	public Skill getSkillById(Long lngSkillID);
 
 	@Secured("ROLE_USER")
 	public List<Skill> listSkills();

@@ -23,8 +23,8 @@ public class SkillConverter implements Converter<String, Skill> {
 	 * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
 	 */
 	@Override
-	public Skill convert(String skillIdStr) {
-		Long skillId = Long.parseLong(skillIdStr);
+	public Skill convert(String strSkillID) {
+		Long skillId = Long.parseLong(strSkillID);
 		return skillService.getSkillById(skillId);
 	}
 }
