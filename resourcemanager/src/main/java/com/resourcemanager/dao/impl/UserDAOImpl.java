@@ -2,9 +2,14 @@ package com.resourcemanager.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,14 +24,17 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserDetails findUserByEmail(String email) {
-		UserDetails userDetails = null;
-		Criteria criteria = sessionFactory.openSession().createCriteria(UserDetails.class);
-		criteria.add(Restrictions.eq("email", email));
-		List<UserDetails> entityList = criteria.list();
+		UserDetails skill = null;
+		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
+		Root<UserDetails> root = criteria.from(UserDetails.class);
+		criteria.select(root).where(builder.equal(root.get("email"), email));
+		Query<UserDetails> query = sessionFactory.getCurrentSession().createQuery(criteria);
+		List<UserDetails> entityList = query.getResultList();
 		if (!entityList.isEmpty()) {
-			userDetails = entityList.get(0);
+			skill = entityList.get(0);
 		}
-		return userDetails;
+		return skill;
 	}
 
 	@Override

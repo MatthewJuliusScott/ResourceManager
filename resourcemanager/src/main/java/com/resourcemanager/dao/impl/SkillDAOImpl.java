@@ -9,6 +9,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,21 @@ public class SkillDAOImpl implements SkillDAO {
 	public Skill getSkillById(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
 		logger.info("Skill retrieved successfully, skill details=" + skill);
+		return skill;
+	}
+
+	@Override
+	public Skill getSkillByName(String name) {
+		Skill skill = null;
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
+		Root<Skill> root = criteria.from(Skill.class);
+		criteria.select(root).where(builder.equal(root.get("name"), name));
+		Query<Skill> query = getCurrentSession().createQuery(criteria);
+		List<Skill> entityList = query.getResultList();
+		if (!entityList.isEmpty()) {
+			skill = entityList.get(0);
+		}
 		return skill;
 	}
 
