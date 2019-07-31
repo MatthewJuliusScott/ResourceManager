@@ -1,6 +1,9 @@
 package com.resourcemanager.service.impl;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.impl.UserDAOImpl;
+import com.resourcemanager.model.UserDetails;
 
 @RunWith(SpringRunner.class)
 @Transactional
@@ -24,12 +28,15 @@ public class UserDetailServiceImplTest {
 
 	@Test
 	public void givenRepository_whenGetUsers_thenUsersReturned() throws Exception {
-		throw new RuntimeException("not yet implemented");
+		List<UserDetails> skills = userDAO.getUserDetails();
+		assertNotNull(skills);
+		assertTrue(skills.size() > 0);
 	}
 
 	@Test
 	public void givenRepository_whenLoadUserByUsername_thenUserReturned() throws Exception {
-		throw new RuntimeException("not yet implemented");
+		UserDetails userdetails = userDAO.findUserByEmail("user@gmail.com");
+		assertNotNull(userdetails);
 	}
 
 	@Test
