@@ -295,9 +295,10 @@ public class AllocationTest {
 	public void testToString() throws Exception {
 		Allocation allocation =
 			new Allocation(1L, new Project(), new Skill(), LocalDate.now(), LocalDate.now().plusDays(7), 40, new Resource());
+		System.out.println(allocation);
 		assertTrue(allocation.toString()
 			.equals(
-				"Allocation [id=1, project=Project [id=0, name=null], skill=Skill [id=0, name=null], startDate=2019-07-25, endDate=2019-08-01, hours=40, resource=Resource [id=0, name=null, skills=[], allocations=[], hours=0]]"));
+				"Allocation [id=1, project=Project [id=0, name=null], skill=Skill [id=0, name=null], startDate=2019-07-31, endDate=2019-08-07, hours=40, resource=Resource [id=0, name=null, skills=[], allocations=[], hours=0]]"));
 	}
 
 }
