@@ -1,10 +1,15 @@
 package com.resourcemanager.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class UserDetailsTest {
 
@@ -35,6 +40,22 @@ public class UserDetailsTest {
 		actual.setPassword("password");
 
 		assertTrue(expected.equals(actual));
+	}
+
+	@Test
+	public void testGetAuthorities() throws Exception {
+		UserDetails userDetails = new UserDetails();
+		Long id = new Random().nextLong();
+		userDetails.setId(id);
+		userDetails.getAuthorityStrings().add("ROLE_USER");
+
+		List<GrantedAuthority> expected = new ArrayList<GrantedAuthority>();
+		expected.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+		List<GrantedAuthority> actual = userDetails.getAuthorities();
+
+		assertEquals(expected, actual);
+
 	}
 
 	@Test

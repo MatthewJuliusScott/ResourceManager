@@ -1,11 +1,8 @@
 package com.resourcemanager.service.impl;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,9 +17,22 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService {
 	@Autowired
 	private UserDAO userDao;
 
-	private List<GrantedAuthority> getAuthority() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
-		// TODO : will need to implement different role levels and include that in our UserDetail model
+	@Override
+	public void addUser(com.resourcemanager.model.UserDetails user) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteUser(Long userID) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public com.resourcemanager.model.UserDetails getUserById(Long userID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -36,6 +46,12 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority());
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
+	}
+
+	@Override
+	public void updateUser(com.resourcemanager.model.UserDetails user) {
+		// TODO Auto-generated method stub
+
 	}
 }

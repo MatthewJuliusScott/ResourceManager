@@ -44,4 +44,5 @@ public class UserDetailServiceImplTest {
 		Class<? extends UserDetailServiceImpl> clazz = new UserDetailServiceImpl().getClass();
 		assertTrue(clazz.equals(UserDetailServiceImpl.class));
 	}
+
 }

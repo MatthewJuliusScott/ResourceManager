@@ -1,13 +1,20 @@
 package com.resourcemanager.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalIdCache;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * The Class UserDetails.
@@ -21,19 +28,23 @@ public class UserDetails implements Cloneable {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long	id;
+	private long		id;
 
 	/** The name. */
 	@Column
-	private String	name;
+	private String		name;
 
 	/** The email. */
 	@Column
-	private String	email;
+	private String		email;
 
 	/** The password. */
 	@Column
-	private String	password;
+	private String		password;
+
+	/** The authority strings. */
+	@OneToMany(mappedBy = "userdetails", fetch = FetchType.EAGER)
+	public List<String>	authorityStrings	= new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)
@@ -89,6 +100,28 @@ public class UserDetails implements Cloneable {
 	}
 
 	/**
+	 * Gets the granted authorities for this user.
+	 *
+	 * @return the authorities
+	 */
+	public List<GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		for (String authority : authorityStrings) {
+			authorities.add(new SimpleGrantedAuthority(authority));
+		}
+		return authorities;
+	}
+
+	/**
+	 * Gets the authority strings.
+	 *
+	 * @return the authority strings
+	 */
+	public List<String> getAuthorityStrings() {
+		return authorityStrings;
+	}
+
+	/**
 	 * Gets the email.
 	 *
 	 * @return the email
@@ -137,6 +170,16 @@ public class UserDetails implements Cloneable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
+	}
+
+	/**
+	 * Sets the authority strings.
+	 *
+	 * @param authorityStrings
+	 *            the new authority strings
+	 */
+	public void setAuthorityStrings(List<String> authorityStrings) {
+		this.authorityStrings = authorityStrings;
 	}
 
 	/**
