@@ -9,17 +9,16 @@ import com.resourcemanager.model.UserDetails;
 public interface UserService {
 
 	@Secured("ROLE_ADMIN")
-	public void addUser(UserDetails user);
+	public void addUserDetails(UserDetails user);
 
 	@Secured("ROLE_ADMIN")
-	public void deleteUser(Long userID);
+	public void deleteUserDetails(Long userID);
+
+	List<UserDetails> getUserDetails();
 
 	@Secured("ROLE_ADMIN")
-	public UserDetails getUserById(Long userID);
-
-	List<UserDetails> getUsers();
+	public UserDetails getUserDetailsByID(Long userID);
 
 	@Secured("ROLE_ADMIN")
-	public void updateUser(UserDetails user);
-
+	public void updateUserDetails(UserDetails userDetails);
 }

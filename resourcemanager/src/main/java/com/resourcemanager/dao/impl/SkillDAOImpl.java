@@ -29,7 +29,7 @@ public class SkillDAOImpl implements SkillDAO {
 	@Override
 	public void addSkill(Skill skill) {
 		getCurrentSession().persist(skill);
-		logger.info("Skill saved successfully, Skill Details=" + skill);
+		logger.info("Skill saved successfully, Skill details=" + skill);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class SkillDAOImpl implements SkillDAO {
 	@Override
 	public void updateSkill(Skill skill) {
 		getCurrentSession().merge(skill);
-		logger.info("Skill updated successfully, Skill Details=" + skill);
+		logger.info("Skill updated successfully, Skill details=" + skill);
 	}
 
 }

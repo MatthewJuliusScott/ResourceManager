@@ -6,10 +6,16 @@ import com.resourcemanager.model.UserDetails;
 
 public interface UserDAO {
 
-	UserDetails findUserByEmail(String email);
+	void addUserDetails(UserDetails user);
 
-	UserDetails findUserById(long id);
+	void deleteUserDetails(Long userID);
+
+	UserDetails findUserDetailsByEmail(String email);
+
+	UserDetails findUserDetailsByID(long id);
 
 	List<UserDetails> getUserDetails();
+
+	void updateUserDetails(UserDetails userDetails);
 
 }

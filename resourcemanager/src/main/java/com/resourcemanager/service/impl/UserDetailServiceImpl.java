@@ -18,31 +18,28 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService {
 	private UserDAO userDao;
 
 	@Override
-	public void addUser(com.resourcemanager.model.UserDetails user) {
-		// TODO Auto-generated method stub
-
+	public void addUserDetails(com.resourcemanager.model.UserDetails userDetails) {
+		userDao.addUserDetails(userDetails);
 	}
 
 	@Override
-	public void deleteUser(Long userID) {
-		// TODO Auto-generated method stub
-
+	public void deleteUserDetails(Long userID) {
+		userDao.deleteUserDetails(userID);
 	}
 
 	@Override
-	public com.resourcemanager.model.UserDetails getUserById(Long userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<com.resourcemanager.model.UserDetails> getUsers() {
+	public List<com.resourcemanager.model.UserDetails> getUserDetails() {
 		return userDao.getUserDetails();
 	}
 
 	@Override
+	public com.resourcemanager.model.UserDetails getUserDetailsByID(Long userID) {
+		return userDao.findUserDetailsByID(userID);
+	}
+
+	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		com.resourcemanager.model.UserDetails user = userDao.findUserByEmail(email);
+		com.resourcemanager.model.UserDetails user = userDao.findUserDetailsByEmail(email);
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
@@ -50,8 +47,7 @@ public class UserDetailServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public void updateUser(com.resourcemanager.model.UserDetails user) {
-		// TODO Auto-generated method stub
-
+	public void updateUserDetails(com.resourcemanager.model.UserDetails userDetails) {
+		userDao.updateUserDetails(userDetails);
 	}
 }
