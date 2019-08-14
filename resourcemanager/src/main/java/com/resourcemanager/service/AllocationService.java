@@ -1,5 +1,6 @@
 package com.resourcemanager.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.access.annotation.Secured;
@@ -19,6 +20,9 @@ public interface AllocationService {
 
 	@Secured("ROLE_ADMIN")
 	public List<Allocation> listAllocations();
+
+	@Secured("ROLE_ADMIN")
+	public List<Allocation> listRequiredAllocations(LocalDate startDate, LocalDate endDate);
 
 	@Secured("ROLE_ADMIN")
 	public void updateAllocation(Allocation allocation);
