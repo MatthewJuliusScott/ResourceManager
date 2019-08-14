@@ -6,9 +6,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public UserDetails findUserByEmail(String email) {
-		UserDetails skill = null;
+		UserDetails userDetails = null;
 		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
 		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
 		Root<UserDetails> root = criteria.from(UserDetails.class);
@@ -32,17 +30,20 @@ public class UserDAOImpl implements UserDAO {
 		Query<UserDetails> query = sessionFactory.getCurrentSession().createQuery(criteria);
 		List<UserDetails> entityList = query.getResultList();
 		if (!entityList.isEmpty()) {
-			skill = entityList.get(0);
+			userDetails = entityList.get(0);
 		}
-		return skill;
+		return userDetails;
 	}
 
 	@Override
 	public UserDetails findUserById(long id) {
 		UserDetails userDetails = null;
-		Criteria criteria = sessionFactory.openSession().createCriteria(UserDetails.class);
-		criteria.add(Restrictions.eq("id", id));
-		List<UserDetails> entityList = criteria.list();
+		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
+		Root<UserDetails> root = criteria.from(UserDetails.class);
+		criteria.select(root).where(builder.equal(root.get("id"), id));
+		Query<UserDetails> query = sessionFactory.getCurrentSession().createQuery(criteria);
+		List<UserDetails> entityList = query.getResultList();
 		if (!entityList.isEmpty()) {
 			userDetails = entityList.get(0);
 		}
@@ -51,8 +52,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<UserDetails> getUserDetails() {
-		Criteria criteria = sessionFactory.openSession().createCriteria(UserDetails.class);
-		return criteria.list();
+		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
+		Root<UserDetails> root = criteria.from(UserDetails.class);
+		criteria.select(root);
+		Query<UserDetails> query = sessionFactory.getCurrentSession().createQuery(criteria);
+		return query.getResultList();
 	}
 
 }
