@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalIdCache;
@@ -28,23 +27,23 @@ public class UserDetails implements Cloneable {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long		id;
+	private long			id;
 
 	/** The name. */
 	@Column
-	private String		name;
+	private String			name;
 
 	/** The email. */
 	@Column
-	private String		email;
+	private String			email;
 
 	/** The password. */
 	@Column
-	private String		password;
+	private String			password;
 
 	/** The authority strings. */
-	@OneToMany(mappedBy = "userdetails", fetch = FetchType.EAGER)
-	public List<String>	authorityStrings	= new ArrayList<String>();
+	@ElementCollection
+	private List<String>	authorityStrings	= new ArrayList<String>();
 
 	/*
 	 * (non-Javadoc)

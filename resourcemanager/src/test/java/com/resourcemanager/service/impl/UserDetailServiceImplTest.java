@@ -35,7 +35,7 @@ public class UserDetailServiceImplTest {
 
 	@Test
 	public void givenRepository_whenLoadUserByUsername_thenUserReturned() throws Exception {
-		UserDetails userdetails = userDAO.findUserByEmail("user@gmail.com");
+		UserDetails userdetails = userDAO.findUserDetailsByEmail("user@gmail.com");
 		assertNotNull(userdetails);
 	}
 
