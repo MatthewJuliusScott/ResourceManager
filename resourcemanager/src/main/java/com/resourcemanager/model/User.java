@@ -6,9 +6,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalIdCache;
@@ -21,7 +25,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Entity(name = "UserDetails")
 @Table(name = "userdetails")
 @NaturalIdCache
-public class UserDetails implements Cloneable {
+public class User implements Cloneable {
 
 	/** The id. */
 	@Id
@@ -45,13 +49,19 @@ public class UserDetails implements Cloneable {
 	@ElementCollection
 	private List<String>	authorityStrings	= new ArrayList<String>();
 
+	/** The resource associated with this user. Usually only for a USER_ROLE authority. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "resource_id")
+	@OrderColumn(name = "order_col")
+	private Resource		resource;
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		UserDetails clone = (UserDetails) super.clone();
+		User clone = (User) super.clone();
 		return clone;
 	}
 
@@ -70,7 +80,7 @@ public class UserDetails implements Cloneable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		UserDetails other = (UserDetails) obj;
+		User other = (User) obj;
 		if (email == null) {
 			if (other.email != null) {
 				return false;

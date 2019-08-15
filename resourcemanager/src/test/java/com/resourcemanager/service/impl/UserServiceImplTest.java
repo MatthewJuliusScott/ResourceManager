@@ -15,34 +15,34 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.impl.UserDAOImpl;
-import com.resourcemanager.model.UserDetails;
+import com.resourcemanager.model.User;
 
 @RunWith(SpringRunner.class)
 @Transactional
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
-public class UserDetailServiceImplTest {
+public class UserServiceImplTest {
 
 	@Autowired
 	UserDAOImpl userDAO;
 
 	@Test
 	public void givenRepository_whenGetUsers_thenUsersReturned() throws Exception {
-		List<UserDetails> skills = userDAO.getUserDetails();
+		List<User> skills = userDAO.listUsers();
 		assertNotNull(skills);
 		assertTrue(skills.size() > 0);
 	}
 
 	@Test
 	public void givenRepository_whenLoadUserByUsername_thenUserReturned() throws Exception {
-		UserDetails userdetails = userDAO.findUserDetailsByEmail("user@gmail.com");
+		User userdetails = userDAO.findUserByEmail("user@gmail.com");
 		assertNotNull(userdetails);
 	}
 
 	@Test
 	public void testGetClass() throws Exception {
-		Class<? extends UserDetailServiceImpl> clazz = new UserDetailServiceImpl().getClass();
-		assertTrue(clazz.equals(UserDetailServiceImpl.class));
+		Class<? extends UserServiceImpl> clazz = new UserServiceImpl().getClass();
+		assertTrue(clazz.equals(UserServiceImpl.class));
 	}
 
 }

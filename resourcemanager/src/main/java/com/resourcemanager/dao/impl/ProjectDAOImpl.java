@@ -47,7 +47,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public Project getProjectById(Long id) {
+	public Project getProjectByID(Long id) {
 		Project project = getCurrentSession().find(Project.class, id);
 		logger.info("Project retrieved successfully, project details=" + project);
 		return project;

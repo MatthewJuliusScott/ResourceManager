@@ -31,8 +31,8 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	@Transactional
-	public Resource getResourceById(Long id) {
-		return this.resourceDAO.getResourceById(id);
+	public Resource getResourceByID(Long id) {
+		return this.resourceDAO.getResourceByID(id);
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public class ResourceDAOImpl implements ResourceDAO {
 	}
 
 	@Override
-	public Resource getResourceById(Long id) {
+	public Resource getResourceByID(Long id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
 		logger.info("Resource retrieved successfully, resource details=" + resource);
 		return resource;

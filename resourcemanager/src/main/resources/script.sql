@@ -106,8 +106,21 @@ INSERT INTO resource_skill(`skill_id`, `resource_id`, `order_col`) VALUES((FLOOR
 INSERT INTO resource_skill(`skill_id`, `resource_id`, `order_col`) VALUES((FLOOR(1 + RAND() * (SELECT MAX(skill_id) FROM `skill` WHERE skill_id NOT IN (SELECT * FROM(SELECT skill_id FROM `resource_skill` WHERE `resource_id` = 22) AS tmp1)) )),22,(SELECT * FROM (SELECT IFNULL(MAX(order_col) + 1, 0) FROM `resource_skill` WHERE `resource_id` = 22 ) AS tmp));
 
 INSERT INTO userdetails(email,name,password) VALUES ('jon.rogers@microfocus.com','John','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(1,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(1,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('brdsbrn15@gmail.com','Brodie','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(2,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(2,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('abrody1188@gmail.com','Aaron','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(3,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(3,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('matthewjuliusscott@gmail.com','Matthew','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(4,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(4,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('jaackcarter@hotmail.com','Jack','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(5,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(5,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('user@gmail.com','user','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(6,"ROLE_USER");
+INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(6,"ROLE_ADMIN");
+

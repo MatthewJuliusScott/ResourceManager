@@ -31,8 +31,8 @@ public class AllocationServiceImpl implements AllocationService {
 
 	@Override
 	@Transactional
-	public Allocation getAllocationById(Long id) {
-		return this.allocationDAO.getAllocationById(id);
+	public Allocation getAllocationByID(Long id) {
+		return this.allocationDAO.getAllocationByID(id);
 	}
 
 	@Override

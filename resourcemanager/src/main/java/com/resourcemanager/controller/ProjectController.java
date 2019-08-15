@@ -1,5 +1,5 @@
 
-package com.resourcemanager.functionality;
+package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,7 +57,7 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
-			model.addAttribute("project", this.projectService.getProjectById(id));
+			model.addAttribute("project", this.projectService.getProjectByID(id));
 		} else {
 			model.addAttribute("project", new Project());
 		}
@@ -130,11 +130,11 @@ public class ProjectController {
 
 					Resource resource = null;
 					if (resourceId != null && !resourceId.equals("") && !resourceId.equals("0")) {
-						resource = resourceService.getResourceById(Long.parseLong(resourceId));
+						resource = resourceService.getResourceByID(Long.parseLong(resourceId));
 					}
 
 					Allocation allocation =
-						new Allocation(Long.parseLong(id), project, skillService.getSkillById(Long.parseLong(skillId)),
+						new Allocation(Long.parseLong(id), project, skillService.getSkillByID(Long.parseLong(skillId)),
 							LocalDate.parse(startDate, dateTimeFormatter),
 							LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), resource);
 					if (resource != null) {

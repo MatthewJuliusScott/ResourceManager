@@ -15,7 +15,7 @@ public interface ProjectService {
 	public void deleteProject(Long id);
 
 	@Secured("ROLE_ADMIN")
-	public Project getProjectById(Long id);
+	public Project getProjectByID(Long id);
 
 	@Secured("ROLE_ADMIN")
 	public List<Project> listProjects();

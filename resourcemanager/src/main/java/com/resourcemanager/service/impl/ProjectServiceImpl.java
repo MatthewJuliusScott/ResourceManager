@@ -30,8 +30,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public Project getProjectById(Long id) {
-		return this.projectDAO.getProjectById(id);
+	public Project getProjectByID(Long id) {
+		return this.projectDAO.getProjectByID(id);
 	}
 
 	@Override

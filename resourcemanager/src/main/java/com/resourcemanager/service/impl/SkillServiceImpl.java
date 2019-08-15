@@ -30,8 +30,8 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	@Transactional
-	public Skill getSkillById(Long lngSkillID) {
-		return this.skillDAO.getSkillById(lngSkillID);
+	public Skill getSkillByID(Long lngSkillID) {
+		return this.skillDAO.getSkillByID(lngSkillID);
 	}
 
 	@Override

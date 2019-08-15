@@ -4,21 +4,23 @@ import java.util.List;
 
 import org.springframework.security.access.annotation.Secured;
 
-import com.resourcemanager.model.UserDetails;
+import com.resourcemanager.model.User;
 
 public interface UserService {
 
 	@Secured("ROLE_ADMIN")
-	public void addUserDetails(UserDetails user);
+	public void addUser(User user);
 
 	@Secured("ROLE_ADMIN")
-	public void deleteUserDetails(Long userID);
+	public void deleteUser(Long userID);
 
-	List<UserDetails> getUserDetails();
+	public User getUserByID(Long userID);
+
+	public User getUserByUserName(String userName);
 
 	@Secured("ROLE_ADMIN")
-	public UserDetails getUserDetailsByID(Long userID);
+	public List<User> listUsers();
 
-	@Secured("ROLE_ADMIN")
-	public void updateUserDetails(UserDetails userDetails);
+	public void updateUser(User user);
+
 }

@@ -1,4 +1,4 @@
-package com.resourcemanager.functionality;
+package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,7 +43,7 @@ public class ResourceController {
 	@RequestMapping(value = { "/resources/edit/{id}" }, method = RequestMethod.GET)
 	public String editResource(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
-			model.addAttribute("resource", this.resourceService.getResourceById(id));
+			model.addAttribute("resource", this.resourceService.getResourceByID(id));
 		} else {
 			model.addAttribute("resource", new Resource());
 		}

@@ -61,7 +61,7 @@ public class ResourceServiceTest {
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenAuthenticationAndGetResource_whenUpdateResource_thenResourceModified() throws Exception {
 
-		Resource expected = resourceService.getResourceById(1L);
+		Resource expected = resourceService.getResourceByID(1L);
 
 		// prove first resource name is not currently "Some other name"
 		assertFalse(expected.getName().equals("Some other name"));
@@ -71,7 +71,7 @@ public class ResourceServiceTest {
 		resourceService.updateResource(expected);
 
 		// Assert the name has changed in the persistence layer
-		Resource actual = resourceService.getResourceById(1L);
+		Resource actual = resourceService.getResourceByID(1L);
 		assertEquals(expected, actual);
 	}
 
@@ -81,9 +81,9 @@ public class ResourceServiceTest {
 	public void givenOnlyAllocatedResourceWithMatchingSkillAndSufficientHours_whenFindResource_thenNoResourceReturned()
 		throws Exception {
 
-		Skill skill = skillService.getSkillById(1L);
+		Skill skill = skillService.getSkillByID(1L);
 
-		Project project = projectService.getProjectById(1L);
+		Project project = projectService.getProjectByID(1L);
 
 		LocalDate startDate = LocalDate.now();
 		LocalDate endDate = LocalDate.now().plusDays(7);
@@ -121,7 +121,7 @@ public class ResourceServiceTest {
 		throws Exception {
 
 		Resource expected = new Resource("Test Resource", 40);
-		Skill skill = skillService.getSkillById(1L);
+		Skill skill = skillService.getSkillByID(1L);
 		expected.addSkill(skill);
 		resourceService.addResource(expected);
 		final int hours = 40;

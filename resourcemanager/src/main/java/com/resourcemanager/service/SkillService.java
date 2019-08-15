@@ -15,7 +15,7 @@ public interface SkillService {
 	public void deleteSkill(Long lngSkillID);
 
 	@Secured("ROLE_USER")
-	public Skill getSkillById(Long lngSkillID);
+	public Skill getSkillByID(Long lngSkillID);
 
 	@Secured("ROLE_USER")
 	public List<Skill> listSkills();

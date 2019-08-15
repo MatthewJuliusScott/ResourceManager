@@ -2,6 +2,7 @@ package com.resourcemanager.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -16,89 +17,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.resourcemanager.dao.UserDAO;
-import com.resourcemanager.model.UserDetails;
+import com.resourcemanager.model.User;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-	private static final Logger	logger	= LoggerFactory.getLogger(UserDAOImpl.class);
+	private static final Logger		logger	= LoggerFactory.getLogger(UserDAOImpl.class);
 
 	@Autowired
-	private SessionFactory		sessionFactory;
+	private EntityManagerFactory	entityManager;
 
 	@Override
-	public void addUserDetails(UserDetails user) {
+	public void addUser(User user) {
 		getCurrentSession().persist(user);
-		logger.info("UserDetails saved successfully, UserDetails details=" + user);
+		logger.info("User saved successfully, User details=" + user);
 	}
 
 	@Override
-	public void deleteUserDetails(Long userID) {
-		UserDetails userDetails = getCurrentSession().find(UserDetails.class, userID);
-		getCurrentSession().remove(userDetails);
-		logger.info("UserDetails deleted successfully, UserDetails details=" + userDetails);
+	public void deleteUser(Long userID) {
+		User user = getCurrentSession().find(User.class, userID);
+		getCurrentSession().remove(user);
+		logger.info("User deleted successfully, User details=" + user);
 	}
 
 	@Override
-	public UserDetails findUserDetailsByEmail(String email) {
-		UserDetails userDetails = null;
-		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
-		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
-		Root<UserDetails> root = criteria.from(UserDetails.class);
+	public User findUserByEmail(String email) {
+		User user = null;
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> root = criteria.from(User.class);
 		criteria.select(root).where(builder.equal(root.get("email"), email));
-		Query<UserDetails> query = getCurrentSession().createQuery(criteria);
-		List<UserDetails> entityList = query.getResultList();
+		Query<User> query = getCurrentSession().createQuery(criteria);
+		List<User> entityList = query.getResultList();
 		if (!entityList.isEmpty()) {
-			userDetails = entityList.get(0);
-			logger.info("UserDetails retrieved successfully, UserDetails details=" + userDetails);
+			user = entityList.get(0);
+			logger.info("User retrieved successfully, User details=" + user);
 		}
-		return userDetails;
+		return user;
 	}
 
 	@Override
-	public UserDetails findUserDetailsByID(long id) {
-		UserDetails userDetails = null;
-		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
-		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
-		Root<UserDetails> root = criteria.from(UserDetails.class);
+	public User findUserByID(long id) {
+		User user = null;
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> root = criteria.from(User.class);
 		criteria.select(root).where(builder.equal(root.get("id"), id));
-		Query<UserDetails> query = getCurrentSession().createQuery(criteria);
-		List<UserDetails> entityList = query.getResultList();
+		Query<User> query = getCurrentSession().createQuery(criteria);
+		List<User> entityList = query.getResultList();
 		if (!entityList.isEmpty()) {
-			userDetails = entityList.get(0);
-			logger.info("UserDetails retrieved successfully, UserDetails details=" + userDetails);
+			user = entityList.get(0);
+			logger.info("User retrieved successfully, User details=" + user);
 		}
-		return userDetails;
+		return user;
 	}
 
 	protected Session getCurrentSession() {
 		Session session;
 		try {
-			session = sessionFactory.unwrap(SessionFactory.class).getCurrentSession();
+			session = entityManager.unwrap(SessionFactory.class).getCurrentSession();
 		} catch (HibernateException e) {
-			session = sessionFactory.unwrap(SessionFactory.class).openSession();
+			session = entityManager.unwrap(SessionFactory.class).openSession();
 		}
 		return session;
 	}
 
 	protected SessionFactory getCurrentSessionFactory() {
-		return sessionFactory.unwrap(SessionFactory.class);
+		return entityManager.unwrap(SessionFactory.class);
 	}
 
 	@Override
-	public List<UserDetails> getUserDetails() {
-		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
-		CriteriaQuery<UserDetails> criteria = builder.createQuery(UserDetails.class);
-		Root<UserDetails> root = criteria.from(UserDetails.class);
+	public List<User> listUsers() {
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> root = criteria.from(User.class);
 		criteria.select(root);
-		Query<UserDetails> query = getCurrentSession().createQuery(criteria);
+		Query<User> query = getCurrentSession().createQuery(criteria);
 		return query.getResultList();
 	}
 
 	@Override
-	public void updateUserDetails(UserDetails userDetails) {
-		getCurrentSession().merge(userDetails);
-		logger.info("Skill updated successfully, UserDetails details=" + userDetails);
+	public void updateUser(User user) {
+		getCurrentSession().merge(user);
+		logger.info("User updated successfully, User details=" + user);
 	}
 
 }

@@ -1,5 +1,5 @@
 
-package com.resourcemanager.functionality;
+package com.resourcemanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class SkillController {
 	@RequestMapping(value = { "/skills/edit/{id}" }, method = RequestMethod.GET)
 	public String editSkill(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
-			model.addAttribute("skill", this.skillService.getSkillById(id));
+			model.addAttribute("skill", this.skillService.getSkillByID(id));
 		} else {
 			model.addAttribute("skill", new Skill());
 		}

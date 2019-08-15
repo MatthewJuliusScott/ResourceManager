@@ -11,7 +11,7 @@ public interface AllocationDAO {
 
 	public void deleteAllocation(Long id);
 
-	public Allocation getAllocationById(Long id);
+	public Allocation getAllocationByID(Long id);
 
 	public List<Allocation> listAllocations();
 

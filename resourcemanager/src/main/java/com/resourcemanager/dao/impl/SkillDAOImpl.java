@@ -55,7 +55,7 @@ public class SkillDAOImpl implements SkillDAO {
 	}
 
 	@Override
-	public Skill getSkillById(Long id) {
+	public Skill getSkillByID(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
 		logger.info("Skill retrieved successfully, skill details=" + skill);
 		return skill;

@@ -2,20 +2,20 @@ package com.resourcemanager.dao;
 
 import java.util.List;
 
-import com.resourcemanager.model.UserDetails;
+import com.resourcemanager.model.User;
 
 public interface UserDAO {
 
-	void addUserDetails(UserDetails user);
+	void addUser(User user);
 
-	void deleteUserDetails(Long userID);
+	void deleteUser(Long userID);
 
-	UserDetails findUserDetailsByEmail(String email);
+	User findUserByEmail(String email);
 
-	UserDetails findUserDetailsByID(long id);
+	User findUserByID(long id);
 
-	List<UserDetails> getUserDetails();
+	List<User> listUsers();
 
-	void updateUserDetails(UserDetails userDetails);
+	void updateUser(User user);
 
 }

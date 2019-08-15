@@ -53,7 +53,7 @@ public class AllocationServiceImplTest {
 	@Test
 	public void givenRepository_whenDeleteAllocation_thenDeleteAllocation() {
 		try {
-			Allocation allocation = allocationDAO.getAllocationById(1L);
+			Allocation allocation = allocationDAO.getAllocationByID(1L);
 			if (allocation != null) {
 				allocationDAO.deleteAllocation(1L);
 			}
@@ -63,9 +63,9 @@ public class AllocationServiceImplTest {
 	}
 
 	@Test
-	public void givenRepository_whenGetAllocationById_thenReturnAllocation() {
+	public void givenRepository_whenGetAllocationByID_thenReturnAllocation() {
 		try {
-			allocationDAO.getAllocationById(1L);
+			allocationDAO.getAllocationByID(1L);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -79,7 +79,7 @@ public class AllocationServiceImplTest {
 
 	@Test
 	public void givenRepository_whenUpdateAllocation_thenAllocationUpdated() {
-		Allocation allocation = allocationDAO.getAllocationById(1L);
+		Allocation allocation = allocationDAO.getAllocationByID(1L);
 		if (allocation == null) {
 			allocation = new Allocation();
 			allocation.setId(1L);

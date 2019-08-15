@@ -15,25 +15,25 @@
 			<table cellpadding="0" cellspacing="0" class="tbl">
 				<tr>
 					<td>
-						<c:if test="${!empty User.name}">
+						<c:if test="${!empty user.name}">
 							<h1>Edit User</h1>
 						</c:if>
-						<c:if test="${empty User.name}">
+						<c:if test="${empty user.name}">
 							<h1>Create User</h1>
 						</c:if>
 					</td>
 				</tr>
 				<tr>
-					<c:url var="addAction" value="/Users/save" ></c:url>
-					<form:form action="${addAction}" modelAttribute="User" method="POST">
-					
+					<c:url var="addAction" value="/users/save" ></c:url>
+					<form:form action="${addAction}" modelAttribute="user" method="POST">
+					<form:hidden path="id" />
 					<table cellpadding="0" cellspacing="0" class="tbl">
 						<tr>
 							<td>
 								<table cellpadding="0" cellspacing="0" style="width: 350px;">
 									<c:if test="${!empty User.name}">
 										<tr>
-											<td style="width: 65px;">
+											<td style="width: 150px;">
 												<form:label path="id" style="font-weight: bold; width: 5px;">
 													<spring:message text="ID"/>
 												</form:label>
@@ -45,7 +45,7 @@
 										</tr>
 									</c:if>
 									<tr>
-										<td style="width: 65px;">
+										<td style="width: 150px;">
 											<form:label path="name" style="font-weight: bold;">
 												<spring:message text="Name"/>
 											</form:label>
@@ -55,23 +55,43 @@
 										</td> 
 									</tr>
 									<tr>
-										<td style="width: 65px;">
+										<td style="width: 150px;">
 											<form:label path="Email" style="font-weight: bold;">
 												<spring:message text="Email"/>
 											</form:label>
 										</td>
 										<td style="width: 500px;">
-											<form:input type="password" path="Email" />
+											<form:input path="email" />
 										</td> 
 									</tr>
 									<tr>
-										<td style="width: 65px;">
-											<form:label path="Password" style="font-weight: bold;">
-												<spring:message text="Password"/>
-											</form:label>
+										<td style="width: 150px;">
+											<label style="font-weight: bold;">
+												<c:if test="${!empty user.name}">
+													<spring:message text="New Password"/>
+												</c:if>
+												<c:if test="${empty user.name}">
+													<spring:message text="Password"/>
+												</c:if>
+											</label>
 										</td>
 										<td style="width: 500px;">
-											<form:input path="Password" />
+											<input type="password" name="password" />
+										</td> 
+									</tr>
+									<tr>
+										<td style="width: 150px;">
+											<label style="font-weight: bold;">
+												<c:if test="${!empty user.name}">
+													<spring:message text="Confirm New Password"/>
+												</c:if>
+												<c:if test="${empty user.name}">
+													<spring:message text="Confirm Password"/>
+												</c:if>
+											</label>
+										</td>
+										<td style="width: 500px;">
+											<input type="password" name="confirmPassword" />
 										</td> 
 									</tr>
 								</table>

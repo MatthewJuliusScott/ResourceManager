@@ -12,7 +12,7 @@ public interface ResourceDAO {
 
 	public void addResource(Resource p);
 
-	public Resource getResourceById(Long id);
+	public Resource getResourceByID(Long id);
 
 	public List<Resource> listResources();
 

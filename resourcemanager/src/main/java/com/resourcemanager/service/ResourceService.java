@@ -16,7 +16,7 @@ public interface ResourceService {
 	public void deleteResource(Long id);
 
 	@Secured("ROLE_ADMIN")
-	public Resource getResourceById(Long id);
+	public Resource getResourceByID(Long id);
 
 	@Secured("ROLE_ADMIN")
 	public List<Resource> listResources();

@@ -42,7 +42,7 @@ public class AllocationDAOImpl implements AllocationDAO {
 	}
 
 	@Override
-	public Allocation getAllocationById(Long id) {
+	public Allocation getAllocationByID(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
 		logger.info("Allocation retrieved successfully, allocation details=" + allocation);
 		return allocation;

@@ -55,8 +55,8 @@ public class SkillServiceImplTest {
 	}
 
 	@Test
-	public void givenRepository_whenGetSkillById_thenSkillReturned() throws Exception {
-		Skill skill = skillDAO.getSkillById(1L);
+	public void givenRepository_whenGetSkillByID_thenSkillReturned() throws Exception {
+		Skill skill = skillDAO.getSkillByID(1L);
 		assertNotNull(skill);
 	}
 
@@ -69,13 +69,13 @@ public class SkillServiceImplTest {
 
 	@Test
 	public void givenRepository_whenUpdateSkill_thenSkillUpdated() throws Exception {
-		Skill expected = skillDAO.getSkillById(1L);
+		Skill expected = skillDAO.getSkillByID(1L);
 		expected.setName("Some Name");
 		skillDAO.updateSkill(expected);
 		assertFalse(expected.getName().equals("Another Name"));
 		expected.setName("Another Name");
 		skillDAO.updateSkill(expected);
-		Skill actual = skillDAO.getSkillById(1L);
+		Skill actual = skillDAO.getSkillByID(1L);
 		assertEquals(expected, actual);
 	}
 

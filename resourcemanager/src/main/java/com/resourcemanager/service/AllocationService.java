@@ -16,7 +16,7 @@ public interface AllocationService {
 	public void deleteAllocation(Long id);
 
 	@Secured("ROLE_ADMIN")
-	public Allocation getAllocationById(Long id);
+	public Allocation getAllocationByID(Long id);
 
 	@Secured("ROLE_ADMIN")
 	public List<Allocation> listAllocations();

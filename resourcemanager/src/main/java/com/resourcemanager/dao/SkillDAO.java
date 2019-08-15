@@ -10,7 +10,7 @@ public interface SkillDAO {
 
 	public void deleteSkill(Long id);
 
-	public Skill getSkillById(Long id);
+	public Skill getSkillByID(Long id);
 
 	public Skill getSkillByName(String name);
 
