@@ -18,8 +18,11 @@
 		<div style="padding-top: 30px;">
 			<table cellpadding="0" cellspacing="0" class="tblHeaderScroll">
 				<tr>
-					<th style="width: 300px;" class="tblHeaderCenter" scope="col">Allocation ID</th>
-					<th style="width: 65%;" class="tblHeader" scope="col">Project</th>
+					<th style="width: 300px;" class="tblHeaderCenter" scope="col">#</th>
+					<th style="width: 20%;" class="tblHeader" scope="col">Project Name</th>
+					<th style="width: 15%;" class="tblHeader" scope="col">Start Date</th>
+					<th style="width: 15%;" class="tblHeader" scope="col">End Date</th>
+					<th style="width: 20%;" class="tblHeader" scope="col">Skill requirement</th>
 					<th style="width: 10%;" class="tblHeaderCenter" scope="col">Edit</th>
 					<th style="width: 10%;" class="tblHeaderCenter" scope="col">Delete</th>
 				</tr>
@@ -27,7 +30,10 @@
 					<c:forEach items="${listAllocations}" var="allocation">
 							<tr>
 								<td style="width: 300px;" class="tblDefCenter">${allocation.id}</td>
-								<td style="width: 65%;" class="tblDef">${allocation.project.name}</td>
+								<td style="width: 20%;" class="tblDef">${allocation.project.name}</td>
+								<td style="width: 15%;" class="tblDef">${allocation.startDateAsString}</td>
+								<td style="width: 15%;" class="tblDef">${allocation.endDateAsString}</td>
+								<td style="width: 20%;" class="tblDef">${allocation.skill.name}</td>
 								<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="allocations/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
 								<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/allocations/delete/${allocation.id}" role="button"><i class="fas fa-trash"></i></a></td>
 							</tr>
