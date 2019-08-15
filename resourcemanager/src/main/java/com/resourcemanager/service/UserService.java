@@ -21,6 +21,7 @@ public interface UserService {
 	@Secured("ROLE_ADMIN")
 	public List<User> listUsers();
 
+	@Secured("ROLE_USER")
 	public void updateUser(User user);
 
 }

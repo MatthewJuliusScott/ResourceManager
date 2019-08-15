@@ -61,39 +61,63 @@
 											</form:label>
 										</td>
 										<td style="width: 500px;">
-											<form:input path="email" />
+											<form:input path="email" readonly="true" />
 										</td> 
 									</tr>
-									<tr>
-										<td style="width: 150px;">
-											<label style="font-weight: bold;">
-												<c:if test="${!empty user.name}">
-													<spring:message text="New Password"/>
-												</c:if>
-												<c:if test="${empty user.name}">
+									<c:if test="${empty user.name}">
+										<tr>
+											<td style="width: 150px;">
+												<label style="font-weight: bold;">
 													<spring:message text="Password"/>
-												</c:if>
-											</label>
-										</td>
-										<td style="width: 500px;">
-											<input type="password" name="password" />
-										</td> 
-									</tr>
-									<tr>
-										<td style="width: 150px;">
-											<label style="font-weight: bold;">
-												<c:if test="${!empty user.name}">
-													<spring:message text="Confirm New Password"/>
-												</c:if>
-												<c:if test="${empty user.name}">
+												</label>
+											</td>
+											<td style="width: 500px;">
+												<input type="password" name="password" />
+											</td> 
+										</tr>
+										<tr>
+											<td style="width: 150px;">
+												<label style="font-weight: bold;">
 													<spring:message text="Confirm Password"/>
-												</c:if>
-											</label>
-										</td>
-										<td style="width: 500px;">
-											<input type="password" name="confirmPassword" />
-										</td> 
-									</tr>
+												</label>
+											</td>
+											<td style="width: 500px;">
+												<input type="password" name="confirmPassword" />
+											</td> 
+										</tr>
+									</c:if>
+									<c:if test="${!empty user.name}">
+										<tr>
+											<td style="width: 150px;">
+												<label style="font-weight: bold;">
+													<spring:message text="Old Password"/>
+												</label>
+											</td>
+											<td style="width: 500px;">
+												<input type="password" name="oldPassword" />
+											</td> 
+										</tr>
+										<tr>
+											<td style="width: 150px;">
+												<label style="font-weight: bold;">
+													<spring:message text="New Password"/>
+												</label>
+											</td>
+											<td style="width: 500px;">
+												<input type="password" name="password" />
+											</td> 
+										</tr>
+										<tr>
+											<td style="width: 150px;">
+												<label style="font-weight: bold;">
+													<spring:message text="Confirm New Password"/>
+												</label>
+											</td>
+											<td style="width: 500px;">
+												<input type="password" name="confirmPassword" />
+											</td> 
+										</tr>
+									</c:if>
 								</table>
 							</td>
 						</tr>

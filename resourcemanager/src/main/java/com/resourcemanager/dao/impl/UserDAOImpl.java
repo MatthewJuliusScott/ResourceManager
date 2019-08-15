@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.UserDAO;
 import com.resourcemanager.model.User;
@@ -97,6 +98,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
+	@Transactional
 	public void updateUser(User user) {
 		getCurrentSession().merge(user);
 		logger.info("User updated successfully, User details=" + user);

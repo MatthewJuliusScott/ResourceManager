@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.resourcemanager.config.SpringSecurityConfig;
 import com.resourcemanager.model.User;
 import com.resourcemanager.service.UserService;
 
@@ -25,7 +25,7 @@ public class UserController {
 	private UserService		userService;
 
 	@Autowired
-	SpringSecurityConfig	securityConfig;
+	private PasswordEncoder	encoder;
 
 	@RequestMapping("users/add")
 	public String addUser() {
@@ -77,10 +77,28 @@ public class UserController {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
+		String oldPassword = request.getParameter("oldPassword") != null ? request.getParameter("oldPassword") : "";
+		String newPassword = request.getParameter("password") != null ? request.getParameter("password") : "";
 
-		// if a new password has been set, encrypt it and assign to user object
-		if (request.getParameter("password") != null && request.getParameter("password").length() > 0) {
-			user.setPassword(securityConfig.encoder().encode(request.getParameter("password")));
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+
+		User oldUser = userService.getUserByUserName(username);
+		user.setPassword(oldUser.getPassword());
+		user.setEmail(oldUser.getEmail());
+
+		// if old password is correct
+		if (encoder.matches(oldPassword, user.getPassword())) {
+			// if a new password has been set, encrypt it and assign to user object
+			if (newPassword.length() > 0) {
+				String encryptedPassword = encoder.encode(newPassword);
+				user.setPassword(encryptedPassword);
+			}
 		}
 
 		if (user.getId() == 0) {
@@ -89,14 +107,6 @@ public class UserController {
 		} else {
 			// existing user, call update
 			this.userService.updateUser(user);
-		}
-
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username;
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
 		}
 
 		if (username.equals(user.getEmail())) {

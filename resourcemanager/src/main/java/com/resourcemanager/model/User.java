@@ -49,7 +49,7 @@ public class User implements Cloneable {
 	@ElementCollection
 	private List<String>	authorityStrings	= new ArrayList<String>();
 
-	/** The resource associated with this user. Usually only for a USER_ROLE authority. */
+	/** The resource associated with this user. Usually only for a ROLE_USER authority. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
