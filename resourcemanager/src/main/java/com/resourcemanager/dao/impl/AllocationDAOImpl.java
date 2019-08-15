@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -48,7 +49,13 @@ public class AllocationDAOImpl implements AllocationDAO {
 	}
 
 	protected Session getCurrentSession() {
-		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		Session session;
+		try {
+			session = entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		} catch (HibernateException e) {
+			session = entityManager.unwrap(SessionFactory.class).openSession();
+		}
+		return session;
 	}
 
 	protected SessionFactory getCurrentSessionFactory() {

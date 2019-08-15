@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -40,7 +41,13 @@ public class SkillDAOImpl implements SkillDAO {
 	}
 
 	protected Session getCurrentSession() {
-		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		Session session;
+		try {
+			session = entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		} catch (HibernateException e) {
+			session = entityManager.unwrap(SessionFactory.class).openSession();
+		}
+		return session;
 	}
 
 	protected SessionFactory getCurrentSessionFactory() {
