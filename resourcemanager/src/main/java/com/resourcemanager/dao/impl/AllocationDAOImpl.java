@@ -82,7 +82,7 @@ public class AllocationDAOImpl implements AllocationDAO {
 		Root<Allocation> root = criteria.from(Allocation.class);
 		Predicate startInTimePeriod = builder.between(root.get("startDate"), startDate, endDate);
 		Predicate endInTimePeriod = builder.between(root.get("endDate"), startDate, endDate);
-		Predicate notAllocation = builder.isNull(root.get("resource_id"));
+		Predicate notAllocation = builder.isNull(root.get("resource"));
 		criteria.select(root).where(builder.and(startInTimePeriod, endInTimePeriod, notAllocation));
 		// .and(startInTimePeriod, endInTimePeriod)
 		List<Allocation> allocationsList = getCurrentSession().createQuery(criteria).getResultList();

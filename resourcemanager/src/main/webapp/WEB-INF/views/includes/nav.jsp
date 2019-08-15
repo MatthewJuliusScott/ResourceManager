@@ -5,6 +5,7 @@
     <a class="navSingleLine" href="/projects">Projects</a>
     <a class="navSingleLine" href="/resources">Resources</a>
     <a class="navSingleLine" href="/skills">Skills</a>
+    <a class="navSingleLine" href="/allocations/listrequired">Organisational Requirements</a>
     <div class="topnav-right">
     	<form action="/logout" method="post">
 			<button type="submit" class="btn btn-danger">Log Out</button>
