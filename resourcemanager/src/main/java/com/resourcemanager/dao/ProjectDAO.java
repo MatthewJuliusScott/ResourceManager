@@ -8,7 +8,7 @@ public interface ProjectDAO {
 
 	public void addProject(Project project);
 
-	public Project getProjectById(Long id);
+	public Project getProjectByID(Long id);
 
 	public List<Project> listProjects();
 

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ProjectTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager.model</a> &gt; <span class="el_source">ProjectTest.java</span></div><h1>ProjectTest.java</h1><pre class="source lang-java linenums">package com.resourcemanager.model;
+
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+
+import org.junit.Test;
+
+<span class="fc" id="L12">public class ProjectTest {</span>
+
+	@Test
+	public void testAddAllocation() throws Exception {
+<span class="fc" id="L16">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L17">		allocation.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L19">		List&lt;Allocation&gt; expected = new ArrayList&lt;Allocation&gt;();</span>
+<span class="fc" id="L20">		expected.add(allocation);</span>
+<span class="fc" id="L21">		Project project = new Project();</span>
+<span class="fc" id="L22">		project.addAllocation(allocation);</span>
+
+<span class="fc" id="L24">		List&lt;Allocation&gt; actual = project.getAllocations();</span>
+
+<span class="fc" id="L26">		assertTrue(expected.equals(actual));</span>
+<span class="fc" id="L27">	}</span>
+
+	@Test
+	public void testClone() throws Exception {
+<span class="fc" id="L31">		Project expected = new Project();</span>
+<span class="fc" id="L32">		expected.setId(new Random().nextLong());</span>
+<span class="fc" id="L33">		expected.setName(UUID.randomUUID().toString());</span>
+
+<span class="fc" id="L35">		Resource resource = new Resource();</span>
+<span class="fc" id="L36">		resource.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L38">		Skill skill = new Skill();</span>
+<span class="fc" id="L39">		skill.setId(new Random().nextLong());</span>
+<span class="fc" id="L40">		skill.setName(UUID.randomUUID().toString());</span>
+
+<span class="fc" id="L42">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L43">		allocation.setId(new Random().nextLong());</span>
+<span class="fc" id="L44">		allocation.setSkill(skill);</span>
+<span class="fc" id="L45">		skill.getAllocations().add(allocation);</span>
+<span class="fc" id="L46">		expected.getAllocations().add(allocation);</span>
+
+<span class="fc" id="L48">		Project actual = (Project) expected.clone();</span>
+<span class="fc" id="L49">		assertTrue(expected.equals(actual));</span>
+<span class="fc" id="L50">	}</span>
+
+	@Test
+	public void testEquals() throws Exception {
+<span class="fc" id="L54">		Project expected = new Project();</span>
+<span class="fc" id="L55">		Long id = new Random().nextLong();</span>
+<span class="fc" id="L56">		expected.setId(id);</span>
+<span class="fc" id="L57">		String name = UUID.randomUUID().toString();</span>
+<span class="fc" id="L58">		expected.setName(name);</span>
+
+<span class="fc" id="L60">		Resource resource = new Resource();</span>
+<span class="fc" id="L61">		resource.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L63">		Skill skill = new Skill();</span>
+<span class="fc" id="L64">		skill.setId(new Random().nextLong());</span>
+<span class="fc" id="L65">		skill.setName(UUID.randomUUID().toString());</span>
+
+<span class="fc" id="L67">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L68">		allocation.setId(new Random().nextLong());</span>
+<span class="fc" id="L69">		allocation.setSkill(skill);</span>
+<span class="fc" id="L70">		skill.getAllocations().add(allocation);</span>
+<span class="fc" id="L71">		expected.getAllocations().add(allocation);</span>
+
+<span class="fc" id="L73">		Project actual = new Project();</span>
+<span class="fc" id="L74">		actual.setId(id);</span>
+<span class="fc" id="L75">		actual.setName(name);</span>
+
+<span class="fc" id="L77">		actual.getAllocations().add(allocation);</span>
+<span class="fc" id="L78">	}</span>
+
+	@Test
+	public void testGetAllocations() throws Exception {
+<span class="fc" id="L82">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L83">		allocation.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L85">		List&lt;Allocation&gt; expected = new ArrayList&lt;Allocation&gt;();</span>
+<span class="fc" id="L86">		expected.add(allocation);</span>
+<span class="fc" id="L87">		Project project = new Project();</span>
+<span class="fc" id="L88">		project.addAllocation(allocation);</span>
+
+<span class="fc" id="L90">		List&lt;Allocation&gt; actual = project.getAllocations();</span>
+
+<span class="fc" id="L92">		assertTrue(expected.equals(actual));</span>
+<span class="fc" id="L93">	}</span>
+
+	@Test
+	public void testGetClass() throws Exception {
+<span class="fc" id="L97">		Class&lt;? extends Project&gt; clazz = new Project().getClass();</span>
+<span class="fc" id="L98">		assertTrue(clazz.equals(Project.class));</span>
+<span class="fc" id="L99">	}</span>
+
+	@Test
+	public void testGetId() throws Exception {
+<span class="fc" id="L103">		Project project = new Project();</span>
+<span class="fc" id="L104">		Long id = new Random().nextLong();</span>
+<span class="fc" id="L105">		project.setId(id);</span>
+
+<span class="fc" id="L107">		assertTrue(Long.valueOf(project.getId()).equals(id));</span>
+<span class="fc" id="L108">	}</span>
+
+	@Test
+	public void testGetName() throws Exception {
+<span class="fc" id="L112">		Skill skill = new Skill();</span>
+<span class="fc" id="L113">		String name = UUID.randomUUID().toString();</span>
+<span class="fc" id="L114">		skill.setName(name);</span>
+
+<span class="fc" id="L116">		assertTrue(skill.getName().equals(name));</span>
+<span class="fc" id="L117">	}</span>
+
+	@Test
+	public void testHashCode() throws Exception {
+<span class="fc" id="L121">		Project x = new Project(&quot;Test Project&quot;);</span>
+<span class="fc" id="L122">		Project y = new Project(&quot;Test Project&quot;);</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">		assertTrue(x.equals(y) &amp;&amp; y.equals(x));</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		assertTrue(x.hashCode() == y.hashCode());</span>
+<span class="fc" id="L125">	}</span>
+
+	@Test
+	public void testProject() throws Exception {
+<span class="fc" id="L129">		Project project = new Project();</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		assertTrue(project != null);</span>
+<span class="fc" id="L131">	}</span>
+
+	@Test
+	public void testProjectString() throws Exception {
+<span class="fc" id="L135">		Project project = new Project(&quot;Test Project&quot;);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		assertTrue(project != null);</span>
+<span class="fc" id="L137">	}</span>
+
+	@Test
+	public void testRemoveAllocation() throws Exception {
+<span class="fc" id="L141">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L142">		allocation.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L144">		List&lt;Allocation&gt; expected = new ArrayList&lt;Allocation&gt;();</span>
+<span class="fc" id="L145">		Project project = new Project();</span>
+<span class="fc" id="L146">		allocation.setProject(project);</span>
+<span class="fc" id="L147">		project.addAllocation(allocation);</span>
+<span class="fc" id="L148">		project.removeAllocation(allocation);</span>
+
+<span class="fc" id="L150">		List&lt;Allocation&gt; actual = project.getAllocations();</span>
+
+<span class="fc" id="L152">		assertTrue(expected.equals(actual));</span>
+<span class="fc" id="L153">	}</span>
+
+	@Test
+	public void testSetAllocations() throws Exception {
+<span class="fc" id="L157">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L158">		allocation.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L160">		List&lt;Allocation&gt; expected = new ArrayList&lt;Allocation&gt;();</span>
+<span class="fc" id="L161">		expected.add(allocation);</span>
+<span class="fc" id="L162">		Project project = new Project();</span>
+<span class="fc" id="L163">		project.setAllocations(expected);</span>
+
+<span class="fc" id="L165">		List&lt;Allocation&gt; actual = project.getAllocations();</span>
+
+<span class="fc" id="L167">		assertTrue(expected.equals(actual));</span>
+<span class="fc" id="L168">	}</span>
+
+	@Test
+	public void testSetId() throws Exception {
+<span class="fc" id="L172">		Project project = new Project();</span>
+<span class="fc" id="L173">		Long id = new Random().nextLong();</span>
+<span class="fc" id="L174">		project.setId(id);</span>
+
+<span class="fc" id="L176">		assertTrue(Long.valueOf(project.getId()).equals(id));</span>
+<span class="fc" id="L177">	}</span>
+
+	@Test
+	public void testSetName() throws Exception {
+<span class="fc" id="L181">		Project project = new Project();</span>
+<span class="fc" id="L182">		String name = UUID.randomUUID().toString();</span>
+<span class="fc" id="L183">		project.setName(name);</span>
+
+<span class="fc" id="L185">		assertTrue(project.getName().equals(name));</span>
+<span class="fc" id="L186">	}</span>
+
+	@Test
+	public void testToString() throws Exception {
+<span class="fc" id="L190">		Project project = new Project();</span>
+<span class="fc" id="L191">		Long id = 100L;</span>
+<span class="fc" id="L192">		project.setId(id);</span>
+<span class="fc" id="L193">		String name = &quot;Test Project&quot;;</span>
+<span class="fc" id="L194">		project.setName(name);</span>
+
+<span class="fc" id="L196">		Resource resource = new Resource();</span>
+<span class="fc" id="L197">		resource.setId(new Random().nextLong());</span>
+
+<span class="fc" id="L199">		Skill skill = new Skill();</span>
+<span class="fc" id="L200">		skill.setId(new Random().nextLong());</span>
+<span class="fc" id="L201">		skill.setName(UUID.randomUUID().toString());</span>
+
+<span class="fc" id="L203">		Allocation allocation = new Allocation();</span>
+<span class="fc" id="L204">		allocation.setId(new Random().nextLong());</span>
+<span class="fc" id="L205">		allocation.setSkill(skill);</span>
+<span class="fc" id="L206">		skill.getAllocations().add(allocation);</span>
+<span class="fc" id="L207">		project.getAllocations().add(allocation);</span>
+
+<span class="fc" id="L209">		assertTrue(project.toString().equals(&quot;Project [id=100, name=Test Project]&quot;));</span>
+<span class="fc" id="L210">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

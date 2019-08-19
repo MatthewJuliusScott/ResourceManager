@@ -1,12 +1,15 @@
 package com.resourcemanager.dao.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -39,14 +42,20 @@ public class AllocationDAOImpl implements AllocationDAO {
 	}
 
 	@Override
-	public Allocation getAllocationById(Long id) {
+	public Allocation getAllocationByID(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
 		logger.info("Allocation retrieved successfully, allocation details=" + allocation);
 		return allocation;
 	}
 
 	protected Session getCurrentSession() {
-		return entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		Session session;
+		try {
+			session = entityManager.unwrap(SessionFactory.class).getCurrentSession();
+		} catch (HibernateException e) {
+			session = entityManager.unwrap(SessionFactory.class).openSession();
+		}
+		return session;
 	}
 
 	protected SessionFactory getCurrentSessionFactory() {
@@ -56,9 +65,26 @@ public class AllocationDAOImpl implements AllocationDAO {
 	@Override
 	public List<Allocation> listAllocations() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery criteria = builder.createQuery(Allocation.class);
-		Root contactRoot = criteria.from(Allocation.class);
-		criteria.select(contactRoot);
+		CriteriaQuery<Allocation> criteria = builder.createQuery(Allocation.class);
+		Root<Allocation> root = criteria.from(Allocation.class);
+		criteria.select(root);
+		List<Allocation> allocationsList = getCurrentSession().createQuery(criteria).getResultList();
+		for (Allocation allocation : allocationsList) {
+			logger.info("Allocation List::" + allocation);
+		}
+		return allocationsList;
+	}
+
+	@Override
+	public List<Allocation> listRequiredAllocations(LocalDate startDate, LocalDate endDate) {
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<Allocation> criteria = builder.createQuery(Allocation.class);
+		Root<Allocation> root = criteria.from(Allocation.class);
+		Predicate startInTimePeriod = builder.between(root.get("startDate"), startDate, endDate);
+		Predicate endInTimePeriod = builder.between(root.get("endDate"), startDate, endDate);
+		Predicate notAllocation = builder.isNull(root.get("resource"));
+		criteria.select(root).where(builder.and(startInTimePeriod, endInTimePeriod, notAllocation));
+		// .and(startInTimePeriod, endInTimePeriod)
 		List<Allocation> allocationsList = getCurrentSession().createQuery(criteria).getResultList();
 		for (Allocation allocation : allocationsList) {
 			logger.info("Allocation List::" + allocation);

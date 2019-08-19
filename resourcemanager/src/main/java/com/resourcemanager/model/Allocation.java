@@ -2,6 +2,7 @@
 package com.resourcemanager.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
@@ -24,41 +25,44 @@ import javax.persistence.Table;
 @Entity(name = "Allocation")
 @Table(name = "allocation")
 @AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name = "allocation_id"))
-})
-public class Allocation {
+		@AttributeOverride(name = "id", column = @Column(name = "allocation_id")) })
+public class Allocation implements Cloneable {
+
+	/** The Constant formatter. */
+	public static final DateTimeFormatter	formatter	= DateTimeFormatter
+		.ofPattern("dd/MM/yyyy");
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long		id;
+	private long							id;
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
-	private Project		project;
+	private Project							project;
 
 	/** The skill. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "skill_id")
-	private Skill		skill;
+	private Skill							skill;
 
 	/** The start date. */
 	@Column(name = "start_date")
-	private LocalDate	startDate;
+	private LocalDate						startDate;
 
 	/** The end date. */
 	@Column(name = "end_date")
-	private LocalDate	endDate;
+	private LocalDate						endDate;
 
 	/** The hours. */
-	private int			hours;
+	private int								hours;
 
 	/** The resource. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
-	private Resource	resource;
+	private Resource						resource;
 
 	/**
 	 * Instantiates a new allocation.
@@ -84,7 +88,8 @@ public class Allocation {
 	 * @param resource
 	 *            the resource
 	 */
-	public Allocation(Long id, Project project, Skill skill, LocalDate startDate, LocalDate endDate, int hours,
+	public Allocation(Long id, Project project, Skill skill,
+		LocalDate startDate, LocalDate endDate, int hours,
 		Resource resource) {
 		super();
 		this.id = id;
@@ -94,6 +99,25 @@ public class Allocation {
 		this.endDate = endDate;
 		this.hours = hours;
 		this.resource = resource;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Allocation clone = (Allocation) super.clone();
+		if (project != null) {
+			clone.project = (Project) project.clone();
+		}
+		if (skill != null) {
+			clone.skill = (Skill) skill.clone();
+		}
+		if (resource != null) {
+			clone.resource = (Resource) resource.clone();
+		}
+		return clone;
 	}
 
 	/*
@@ -122,6 +146,15 @@ public class Allocation {
 	 */
 	public LocalDate getEndDate() {
 		return endDate;
+	}
+
+	/**
+	 * Gets the end date.
+	 *
+	 * @return the endDate formatted as a String
+	 */
+	public String getEndDateAsString() {
+		return endDate.format(formatter);
 	}
 
 	/**
@@ -178,6 +211,15 @@ public class Allocation {
 		return startDate;
 	}
 
+	/**
+	 * Gets the start date.
+	 *
+	 * @return the startDate formatted as a String
+	 */
+	public String getStartDateAsString() {
+		return startDate.format(formatter);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -200,6 +242,9 @@ public class Allocation {
 			getResource().removeAllocation(this);
 		}
 		setResource(null);
+		if (getSkill() != null) {
+			getSkill().removeAllocation(this);
+		}
 		setSkill(null);
 	}
 
@@ -271,5 +316,16 @@ public class Allocation {
 	 */
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Allocation [id=" + id + ", project=" + project + ", skill="
+			+ skill + ", startDate=" + startDate + ", endDate=" + endDate
+			+ ", hours=" + hours + ", resource=" + resource + "]";
 	}
 }

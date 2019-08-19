@@ -1,0 +1,11 @@
+Unit and Integration Tests
+see xml
+	tests="53" started="53" failures="0" errors="1" ignored="0"
+
+code coverage
+	see html
+	Element	Missed Instructions	Cov.	Missed Branches	Cov.	Missed	Cxty	Missed	Lines	Missed	Methods	Missed	Classes
+	Total	1,108 of 4,258	73%	131 of 226	42%	150	374	255	1,017	66	261	1	32
+	resourcemanager	1,1083,150	73%	13195	42%	150	374	255	1,017	66	261	1	32
+
+

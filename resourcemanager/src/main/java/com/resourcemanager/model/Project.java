@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,9 +23,8 @@ import javax.persistence.Table;
 @Entity(name = "Project")
 @Table(name = "project")
 @AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name = "project_id"))
-})
-public class Project {
+		@AttributeOverride(name = "id", column = @Column(name = "project_id")) })
+public class Project implements Cloneable {
 
 	/** The id. */
 	@Id
@@ -37,7 +35,7 @@ public class Project {
 	private String				name;
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
 	private List<Allocation>	allocations	= new ArrayList<Allocation>();
 
 	/**
@@ -52,8 +50,8 @@ public class Project {
 	 * @param title
 	 *            the title
 	 */
-	public Project(String title) {
-		this.name = title;
+	public Project(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -67,6 +65,22 @@ public class Project {
 		if (allocation.getResource() != null) {
 			allocation.getResource().addAllocation(allocation);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Project clone = (Project) super.clone();
+		clone.allocations = new ArrayList<Allocation>();
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
+		}
+		return clone;
 	}
 
 	/*
@@ -126,16 +140,15 @@ public class Project {
 	/**
 	 * Removes the skill.
 	 *
-	 * @param skill
-	 *            the skill
+	 * @param allocation
+	 *            the allocation
 	 */
 	public void removeAllocation(Allocation allocation) {
 		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
 			.hasNext();) {
 			Allocation i = iterator.next();
 
-			if (i.getProject().equals(this)
-				&& i.equals(allocation)) {
+			if (i.getProject().equals(this) && i.equals(allocation)) {
 				iterator.remove();
 			}
 		}
@@ -169,5 +182,14 @@ public class Project {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", name=" + name + "]";
 	}
 }

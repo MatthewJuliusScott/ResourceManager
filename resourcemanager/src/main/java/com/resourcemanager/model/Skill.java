@@ -2,21 +2,23 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
@@ -27,36 +29,30 @@ import org.hibernate.annotations.NaturalIdCache;
 @Table(name = "skill")
 @NaturalIdCache
 @AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name = "skill_id"))
-})
-public class Skill {
+		@AttributeOverride(name = "id", column = @Column(name = "skill_id")) })
+public class Skill implements Cloneable {
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long			id;
+	private long				id;
 
 	/** The name. */
 	@NaturalId
-	private String			name;
+	private String				name;
 
 	/** The resources. */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "resource_skill",
-		joinColumns = {
-				@JoinColumn(
-					name = "skill_id")
-		},
-		inverseJoinColumns = {
-				@JoinColumn(
-					name = "resource_id")
-		})
-	private List<Resource>	resources	= new ArrayList<Resource>();
+	@ManyToMany(mappedBy = "skills", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Resource>		resources	= new ArrayList<Resource>();
 
-	/**
-	 * Instantiates a new skill.
-	 */
+	/** The allocations. */
+	@ManyToMany(mappedBy = "project", fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Allocation>	allocations	= new ArrayList<>();
+
 	public Skill() {
+		super();
 	}
 
 	/**
@@ -67,6 +63,28 @@ public class Skill {
 	 */
 	public Skill(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Skill clone = (Skill) super.clone();
+		clone.allocations = new ArrayList<Allocation>();
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
+		}
+		clone.resources = new ArrayList<Resource>();
+		if (resources != null) {
+			for (Resource resource : resources) {
+				clone.getResources().add(resource);
+			}
+		}
+		return clone;
 	}
 
 	/*
@@ -96,6 +114,15 @@ public class Skill {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Gets the allocations.
+	 *
+	 * @return the allocations
+	 */
+	public List<Allocation> getAllocations() {
+		return allocations;
 	}
 
 	/**
@@ -139,6 +166,54 @@ public class Skill {
 	}
 
 	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		for (Resource resource : new ArrayList<Resource>(resources)) {
+			removeResource(resource);
+		}
+		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
+			removeAllocation(allocation);
+		}
+	}
+
+	/**
+	 * Removes the allocation.
+	 *
+	 * @param allocation
+	 *            the allocation
+	 */
+	public void removeAllocation(Allocation allocation) {
+		for (Iterator<Allocation> iterator = allocations.iterator(); iterator
+			.hasNext();) {
+			Allocation i = iterator.next();
+
+			if (i.getSkill().equals(this) && i.equals(allocation)) {
+				allocation.setSkill(null);
+				iterator.remove();
+			}
+		}
+	}
+
+	/**
+	 * Removes the resource.
+	 *
+	 * @param resource
+	 *            the resource
+	 */
+	private void removeResource(Resource resource) {
+		for (Resource r : resources) {
+			for (Iterator<Skill> is = r.getSkills().iterator(); is.hasNext();) {
+				Skill skill = is.next();
+				if (skill.equals(this) && r.equals(resource)) {
+					is.remove();
+				}
+			}
+		}
+	}
+
+	/**
 	 * Sets the id.
 	 *
 	 * @param id
@@ -148,8 +223,6 @@ public class Skill {
 		this.id = id;
 	}
 
-	// Getters and setters omitted for brevity
-
 	/**
 	 * Sets the name.
 	 *
@@ -158,5 +231,14 @@ public class Skill {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Skill [id=" + id + ", name=" + name + "]";
 	}
 }

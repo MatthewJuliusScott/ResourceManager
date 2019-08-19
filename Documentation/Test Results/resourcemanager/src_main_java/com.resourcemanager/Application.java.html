@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Application.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (22/07/2019 8:58:39 PM)</a> &gt; <a href="../../index.html" class="el_group">resourcemanager</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.resourcemanager</a> &gt; <span class="el_source">Application.java</span></div><h1>Application.java</h1><pre class="source lang-java linenums">
+package com.resourcemanager;
+
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.google.common.base.Preconditions;
+import com.resourcemanager.converter.SkillConverter;
+
+@SpringBootApplication
+<span class="fc" id="L34">public class Application extends SpringBootServletInitializer {</span>
+
+	@Configuration
+	@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
+	@EnableTransactionManagement
+<span class="fc" id="L39">	public class WebConfig implements WebMvcConfigurer {</span>
+		
+		@Lazy
+		@Autowired
+		SkillConverter	skillConverter;
+
+		@Value(&quot;${spring.datasource.driver-class-name}&quot;)
+		private String	jdbcDriverClassName;
+
+		@Value(&quot;${spring.datasource.url}&quot;)
+		private String	jdbcURl;
+
+		@Value(&quot;${spring.datasource.username}&quot;)
+		private String	dbUsername;
+
+		@Value(&quot;${spring.datasource.password}&quot;)
+		private String	dbPassword;
+
+		@Value(&quot;${hibernate.hbm2ddl.auto}&quot;)
+		private String	hbm2ddlAuto;
+
+		@Value(&quot;${hibernate.hbm2ddl.import_files}&quot;)
+		private String	hbm2ddlImport_files;
+
+		@Value(&quot;${hibernate.dialect}&quot;)
+		private String	dialect;
+
+		@Override
+		public void addFormatters(FormatterRegistry registry) {
+<span class="fc" id="L68">			registry.addConverter(skillConverter);</span>
+<span class="fc" id="L69">		}</span>
+
+		@Override
+		public void addViewControllers(ViewControllerRegistry registry) {
+<span class="fc" id="L73">			registry.addViewController(&quot;/login&quot;).setViewName(&quot;login&quot;);</span>
+<span class="fc" id="L74">		}</span>
+
+		@Bean
+		public DataSource dataSource() {
+<span class="fc" id="L78">			final BasicDataSource dataSource = new BasicDataSource();</span>
+<span class="fc" id="L79">			dataSource.setDriverClassName(Preconditions.checkNotNull(jdbcDriverClassName));</span>
+<span class="fc" id="L80">			dataSource.setUrl(Preconditions.checkNotNull(jdbcURl));</span>
+<span class="fc" id="L81">			dataSource.setUsername(Preconditions.checkNotNull(dbUsername));</span>
+<span class="fc" id="L82">			dataSource.setPassword(Preconditions.checkNotNull(dbPassword));</span>
+
+<span class="fc" id="L84">			return dataSource;</span>
+		}
+
+		private final Properties hibernateProperties() {
+<span class="fc" id="L88">			final Properties hibernateProperties = new Properties();</span>
+<span class="fc" id="L89">			hibernateProperties.setProperty(&quot;hibernate.hbm2ddl.auto&quot;, Preconditions.checkNotNull(hbm2ddlAuto));</span>
+<span class="fc" id="L90">			hibernateProperties.setProperty(&quot;hibernate.hbm2ddl.import_files&quot;, Preconditions.checkNotNull(hbm2ddlImport_files));</span>
+<span class="fc" id="L91">			hibernateProperties.setProperty(&quot;hibernate.dialect&quot;, Preconditions.checkNotNull(dialect));</span>
+
+<span class="fc" id="L93">			return hibernateProperties;</span>
+		}
+
+		@Bean
+		public PlatformTransactionManager hibernateTransactionManager() {
+<span class="fc" id="L98">			HibernateTransactionManager transactionManager = new HibernateTransactionManager();</span>
+<span class="fc" id="L99">			transactionManager.setSessionFactory(sessionFactory().getObject());</span>
+<span class="fc" id="L100">			return transactionManager;</span>
+		}
+
+		@Bean
+		public LocalSessionFactoryBean sessionFactory() {
+<span class="fc" id="L105">			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();</span>
+<span class="fc" id="L106">			sessionFactory.setDataSource(dataSource());</span>
+<span class="fc" id="L107">			sessionFactory.setPackagesToScan(</span>
+				&quot;com.resourcemanager.model&quot;);
+<span class="fc" id="L109">			sessionFactory.setHibernateProperties(hibernateProperties());</span>
+
+<span class="fc" id="L111">			return sessionFactory;</span>
+		}
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L116">		String password = &quot;password&quot;;</span>
+<span class="nc" id="L117">		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
+<span class="nc" id="L118">		String hashedPassword = passwordEncoder.encode(password);</span>
+<span class="nc" id="L119">		System.out.println(hashedPassword);</span>
+<span class="nc" id="L120">		SpringApplication.run(Application.class, args);</span>
+<span class="nc" id="L121">	}</span>
+
+	@Override
+	protected SpringApplicationBuilder configure(
+		SpringApplicationBuilder application) {
+<span class="nc" id="L126">		return application.sources(Application.class);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>java (22/07/2019 8:58:39 PM)</div></body></html>

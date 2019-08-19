@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
@@ -25,7 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "resource")
-public class Resource {
+public class Resource implements Cloneable {
 
 	/** The id. */
 	@Id
@@ -37,16 +38,12 @@ public class Resource {
 	private String				name;
 
 	/** The skills. */
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "resource_skill",
-		joinColumns = {
-				@JoinColumn(
-					name = "resource_id")
-		},
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@JoinTable(name = "resource_skill", joinColumns = {
+			@JoinColumn(name = "resource_id") },
 		inverseJoinColumns = {
-				@JoinColumn(
-					name = "skill_id")
-		})
+				@JoinColumn(name = "skill_id") })
+	@OrderColumn(name = "order_col")
 	private List<Skill>			skills		= new ArrayList<>();
 
 	/** The allocations. */
@@ -56,6 +53,27 @@ public class Resource {
 	/** The hours. */
 	@Basic
 	private int					hours;
+
+	/**
+	 * Instantiates a new resource.
+	 */
+	public Resource() {
+		super();
+	}
+
+	/**
+	 * Instantiates a new resource.
+	 *
+	 * @param name
+	 *            the name
+	 * @param hours
+	 *            the hours
+	 */
+	public Resource(String name, int hours) {
+		super();
+		this.name = name;
+		this.hours = hours;
+	}
 
 	/**
 	 * Adds the allocation.
@@ -80,6 +98,28 @@ public class Resource {
 
 	/*
 	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Resource clone = (Resource) super.clone();
+		clone.allocations = new ArrayList<Allocation>();
+		if (allocations != null) {
+			for (Allocation allocation : allocations) {
+				clone.getAllocations().add(allocation);
+			}
+		}
+		clone.skills = new ArrayList<Skill>();
+		if (skills != null) {
+			for (Skill skill : skills) {
+				clone.getSkills().add(skill);
+			}
+		}
+		return clone;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -98,7 +138,7 @@ public class Resource {
 			if (other.allocations != null) {
 				return false;
 			}
-		} else if (!allocations.equals(other.allocations)) {
+		} else if (!allocations.containsAll(other.allocations)) {
 			return false;
 		}
 		if (hours != other.hours) {
@@ -209,7 +249,7 @@ public class Resource {
 			.hasNext();) {
 			Allocation i = iterator.next();
 
-			if (i.getResource().equals(this)
+			if (i.getResource() != null && i.getResource().equals(this)
 				&& i.equals(allocation)) {
 				iterator.remove();
 			}
@@ -227,8 +267,7 @@ public class Resource {
 			.hasNext();) {
 			Skill i = iterator.next();
 			for (Resource resource : i.getResources()) {
-				if (resource.equals(this)
-					&& i.equals(skill)) {
+				if (resource.equals(this) && i.equals(skill)) {
 					iterator.remove();
 				}
 			}
@@ -286,10 +325,6 @@ public class Resource {
 		this.skills = skills;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="

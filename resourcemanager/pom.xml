@@ -12,6 +12,7 @@
 		<hibernate-version>5.4.2.Final</hibernate-version>
 		<mysql-version>8.0.15</mysql-version>
 		<tomcat-version>9.0.17</tomcat-version>
+		<start-class>com.resourcemanager.Application</start-class>
 	</properties>
     <build>
         <plugins>
@@ -28,13 +29,29 @@
 			    <groupId>org.springframework.boot</groupId>
 			    <artifactId>spring-boot-maven-plugin</artifactId>
 			    <configuration>
-			        <executable>true</executable>
+			    	<mainClass>com.resourcemanager.Application</mainClass>
+			    </configuration>
+			    <executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            
+            <plugin>
+			    <artifactId>maven-war-plugin</artifactId>
+			    <version>2.6</version>
+			    <configuration>
+			    	 <warName>ResourceManager</warName>
+			         <failOnMissingWebXml>false</failOnMissingWebXml>
 			    </configuration>
 			</plugin>
-
+	
         </plugins>
     </build>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     
 	<parent>
         <groupId>org.springframework.boot</groupId>
@@ -43,28 +60,47 @@
     </parent>
     
     <dependencies>
+    
+	    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-jpamodelgen</artifactId>
+		    <version>${hibernate-version}</version>
+		    <scope>provided</scope>
+		</dependency>
+		
 	    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot</artifactId>
 		</dependency>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        
         <dependency>
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
 		    <scope>runtime</scope>
 		</dependency>
+		
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -75,37 +111,84 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
         <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
 	    </dependency>
+	    
         <dependency>
 	        <groupId>org.apache.tomcat.embed</groupId>
 	        <artifactId>tomcat-embed-jasper</artifactId>
 	        <version>${tomcat-version}</version>
 	        <scope>provided</scope>
 	    </dependency>
+	    
 	    <dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-dbcp</artifactId>
 		    <version>${tomcat-version}</version>
 		</dependency>
+		
         <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.6</version>
         </dependency>
+        
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 		    <groupId>com.google.guava</groupId>
 		    <artifactId>guava</artifactId>
 		    <version>27.1-jre</version>
+		</dependency>
+				
+		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<version>2.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-test</artifactId>
+	    <scope>test</scope>
+	</dependency>
+		
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-core</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>2.0.0</version>
 		</dependency>
     </dependencies>
 

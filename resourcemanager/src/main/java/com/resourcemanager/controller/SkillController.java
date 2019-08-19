@@ -24,10 +24,10 @@ public class SkillController {
 		return "redirect:/skills/edit/0";
 	}
 
-	@RequestMapping("skills/edit/{id}")
+	@RequestMapping(value = { "/skills/edit/{id}" }, method = RequestMethod.GET)
 	public String editSkill(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
-			model.addAttribute("skill", this.skillService.getSkillById(id));
+			model.addAttribute("skill", this.skillService.getSkillByID(id));
 		} else {
 			model.addAttribute("skill", new Skill());
 		}
@@ -41,7 +41,7 @@ public class SkillController {
 		return "skills";
 	}
 
-	@RequestMapping("/skills/delete/{id}")
+	@RequestMapping(value = { "/skills/delete/{id}" }, method = RequestMethod.GET)
 	public String removeSkill(@PathVariable("id") Long id) {
 
 		this.skillService.deleteSkill(id);

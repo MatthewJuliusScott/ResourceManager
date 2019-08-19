@@ -24,20 +24,20 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	@Transactional
-	public Skill getSkillById(Long id) {
-		return this.skillDAO.getSkillById(id);
+	public void deleteSkill(Long lngSkillID) {
+		this.skillDAO.deleteSkill(lngSkillID);
+	}
+
+	@Override
+	@Transactional
+	public Skill getSkillByID(Long lngSkillID) {
+		return this.skillDAO.getSkillByID(lngSkillID);
 	}
 
 	@Override
 	@Transactional
 	public List<Skill> listSkills() {
 		return this.skillDAO.listSkills();
-	}
-
-	@Override
-	@Transactional
-	public void deleteSkill(Long id) {
-		this.skillDAO.deleteSkill(id);
 	}
 
 	public void setSkillDAO(SkillDAO skillDAO) {

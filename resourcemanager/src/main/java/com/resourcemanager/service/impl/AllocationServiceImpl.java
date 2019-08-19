@@ -1,5 +1,6 @@
 package com.resourcemanager.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,20 @@ public class AllocationServiceImpl implements AllocationService {
 
 	@Override
 	@Transactional
-	public Allocation getAllocationById(Long id) {
-		return this.allocationDAO.getAllocationById(id);
+	public Allocation getAllocationByID(Long id) {
+		return this.allocationDAO.getAllocationByID(id);
 	}
 
 	@Override
 	@Transactional
 	public List<Allocation> listAllocations() {
 		return this.allocationDAO.listAllocations();
+	}
+
+	@Override
+	@Transactional
+	public List<Allocation> listRequiredAllocations(LocalDate startDate, LocalDate endDate) {
+		return this.allocationDAO.listRequiredAllocations(startDate, endDate);
 	}
 
 	public void setAllocationDAO(AllocationDAO allocationDAO) {
