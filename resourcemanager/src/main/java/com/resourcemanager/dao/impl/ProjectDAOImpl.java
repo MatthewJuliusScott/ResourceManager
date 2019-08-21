@@ -65,6 +65,20 @@ public class ProjectDAOImpl implements ProjectDAO {
 		}
 		return projectsList;
 	}
+	
+	@Override
+	public List<Project> viewProjects() {
+		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaQuery<Project> criteria = builder.createQuery(Project.class);
+		criteria.getRestriction();
+		Root<Project> root = criteria.from(Project.class);
+		criteria.select(root);
+		List<Project> projectsList = getCurrentSession().createQuery(criteria).getResultList();
+		for (Project project : projectsList) {
+			logger.info("Project List::" + project);
+		}
+		return projectsList;
+	}
 
 	@Override
 	public void removeProject(Long id) {

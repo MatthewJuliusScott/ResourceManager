@@ -53,7 +53,7 @@ public class ProjectController {
 		this.projectService.deleteProject(id);
 		return "redirect:/projects";
 	}
-
+	
 	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -68,6 +68,12 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.listProjects());
+		return "projects";
+	}
+	
+	@RequestMapping(value = { "/ViewProjects"} , method = RequestMethod.GET)
+	public String viewProjects(Model model) {
+		model.addAttribute("listProjects", this.projectService.viewProjects());
 		return "projects";
 	}
 

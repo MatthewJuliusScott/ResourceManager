@@ -22,5 +22,10 @@ public interface ProjectService {
 
 	@Secured("ROLE_ADMIN")
 	public void updateProject(Project project);
+	
+	@Secured("ROLE_User")
+	public List<Project> viewProjects();
+
+	
 
 }
