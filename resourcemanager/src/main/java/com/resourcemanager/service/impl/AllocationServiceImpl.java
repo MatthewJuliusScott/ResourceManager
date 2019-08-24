@@ -56,5 +56,11 @@ public class AllocationServiceImpl implements AllocationService {
 	public void updateAllocation(Allocation allocation) {
 		this.allocationDAO.updateAllocation(allocation);
 	}
+	
+	@Override
+	@Transactional
+	public void allocateUser(Allocation allocation) {
+		this.allocationDAO.updateAllocation(allocation);
+	}
 
 }

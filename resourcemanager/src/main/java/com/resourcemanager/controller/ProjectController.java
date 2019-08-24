@@ -170,4 +170,90 @@ public class ProjectController {
 		}
 		return "redirect:/projects/edit/" + project.getId();
 	}
+	
+	@RequestMapping(value = "/projects/join", method = RequestMethod.POST)
+	public String joinProject(@ModelAttribute("project") Project project,
+		BindingResult result, HttpServletRequest request) {
+		if (result.hasErrors()) {
+			System.err.println(result.toString());
+		}
+		try 
+		{
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+			HashSet<String> ids = new HashSet<String>();
+			for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
+				String key = entry.getKey();
+	
+				if (Pattern.compile("allocation_\\d_\\w*").matcher(key).matches()) {
+	
+					// the input names we are looking for is allocation_*id*_*fieldname*
+					String[] composite = key.split("_");
+					if (composite.length == 3) {
+						ids.add(composite[1]);
+					}
+				}
+			}
+			for (String id : ids) {
+
+				String[] skillIds = request.getParameterValues("allocation_" + id + "_skillId");
+				String[] startDates = request.getParameterValues("allocation_" + id + "_startDate");
+				String[] endDates = request.getParameterValues("allocation_" + id + "_endDate");
+				String[] hourss = request.getParameterValues("allocation_" + id + "_hours");
+				String[] resourceIds = request.getParameterValues("allocation_" + id + "_resourceId");
+
+				// Assert that all required form data was submitted, prevent saving corrupt data
+				if (skillIds == null || startDates == null || endDates == null || hourss == null
+					|| skillIds.length != startDates.length || startDates.length != endDates.length
+					|| endDates.length != hourss.length) {
+
+				
+
+					continue;
+				}
+
+				for (int i = 0; i < skillIds.length; i++) {
+
+					// get each of the allocations
+					String skillId = skillIds[i];
+					String startDate = startDates[i];
+					String endDate = endDates[i];
+					String hours = hourss[i];
+					String resourceId = resourceIds != null ? resourceIds[i] : null;
+
+					Resource resource = null;
+					if (resourceId != null && !resourceId.equals("") && !resourceId.equals("0")) {
+						resource = resourceService.getResourceByID(Long.parseLong(resourceId));
+					}
+
+					Allocation allocation =
+						new Allocation(Long.parseLong(id), project, skillService.getSkillByID(Long.parseLong(skillId)),
+							LocalDate.parse(startDate, dateTimeFormatter),
+							LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), resource);
+					if (resource != null) {
+						resource.addAllocation(allocation);
+					}
+					project.addAllocation(allocation);
+
+					allocationService.allocateUser(allocation);
+
+				}
+			}
+
+		} catch (
+
+		Exception e) {
+			// do nothing
+			e.printStackTrace();
+			// TODO : friendly error reporting
+		}
+
+		if (project.getId() == 0) {
+			// new project, add it
+			this.projectService.addProject(project);
+		} else {
+			// existing project, call update
+			this.projectService.updateProject(project);
+		}
+		return "redirect:/projects/join/" + project.getId();
+	}
 }

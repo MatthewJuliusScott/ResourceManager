@@ -26,4 +26,7 @@ public interface AllocationService {
 
 	@Secured("ROLE_ADMIN")
 	public void updateAllocation(Allocation allocation);
+	
+	@Secured("ROLE_USER")
+	public void allocateUser(Allocation allocation);
 }
