@@ -84,6 +84,8 @@ public class UserController {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
+
+		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
 		        ? request.getParameter("oldPassword")
 		        : "";
@@ -91,6 +93,7 @@ public class UserController {
 		        ? request.getParameter("password")
 		        : "";
 
+		// get the currently logged in username
 		Object principal = SecurityContextHolder.getContext()
 		        .getAuthentication().getPrincipal();
 		String username;
@@ -99,24 +102,45 @@ public class UserController {
 		} else {
 			username = principal.toString();
 		}
+		// get currently logged in user
+		User loggedInUser = userService.getUserByUserName(username);
 
-		User oldUser = userService.getUserByUserName(username);
-		user.setPassword(oldUser.getPassword());
-		user.setEmail(oldUser.getEmail());
+		// When changing our own password only change the password if the old
+		// password field matches the old password.
+		if (user.getId() != 0 || user.getId() == loggedInUser.getId()) {
 
-		// if old password is correct
-		if (encoder.matches(oldPassword, user.getPassword())) {
-			// if a new password has been set, encrypt it and assign to user
-			// object
-			if (newPassword.length() > 0) {
-				String encryptedPassword = encoder.encode(newPassword);
-				user.setPassword(encryptedPassword);
+			User oldUser = userService.getUserByID(user.getId());
+			user.setPassword(oldUser.getPassword());
+			user.setEmail(oldUser.getEmail());
+
+			if (user.getId() == loggedInUser.getId()) {
+				// if old password is correct
+				if (encoder.matches(oldPassword, user.getPassword())) {
+					// if a new password has been set, encrypt it and assign to
+					// user
+					// object
+					if (newPassword.length() > 0) {
+						String encryptedPassword = encoder.encode(newPassword);
+						user.setPassword(encryptedPassword);
+					}
+				}
 			}
+
+			// If it is not an existing user, or if editing another user and the
+			// logged in user has admin privileges we can just update their
+			// password.
+		} else if (user.getId() == 0 || (user.getId() != loggedInUser.getId()
+		        && loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
+
+			// The front end validation will already have checked a password
+			// field matches a re-enter your password field, just set value
+			String encryptedPassword = encoder.encode(newPassword);
+			user.setPassword(encryptedPassword);
 		}
 
-		// this will need to be set on the front end, cant pass back whole POJO,
-		// but we can send back just the resourceId for this user, and then
-		// extract it and assign back to the object here
+		// this will need to be set on the front end, can't pass back whole
+		// POJO, but we can send back just the resourceId for this user, and
+		// then extract it and assign back to the object here
 		String resourceId = request.getParameter("resourceId");
 
 		if (resourceId != null && !resourceId.equals("")
@@ -125,7 +149,6 @@ public class UserController {
 			        .getResourceByID(Long.parseLong(resourceId));
 			user.setResource(resource);
 		}
-		
 
 		if (user.getId() == 0) {
 			// new user, add it
