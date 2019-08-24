@@ -48,7 +48,9 @@
 									<th class="tblHeader">Hours</th>
 									<th class="tblHeaderCenter">Allocated To</th>
 								</tr>
+								
 								<c:forEach items="${project.allocations}" var="allocation">
+								<c:if test="${user.getSkills().contains(allocation) }">
 									<tr>
 										<td class="tblDef">
 											<select name="allocation_${allocation.id}_skillId" class="form-control">
@@ -66,6 +68,7 @@
 										<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> <span>${allocation.resource.name}</span></td>
 										<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
 									</tr>
+									</c:if>
 			                	</c:forEach>
 		                		<tr id="allocationTemplate" style="display: none">
 		                			<td>
@@ -85,7 +88,7 @@
 		                	</table>
 		                	
 		                	<!-- Cancel/Save buttons -->
-							<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
+							<a href="/ViewProjects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
 		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
 						</form:form>
 						
@@ -102,15 +105,15 @@
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Available Resources</h4>
+						<h4 class="modal-title">Join Project</h4>
 					</div>
-					<input type="hidden" name="allocationId" id="allocationId">
+					
 					<div class="modal-body">
-						
+						<h5>Do you wish to join this Allocation?</h5>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> Cancel</button>
-						<button type="button" class="btn btn-success" data-dismiss="modal" onclick="allocate()"><i class="far fa-save"></i> Save</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-window-close"></i> No</button>
+						<button type="button" class="btn btn-success" data-dismiss="modal" onclick="allocate()"><i class="far fa-save"></i> Yes</button>
 					</div>
 				</div>
 			</div>
@@ -212,8 +215,8 @@
 			
 			function allocate() {
 				var key = $(".modal-body").find('input[type="radio"]:checked').val();
-				var value = $(".modal-body").find('input[type="radio"]:checked').parent().siblings().first().text();
-				var id = $('#allocationId').val();
+				//var value = $(".modal-body").find('input[type="radio"]:checked').parent().siblings().first().text();
+				var id = $session.getAttribute("ResourceId");
 				var string = "allocation_" + id + "_resourceId";
 				var resource = $('input[name=' + string + ']');
 				$(resource).val(key);

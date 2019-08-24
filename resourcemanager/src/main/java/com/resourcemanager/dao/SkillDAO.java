@@ -17,4 +17,5 @@ public interface SkillDAO {
 	public List<Skill> listSkills();
 
 	public void updateSkill(Skill skill);
+	
 }

@@ -22,4 +22,7 @@ public interface SkillService {
 
 	@Secured("ROLE_USER")
 	public void updateSkill(Skill skill);
+	
+
+	
 }
