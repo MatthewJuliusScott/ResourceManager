@@ -1,3 +1,4 @@
+
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
@@ -49,14 +50,36 @@ public class User implements Cloneable {
 	@ElementCollection
 	private List<String>	authorityStrings	= new ArrayList<String>();
 
-	/** The resource associated with this user. Usually only for a ROLE_USER authority. */
+	/**
+	 * The resource associated with this user. Usually only for a ROLE_USER
+	 * authority.
+	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
 	private Resource		resource;
 
+	/**
+	 * Gets the resource.
+	 *
+	 * @return the resource
+	 */
+	public Resource getResource() {
+		return resource;
+	}
+
+	/**
+	 * Sets the resource.
+	 *
+	 * @param resource the resource to set
+	 */
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -67,6 +90,7 @@ public class User implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -168,6 +192,7 @@ public class User implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -177,15 +202,15 @@ public class User implements Cloneable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+		        + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
 
 	/**
 	 * Sets the authority strings.
 	 *
-	 * @param authorityStrings
-	 *            the new authority strings
+	 * @param authorityStrings the new authority strings
 	 */
 	public void setAuthorityStrings(List<String> authorityStrings) {
 		this.authorityStrings = authorityStrings;
@@ -194,8 +219,7 @@ public class User implements Cloneable {
 	/**
 	 * Sets the email.
 	 *
-	 * @param email
-	 *            the new email
+	 * @param email the new email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -204,8 +228,7 @@ public class User implements Cloneable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id
-	 *            the new id
+	 * @param id the new id
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -214,8 +237,7 @@ public class User implements Cloneable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name
-	 *            the new name
+	 * @param name the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -224,8 +246,7 @@ public class User implements Cloneable {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password
-	 *            the new password
+	 * @param password the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -233,11 +254,13 @@ public class User implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email
+		        + ", password=" + password + "]";
 	}
 
 }
