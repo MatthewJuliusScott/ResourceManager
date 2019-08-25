@@ -74,8 +74,19 @@ public class ProjectController {
 	@RequestMapping(value = { "/ViewProjects"} , method = RequestMethod.GET)
 	public String viewProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.viewProjects());
-		return "projects";
+		return "ViewProjects";
 	}
+	@RequestMapping(value = { "/projects/join/{id}" }, method = RequestMethod.GET)
+	public String joinProject(@PathVariable("id") Long id, Model model) {
+		if (id > 0) {
+			model.addAttribute("project", this.projectService.getProjectByID(id));
+		} else {
+			model.addAttribute("project", new Project());
+		}
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "projects/edit";
+	}
+
 
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)

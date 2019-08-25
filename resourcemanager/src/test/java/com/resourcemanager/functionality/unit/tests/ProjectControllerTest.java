@@ -126,4 +126,14 @@ public class ProjectControllerTest {
 			.apply(springSecurity())
 			.build();
 	}
+	@Test
+	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
+	public void givenRequestMapping_whenGetViewProjects_thenForwardToViewProjectsJSP()
+		throws Exception {
+
+		mvc.perform(get("/ViewProjects")
+			.contentType(MediaType.TEXT_HTML))
+			.andExpect(status().isOk())
+			.andExpect(forwardedUrl("/WEB-INF/views/ViewProjects.jsp"));
+	}
 }
