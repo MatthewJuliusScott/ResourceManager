@@ -122,5 +122,31 @@ INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)V
 INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(5,"ROLE_ADMIN");
 INSERT INTO userdetails(email,name,password) VALUES ('user@gmail.com','user','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
 INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(6,"ROLE_USER");
+INSERT INTO userdetails(email,name,password) VALUES ('admin@gmail.com','admin','$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi');
 INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(6,"ROLE_ADMIN");
+
+INSERT INTO userdetails(email, name, password) SELECT CONCAT(REPLACE(name, " ", ""), "@gmail.com"), name, '$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi' FROM resource;
+
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(8, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(9, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(10, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(11, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(12, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(13, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(14, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(15, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(16, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(17, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(18, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(19, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(20, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(21, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(22, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(23, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(24, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(25, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(26, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(27, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(28, "ROLE_USER");
+INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(29, "ROLE_USER");
 
