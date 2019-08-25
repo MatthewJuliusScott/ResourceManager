@@ -300,5 +300,19 @@ public class AllocationTest {
 		assertTrue(allocation.toString()
 			.endsWith(", hours=40, resource=Resource [id=0, name=null, skills=[], allocations=[], hours=0]]"));
 	}
+	
+	@Test
+	public void testJoinProject() throws Exception {
+		Skill expected = new Skill();
+		
+		Resource testResource = new Resource();
+		testResource.addSkill(expected);
+		User testuser = new User();
+		testuser.setResource(testResource);
+		Allocation allocation =
+				new Allocation(1L, new Project(), expected, LocalDate.now(), LocalDate.now().plusDays(7), 40, testuser.getResource());
+		
+		
+	}
 
 }

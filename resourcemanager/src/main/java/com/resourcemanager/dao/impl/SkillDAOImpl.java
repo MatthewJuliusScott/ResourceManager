@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.resourcemanager.dao.SkillDAO;
 import com.resourcemanager.model.Skill;
+import com.resourcemanager.dao.ResourceDAO;
 
 @Repository
 public class SkillDAOImpl implements SkillDAO {
@@ -94,5 +95,7 @@ public class SkillDAOImpl implements SkillDAO {
 		getCurrentSession().merge(skill);
 		logger.info("Skill updated successfully, Skill details=" + skill);
 	}
+
+
 
 }

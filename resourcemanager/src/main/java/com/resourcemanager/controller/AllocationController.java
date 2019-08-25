@@ -17,6 +17,7 @@ import com.resourcemanager.model.Allocation;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
+import com.resourcemanager.service.UserService;
 
 @Controller
 public class AllocationController {
@@ -32,6 +33,9 @@ public class AllocationController {
 
 	@Autowired
 	private AllocationService	projectService;
+	
+	@Autowired
+    private UserService        userService;
 
 	@RequestMapping(value = {"/allocations/add"}, method = RequestMethod.GET)
 	public String addAllocation() {
@@ -88,4 +92,16 @@ public class AllocationController {
 		request.setAttribute("endDate", dateTimeFormatter.format(endDate));
 		return "allocations";
 	}
+	
+	@RequestMapping(value = { "/allocations/join/{id}" }, method = RequestMethod.GET)
+	public String joinAllocation(@PathVariable("id") Long id, Model model) {
+		if (id > 0) {
+			model.addAttribute("allocation", this.allocationService.getAllocationByID(id));
+		} else {
+			model.addAttribute("allocation", new Allocation());
+		}
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "allocations/join";
+	}
+	
 }

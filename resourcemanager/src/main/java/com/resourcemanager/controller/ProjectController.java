@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,7 @@ import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
-
+import com.resourcemanager.service.UserService;
 @Controller
 public class ProjectController {
 
@@ -41,7 +43,10 @@ public class ProjectController {
 
 	@Autowired
 	private AllocationService	allocationService;
-
+	
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String addProject() {
 		return "redirect:/projects/edit/0";
@@ -53,7 +58,7 @@ public class ProjectController {
 		this.projectService.deleteProject(id);
 		return "redirect:/projects";
 	}
-
+	
 	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -68,8 +73,20 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.listProjects());
+		 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	        String username;
+	        if (principal instanceof UserDetails) {
+	            username = ((UserDetails) principal).getUsername();
+	        } else {
+	            username = principal.toString();
+	        }
+
+	        model.addAttribute("user", this.userService.getUserByUserName(username));
+	        model.addAttribute("roles", this.userService.getUserByUserName(username).getAuthorityStrings());
+	        
 		return "projects";
 	}
+	
 
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
@@ -163,5 +180,27 @@ public class ProjectController {
 			this.projectService.updateProject(project);
 		}
 		return "redirect:/projects/edit/" + project.getId();
+	}
+	
+	@RequestMapping(value = { "/projects/join/{id}" }, method = RequestMethod.GET)
+	public String joinProject(@PathVariable("id") Long id, Model model) {
+		if (id > 0) {
+			model.addAttribute("project", this.projectService.getProjectByID(id));
+		} else {
+			model.addAttribute("project", new Project());
+		}
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+      
+        model.addAttribute("user", this.userService.getUserByUserName(username));
+        Resource res = resourceService.getResourceByID(this.userService.getUserByUserName(username).getId());
+        model.addAttribute("userResource", res);
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "projects/join";
 	}
 }

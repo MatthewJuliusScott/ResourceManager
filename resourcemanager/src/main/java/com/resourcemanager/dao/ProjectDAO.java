@@ -15,4 +15,5 @@ public interface ProjectDAO {
 	public void removeProject(Long id);
 
 	public void updateProject(Project project);
+	
 }
