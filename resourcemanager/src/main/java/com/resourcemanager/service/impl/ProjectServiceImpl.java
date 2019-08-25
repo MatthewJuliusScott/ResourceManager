@@ -50,10 +50,6 @@ public class ProjectServiceImpl implements ProjectService {
 		this.projectDAO.updateProject(p);
 	}
 	
-	@Override
-	@Transactional
-	public List<Project> viewProjects() {
-		return this.projectDAO.viewProjects();
-	}
+	
 
 }
