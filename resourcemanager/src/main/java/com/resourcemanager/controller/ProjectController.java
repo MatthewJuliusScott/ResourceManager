@@ -71,11 +71,12 @@ public class ProjectController {
 		return "projects";
 	}
 	
-	@RequestMapping(value = { "/ViewProjects"} , method = RequestMethod.GET)
+	@RequestMapping(value = { "/viewprojects"} , method = RequestMethod.GET)
 	public String viewProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.viewProjects());
-		return "ViewProjects";
+		return "viewprojects";
 	}
+	
 	@RequestMapping(value = { "/projects/join/{id}" }, method = RequestMethod.GET)
 	public String joinProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
