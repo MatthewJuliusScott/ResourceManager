@@ -2,6 +2,15 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
+
+<script>
+	function ConfirmMessage(id) {
+		var result = confirm("Are you sure you want to remove this skill from your profile?");
+		if (result == true){
+			window.location.href = "/skills/delete/"+id;	
+		}
+	}
+</script>
 <html>
 	<head>
 		<title>Skills</title>
@@ -41,7 +50,7 @@
 										<td style="width: 300px;" class="tblDefCenter">${skill.id}</td>
 										<td style="width: 65%;" class="tblDef">${skill.name}</td>
 										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/skills/delete/${skill.id}" role="button"><i class="fas fa-trash"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" onclick="ConfirmMessage(${skill.id});" role="button"><i class="fas fa-trash"></i></a></td>
 									</tr>
 							</c:forEach>
 						</table>
