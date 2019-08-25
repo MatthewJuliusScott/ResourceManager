@@ -28,6 +28,7 @@
 			
 			<div style="padding-top: 30px;">
 				<c:if test="${!empty listProjects}">
+				
 					<table cellpadding="0" cellspacing="0" class="tblHeaderScroll">
 						<tr>
 							<th style="width: 300px;" class="tblHeaderCenter">Project ID</th>

@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,7 @@ import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
-
+import com.resourcemanager.service.UserService;
 @Controller
 public class ProjectController {
 
@@ -41,7 +43,10 @@ public class ProjectController {
 
 	@Autowired
 	private AllocationService	allocationService;
-
+	
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String addProject() {
 		return "redirect:/projects/edit/0";
@@ -68,6 +73,16 @@ public class ProjectController {
 	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.listProjects());
+		 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	        String username;
+	        if (principal instanceof UserDetails) {
+	            username = ((UserDetails) principal).getUsername();
+	        } else {
+	            username = principal.toString();
+	        }
+
+	        model.addAttribute("user", this.userService.getUserByUserName(username));
+	        
 		return "projects";
 	}
 	

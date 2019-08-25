@@ -63,6 +63,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		for (Project project : projectsList) {
 			logger.info("Project List::" + project);
 		}
+		
 		return projectsList;
 	}
 	
