@@ -289,5 +289,4 @@ public class User implements Cloneable {
 		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email
 			+ ", password=" + password + "]";
 	}
-
 }
