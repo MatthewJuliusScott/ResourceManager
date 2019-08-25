@@ -61,7 +61,7 @@ public class User implements Cloneable {
 
 	/** The notifications. */
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_id")
+	@JoinColumn(name = "notification_id")
 	@OrderColumn(name = "order_col")
 	private List<Notification>	notifications;
 

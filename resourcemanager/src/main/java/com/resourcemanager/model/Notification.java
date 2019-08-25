@@ -10,14 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NaturalIdCache;
-
 /**
  * The Class Notification.
  */
 @Entity(name = "Notification")
 @Table(name = "notification")
-@NaturalIdCache
 @AttributeOverrides({
 		@AttributeOverride(name = "id", column = @Column(name = "notification_id")) })
 public class Notification implements Cloneable {
@@ -30,8 +27,8 @@ public class Notification implements Cloneable {
 	/** The message. */
 	private String	message	= "";
 
-	/** The read. */
-	private boolean	read	= false;
+	/** The seen. */
+	private boolean	seen	= false;
 
 	/**
 	 * Instantiates a new notification.
@@ -121,12 +118,12 @@ public class Notification implements Cloneable {
 	}
 
 	/**
-	 * Checks if is read.
+	 * Checks if is seen.
 	 *
-	 * @return true, if is read
+	 * @return true, if is seen
 	 */
-	public boolean isRead() {
-		return read;
+	public boolean isSeen() {
+		return seen;
 	}
 
 	/**
@@ -150,13 +147,13 @@ public class Notification implements Cloneable {
 	}
 
 	/**
-	 * Sets the read.
+	 * Sets the seen.
 	 *
 	 * @param read
-	 *            the new read
+	 *            the new seen
 	 */
-	public void setRead(boolean read) {
-		this.read = read;
+	public void setSeen(boolean seen) {
+		this.seen = seen;
 	}
 
 	/*
