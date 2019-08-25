@@ -17,7 +17,7 @@ public interface ProjectService {
 	@Secured("ROLE_ADMIN")
 	public Project getProjectByID(Long id);
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public List<Project> listProjects();
 
 	@Secured("ROLE_ADMIN")
