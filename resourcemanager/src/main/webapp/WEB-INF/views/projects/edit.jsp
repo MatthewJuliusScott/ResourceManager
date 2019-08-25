@@ -50,6 +50,7 @@
 									<th class="tblHeaderCenter">Delete</th>
 								</tr>
 								<c:forEach items="${project.allocations}" var="allocation">
+						
 									<tr>
 										<td class="tblDef">
 											<select name="allocation_${allocation.id}_skillId" class="form-control">

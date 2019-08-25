@@ -2,6 +2,9 @@
 package com.resourcemanager.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import com.resourcemanager.model.Allocation;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
+import com.resourcemanager.service.UserService;
 
 @Controller
 public class AllocationController {
@@ -29,23 +33,29 @@ public class AllocationController {
 
 	@Autowired
 	private AllocationService	projectService;
+	
+	@Autowired
+    private UserService        userService;
 
-	@RequestMapping(value = { "/allocations/add" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/allocations/add"}, method = RequestMethod.GET)
 	public String addAllocation() {
 		return "redirect:/allocations/edit/0";
 	}
 
-	@RequestMapping(value = { "/allocations/delete/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {
+	        "/allocations/delete/{id}"}, method = RequestMethod.GET)
 	public String deleteAllocation(@PathVariable("id") Long id) {
 
 		this.allocationService.deleteAllocation(id);
 		return "redirect:/allocations";
 	}
 
-	@RequestMapping(value = { "/allocations/edit/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {
+	        "/allocations/edit/{id}"}, method = RequestMethod.GET)
 	public String editAllocation(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
-			model.addAttribute("allocation", this.allocationService.getAllocationByID(id));
+			model.addAttribute("allocation",
+			        this.allocationService.getAllocationByID(id));
 		} else {
 			model.addAttribute("allocation", new Allocation());
 		}
@@ -53,16 +63,45 @@ public class AllocationController {
 		return "allocations/edit";
 	}
 
-	@RequestMapping(value = { "/allocations" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/allocations"}, method = RequestMethod.GET)
 	public String listAllocations(Model model) {
-		model.addAttribute("listAllocations", this.allocationService.listAllocations());
+		model.addAttribute("listAllocations",
+		        this.allocationService.listAllocations());
 		return "allocations";
 	}
 
-	@RequestMapping(value = { "/allocations/listrequired" }, method = RequestMethod.GET)
-	public String listRequiredAllocations(Model model) {
+	@RequestMapping(value = {
+	        "/allocations/listrequired"}, method = RequestMethod.GET)
+	public String listRequiredAllocations(Model model,
+	        HttpServletRequest request) {
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+		LocalDate startDate;
+		LocalDate endDate;
+		try {
+			startDate = LocalDate.parse(request.getParameter("startDate"), dateTimeFormatter);
+			endDate = LocalDate.parse(request.getParameter("endDate"), dateTimeFormatter);
+		} catch (Exception e) {
+			startDate = LocalDate.now();
+			endDate = LocalDate.now().plusDays(28);
+		}
 		model.addAttribute("listAllocations",
-			this.allocationService.listRequiredAllocations(LocalDate.now(), LocalDate.now().plusDays(28)));
+		        this.allocationService.listRequiredAllocations(startDate,
+		                endDate));
+		request.setAttribute("startDate", dateTimeFormatter.format(startDate));
+		request.setAttribute("endDate", dateTimeFormatter.format(endDate));
 		return "allocations";
 	}
+	
+	@RequestMapping(value = { "/allocations/join/{id}" }, method = RequestMethod.GET)
+	public String joinAllocation(@PathVariable("id") Long id, Model model) {
+		if (id > 0) {
+			model.addAttribute("allocation", this.allocationService.getAllocationByID(id));
+		} else {
+			model.addAttribute("allocation", new Allocation());
+		}
+		model.addAttribute("listSkills", this.skillService.listSkills());
+		return "allocations/join";
+	}
+	
 }

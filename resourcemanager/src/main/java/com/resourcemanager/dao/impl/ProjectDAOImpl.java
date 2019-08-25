@@ -63,8 +63,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 		for (Project project : projectsList) {
 			logger.info("Project List::" + project);
 		}
+		
 		return projectsList;
 	}
+	
 
 	@Override
 	public void removeProject(Long id) {
