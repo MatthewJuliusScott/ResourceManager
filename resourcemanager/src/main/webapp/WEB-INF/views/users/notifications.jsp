@@ -10,7 +10,7 @@
 	
 	<body>
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
-		
+				
 		<table class="tbl">
 			<tr>
 				<th class="tblHeader" style="padding-left: 5px;">#</th>
@@ -33,6 +33,11 @@
 				</tr>
           	</c:forEach>
        	</table>
+              	
+        <div>
+        	<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+        </div>      	
+              	
 	</body>
 	
 	<footer>

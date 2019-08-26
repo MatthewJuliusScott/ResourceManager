@@ -64,7 +64,10 @@
 							</c:forEach>
 						</table>
 					</table>
-				</c:if>		
+				</c:if>
+				<div>
+	        		<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+	       		</div>		
 			</div>	
 		</div>
 	</body>	

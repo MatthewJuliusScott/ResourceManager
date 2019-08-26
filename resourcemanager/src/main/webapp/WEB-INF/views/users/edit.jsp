@@ -125,6 +125,7 @@
 						</tr>
 						<tr>
 							<td colspan="2" style="padding-top: 20px;">
+								<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
 								<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
 							</td>
 						</tr>
