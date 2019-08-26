@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+
 <html>
 	<head>
 		<title>Join Project</title>
@@ -50,16 +50,17 @@
 								</tr>
 								
 								<c:forEach items="${project.allocations}" var="allocation">
-									<c:if test="${empty allocation.resource}">																								
-										<tr>											
-						               		<td style="width: 300px;" class="tblDef">${allocation.skill.name}</td>
-						               		<td style="width: 300px;" class="tblDef">${allocation.startDateAsString}</td>
-											<td style="width: 300px;" class="tblDef">${allocation.endDateAsString}</td>
-											<td style="width: 300px;" class="tblDef">${allocation.hours}</td>
-											<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="joinAllocation(${allocation}, ${resource})"><i class="fas fa-edit"></i></button></td>
-					
-										</tr>
-									</c:if>
+									<c:forEach items="${user.skills}" var="skills">
+										<c:if test="${user.skill.id == allocation.skill.id && empty allocation.resource}">																						
+											<tr>											
+							               		<td style="width: 300px;" class="tblDef">${allocation.skill.name}</td>
+							               		<td style="width: 300px;" class="tblDef">${allocation.startDateAsString}</td>
+												<td style="width: 300px;" class="tblDef">${allocation.endDateAsString}</td>
+												<td style="width: 300px;" class="tblDef">${allocation.hours}</td>
+												<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="joinAllocation(${allocation}, ${resource})"><i class="fas fa-edit"></i></button></td>
+											</tr>								
+										</c:if>
+									</c:forEach>
 			                	</c:forEach>
 		                		<tr id="allocationTemplate" style="display: none">
 		                			<td>

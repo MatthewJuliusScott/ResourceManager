@@ -1,7 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+
+<script>
+	function ConfirmMessage(id) {
+		var result = confirm("Do you want to remove this User?");
+		if (result == true){
+			window.location.href = "/users/delete/"+id;	
+		}
+	}
+</script>
 <html>
 	<head>
 		<title>Manage System Users</title>
@@ -21,7 +29,7 @@
 				
 				<tr>
 					<td>
-						<a class="tblButton" href="/Users/add" role="button">Create User</a>
+						<a class="tblButton" href="/users/add" role="button">Create User</a>
 					</td>	
 				</tr>
 			</table>
@@ -40,8 +48,8 @@
 									<tr>
 										<td style="width: 300px;" class="tblDefCenter">${User.id}</td>
 										<td style="width: 65%;" class="tblDef">${User.name}</td>
-										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/Users/edit/${User.id}" role="button"><i class="far fa-edit"></i></a></td>
-										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/Users/delete/${User.id}" role="button"><i class="fas fa-trash"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/users/edit/${User.id}" role="button"><i class="far fa-edit"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" onclick="ConfirmMessage(${User.id});" role="button"><i class="fas fa-trash"></i></a></td>
 									</tr>
 							</c:forEach>
 						</table>

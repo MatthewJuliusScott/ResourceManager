@@ -2,6 +2,7 @@
 package com.resourcemanager.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestDecorator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,11 +38,11 @@ public class UserController {
 		return "redirect:/users/edit/0";
 	}
 
-	@RequestMapping(value = {"/users/myprofile"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/users/myprofile" }, method = RequestMethod.GET)
 	public String editMyProfile(Model model) {
 
 		Object principal = SecurityContextHolder.getContext()
-		        .getAuthentication().getPrincipal();
+			.getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
@@ -50,11 +51,11 @@ public class UserController {
 		}
 
 		model.addAttribute("user",
-		        this.userService.getUserByUserName(username));
+			this.userService.getUserByUserName(username));
 		return "users/edit";
 	}
 
-	@RequestMapping(value = {"/users/edit/{id}"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/users/edit/{id}" }, method = RequestMethod.GET)
 	public String editUser(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("user", this.userService.getUserByID(id));
@@ -64,13 +65,35 @@ public class UserController {
 		return "users/edit";
 	}
 
-	@RequestMapping(value = {"/users"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/users/notifications" }, method = RequestMethod.GET)
+	public String editUser(Model model) {
+		User user = getLoggedInUser();
+		model.addAttribute("user", user);
+		return "users/notifications";
+	}
+
+	private User getLoggedInUser() {
+		// get the currently logged in username
+		Object principal = SecurityContextHolder.getContext()
+			.getAuthentication().getPrincipal();
+		String username;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		// get currently logged in user
+		User loggedInUser = userService.getUserByUserName(username);
+		return loggedInUser;
+	}
+
+	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
 	public String listUsers(Model model) {
 		model.addAttribute("listUsers", this.userService.listUsers());
 		return "users";
 	}
 
-	@RequestMapping(value = {"/users/delete/{id}"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/users/delete/{id}" }, method = RequestMethod.GET)
 	public String removeUser(@PathVariable("id") Long id) {
 
 		this.userService.deleteUser(id);
@@ -80,30 +103,22 @@ public class UserController {
 	// For add and update user both
 	@RequestMapping(value = "/users/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("user") User user,
-	        BindingResult result, HttpServletRequest request) {
+		BindingResult result, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
 
+		System.out.println(request.getAttribute("messages"));
+
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
-		        ? request.getParameter("oldPassword")
-		        : "";
+			? request.getParameter("oldPassword")
+			: "";
 		String newPassword = request.getParameter("password") != null
-		        ? request.getParameter("password")
-		        : "";
+			? request.getParameter("password")
+			: "";
 
-		// get the currently logged in username
-		Object principal = SecurityContextHolder.getContext()
-		        .getAuthentication().getPrincipal();
-		String username;
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
-		} else {
-			username = principal.toString();
-		}
-		// get currently logged in user
-		User loggedInUser = userService.getUserByUserName(username);
+		User loggedInUser = getLoggedInUser();
 
 		// When changing our own password only change the password if the old
 		// password field matches the old password.
@@ -123,6 +138,9 @@ public class UserController {
 						String encryptedPassword = encoder.encode(newPassword);
 						user.setPassword(encryptedPassword);
 					}
+				} else {
+					HttpServletRequestDecorator req = new HttpServletRequestDecorator(request);
+					req.addMessage("Old password was incorrect.");
 				}
 			}
 
@@ -130,7 +148,7 @@ public class UserController {
 			// logged in user has admin privileges we can just update their
 			// password.
 		} else if (user.getId() == 0 || (user.getId() != loggedInUser.getId()
-		        && loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
+			&& loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
 
 			// The front end validation will already have checked a password
 			// field matches a re-enter your password field, just set value
@@ -144,9 +162,9 @@ public class UserController {
 		String resourceId = request.getParameter("resourceId");
 
 		if (resourceId != null && !resourceId.equals("")
-		        && !resourceId.equals("0")) {
+			&& !resourceId.equals("0")) {
 			Resource resource = resourceService
-			        .getResourceByID(Long.parseLong(resourceId));
+				.getResourceByID(Long.parseLong(resourceId));
 			user.setResource(resource);
 		}
 
@@ -158,7 +176,7 @@ public class UserController {
 			this.userService.updateUser(user);
 		}
 
-		if (username.equals(user.getEmail())) {
+		if (loggedInUser.getId() == user.getId()) {
 			return "redirect:/users/myprofile";
 		} else {
 			return "redirect:/users";

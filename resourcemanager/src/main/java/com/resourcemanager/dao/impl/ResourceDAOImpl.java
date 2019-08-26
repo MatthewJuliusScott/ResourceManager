@@ -19,12 +19,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.ResourceDAO;
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Resource;
 
 @Repository
+@Transactional
 public class ResourceDAOImpl implements ResourceDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(ResourceDAOImpl.class);
