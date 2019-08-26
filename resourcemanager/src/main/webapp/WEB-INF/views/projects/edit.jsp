@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+
 <html>
 	<head>
 		<title>Manage Project</title>
@@ -50,6 +50,7 @@
 									<th class="tblHeaderCenter">Delete</th>
 								</tr>
 								<c:forEach items="${project.allocations}" var="allocation">
+						
 									<tr>
 										<td class="tblDef">
 											<select name="allocation_${allocation.id}_skillId" class="form-control">

@@ -18,7 +18,7 @@ public interface AllocationService {
 	@Secured("ROLE_ADMIN")
 	public Allocation getAllocationByID(Long id);
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public List<Allocation> listAllocations();
 
 	@Secured("ROLE_ADMIN")
@@ -26,4 +26,7 @@ public interface AllocationService {
 
 	@Secured("ROLE_ADMIN")
 	public void updateAllocation(Allocation allocation);
+	
+	@Secured("ROLE_USER")
+	public void allocateUser(Allocation allocation);
 }

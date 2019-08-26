@@ -50,7 +50,7 @@ public class ProjectServiceTest {
 		// prove first project name is not currently "Some other name"
 		assertFalse(expected.getName().equals("Some other name"));
 
-		// udpate the project name
+		// update the project name
 		expected.setName("Some other name");
 		projectService.updateProject(expected);
 

@@ -49,5 +49,4 @@ public class SkillServiceImpl implements SkillService {
 	public void updateSkill(Skill skill) {
 		this.skillDAO.updateSkill(skill);
 	}
-
 }

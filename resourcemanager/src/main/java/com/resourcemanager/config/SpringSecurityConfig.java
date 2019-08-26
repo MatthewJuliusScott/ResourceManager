@@ -15,13 +15,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.resourcemanager.handler.CustomAuthenticationSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private CustomAuthenticationSuccessHandler	customAuthenticationSuccessHandler;
+
 	@Resource(name = "userDetailService")
-	private UserDetailsService userDetailsService;
+	private UserDetailsService					userDetailsService;
 
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
@@ -46,13 +51,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.formLogin()
 			.loginPage("/login")
+			.successHandler(customAuthenticationSuccessHandler)
 			.permitAll()
 			.and()
 			.logout()
 			.permitAll()
 			.and()
 			.csrf().disable();
-		;
 	}
 
 	@Autowired

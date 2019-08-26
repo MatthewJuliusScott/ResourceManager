@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<%@page import="com.resourcemanager.model.User"%>
+<% User user = (User)session.getAttribute("loggedInUser") != null ? (User)session.getAttribute("loggedInUser") : new User();%>
+
 <html>
 	<head>
 		<title>User Page</title>
@@ -31,7 +33,7 @@
 						<tr>
 							<td>
 								<table cellpadding="0" cellspacing="0" style="width: 350px;">
-									<c:if test="${!empty User.name}">
+									<c:if test="${user.id == 0}">
 										<tr>
 											<td style="width: 150px;">
 												<form:label path="id" style="font-weight: bold; width: 5px;">
@@ -64,7 +66,7 @@
 											<form:input path="email" readonly="true" />
 										</td> 
 									</tr>
-									<c:if test="${empty user.name}">
+									<c:if test="${user.id == 0}">
 										<tr>
 											<td style="width: 150px;">
 												<label style="font-weight: bold;">
@@ -86,7 +88,7 @@
 											</td> 
 										</tr>
 									</c:if>
-									<c:if test="${!empty user.name}">
+									<c:if test="${user.id != 0}">
 										<tr>
 											<td style="width: 150px;">
 												<label style="font-weight: bold;">
