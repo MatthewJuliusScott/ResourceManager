@@ -2,7 +2,9 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -12,7 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
@@ -32,54 +35,40 @@ public class User implements Cloneable {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long			id;
+	private long				id;
 
 	/** The name. */
 	@Column
-	private String			name;
+	private String				name;
 
 	/** The email. */
 	@Column
-	private String			email;
+	private String				email;
 
 	/** The password. */
 	@Column
-	private String			password;
+	private String				password;
 
 	/** The authority strings. */
-	@ElementCollection
-	private List<String>	authorityStrings	= new ArrayList<String>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String>			authorityStrings	= new HashSet<String>();
 
 	/**
-	 * The resource associated with this user. Usually only for a ROLE_USER
-	 * authority.
+	 * The resource associated with this user. Usually only for a ROLE_USER authority.
 	 */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "resource_id")
 	@OrderColumn(name = "order_col")
-	private Resource		resource;
+	private Resource			resource;
 
-	/**
-	 * Gets the resource.
-	 *
-	 * @return the resource
-	 */
-	public Resource getResource() {
-		return resource;
-	}
-
-	/**
-	 * Sets the resource.
-	 *
-	 * @param resource the resource to set
-	 */
-	public void setResource(Resource resource) {
-		this.resource = resource;
-	}
+	/** The notifications. */
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "notification_id")
+	@OrderColumn(name = "order_col")
+	private List<Notification>	notifications;
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -90,7 +79,6 @@ public class User implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -150,7 +138,7 @@ public class User implements Cloneable {
 	 *
 	 * @return the authority strings
 	 */
-	public List<String> getAuthorityStrings() {
+	public Set<String> getAuthorityStrings() {
 		return authorityStrings;
 	}
 
@@ -182,6 +170,15 @@ public class User implements Cloneable {
 	}
 
 	/**
+	 * Gets the notifications.
+	 *
+	 * @return the notifications
+	 */
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	/**
 	 * Gets the password.
 	 *
 	 * @return the password
@@ -190,9 +187,17 @@ public class User implements Cloneable {
 		return password;
 	}
 
+	/**
+	 * Gets the resource.
+	 *
+	 * @return the resource
+	 */
+	public Resource getResource() {
+		return resource;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -203,23 +208,25 @@ public class User implements Cloneable {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
-		        + ((password == null) ? 0 : password.hashCode());
+			+ ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
 
 	/**
 	 * Sets the authority strings.
 	 *
-	 * @param authorityStrings the new authority strings
+	 * @param authorityStrings
+	 *            the new authority strings
 	 */
-	public void setAuthorityStrings(List<String> authorityStrings) {
+	public void setAuthorityStrings(Set<String> authorityStrings) {
 		this.authorityStrings = authorityStrings;
 	}
 
 	/**
 	 * Sets the email.
 	 *
-	 * @param email the new email
+	 * @param email
+	 *            the new email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -228,7 +235,8 @@ public class User implements Cloneable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -237,30 +245,50 @@ public class User implements Cloneable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
+	 * Sets the notifications.
+	 *
+	 * @param notifications
+	 *            the new notifications
+	 */
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * Sets the resource.
+	 *
+	 * @param resource
+	 *            the resource to set
+	 */
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email
-		        + ", password=" + password + "]";
+			+ ", password=" + password + "]";
 	}
-
 }

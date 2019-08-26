@@ -16,11 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
 
 @Repository
+@Transactional
 public class AllocationDAOImpl implements AllocationDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(AllocationDAOImpl.class);

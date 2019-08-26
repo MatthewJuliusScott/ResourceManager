@@ -21,6 +21,7 @@ import com.resourcemanager.dao.UserDAO;
 import com.resourcemanager.model.User;
 
 @Repository
+@Transactional
 public class UserDAOImpl implements UserDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(UserDAOImpl.class);
@@ -59,17 +60,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User findUserByID(long id) {
-		User user = null;
-		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
-		CriteriaQuery<User> criteria = builder.createQuery(User.class);
-		Root<User> root = criteria.from(User.class);
-		criteria.select(root).where(builder.equal(root.get("id"), id));
-		Query<User> query = getCurrentSession().createQuery(criteria);
-		List<User> entityList = query.getResultList();
-		if (!entityList.isEmpty()) {
-			user = entityList.get(0);
-			logger.info("User retrieved successfully, User details=" + user);
-		}
+		User user = getCurrentSession().find(User.class, id);
+		logger.info("User retrieved successfully, user details=" + user);
 		return user;
 	}
 
@@ -98,7 +90,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	@Transactional
 	public void updateUser(User user) {
 		getCurrentSession().merge(user);
 		logger.info("User updated successfully, User details=" + user);
