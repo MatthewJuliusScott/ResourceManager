@@ -14,11 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.resourcemanager.dao.ProjectDAO;
 import com.resourcemanager.model.Project;
 
 @Repository
+@Transactional
 public class ProjectDAOImpl implements ProjectDAO {
 
 	private static final Logger		logger	= LoggerFactory.getLogger(ProjectDAOImpl.class);
@@ -63,10 +65,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 		for (Project project : projectsList) {
 			logger.info("Project List::" + project);
 		}
-		
+
 		return projectsList;
 	}
-	
 
 	@Override
 	public void removeProject(Long id) {
