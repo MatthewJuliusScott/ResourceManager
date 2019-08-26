@@ -2,7 +2,9 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -48,8 +50,8 @@ public class User implements Cloneable {
 	private String				password;
 
 	/** The authority strings. */
-	@ElementCollection
-	private List<String>		authorityStrings	= new ArrayList<String>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String>			authorityStrings	= new HashSet<String>();
 
 	/**
 	 * The resource associated with this user. Usually only for a ROLE_USER authority.
@@ -136,7 +138,7 @@ public class User implements Cloneable {
 	 *
 	 * @return the authority strings
 	 */
-	public List<String> getAuthorityStrings() {
+	public Set<String> getAuthorityStrings() {
 		return authorityStrings;
 	}
 
@@ -216,7 +218,7 @@ public class User implements Cloneable {
 	 * @param authorityStrings
 	 *            the new authority strings
 	 */
-	public void setAuthorityStrings(List<String> authorityStrings) {
+	public void setAuthorityStrings(Set<String> authorityStrings) {
 		this.authorityStrings = authorityStrings;
 	}
 
