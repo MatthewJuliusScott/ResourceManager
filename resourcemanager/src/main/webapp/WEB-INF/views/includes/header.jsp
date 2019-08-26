@@ -10,4 +10,6 @@
 <link rel="icon" href="/resources/images/favicon.png" type="image/x-icon"/>
 <link rel="shortcut icon" href="/resources/images/favicon.png" type="image/x-icon"/>
 <style> <%@ include file="/WEB-INF/css/styles.css" %> </style>
+<%@page import="com.resourcemanager.model.User"%>
+<% User user = (User)session.getAttribute("loggedInUser") != null ? (User)session.getAttribute("loggedInUser") : new User();%>
 
