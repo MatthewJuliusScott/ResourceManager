@@ -3,7 +3,13 @@ package com.resourcemanager.service.impl;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +43,44 @@ public class UserServiceImplTest {
 	public void givenRepository_whenLoadUserByUsername_thenUserReturned() throws Exception {
 		User userdetails = userDAO.findUserByEmail("user@gmail.com");
 		assertNotNull(userdetails);
+	}
+
+	@Test
+	public void givenRepository_whenStressTestLoadUsersById_thenUsersReturned() throws Exception {
+
+		List<Callable<Object>> callableTasks = new ArrayList<>();
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+
+		for (int i = 1; i < 29; i++) {
+
+			final int id = i;
+
+			callableTasks.add(new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					User userdetails = userDAO.findUserByID(id);
+					assertNotNull(userdetails);
+					return null;
+				}
+
+			});
+
+		}
+
+		List<Future<Object>> futures = executor.invokeAll(callableTasks);
+		for (Future<Object> future : futures) {
+			future.get(10, TimeUnit.SECONDS);
+		}
+		executor.shutdown();
+		try {
+			if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
+				executor.shutdownNow();
+			}
+		} catch (InterruptedException e) {
+			executor.shutdownNow();
+			throw e;
+		}
 	}
 
 	@Test
