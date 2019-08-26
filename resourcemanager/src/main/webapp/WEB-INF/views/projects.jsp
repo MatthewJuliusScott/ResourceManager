@@ -58,7 +58,7 @@
 									<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/projects/delete/${project.id}" role="button"><i class="fas fa-trash"></i></a></td>
 									</c:if>
 									<c:if test="${isadmin != 'true' }">
-									<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/projects/edit/${project.id}" role="button"><i class="far fa-edit"></i></a></td>
+									<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/projects/join/${project.id}" role="button"><i class="far fa-edit"></i></a></td>
 									</c:if>
 								</tr>
 							</c:forEach>

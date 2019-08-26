@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 	<head>
-		<title>Manage Project</title>
+		<title>Join Project</title>
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 	</head>
 	
@@ -46,28 +46,19 @@
 									<th class="tblHeader">Start Date</th>
 									<th class="tblHeader">End Date</th>
 									<th class="tblHeader">Hours</th>
-									<th class="tblHeaderCenter">Allocated To</th>
+									<th class="tblHeaderCenter">Join</th>
 								</tr>
 								
 								<c:forEach items="${project.allocations}" var="allocation">
-								<c:if test="${user.getSkills().contains(allocation) }">
-									<tr>
-										<td class="tblDef">
-											<select name="allocation_${allocation.id}_skillId" class="form-control">
-												<option value="${allocation.skill.id}" selected>${allocation.skill.name}</option>
-												<c:forEach items="${listSkills}" var="skill">
-													<c:if test="${skill.id != allocation.skill.id}">
-														<option value="${skill.id}">${skill.name}</option>
-													</c:if>
-						                  		</c:forEach>
-					               			</select>
-					               		</td>
-										<td class="tblDef"><input name="allocation_${allocation.id}_startDate" autocomplete="off" type="text" value="${allocation.startDateAsString}" class="form-control datepicker startDate"/></td>
-										<td class="tblDef"><input name="allocation_${allocation.id}_endDate" autocomplete="off" type="text" value="${allocation.endDateAsString}" class="form-control datepicker endDate"/></td>
-										<td class="tblDef"><input name="allocation_${allocation.id}_hours" type="text" value="${allocation.hours}" class="form-control" style="width: 120px;"/></td>
-										<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="editAllocation(${allocation.id}, this)"><i class="fas fa-edit"></i></button> <span>${allocation.resource.name}</span></td>
-										<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="deleteAllocation(this)"><i class="fas fa-trash"></i></button></td>
-									</tr>
+									<c:if test="${empty allocation.resource}">																								
+										<tr>											
+						               		<td style="width: 300px;" class="tblDef">${allocation.skill.name}</td>
+						               		<td style="width: 300px;" class="tblDef">${allocation.startDateAsString}</td>
+											<td style="width: 300px;" class="tblDef">${allocation.endDateAsString}</td>
+											<td style="width: 300px;" class="tblDef">${allocation.hours}</td>
+											<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="joinAllocation(${allocation}, ${resource})"><i class="fas fa-edit"></i></button></td>
+					
+										</tr>
 									</c:if>
 			                	</c:forEach>
 		                		<tr id="allocationTemplate" style="display: none">
@@ -88,7 +79,7 @@
 		                	</table>
 		                	
 		                	<!-- Cancel/Save buttons -->
-							<a href="/ViewProjects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
+							<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
 		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
 						</form:form>
 						
@@ -164,6 +155,11 @@
 			
 			function deleteAllocation(buttonElement) {
 				$(buttonElement).closest('tr').remove();
+			}
+			
+			function joinAllocation(allocation, resouce){
+				
+				
 			}
 			
 			function editAllocation(allocationId, buttonElement) {

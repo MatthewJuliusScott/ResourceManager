@@ -16,5 +16,4 @@ public interface ProjectDAO {
 
 	public void updateProject(Project project);
 	
-	public List<Project> viewProjects();
 }
