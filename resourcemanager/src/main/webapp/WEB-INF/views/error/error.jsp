@@ -17,7 +17,7 @@
 	<body>
 		<h1>Error! </h1>
 		<h2><div>Status code: <%=statusCode%></div></h2>
-		<div>Exception: <%= exception==null? "N/A": exception.getMessage() %></div>
+		<div>Something went wrong. Please submit a bug report detailing how you got to this screen so we can reproduce and fix the error. %></div>
 		<a href="/">Go Home</a>
 	</body>
 </html>
