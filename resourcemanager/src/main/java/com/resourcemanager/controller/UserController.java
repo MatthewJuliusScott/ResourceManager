@@ -2,6 +2,7 @@
 package com.resourcemanager.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestDecorator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -107,6 +108,8 @@ public class UserController {
 			System.err.println(result.toString());
 		}
 
+		System.out.println(request.getAttribute("messages"));
+
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
 			? request.getParameter("oldPassword")
@@ -135,6 +138,9 @@ public class UserController {
 						String encryptedPassword = encoder.encode(newPassword);
 						user.setPassword(encryptedPassword);
 					}
+				} else {
+					HttpServletRequestDecorator req = new HttpServletRequestDecorator(request);
+					req.addMessage("Old password was incorrect.");
 				}
 			}
 
