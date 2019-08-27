@@ -67,6 +67,13 @@ public class User implements Cloneable {
 	@OrderColumn(name = "order_col")
 	private List<Notification>	notifications;
 
+	public void addNotification(Notification notification) {
+		if (notifications == null) {
+			notifications = new ArrayList<Notification>();
+		}
+		notifications.add(notification);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#clone()

@@ -1,6 +1,8 @@
 
 package com.resourcemanager.controller;
 
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestDecorator;
 
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.resourcemanager.model.Notification;
 import com.resourcemanager.model.Resource;
 import com.resourcemanager.model.User;
+import com.resourcemanager.service.NotificationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.UserService;
 
@@ -25,17 +29,35 @@ import com.resourcemanager.service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService		userService;
+	private UserService			userService;
 
 	@Autowired
-	private ResourceService	resourceService;
+	private ResourceService		resourceService;
 
 	@Autowired
-	private PasswordEncoder	encoder;
+	private NotificationService	notificationService;
+
+	@Autowired
+	private PasswordEncoder		encoder;
 
 	@RequestMapping("users/add")
 	public String addUser() {
 		return "redirect:/users/edit/0";
+	}
+
+	@RequestMapping(value = { "/users/notifications/delete/{id}" }, method = RequestMethod.POST)
+	public String deleteNotification(@PathVariable("id") Long id, Model model) {
+		User user = getLoggedInUser();
+		Iterator<Notification> i = user.getNotifications().iterator();
+		while (i.hasNext()) {
+			Notification notification = i.next();
+			if (notification.getId() == id.longValue()) {
+				notificationService.deleteNotification(notification.getId());
+				i.remove();
+			}
+		}
+		model.addAttribute("user", user);
+		return "users/notifications";
 	}
 
 	@RequestMapping(value = { "/users/myprofile" }, method = RequestMethod.GET)
@@ -65,13 +87,6 @@ public class UserController {
 		return "users/edit";
 	}
 
-	@RequestMapping(value = { "/users/notifications" }, method = RequestMethod.GET)
-	public String getNotifications(Model model) {
-		User user = getLoggedInUser();
-		model.addAttribute("user", user);
-		return "users/notifications";
-	}
-
 	private User getLoggedInUser() {
 		// get the currently logged in username
 		Object principal = SecurityContextHolder.getContext()
@@ -87,10 +102,33 @@ public class UserController {
 		return loggedInUser;
 	}
 
+	@RequestMapping(value = { "/users/notifications" }, method = RequestMethod.GET)
+	public String getNotifications(Model model) {
+		User user = getLoggedInUser();
+		model.addAttribute("user", user);
+		return "users/notifications";
+	}
+
 	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
 	public String listUsers(Model model) {
 		model.addAttribute("listUsers", this.userService.listUsers());
 		return "users";
+	}
+
+	@RequestMapping(value = { "/users/notifications/seen/{id}" }, method = RequestMethod.POST)
+	public String markNotificationAsSeen(@PathVariable("id") Long id, Model model) {
+		User user = getLoggedInUser();
+		Iterator<Notification> i = user.getNotifications().iterator();
+		while (i.hasNext()) {
+			Notification notification = i.next();
+			if (notification.getId() == id.longValue()) {
+				notification.setSeen(true);
+				notificationService.updateNotification(notification);
+			}
+		}
+
+		model.addAttribute("user", user);
+		return "users/notifications";
 	}
 
 	@RequestMapping(value = { "/users/delete/{id}" }, method = RequestMethod.GET)
@@ -141,6 +179,7 @@ public class UserController {
 				} else {
 					HttpServletRequestDecorator req = new HttpServletRequestDecorator(request);
 					req.addMessage("Old password was incorrect.");
+					return "redirect:/users/myprofile";
 				}
 			}
 
@@ -173,6 +212,9 @@ public class UserController {
 			this.userService.addUser(user);
 		} else {
 			// existing user, call update
+			Notification notification = new Notification("User updated successfully!");
+			notificationService.addNotification(notification);
+			user.addNotification(notification);
 			this.userService.updateUser(user);
 		}
 

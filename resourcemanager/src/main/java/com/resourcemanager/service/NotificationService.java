@@ -8,10 +8,10 @@ import com.resourcemanager.model.Notification;
 
 public interface NotificationService {
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public void addNotification(Notification notification);
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public void deleteNotification(Long notificationID);
 
 	@Secured("ROLE_USER")

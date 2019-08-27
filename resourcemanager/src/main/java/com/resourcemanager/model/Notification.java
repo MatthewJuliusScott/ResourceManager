@@ -8,9 +8,12 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -96,8 +99,22 @@ public class Notification implements Cloneable {
 		return true;
 	}
 
+	/**
+	 * Gets the created date.
+	 *
+	 * @return the created date
+	 */
 	public LocalDate getCreatedDate() {
 		return createdDate;
+	}
+
+	/**
+	 * Gets the created date.
+	 *
+	 * @return the createdDate formatted as a String
+	 */
+	public String getCreatedDateAsString() {
+		return createdDate.format(formatter);
 	}
 
 	/**
@@ -140,6 +157,12 @@ public class Notification implements Cloneable {
 		return seen;
 	}
 
+	/**
+	 * Sets the created date.
+	 *
+	 * @param createdDate
+	 *            the new created date
+	 */
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
@@ -167,7 +190,7 @@ public class Notification implements Cloneable {
 	/**
 	 * Sets the seen.
 	 *
-	 * @param read
+	 * @param seen
 	 *            the new seen
 	 */
 	public void setSeen(boolean seen) {
