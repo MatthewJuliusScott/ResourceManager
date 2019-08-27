@@ -3,7 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="com.resourcemanager.model.User"%>
 
-<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
+<c:set var="loggedInUser" value="${loggedInUser}"/>
+<c:set var="roleAdmin" value="ROLE_ADMIN"/>
+<spring:eval var="admin" expression="'not empty loggedInUser ? loggedInUser.authorityStrings.contains(roleAdmin) : false'" />
 
 <html>
 	<head>
