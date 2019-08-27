@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.dao.impl;
 
 import java.util.List;
@@ -19,21 +22,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.ProjectDAO;
 import com.resourcemanager.model.Project;
 
+/**
+ * The Class ProjectDAOImpl.
+ */
 @Repository
 @Transactional
 public class ProjectDAOImpl implements ProjectDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(ProjectDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ProjectDAO#addProject(com.resourcemanager.model.Project)
+	 */
 	@Override
 	public void addProject(Project project) {
 		getCurrentSession().persist(project);
 		logger.info("Project saved successfully, Project Details=" + project);
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -44,10 +60,18 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ProjectDAO#getProjectByID(java.lang.Long)
+	 */
 	@Override
 	public Project getProjectByID(Long id) {
 		Project project = getCurrentSession().find(Project.class, id);
@@ -55,6 +79,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return project;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ProjectDAO#listProjects()
+	 */
 	@Override
 	public List<Project> listProjects() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -69,6 +96,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return projectsList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ProjectDAO#removeProject(java.lang.Long)
+	 */
 	@Override
 	public void removeProject(Long id) {
 		Project project = getCurrentSession().find(Project.class, id);
@@ -76,6 +106,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 		logger.info("Project deleted successfully, project details=" + project);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ProjectDAO#updateProject(com.resourcemanager.model.Project)
+	 */
 	@Override
 	public void updateProject(Project project) {
 		getCurrentSession().merge(project);

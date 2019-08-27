@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.controller;
 
@@ -23,29 +26,48 @@ import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 import com.resourcemanager.service.UserService;
 
+/**
+ * The Class AllocationController.
+ */
 @Controller
 public class AllocationController {
 
+	/** The allocation service. */
 	@Autowired
 	private AllocationService	allocationService;
 
+	/** The skill service. */
 	@Autowired
 	private SkillService		skillService;
 
+	/** The resource service. */
 	@Autowired
 	private ResourceService		resourceService;
 
+	/** The project service. */
 	@Autowired
 	private AllocationService	projectService;
 	
+	/** The user service. */
 	@Autowired
     private UserService        userService;
 	
+	/**
+	 * Adds the allocation.
+	 *
+	 * @return the string
+	 */
 	@RequestMapping(value = {"/allocations/add"}, method = RequestMethod.GET)
 	public String addAllocation() {
 		return "redirect:/allocations/edit/0";
 	}
 
+	/**
+	 * Delete allocation.
+	 *
+	 * @param id the id
+	 * @return the string
+	 */
 	@RequestMapping(value = {
 	        "/allocations/delete/{id}"}, method = RequestMethod.GET)
 	public String deleteAllocation(@PathVariable("id") Long id) {
@@ -54,6 +76,13 @@ public class AllocationController {
 		return "redirect:/allocations";
 	}
 
+	/**
+	 * Edits the allocation.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = {
 	        "/allocations/edit/{id}"}, method = RequestMethod.GET)
 	public String editAllocation(@PathVariable("id") Long id, Model model) {
@@ -67,6 +96,12 @@ public class AllocationController {
 		return "allocations/edit";
 	}
 
+	/**
+	 * List allocations.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = {"/allocations"}, method = RequestMethod.GET)
 	public String listAllocations(Model model) {
 		model.addAttribute("listAllocations",
@@ -74,6 +109,13 @@ public class AllocationController {
 		return "allocations";
 	}
 
+	/**
+	 * List required allocations.
+	 *
+	 * @param model the model
+	 * @param request the request
+	 * @return the string
+	 */
 	@RequestMapping(value = {
 	        "/allocations/listrequired"}, method = RequestMethod.GET)
 	public String listRequiredAllocations(Model model,
@@ -97,6 +139,13 @@ public class AllocationController {
 		return "allocations";
 	}
 	
+	/**
+	 * Join allocation.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
 	public String allocate(HttpServletRequest request) {
 		

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.controller;
 
@@ -30,29 +33,48 @@ import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 import com.resourcemanager.service.UserService;
 
+/**
+ * The Class ProjectController.
+ */
 @Controller
 public class ProjectController {
 
+	/** The project service. */
 	@Autowired
 	private ProjectService		projectService;
 
+	/** The skill service. */
 	@Autowired
 	private SkillService		skillService;
 
+	/** The resource service. */
 	@Autowired
 	private ResourceService		resourceService;
 
+	/** The allocation service. */
 	@Autowired
 	private AllocationService	allocationService;
 
+	/** The user service. */
 	@Autowired
 	private UserService			userService;
 
+	/**
+	 * Adds the project.
+	 *
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String addProject() {
 		return "redirect:/projects/edit/0";
 	}
 
+	/**
+	 * Delete project.
+	 *
+	 * @param id the id
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/projects/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteProject(@PathVariable("id") Long id) {
 
@@ -60,6 +82,13 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 
+	/**
+	 * Edits the project.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -71,6 +100,13 @@ public class ProjectController {
 		return "projects/edit";
 	}
 
+	/**
+	 * Join project.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/projects/join/{id}" }, method = RequestMethod.GET)
 	public String joinProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -93,6 +129,12 @@ public class ProjectController {
 		return "projects/join";
 	}
 
+	/**
+	 * List projects.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.listProjects());
@@ -110,6 +152,14 @@ public class ProjectController {
 		return "projects";
 	}
 
+	/**
+	 * Save project.
+	 *
+	 * @param project the project
+	 * @param result the result
+	 * @param request the request
+	 * @return the string
+	 */
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
 	public String saveProject(@ModelAttribute("project") Project project,

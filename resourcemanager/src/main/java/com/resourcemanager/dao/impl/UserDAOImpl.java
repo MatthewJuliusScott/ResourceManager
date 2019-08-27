@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.dao.impl;
 
 import java.util.List;
@@ -20,21 +23,32 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.UserDAO;
 import com.resourcemanager.model.User;
 
+/**
+ * The Class UserDAOImpl.
+ */
 @Repository
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(UserDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#addUser(com.resourcemanager.model.User)
+	 */
 	@Override
 	public void addUser(User user) {
 		getCurrentSession().persist(user);
 		logger.info("User saved successfully, User details=" + user);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#deleteUser(java.lang.Long)
+	 */
 	@Override
 	public void deleteUser(Long userID) {
 		User user = getCurrentSession().find(User.class, userID);
@@ -42,6 +56,9 @@ public class UserDAOImpl implements UserDAO {
 		logger.info("User deleted successfully, User details=" + user);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#findUserByEmail(java.lang.String)
+	 */
 	@Override
 	public User findUserByEmail(String email) {
 		User user = null;
@@ -58,6 +75,9 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#findUserByID(long)
+	 */
 	@Override
 	public User findUserByID(long id) {
 		User user = getCurrentSession().find(User.class, id);
@@ -65,6 +85,11 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -75,10 +100,18 @@ public class UserDAOImpl implements UserDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#listUsers()
+	 */
 	@Override
 	public List<User> listUsers() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -89,6 +122,9 @@ public class UserDAOImpl implements UserDAO {
 		return query.getResultList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.UserDAO#updateUser(com.resourcemanager.model.User)
+	 */
 	@Override
 	public void updateUser(User user) {
 		getCurrentSession().merge(user);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.dao.impl;
 
 import java.util.List;
@@ -20,21 +23,32 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.SkillDAO;
 import com.resourcemanager.model.Skill;
 
+/**
+ * The Class SkillDAOImpl.
+ */
 @Repository
 @Transactional
 public class SkillDAOImpl implements SkillDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(SkillDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#addSkill(com.resourcemanager.model.Skill)
+	 */
 	@Override
 	public void addSkill(Skill skill) {
 		getCurrentSession().persist(skill);
 		logger.info("Skill saved successfully, Skill details=" + skill);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#deleteSkill(java.lang.Long)
+	 */
 	@Override
 	public void deleteSkill(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
@@ -42,6 +56,11 @@ public class SkillDAOImpl implements SkillDAO {
 		logger.info("Skill deleted successfully, skill details=" + skill);
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -52,10 +71,18 @@ public class SkillDAOImpl implements SkillDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#getSkillByID(java.lang.Long)
+	 */
 	@Override
 	public Skill getSkillByID(Long id) {
 		Skill skill = getCurrentSession().find(Skill.class, id);
@@ -63,6 +90,9 @@ public class SkillDAOImpl implements SkillDAO {
 		return skill;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#getSkillByName(java.lang.String)
+	 */
 	@Override
 	public Skill getSkillByName(String name) {
 		Skill skill = null;
@@ -78,6 +108,9 @@ public class SkillDAOImpl implements SkillDAO {
 		return skill;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#listSkills()
+	 */
 	@Override
 	public List<Skill> listSkills() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -91,6 +124,9 @@ public class SkillDAOImpl implements SkillDAO {
 		return skillsList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.SkillDAO#updateSkill(com.resourcemanager.model.Skill)
+	 */
 	@Override
 	public void updateSkill(Skill skill) {
 		getCurrentSession().merge(skill);

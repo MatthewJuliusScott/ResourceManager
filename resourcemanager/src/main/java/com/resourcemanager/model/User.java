@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.model;
 
@@ -67,6 +70,11 @@ public class User implements Cloneable {
 	@OrderColumn(name = "order_col")
 	private List<Notification>	notifications;
 
+	/**
+	 * Adds the notification.
+	 *
+	 * @param notification the notification
+	 */
 	public void addNotification(Notification notification) {
 		if (notifications == null) {
 			notifications = new ArrayList<Notification>();
@@ -289,6 +297,9 @@ public class User implements Cloneable {
 		this.resource = resource;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", authorityStrings="
