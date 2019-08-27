@@ -66,7 +66,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = { "/users/notifications" }, method = RequestMethod.GET)
-	public String editUser(Model model) {
+	public String getNotifications(Model model) {
 		User user = getLoggedInUser();
 		model.addAttribute("user", user);
 		return "users/notifications";
