@@ -9,11 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
+import com.resourcemanager.model.Project;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
@@ -36,7 +40,7 @@ public class AllocationController {
 	
 	@Autowired
     private UserService        userService;
-
+	
 	@RequestMapping(value = {"/allocations/add"}, method = RequestMethod.GET)
 	public String addAllocation() {
 		return "redirect:/allocations/edit/0";
@@ -91,6 +95,18 @@ public class AllocationController {
 		request.setAttribute("startDate", dateTimeFormatter.format(startDate));
 		request.setAttribute("endDate", dateTimeFormatter.format(endDate));
 		return "allocations";
+	}
+	
+	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
+	public String allocate(HttpServletRequest request) {
+		
+		long resourceid = long.class.cast(request.getParameter("resourceId"));
+		long allocationid = long.class.cast(request.getParameter("allocationId"));
+		Allocation allocation = this.allocationService.getAllocationByID(allocationid);
+		allocation.setResource(this.resourceService.getResourceByID(resourceid));
+		this.allocationService.updateAllocation(allocation);
+
+		return "projects";
 	}
 	
 	
