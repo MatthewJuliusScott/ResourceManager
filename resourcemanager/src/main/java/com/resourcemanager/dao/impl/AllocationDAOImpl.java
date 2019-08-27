@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.dao.impl;
 
 import java.time.LocalDate;
@@ -21,21 +24,32 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
 
+/**
+ * The Class AllocationDAOImpl.
+ */
 @Repository
 @Transactional
 public class AllocationDAOImpl implements AllocationDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(AllocationDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#addAllocation(com.resourcemanager.model.Allocation)
+	 */
 	@Override
 	public void addAllocation(Allocation allocation) {
 		getCurrentSession().persist(allocation);
 		logger.info("Allocation saved successfully, Allocation Details=" + allocation);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#deleteAllocation(java.lang.Long)
+	 */
 	@Override
 	public void deleteAllocation(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
@@ -43,6 +57,9 @@ public class AllocationDAOImpl implements AllocationDAO {
 		logger.info("Allocation deleted successfully, allocation details=" + allocation);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#getAllocationByID(java.lang.Long)
+	 */
 	@Override
 	public Allocation getAllocationByID(Long id) {
 		Allocation allocation = getCurrentSession().find(Allocation.class, id);
@@ -50,6 +67,11 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return allocation;
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -60,10 +82,18 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#listAllocations()
+	 */
 	@Override
 	public List<Allocation> listAllocations() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -77,6 +107,9 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return allocationsList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#listRequiredAllocations(java.time.LocalDate, java.time.LocalDate)
+	 */
 	@Override
 	public List<Allocation> listRequiredAllocations(LocalDate startDate, LocalDate endDate) {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -94,6 +127,9 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return allocationsList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.AllocationDAO#updateAllocation(com.resourcemanager.model.Allocation)
+	 */
 	@Override
 	public void updateAllocation(Allocation allocation) {
 		getCurrentSession().merge(allocation);

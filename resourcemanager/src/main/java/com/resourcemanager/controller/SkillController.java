@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.controller;
 
@@ -13,17 +16,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.SkillService;
 
+/**
+ * The Class SkillController.
+ */
 @Controller
 public class SkillController {
 
+	/** The skill service. */
 	@Autowired
 	private SkillService skillService;
 
+	/**
+	 * Adds the skill.
+	 *
+	 * @return the string
+	 */
 	@RequestMapping("skills/add")
 	public String addSkill() {
 		return "redirect:/skills/edit/0";
 	}
 
+	/**
+	 * Edits the skill.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/skills/edit/{id}" }, method = RequestMethod.GET)
 	public String editSkill(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -35,12 +54,24 @@ public class SkillController {
 		return "skills/edit";
 	}
 
+	/**
+	 * List skills.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/skills" }, method = RequestMethod.GET)
 	public String listSkills(Model model) {
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "skills";
 	}
 
+	/**
+	 * Removes the skill.
+	 *
+	 * @param id the id
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/skills/delete/{id}" }, method = RequestMethod.GET)
 	public String removeSkill(@PathVariable("id") Long id) {
 
@@ -48,6 +79,13 @@ public class SkillController {
 		return "redirect:/skills";
 	}
 
+	/**
+	 * Save skill.
+	 *
+	 * @param skill the skill
+	 * @param result the result
+	 * @return the string
+	 */
 	// For add and update skill both
 	@RequestMapping(value = "/skills/save", method = RequestMethod.POST)
 	public String saveSkill(@ModelAttribute("skill") Skill skill,
