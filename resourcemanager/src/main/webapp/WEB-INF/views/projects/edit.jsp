@@ -94,7 +94,7 @@
 		                	</table>
 		                	
 		                	<!-- Cancel/Save buttons -->
-							<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
+							<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
 		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
 						</form:form>
 						
@@ -124,10 +124,6 @@
 				</div>
 			</div>
 		</div>
-		
-		<div>
-        	<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
-        </div>
         
 	</body>
 	
