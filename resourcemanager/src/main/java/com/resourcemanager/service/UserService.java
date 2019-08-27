@@ -15,7 +15,7 @@ public interface UserService {
 	public void deleteUser(Long userID);
 
 	public User getUserByID(Long userID);
-
+	
 	public User getUserByUserName(String userName);
 
 	@Secured("ROLE_ADMIN")

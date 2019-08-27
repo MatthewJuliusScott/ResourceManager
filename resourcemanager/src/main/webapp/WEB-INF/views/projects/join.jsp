@@ -22,7 +22,7 @@
 				<tr>
 					<td>
 						<div>
-						<c:url var="addAction" value="/projects/save" ></c:url>
+						<c:url var="addAction" value="/projects/join" ></c:url>
 						<form:form action="${addAction}" modelAttribute="project" method="POST" id="projectForm">
 							<form:hidden path="id" />
 										
@@ -50,8 +50,8 @@
 								</tr>
 								
 								<c:forEach items="${project.allocations}" var="allocation">
-									<c:forEach items="${user.skills}" var="skills">
-										<c:if test="${user.skill.id == allocation.skill.id && empty allocation.resource}">																						
+									<c:forEach items="${user.skills}" var="skill">
+										<c:if test="${skill.id == allocation.skill.id && empty allocation.resource}">																						
 											<tr>											
 							               		<td style="width: 300px;" class="tblDef">${allocation.skill.name}</td>
 							               		<td style="width: 300px;" class="tblDef">${allocation.startDateAsString}</td>
@@ -214,7 +214,7 @@
 				$("#projectForm").find(':submit').click();
 			}
 			
-			function allocate() {
+			function allocate(Allocation allocation, Resource resource) {
 				var key = $(".modal-body").find('input[type="radio"]:checked').val();
 				//var value = $(".modal-body").find('input[type="radio"]:checked').parent().siblings().first().text();
 				var id = $session.getAttribute("ResourceId");

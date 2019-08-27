@@ -93,15 +93,6 @@ public class AllocationController {
 		return "allocations";
 	}
 	
-	@RequestMapping(value = { "/allocations/join/{id}" }, method = RequestMethod.GET)
-	public String joinAllocation(@PathVariable("id") Long id, Model model) {
-		if (id > 0) {
-			model.addAttribute("allocation", this.allocationService.getAllocationByID(id));
-		} else {
-			model.addAttribute("allocation", new Allocation());
-		}
-		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "allocations/join";
-	}
+	
 	
 }

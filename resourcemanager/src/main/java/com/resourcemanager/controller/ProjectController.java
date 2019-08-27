@@ -75,7 +75,7 @@ public class ProjectController {
 		if (id > 0) {
 			model.addAttribute("project", this.projectService.getProjectByID(id));
 		} else {
-			model.addAttribute("project", new Project());
+			return "projects";
 		}
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
