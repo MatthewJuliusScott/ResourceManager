@@ -289,13 +289,9 @@ public class User implements Cloneable {
 		this.resource = resource;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email
-			+ ", password=" + password + "]";
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", authorityStrings="
+			+ authorityStrings + ", resource=" + resource + ", notifications=" + notifications + "]";
 	}
 }

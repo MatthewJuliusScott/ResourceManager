@@ -72,9 +72,8 @@ public class UserController {
 			username = principal.toString();
 		}
 
-		model.addAttribute("user",
-			this.userService.getUserByUserName(username));
-		return "users/edit";
+		User user = this.userService.getUserByUserName(username);
+		return "redirect:/users/edit/" + user.getId();
 	}
 
 	@RequestMapping(value = { "/users/edit/{id}" }, method = RequestMethod.GET)
@@ -84,6 +83,7 @@ public class UserController {
 		} else {
 			model.addAttribute("user", new User());
 		}
+		model.addAttribute("listResources", this.resourceService.listResources());
 		return "users/edit";
 	}
 
