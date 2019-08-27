@@ -279,12 +279,14 @@ public class UserController {
 		// then extract it and assign back to the object here
 		String resourceId = request.getParameter("resourceId");
 
+		Resource resource = null;
 		if (resourceId != null && !resourceId.equals("")
 		        && !resourceId.equals("0")) {
-			Resource resource = resourceService
+			resource = resourceService
 			        .getResourceByID(Long.parseLong(resourceId));
-			user.setResource(resource);
+			
 		}
+		user.setResource(resource);
 
 		if (user.getId() == 0) {
 			// new user, add it
