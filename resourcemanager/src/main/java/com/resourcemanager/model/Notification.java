@@ -1,6 +1,9 @@
 
 package com.resourcemanager.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -19,16 +22,23 @@ import javax.persistence.Table;
 		@AttributeOverride(name = "id", column = @Column(name = "notification_id")) })
 public class Notification implements Cloneable {
 
+	/** The Constant formatter. */
+	public static final DateTimeFormatter	formatter	= DateTimeFormatter
+		.ofPattern("dd/MM/yyyy");
+
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long	id;
+	private long							id;
 
 	/** The message. */
-	private String	message	= "";
+	private String							message		= "";
+
+	/** The start date. */
+	private LocalDate						createdDate	= LocalDate.now();
 
 	/** The seen. */
-	private boolean	seen	= false;
+	private boolean							seen		= false;
 
 	/**
 	 * Instantiates a new notification.
@@ -86,6 +96,10 @@ public class Notification implements Cloneable {
 		return true;
 	}
 
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+
 	/**
 	 * Gets the id.
 	 *
@@ -124,6 +138,10 @@ public class Notification implements Cloneable {
 	 */
 	public boolean isSeen() {
 		return seen;
+	}
+
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	/**
