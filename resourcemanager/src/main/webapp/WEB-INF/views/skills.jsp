@@ -49,13 +49,18 @@
 										<td style="width: 300px;" class="tblDefCenter">${skill.id}</td>
 										<td style="width: 65%;" class="tblDef">${skill.name}</td>
 										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/skills/edit/${skill.id}" role="button"><i class="far fa-edit"></i></a></td>
-										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" onclick="ConfirmMessage(${skill.id});" role="button"><i class="fas fa-trash"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="ConfirmMessage(${skill.id});" role="button"><i class="fas fa-trash"></i></a></td>
 									</tr>
 							</c:forEach>
 						</table>
 					</table>
 				</c:if>		
 			</div>	
-		</div>	
+		</div>
+		
+		<div>
+        	<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+        </div>
+        	
 	</body>
 </html>

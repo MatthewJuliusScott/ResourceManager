@@ -1,13 +1,19 @@
 
 package com.resourcemanager.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,16 +25,23 @@ import javax.persistence.Table;
 		@AttributeOverride(name = "id", column = @Column(name = "notification_id")) })
 public class Notification implements Cloneable {
 
+	/** The Constant formatter. */
+	public static final DateTimeFormatter	formatter	= DateTimeFormatter
+		.ofPattern("dd/MM/yyyy");
+
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long	id;
+	private long							id;
 
 	/** The message. */
-	private String	message	= "";
+	private String							message		= "";
+
+	/** The start date. */
+	private LocalDate						createdDate	= LocalDate.now();
 
 	/** The seen. */
-	private boolean	seen	= false;
+	private boolean							seen		= false;
 
 	/**
 	 * Instantiates a new notification.
@@ -87,6 +100,24 @@ public class Notification implements Cloneable {
 	}
 
 	/**
+	 * Gets the created date.
+	 *
+	 * @return the created date
+	 */
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * Gets the created date.
+	 *
+	 * @return the createdDate formatted as a String
+	 */
+	public String getCreatedDateAsString() {
+		return createdDate.format(formatter);
+	}
+
+	/**
 	 * Gets the id.
 	 *
 	 * @return the id
@@ -127,6 +158,16 @@ public class Notification implements Cloneable {
 	}
 
 	/**
+	 * Sets the created date.
+	 *
+	 * @param createdDate
+	 *            the new created date
+	 */
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
 	 * Sets the id.
 	 *
 	 * @param id
@@ -149,7 +190,7 @@ public class Notification implements Cloneable {
 	/**
 	 * Sets the seen.
 	 *
-	 * @param read
+	 * @param seen
 	 *            the new seen
 	 */
 	public void setSeen(boolean seen) {

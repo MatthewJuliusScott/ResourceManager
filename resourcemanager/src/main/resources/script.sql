@@ -126,7 +126,7 @@ INSERT INTO userdetails(email,name,password) VALUES ('admin@gmail.com','admin','
 INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(7,"ROLE_USER");
 INSERT INTO `userdetails_authoritystrings`(`UserDetails_id`,`authorityStrings`)VALUES(7,"ROLE_ADMIN");
 
-INSERT INTO userdetails(email, name, password) SELECT CONCAT(REPLACE(name, " ", ""), "@gmail.com"), name, '$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi' FROM resource;
+INSERT INTO userdetails(email, name, password, resource_id) SELECT CONCAT(REPLACE(name, " ", ""), "@gmail.com"), name, '$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi', resource_id FROM resource;
 
 INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(8, "ROLE_USER");
 INSERT INTO userdetails_authoritystrings(UserDetails_id, authorityStrings) VALUES(9, "ROLE_USER");

@@ -84,13 +84,9 @@ public class ResourceController {
 
 		List<Resource> resources = new ArrayList<Resource>();
 
-		try {
-			resources = this.resourceService.searchResources(Long.parseLong(skillId),
-				LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter),
-				Integer.parseInt(hours));
-		} catch (Exception e) {
-			// TODO : friendly error reporting
-		}
+		resources = this.resourceService.searchResources(Long.parseLong(skillId),
+			LocalDate.parse(startDate, dateTimeFormatter), LocalDate.parse(endDate, dateTimeFormatter),
+			Integer.parseInt(hours));
 
 		model.addAttribute("resource", new Resource());
 		model.addAttribute("listResources", resources);
