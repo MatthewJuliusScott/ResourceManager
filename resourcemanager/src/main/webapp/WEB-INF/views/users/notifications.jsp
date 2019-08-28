@@ -37,7 +37,7 @@
 						${notification.message}
                		</td>
                		<td>
-						<button type="button" onclick="deleteNotification(${notification.id})" class="btn btn-danger"><i class="far fa-trash"></i></button>
+						<button type="button" onclick="deleteNotification(${notification.id})" class="btn btn-danger"><i class="fas fa-trash"></i></button>
 					</td>
 				</tr>
           	</c:forEach>

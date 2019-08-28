@@ -14,6 +14,7 @@
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
 		<div class="formContent">
+			<c:url var="addAction" value="/users/save" ></c:url>
 			<form:form action="${addAction}" modelAttribute="user" method="POST">
 			<form:hidden path="id" />
 				<table cellpadding="0" cellspacing="0" class="tbl">
@@ -31,7 +32,6 @@
 						</td>
 					</tr>
 					<tr>
-						<c:url var="addAction" value="/users/save" ></c:url>
 						<table cellpadding="0" cellspacing="0" class="tbl">
 							<tr>
 								<td>
@@ -134,6 +134,10 @@
 													<select name="resourceId" id="resourceId" class="form-control" style="width: 500px;">
 														<c:if test = "${not empty user.resource}">
 															<option value="${user.resource.id}" selected>${user.resource.name}</option>
+															<option value="">-- none --</option>
+														</c:if>
+														<c:if test = "${empty user.resource}">
+															<option value="" selected>-- none --</option>
 														</c:if>
 														<c:forEach items="${listResources}" var="resource">
 															<c:if test = "${empty user.resource || user.resource.id != resource.id}">
