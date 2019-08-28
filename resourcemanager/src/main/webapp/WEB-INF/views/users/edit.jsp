@@ -135,6 +135,10 @@
 													<select name="resourceId" id="resourceId" class="form-control" style="width: 500px;">
 														<c:if test = "${not empty user.resource}">
 															<option value="${user.resource.id}" selected>${user.resource.name}</option>
+															<option value="">-- none --</option>
+														</c:if>
+														<c:if test = "${empty user.resource}">
+															<option value="" selected>-- none --</option>
 														</c:if>
 														<c:forEach items="${listResources}" var="resource">
 															<c:if test = "${empty user.resource || user.resource.id != resource.id}">
