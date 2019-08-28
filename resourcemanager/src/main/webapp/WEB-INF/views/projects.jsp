@@ -2,6 +2,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
+<c:set var="loggedInUser" value="${loggedInUser}"/>
+<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
+
 <script>
    var projectId; // Used for modal.
 </script>
@@ -23,11 +26,13 @@
 					</td>	
 				</tr>
 				
-				<tr>
-					<td>
-						<a class="tblButton" href="/projects/add" role="button">Create Project</a>
-					</td>	
-				</tr>
+				<c:if test="${admin}">
+					<tr>
+						<td>
+							<a class="tblButton" href="/projects/add" role="button">Create Project</a>
+						</td>	
+					</tr>
+				</c:if>
 			</table>
 			<c:set var="isadmin" value="false"/>
 			<c:if test="${!empty user }">

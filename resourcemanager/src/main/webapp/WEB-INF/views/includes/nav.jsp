@@ -13,8 +13,8 @@
     <a class="navSingleLine" href="/users/notifications">Notifications</a>
     <a class="navSingleLine" href="/projects">Projects</a>
     <c:if test="${admin}"><a class="navSingleLine" href="/resources">Resources</a></c:if>
-    <a class="navSingleLine" href="/skills">Skills</a>
-    <c:if test="${admin}"><a class="navSingleLine" href="/users">Manage Users</a></c:if>
+    <c:if test="${admin}"><a class="navSingleLine" href="/skills">Skills</a></c:if>
+    <c:if test="${admin}"><a class="navSingleLine" href="/users">Users</a></c:if>
     <c:if test="${admin}"><a class="navSingleLine" href="/allocations/listrequired">Organisational Requirements</a></c:if>
     <div class="topnav-right">
     	<form action="/logout" method="post">
