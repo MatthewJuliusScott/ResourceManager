@@ -14,6 +14,7 @@
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
 		
 		<div class="formContent">
+			<c:url var="addAction" value="/users/save" ></c:url>
 			<form:form action="${addAction}" modelAttribute="user" method="POST">
 			<form:hidden path="id" />
 				<table cellpadding="0" cellspacing="0" class="tbl">
@@ -31,7 +32,6 @@
 						</td>
 					</tr>
 					<tr>
-						<c:url var="addAction" value="/users/save" ></c:url>
 						<table cellpadding="0" cellspacing="0" class="tbl">
 							<tr>
 								<td>
