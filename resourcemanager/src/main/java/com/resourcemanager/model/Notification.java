@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -11,19 +11,19 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalIdCache;
 
 /**
  * The Class Notification.
  */
 @Entity(name = "Notification")
 @Table(name = "notification")
+@NaturalIdCache
 @AttributeOverrides({
 		@AttributeOverride(name = "id", column = @Column(name = "notification_id")) })
 public class Notification implements Cloneable {
@@ -34,16 +34,20 @@ public class Notification implements Cloneable {
 
 	/** The id. */
 	@Id
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long							id;
+	private long							id			= 0;
 
 	/** The message. */
+	@Column
 	private String							message		= "";
 
 	/** The start date. */
+	@Column
 	private LocalDate						createdDate	= LocalDate.now();
 
 	/** The seen. */
+	@Column
 	private boolean							seen		= false;
 
 	/**
