@@ -143,6 +143,19 @@
 							               			</select>
 												</td>
 											</tr>
+											<tr>
+												<td style="width: 150px;">
+														<label style="font-weight: bold;">
+															<spring:message text="Authority"/>
+														</label>
+												</td>
+												<td>
+													<select name="authority" id="authority" class="form-control" style="width: 500px;">
+														<option value="ROLE_USER">User</option>
+														<option value="ROLE_ADMIN">Admin</option>
+						               				</select>
+					               				</td>
+											</tr>
 										</c:if>
 									</table>
 								</td>

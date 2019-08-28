@@ -244,8 +244,6 @@ public class UserController {
 			System.err.println(result.toString());
 		}
 
-		System.out.println(request.getAttribute("messages"));
-
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
 			? request.getParameter("oldPassword")
