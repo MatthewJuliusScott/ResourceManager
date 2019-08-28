@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service;
 
@@ -18,7 +18,8 @@ public interface ResourceService {
 	/**
 	 * Adds the resource.
 	 *
-	 * @param p the p
+	 * @param p
+	 *            the p
 	 */
 	@Secured("ROLE_ADMIN")
 	public void addResource(Resource p);
@@ -26,7 +27,8 @@ public interface ResourceService {
 	/**
 	 * Delete resource.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	@Secured("ROLE_ADMIN")
 	public void deleteResource(Long id);
@@ -34,10 +36,11 @@ public interface ResourceService {
 	/**
 	 * Gets the resource by ID.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the resource by ID
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public Resource getResourceByID(Long id);
 
 	/**
@@ -51,10 +54,14 @@ public interface ResourceService {
 	/**
 	 * Search resources.
 	 *
-	 * @param skillId the skill id
-	 * @param startDate the start date
-	 * @param endDate the end date
-	 * @param hours the hours
+	 * @param skillId
+	 *            the skill id
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
+	 * @param hours
+	 *            the hours
 	 * @return the list
 	 */
 	@Secured("ROLE_ADMIN")
@@ -63,7 +70,8 @@ public interface ResourceService {
 	/**
 	 * Update resource.
 	 *
-	 * @param p the p
+	 * @param p
+	 *            the p
 	 */
 	@Secured("ROLE_ADMIN")
 	public void updateResource(Resource p);

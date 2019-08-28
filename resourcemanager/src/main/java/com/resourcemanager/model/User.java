@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -73,7 +73,8 @@ public class User implements Cloneable {
 	/**
 	 * Adds the notification.
 	 *
-	 * @param notification the notification
+	 * @param notification
+	 *            the notification
 	 */
 	public void addNotification(Notification notification) {
 		if (notifications == null) {
@@ -297,7 +298,8 @@ public class User implements Cloneable {
 		this.resource = resource;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
