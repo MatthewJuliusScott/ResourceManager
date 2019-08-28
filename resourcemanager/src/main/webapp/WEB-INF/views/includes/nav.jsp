@@ -3,8 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="com.resourcemanager.model.User"%>
 
-<c:set var="loggedInUser" value="${loggedInUser}"/>
-<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
 <!-- nav bar -->
 <div class="topnav">

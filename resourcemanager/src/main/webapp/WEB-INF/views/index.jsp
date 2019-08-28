@@ -2,9 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<c:set var="loggedInUser" value="${loggedInUser}"/>
-<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
-
 <html>
 	<head>
 		<title>Index</title>
