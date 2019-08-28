@@ -155,8 +155,14 @@
 												</td>
 												<td>
 													<select name="authority" id="authority" class="form-control" style="width: 500px;">
-														<option value="ROLE_USER">User</option>
-														<option value="ROLE_ADMIN">Admin</option>
+														<c:if test = "${user.authorityStrings.contains('ROLE_ADMIN')}">
+															<option value="ROLE_USER">User</option>
+															<option value="ROLE_ADMIN" selected>Admin</option>
+														</c:if>
+														<c:if test = "${!user.authorityStrings.contains('ROLE_ADMIN')}">
+															<option value="ROLE_USER" selected>User</option>
+															<option value="ROLE_ADMIN">Admin</option>
+														</c:if>
 						               				</select>
 					               				</td>
 											</tr>
