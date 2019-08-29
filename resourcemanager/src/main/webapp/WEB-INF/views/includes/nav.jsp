@@ -2,10 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="com.resourcemanager.model.User"%>
-
-<c:set var="loggedInUser" value="${loggedInUser}"/>
-<c:set var="roleAdmin" value="ROLE_ADMIN"/>
-<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
 <!-- nav bar -->
 <div class="topnav">
@@ -14,8 +11,8 @@
     <a class="navSingleLine" href="/users/notifications">Notifications</a>
     <a class="navSingleLine" href="/projects">Projects</a>
     <c:if test="${admin}"><a class="navSingleLine" href="/resources">Resources</a></c:if>
-    <a class="navSingleLine" href="/skills">Skills</a>
-    <c:if test="${admin}"><a class="navSingleLine" href="/users">Manage Users</a></c:if>
+    <c:if test="${admin}"><a class="navSingleLine" href="/skills">Skills</a></c:if>
+    <c:if test="${admin}"><a class="navSingleLine" href="/users">Users</a></c:if>
     <c:if test="${admin}"><a class="navSingleLine" href="/allocations/listrequired">Organisational Requirements</a></c:if>
     <div class="topnav-right">
     	<form action="/logout" method="post">

@@ -2,10 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="com.resourcemanager.model.User"%>
-
-<c:set var="loggedInUser" value="${loggedInUser}"/>
-<c:set var="roleAdmin" value="ROLE_ADMIN"/>
-<spring:eval var="admin" expression="loggedInUser.authorityStrings.contains('ROLE_ADMIN')" />
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
 <html>
 	<head>
@@ -95,18 +92,16 @@
 											</tr>
 										</c:if>
 										<c:if test="${user.id != 0}">
-											<c:if test="${!admin || loggedInUser.getId() == user.getId()}">
-												<tr>
-													<td style="width: 150px;">
-														<label style="font-weight: bold;">
-															<spring:message text="Old Password"/>
-														</label>
-													</td>
-													<td style="width: 500px;">
-														<input type="password" name="oldPassword" class="form-control" />
-													</td> 
-												</tr>
-											</c:if>
+											<tr>
+												<td style="width: 150px;">
+													<label style="font-weight: bold;">
+														<spring:message text="Old Password"/>
+													</label>
+												</td>
+												<td style="width: 500px;">
+													<input type="password" name="oldPassword" class="form-control" />
+												</td> 
+											</tr>
 											<tr>
 												<td style="width: 150px;">
 													<label style="font-weight: bold;">
@@ -151,6 +146,25 @@
 								                  		</c:forEach>
 							               			</select>
 												</td>
+											</tr>
+											<tr>
+												<td style="width: 150px;">
+														<label style="font-weight: bold;">
+															<spring:message text="Authority"/>
+														</label>
+												</td>
+												<td>
+													<select name="authority" id="authority" class="form-control" style="width: 500px;">
+														<c:if test = "${user.authorityStrings.contains('ROLE_ADMIN')}">
+															<option value="ROLE_USER">User</option>
+															<option value="ROLE_ADMIN" selected>Admin</option>
+														</c:if>
+														<c:if test = "${!user.authorityStrings.contains('ROLE_ADMIN')}">
+															<option value="ROLE_USER" selected>User</option>
+															<option value="ROLE_ADMIN">Admin</option>
+														</c:if>
+						               				</select>
+					               				</td>
 											</tr>
 										</c:if>
 									</table>

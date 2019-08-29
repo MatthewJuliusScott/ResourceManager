@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao.impl;
 
@@ -37,7 +37,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.NotificationDAO#addNotification(com.resourcemanager.model.Notification)
 	 */
 	@Override
@@ -46,7 +47,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 		logger.info("Notification saved successfully, Notification details=" + notification);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.NotificationDAO#deleteNotification(java.lang.Long)
 	 */
 	@Override
@@ -56,7 +58,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 		logger.info("Notification deleted successfully, Notification details=" + notification);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.NotificationDAO#findNotificationByID(long)
 	 */
 	@Override
@@ -90,7 +93,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.NotificationDAO#listNotifications()
 	 */
 	@Override
@@ -103,7 +107,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return query.getResultList();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.NotificationDAO#updateNotification(com.resourcemanager.model.Notification)
 	 */
 	@Override
