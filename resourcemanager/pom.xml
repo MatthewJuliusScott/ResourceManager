@@ -15,6 +15,7 @@
 		<start-class>com.resourcemanager.Application</start-class>
 	</properties>
     <build>
+    	<finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
