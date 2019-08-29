@@ -85,9 +85,10 @@ public class ProjectController {
 		} else {
 			username = principal.toString();
 		}
+		
 		User user = this.userService.getUserByUserName(username); 
 		model.addAttribute("user", user);
-		Resource res = resourceService.getResourceByID(user.getId());
+		Resource res = user.getResource();
 		model.addAttribute("userResource", res);
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "projects/join";

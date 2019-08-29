@@ -23,7 +23,7 @@
 					<td>
 						<div>
 						<c:url var="addAction" value="/allocations/join" ></c:url>
-						<form:form action="${addAction}"  method="POST" id="allocateForm">
+						<form:form action="${addAction}" modelAttribute="project" method="POST" id="allocateForm">
 							<input type="hidden" path="allocationId" value="0" />	
 							<input type="hidden" path="resourceId" value="${userResource.id}" />			
 							<table>
@@ -54,26 +54,13 @@
 									</c:if> 
 									</c:forEach>
 			                	</c:forEach>
-		                		<tr id="allocationTemplate" style="display: none">
-		                			<td>
-										<select name="allocation_0_skillId" class="form-control" required>
-											<option value="" disabled selected>Select...</option>
-											<c:forEach items="${listSkills}" var="skill">
-												<option value="${skill.id}">${skill.name}</option>
-					                  		</c:forEach>
-				               			</select>
-				               		</td>
-									<td><input name="allocation_0_startDate" autocomplete="off" type="text" class="form-control datepicker startDate" required/></td>
-									<td><input name="allocation_0_endDate" autocomplete="off" type="text" class="form-control datepicker endDate" required/></td>
-									<td><input name="allocation_0_hours" type="text" class="form-control" required/></td>
-									<td></td>
-		                		</tr>
+		            
 		                		
 		                	</table>
 		                	
 		                	<!-- Cancel/Save buttons -->
 							<a href="/projects" class="btn btn-danger"><i class="far fa-window-close"></i> Cancel</a>
-		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+		           			<button type="submit" class="btn btn-success"><i class="far fa-save"></i>Save</button>
 						</form:form>
 						
 						
