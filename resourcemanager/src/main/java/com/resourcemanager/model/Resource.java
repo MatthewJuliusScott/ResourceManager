@@ -333,7 +333,7 @@ public class Resource implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="
+		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", hours="
 			+ hours + "]";
 	}
 

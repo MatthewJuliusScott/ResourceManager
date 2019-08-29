@@ -37,7 +37,7 @@ public interface UserService {
 	 * @return the user by ID
 	 */
 	public User getUserByID(Long userID);
-
+	
 	/**
 	 * Gets the user by user name.
 	 *

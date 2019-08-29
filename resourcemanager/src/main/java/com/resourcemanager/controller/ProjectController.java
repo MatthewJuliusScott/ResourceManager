@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
 import com.resourcemanager.model.Resource;
+import com.resourcemanager.model.User;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.ResourceService;
@@ -111,7 +112,7 @@ public class ProjectController {
 		if (id > 0) {
 			model.addAttribute("project", this.projectService.getProjectByID(id));
 		} else {
-			model.addAttribute("project", new Project());
+			return "projects";
 		}
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
@@ -120,9 +121,10 @@ public class ProjectController {
 		} else {
 			username = principal.toString();
 		}
-
-		model.addAttribute("user", this.userService.getUserByUserName(username));
-		Resource res = resourceService.getResourceByID(this.userService.getUserByUserName(username).getId());
+		
+		User user = this.userService.getUserByUserName(username); 
+		model.addAttribute("user", user);
+		Resource res = user.getResource();
 		model.addAttribute("userResource", res);
 		model.addAttribute("listSkills", this.skillService.listSkills());
 		return "projects/join";
