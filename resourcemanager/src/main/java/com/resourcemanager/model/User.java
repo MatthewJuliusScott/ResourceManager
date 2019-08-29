@@ -1,3 +1,6 @@
+/*
+ *
+ */
 
 package com.resourcemanager.model;
 
@@ -6,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -24,11 +29,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
- * The Class UserDetails.
+ * The Class User.
  */
-@Entity(name = "UserDetails")
-@Table(name = "userdetails")
+@Entity(name = "User")
+@Table(name = "user")
 @NaturalIdCache
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name = "user_id")) })
 public class User implements Cloneable {
 
 	/** The id. */
@@ -63,10 +70,16 @@ public class User implements Cloneable {
 
 	/** The notifications. */
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "notification_id")
+	@JoinColumn(name = "user_id")
 	@OrderColumn(name = "order_col")
 	private List<Notification>	notifications;
 
+	/**
+	 * Adds the notification.
+	 *
+	 * @param notification
+	 *            the notification
+	 */
 	public void addNotification(Notification notification) {
 		if (notifications == null) {
 			notifications = new ArrayList<Notification>();
@@ -289,6 +302,10 @@ public class User implements Cloneable {
 		this.resource = resource;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", authorityStrings="

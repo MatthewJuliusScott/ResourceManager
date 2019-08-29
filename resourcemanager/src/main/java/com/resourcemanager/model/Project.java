@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.model;
 
@@ -47,8 +50,7 @@ public class Project implements Cloneable {
 	/**
 	 * Instantiates a new project.
 	 *
-	 * @param title
-	 *            the title
+	 * @param name the name
 	 */
 	public Project(String name) {
 		this.name = name;

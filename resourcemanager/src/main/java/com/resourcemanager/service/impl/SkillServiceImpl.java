@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.service.impl;
 
 import java.util.List;
@@ -10,40 +13,64 @@ import com.resourcemanager.dao.SkillDAO;
 import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.SkillService;
 
+/**
+ * The Class SkillServiceImpl.
+ */
 @Service
 public class SkillServiceImpl implements SkillService {
 
+	/** The skill DAO. */
 	@Autowired
 	private SkillDAO skillDAO;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.service.SkillService#addSkill(com.resourcemanager.model.Skill)
+	 */
 	@Override
 	@Transactional
 	public void addSkill(Skill skill) {
 		this.skillDAO.addSkill(skill);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.service.SkillService#deleteSkill(java.lang.Long)
+	 */
 	@Override
 	@Transactional
 	public void deleteSkill(Long lngSkillID) {
 		this.skillDAO.deleteSkill(lngSkillID);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.service.SkillService#getSkillByID(java.lang.Long)
+	 */
 	@Override
 	@Transactional
 	public Skill getSkillByID(Long lngSkillID) {
 		return this.skillDAO.getSkillByID(lngSkillID);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.service.SkillService#listSkills()
+	 */
 	@Override
 	@Transactional
 	public List<Skill> listSkills() {
 		return this.skillDAO.listSkills();
 	}
 
+	/**
+	 * Sets the skill DAO.
+	 *
+	 * @param skillDAO the new skill DAO
+	 */
 	public void setSkillDAO(SkillDAO skillDAO) {
 		this.skillDAO = skillDAO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.service.SkillService#updateSkill(com.resourcemanager.model.Skill)
+	 */
 	@Override
 	@Transactional
 	public void updateSkill(Skill skill) {

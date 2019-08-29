@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.controller;
 
 import java.time.LocalDate;
@@ -19,20 +22,36 @@ import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 
+/**
+ * The Class ResourceController.
+ */
 @Controller
 public class ResourceController {
 
+	/** The resource service. */
 	@Autowired
 	private ResourceService	resourceService;
 
+	/** The skill service. */
 	@Autowired
 	private SkillService	skillService;
 
+	/**
+	 * Adds the resource.
+	 *
+	 * @return the string
+	 */
 	@RequestMapping("resources/add")
 	public String addResource() {
 		return "redirect:/resources/edit/0";
 	}
 
+	/**
+	 * Delete resource.
+	 *
+	 * @param id the id
+	 * @return the string
+	 */
 	@RequestMapping(value = { "resources/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteResource(@PathVariable("id") Long id) {
 
@@ -40,6 +59,13 @@ public class ResourceController {
 		return "redirect:/resources";
 	}
 
+	/**
+	 * Edits the resource.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/resources/edit/{id}" }, method = RequestMethod.GET)
 	public String editResource(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
@@ -52,6 +78,12 @@ public class ResourceController {
 		return "resources/edit";
 	}
 
+	/**
+	 * List resources.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/resources" }, method = RequestMethod.GET)
 	public String listResources(Model model) {
 		model.addAttribute("resource", new Resource());
@@ -59,6 +91,13 @@ public class ResourceController {
 		return "resources";
 	}
 
+	/**
+	 * Save resource.
+	 *
+	 * @param p the p
+	 * @param result the result
+	 * @return the string
+	 */
 	// For add and update resource both
 	@RequestMapping(value = "/resources/save", method = RequestMethod.POST)
 	public String saveResource(@ModelAttribute("resource") Resource p, BindingResult result) {
@@ -75,6 +114,16 @@ public class ResourceController {
 		return "redirect:/resources";
 	}
 
+	/**
+	 * Search resources.
+	 *
+	 * @param model the model
+	 * @param skillId the skill id
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param hours the hours
+	 * @return the string
+	 */
 	@RequestMapping(value = { "/resources/search" }, method = RequestMethod.GET)
 	public String searchResources(Model model, @RequestParam("skillId") String skillId,
 		@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate,

@@ -1,3 +1,6 @@
+/*
+ *
+ */
 package com.resourcemanager.dao.impl;
 
 import java.util.List;
@@ -20,21 +23,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.NotificationDAO;
 import com.resourcemanager.model.Notification;
 
+/**
+ * The Class NotificationDAOImpl.
+ */
 @Repository
 @Transactional
 public class NotificationDAOImpl implements NotificationDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(NotificationDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.resourcemanager.dao.NotificationDAO#addNotification(com.resourcemanager.model.Notification)
+	 */
 	@Override
 	public void addNotification(Notification notification) {
 		getCurrentSession().persist(notification);
 		logger.info("Notification saved successfully, Notification details=" + notification);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.resourcemanager.dao.NotificationDAO#deleteNotification(java.lang.Long)
+	 */
 	@Override
 	public void deleteNotification(Long notificationID) {
 		Notification notification = getCurrentSession().find(Notification.class, notificationID);
@@ -42,6 +58,10 @@ public class NotificationDAOImpl implements NotificationDAO {
 		logger.info("Notification deleted successfully, Notification details=" + notification);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.resourcemanager.dao.NotificationDAO#findNotificationByID(long)
+	 */
 	@Override
 	public Notification findNotificationByID(long id) {
 		Notification notification = getCurrentSession().find(Notification.class, id);
@@ -49,6 +69,11 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return notification;
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -59,10 +84,19 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.resourcemanager.dao.NotificationDAO#listNotifications()
+	 */
 	@Override
 	public List<Notification> listNotifications() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -73,6 +107,10 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return query.getResultList();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.resourcemanager.dao.NotificationDAO#updateNotification(com.resourcemanager.model.Notification)
+	 */
 	@Override
 	public void updateNotification(Notification notification) {
 		getCurrentSession().merge(notification);

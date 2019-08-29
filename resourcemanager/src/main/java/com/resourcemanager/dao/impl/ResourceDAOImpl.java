@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.dao.impl;
 
 import java.time.LocalDate;
@@ -25,21 +28,34 @@ import com.resourcemanager.dao.ResourceDAO;
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Resource;
 
+/**
+ * The Class ResourceDAOImpl.
+ */
 @Repository
 @Transactional
 public class ResourceDAOImpl implements ResourceDAO {
 
+	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory.getLogger(ResourceDAOImpl.class);
 
+	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#addResource(com.resourcemanager.model.Resource)
+	 */
 	@Override
 	public void addResource(Resource resource) {
 		getCurrentSession().persist(resource);
 		logger.info("Resource saved successfully, Resource Details=" + resource);
 	}
 
+	/**
+	 * Gets the current session.
+	 *
+	 * @return the current session
+	 */
 	protected Session getCurrentSession() {
 		Session session;
 		try {
@@ -50,10 +66,18 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return session;
 	}
 
+	/**
+	 * Gets the current session factory.
+	 *
+	 * @return the current session factory
+	 */
 	protected SessionFactory getCurrentSessionFactory() {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#getResourceByID(java.lang.Long)
+	 */
 	@Override
 	public Resource getResourceByID(Long id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
@@ -61,6 +85,9 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return resource;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#listResources()
+	 */
 	@Override
 	public List<Resource> listResources() {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -74,6 +101,9 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return resourcesList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#removeResource(java.lang.Long)
+	 */
 	@Override
 	public void removeResource(Long id) {
 		Resource resource = getCurrentSession().find(Resource.class, id);
@@ -81,6 +111,9 @@ public class ResourceDAOImpl implements ResourceDAO {
 		logger.info("Resource deleted successfully, resource details=" + resource);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#searchResources(long, java.time.LocalDate, java.time.LocalDate, int)
+	 */
 	@Override
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours) {
 		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
@@ -121,6 +154,9 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return resourcesList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.resourcemanager.dao.ResourceDAO#updateResource(com.resourcemanager.model.Resource)
+	 */
 	@Override
 	public void updateResource(Resource resource) {
 		getCurrentSession().merge(resource);

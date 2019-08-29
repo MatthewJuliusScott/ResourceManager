@@ -10,6 +10,9 @@
 <link rel="icon" href="/resources/images/favicon.png" type="image/x-icon"/>
 <link rel="shortcut icon" href="/resources/images/favicon.png" type="image/x-icon"/>
 <style> <%@ include file="/WEB-INF/css/styles.css" %> </style>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="java.util.LinkedList"%>
 <%@page import="com.resourcemanager.model.User"%>
 <% User user = (User)session.getAttribute("loggedInUser") != null ? (User)session.getAttribute("loggedInUser") : new User();%>
@@ -19,4 +22,6 @@
 	alert("<%=messages.pop()%>");
 <% } %>
 </script>
+
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 

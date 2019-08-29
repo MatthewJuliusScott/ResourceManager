@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.resourcemanager.handler;
 
 import java.io.IOException;
@@ -16,12 +19,19 @@ import org.springframework.stereotype.Component;
 import com.resourcemanager.model.User;
 import com.resourcemanager.service.UserService;
 
+/**
+ * The Class CustomAuthenticationSuccessHandler.
+ */
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 		throws IOException, ServletException {

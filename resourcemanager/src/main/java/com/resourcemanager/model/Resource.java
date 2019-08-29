@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.model;
 
@@ -325,6 +328,9 @@ public class Resource implements Cloneable {
 		this.skills = skills;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", hours="
