@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Project;
+import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
@@ -147,10 +148,10 @@ public class AllocationController {
 	 * @return the string
 	 */
 	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
-	public String allocate(HttpServletRequest request) {
+	public String allocate(@ModelAttribute("resource") Resource p, BindingResult result, HttpServletRequest request) {
 		
-		long resourceid = long.class.cast(request.getParameter("resourceId"));
-		long allocationid = long.class.cast(request.getParameter("allocationId"));
+		long resourceid = Long.parseLong(request.getParameter("resourceId"));
+		long allocationid = Long.parseLong(request.getParameter("allocationId"));
 		Allocation allocation = this.allocationService.getAllocationByID(allocationid);
 		allocation.setResource(this.resourceService.getResourceByID(resourceid));
 		this.allocationService.updateAllocation(allocation);

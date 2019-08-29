@@ -23,9 +23,9 @@
 					<td>
 						<div>
 						<c:url var="addAction" value="/allocations/join" ></c:url>
-						<form:form action="${addAction}" modelAttribute="project" method="POST" id="allocateForm">
-							<input type="hidden" path="allocationId" value="0" />	
-							<input type="hidden" path="resourceId" value="${userResource.id}" />			
+						<form:form action="${addAction}" modelAttribute="resource" method="POST" id="allocateForm">
+							<input type="hidden" name="resourceId" id="resourceId">	
+							<input type="hidden" name="allocationId" id="allocationId">
 							<table>
 								<h2>${project.name}</h2>
 							</table>							
@@ -49,7 +49,7 @@
 												<td style="width: 300px;" class="tblDef">${allocation.endDateAsString}</td>
 												<td style="width: 300px;" class="tblDef">${allocation.hours}</td>
 												
-												<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="joinAllocation(${allocation.id})"><i class="fas fa-edit"></i></button></td>
+												<td class="tblDefCenter"><button type="button" style="background: deepskyblue;" class="btn btn-primary btn-sm" onclick="joinAllocation(${allocation.id}, ${userResource.id })"><i class="fas fa-edit"></i></button></td>
 											</tr>								
 									</c:if> 
 									</c:forEach>
@@ -81,9 +81,9 @@
 		<script>
 			
 			
-			function joinAllocation(allocation){
-				
-				$(#allocationId).val(allocation)
+			function joinAllocation(allocation, resource){
+				$("#resourceId").val(resource)
+				$("#allocationId").val(allocation)
 				
 				save();
 			}
