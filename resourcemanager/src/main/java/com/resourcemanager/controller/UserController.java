@@ -4,7 +4,9 @@
 
 package com.resourcemanager.controller;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestDecorator;
@@ -166,6 +168,10 @@ public class UserController {
 		method = RequestMethod.GET)
 	public String getNotifications(Model model) {
 		User user = getLoggedInUser();
+		Notification notification = new Notification("This is test.");
+		notificationService.addNotification(notification);
+		user.addNotification(notification);
+		userService.updateUser(user);
 		model.addAttribute("user", user);
 		return "users/notifications";
 	}
@@ -244,8 +250,6 @@ public class UserController {
 			System.err.println(result.toString());
 		}
 
-		System.out.println(request.getAttribute("messages"));
-
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
 			? request.getParameter("oldPassword")
@@ -256,11 +260,12 @@ public class UserController {
 
 		User loggedInUser = getLoggedInUser();
 
+		User oldUser = userService.getUserByID(user.getId());
+
 		// When changing our own password only change the password if the old
 		// password field matches the old password.
 		if (user.getId() != 0 || user.getId() == loggedInUser.getId()) {
 
-			User oldUser = userService.getUserByID(user.getId());
 			user.setPassword(oldUser.getPassword());
 			user.setEmail(oldUser.getEmail());
 
@@ -306,15 +311,27 @@ public class UserController {
 			user.setResource(resource);
 		}
 
+		if (loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN")) {
+			String authority = request.getParameter("authority");
+			Set<String> authorities = new HashSet<String>();
+			if (authority.equals("ROLE_USER")) {
+				authorities.add(authority);
+			} else if (authority.equals("ROLE_ADMIN")) {
+				authorities.add("ROLE_USER");
+				authorities.add(authority);
+			}
+			user.setAuthorityStrings(authorities);
+
+		} else {
+			user.setResource(oldUser.getResource());
+			user.setAuthorityStrings(oldUser.getAuthorityStrings());
+		}
+
 		if (user.getId() == 0) {
 			// new user, add it
 			this.userService.addUser(user);
 		} else {
 			// existing user, call update
-			Notification notification = new Notification(
-				"User updated successfully!");
-			notificationService.addNotification(notification);
-			user.addNotification(notification);
 			this.userService.updateUser(user);
 		}
 

@@ -1,3 +1,7 @@
+a.btn.btn-danger.btn-sm {
+    color: white;
+}
+
 input[type="text"], input[type="password"] {
 	width: 100%;
 	border: 2px solid #aaa;
