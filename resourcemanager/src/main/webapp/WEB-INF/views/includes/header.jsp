@@ -15,13 +15,19 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@page import="java.util.LinkedList"%>
 <%@page import="com.resourcemanager.model.User"%>
+<%@include file="..\users.jsp" %>
+
+
 <% User user = (User)session.getAttribute("loggedInUser") != null ? (User)session.getAttribute("loggedInUser") : new User();%>
 <% LinkedList<String> messages = (LinkedList<String>)session.getAttribute("messages") != null ? (LinkedList<String>)session.getAttribute("messages") : new LinkedList<String>(); %>
 <script>
 <% while (messages.size() > 0) { %>
-	alert("<%=messages.pop()%>");
+	   testShowModal("<%=messages.pop()%>");
 <% } %>
+
+   function testShowModal(strMsg){
+	   $("#testModal").modal();
+   }
 </script>
 
 <c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
-
