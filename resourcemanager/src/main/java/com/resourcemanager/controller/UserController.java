@@ -167,6 +167,7 @@ public class UserController {
 			"/users/notifications" },
 		method = RequestMethod.GET)
 	public String getNotifications(Model model) {
+		User user = getLoggedInUser();
 		model.addAttribute("user", user);
 		return "users/notifications";
 	}
