@@ -4,7 +4,9 @@
 <c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
 <script>
-   var resourceId; // Used for modal.
+   function confirmDelete(resourceId){
+      BAMJConfirm("Are you sure you want to delete resource " + resourceId + "?", "/resources/delete/" + resourceId);
+   }
 </script>
 
 <html>
@@ -46,7 +48,7 @@
 										<td style="width: 300px;" class="tblDefCenter">${resource.id}</td>
 										<td style="width: 65%;" class="tblDef">${resource.name}</td>
 										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
-										<td style="width: 10%;" class="tblDefCenter"><a data-toggle="modal" data-target="#exampleModalCenter" onclick="resourceId = '${resource.id}'" class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a onclick="confirmDelete(${resource.id})" class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash"></i></a></td>
 									</tr>
 							</c:forEach>
 						</table>
@@ -55,30 +57,8 @@
 			</div>	
 		</div>
 		
-		<div>
+		<div style="padding:10px;">
          <button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
       </div>
-      
-      <!-- Modal popup -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight:bold;">Warning</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                  </button>
-               </div>
-               <div class="modal-body">
-                  Are you sure you want to delete this Resource?
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" style="background:deepskyblue;">Cancel</button>
-                  <button type="button" class="btn btn-danger" onclick="window.location.href='/resources/delete/'+resourceId">Delete</button>
-               </div>
-            </div>
-         </div>
-      </div>
-        
 	</body>	
 </html>

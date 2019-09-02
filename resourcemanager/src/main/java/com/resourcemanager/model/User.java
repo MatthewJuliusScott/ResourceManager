@@ -22,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalIdCache;
@@ -63,8 +64,8 @@ public class User implements Cloneable {
 	/**
 	 * The resource associated with this user. Usually only for a ROLE_USER authority.
 	 */
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_id")
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "resource_id", nullable = true)
 	@OrderColumn(name = "order_col")
 	private Resource			resource;
 
@@ -233,6 +234,16 @@ public class User implements Cloneable {
 	}
 
 	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		if (resource != null) {
+			resource.setUser(null);
+		}
+	}
+
+	/**
 	 * Sets the authority strings.
 	 *
 	 * @param authorityStrings
@@ -302,13 +313,11 @@ public class User implements Cloneable {
 		this.resource = resource;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", authorityStrings="
-			+ authorityStrings + ", resource=" + resource + ", notifications=" + notifications + "]";
+			+ authorityStrings + ", resource=" + (resource != null ? String.valueOf(resource.getId())
+				: "null")
+			+ ", notifications=" + notifications + "]";
 	}
 }

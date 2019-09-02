@@ -12,11 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
+import com.resourcemanager.model.Project;
+import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
@@ -47,7 +52,7 @@ public class AllocationController {
 	/** The user service. */
 	@Autowired
     private UserService        userService;
-
+	
 	/**
 	 * Adds the allocation.
 	 *
@@ -142,15 +147,18 @@ public class AllocationController {
 	 * @param model the model
 	 * @return the string
 	 */
-	@RequestMapping(value = { "/allocations/join/{id}" }, method = RequestMethod.GET)
-	public String joinAllocation(@PathVariable("id") Long id, Model model) {
-		if (id > 0) {
-			model.addAttribute("allocation", this.allocationService.getAllocationByID(id));
-		} else {
-			model.addAttribute("allocation", new Allocation());
-		}
-		model.addAttribute("listSkills", this.skillService.listSkills());
-		return "allocations/join";
+	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
+	public String allocate(@ModelAttribute("resource") Resource p, BindingResult result, HttpServletRequest request) {
+		
+		long resourceid = Long.parseLong(request.getParameter("resourceId"));
+		long allocationid = Long.parseLong(request.getParameter("allocationId"));
+		Allocation allocation = this.allocationService.getAllocationByID(allocationid);
+		allocation.setResource(this.resourceService.getResourceByID(resourceid));
+		this.allocationService.updateAllocation(allocation);
+
+		return "projects";
 	}
+	
+	
 	
 }

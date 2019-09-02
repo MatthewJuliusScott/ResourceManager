@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.controller;
 
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
+import com.resourcemanager.service.UserService;
 
 /**
  * The Class ResourceController.
@@ -36,6 +37,10 @@ public class ResourceController {
 	@Autowired
 	private SkillService	skillService;
 
+	/** The user service. */
+	@Autowired
+	private UserService		userService;
+
 	/**
 	 * Adds the resource.
 	 *
@@ -49,11 +54,18 @@ public class ResourceController {
 	/**
 	 * Delete resource.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the string
 	 */
 	@RequestMapping(value = { "resources/delete/{id}" }, method = RequestMethod.GET)
 	public String deleteResource(@PathVariable("id") Long id) {
+
+		Resource resource = this.resourceService.getResourceByID(id);
+		if (resource.getUser() != null) {
+			resource.getUser().setResource(null);
+			userService.updateUser(resource.getUser());
+		}
 
 		this.resourceService.deleteResource(id);
 		return "redirect:/resources";
@@ -62,8 +74,10 @@ public class ResourceController {
 	/**
 	 * Edits the resource.
 	 *
-	 * @param id the id
-	 * @param model the model
+	 * @param id
+	 *            the id
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = { "/resources/edit/{id}" }, method = RequestMethod.GET)
@@ -81,7 +95,8 @@ public class ResourceController {
 	/**
 	 * List resources.
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = { "/resources" }, method = RequestMethod.GET)
@@ -94,8 +109,10 @@ public class ResourceController {
 	/**
 	 * Save resource.
 	 *
-	 * @param p the p
-	 * @param result the result
+	 * @param p
+	 *            the p
+	 * @param result
+	 *            the result
 	 * @return the string
 	 */
 	// For add and update resource both
@@ -117,11 +134,16 @@ public class ResourceController {
 	/**
 	 * Search resources.
 	 *
-	 * @param model the model
-	 * @param skillId the skill id
-	 * @param startDate the start date
-	 * @param endDate the end date
-	 * @param hours the hours
+	 * @param model
+	 *            the model
+	 * @param skillId
+	 *            the skill id
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
+	 * @param hours
+	 *            the hours
 	 * @return the string
 	 */
 	@RequestMapping(value = { "/resources/search" }, method = RequestMethod.GET)

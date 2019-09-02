@@ -1,0 +1,11 @@
+Get new domain-crt.txt and domain-key.txt from www.zerossl.com using the account-key.txt, domain-csr.txt.
+
+Install OpenSSL
+Generate a pkcs12 file (combination of crt and key) with the following (use the password 'password'):
+openssl pkcs12 -export -in domain.pem -inkey domain-key.txt -out domain.p12 -name ResourceManager
+
+
+Run the following from the java/bin directory (where you installed the JRE):
+keytool -importkeystore -deststorepass password -destkeypass password -destkeystore KeyStore.jks -srckeystore "location/domain.p12" -srcstoretype PKCS12 -srcstorepass password
+
+Copy KeyStore.jks from java/bin directory (where you installed the JRE) to the classes folder in project
