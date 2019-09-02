@@ -127,6 +127,7 @@ INSERT INTO `User_authoritystrings`(`User_user_id`,`authorityStrings`)VALUES(7,"
 INSERT INTO `User_authoritystrings`(`User_user_id`,`authorityStrings`)VALUES(7,"ROLE_ADMIN");
 
 INSERT INTO User(email, name, password, resource_id) SELECT CONCAT(REPLACE(name, " ", ""), "@gmail.com"), name, '$2a$10$jH./PUyAi1ztDhH5PHjKH.otCTfcqS1IZRtAPmqWNX8DkoN.xQAWi', resource_id FROM resource;
+UPDATE resource AS U1, user AS U2 SET U1.user_id = U2.user_id WHERE U2.resource_id = U1.resource_id;
 
 INSERT INTO User_authoritystrings(User_user_id, authorityStrings) VALUES(8, "ROLE_USER");
 INSERT INTO User_authoritystrings(User_user_id, authorityStrings) VALUES(9, "ROLE_USER");
