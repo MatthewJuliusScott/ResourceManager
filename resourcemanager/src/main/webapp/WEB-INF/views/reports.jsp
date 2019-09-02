@@ -12,7 +12,7 @@
 	
 	<body>
 		<jsp:include page="/WEB-INF/views/includes/nav.jsp" />
-		<div style="width: 929px;">
+		<div style="max-width: 1500px;">
 			<div style="width:100%;">
 				<canvas id="myChart"></canvas>
 			</div>
@@ -35,7 +35,16 @@
 			         borderColor: report.borderColours,
 			         borderWidth: 1
 			      }]
-			   }
+			   },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero: true
+			                }
+			            }]
+			        }
+			    }
 			};
 
 			var chart = new Chart(ctx, config);

@@ -2,6 +2,8 @@ package com.resourcemanager.model;
 
 import java.nio.ByteBuffer;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.ElementCollection;
@@ -16,11 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Report {
 
-	public final static int	HOURS_PER_MONTH		= 1;
+	public final static int	HOURS_PER_SKILL		= 1;
 
-	public final static int	HOURS_PER_SKILL		= 2;
-
-	public final static int	HOURS_PER_PROJECT	= 3;
+	public final static int	HOURS_PER_PROJECT	= 2;
 
 	/** The labels. */
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -28,7 +28,7 @@ public class Report {
 
 	/** The data. */
 	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String>		data				= new LinkedHashSet<String>();
+	private List<String>	data				= new LinkedList<String>();
 
 	/** The name. */
 	private String			name				= "";
@@ -75,7 +75,7 @@ public class Report {
 	 *
 	 * @return the data
 	 */
-	public Set<String> getData() {
+	public List<String> getData() {
 		return data;
 	}
 
@@ -103,7 +103,7 @@ public class Report {
 	 * @param data
 	 *            the new data
 	 */
-	public void setData(Set<String> data) {
+	public void setData(List<String> data) {
 		this.data = data;
 	}
 

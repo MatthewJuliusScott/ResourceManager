@@ -49,9 +49,8 @@
           Reports
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/reports/1">Hours per month</a>
-          <a class="dropdown-item" href="/reports/2">Hours per skill</a>
-          <a class="dropdown-item" href="/reports/3">Hours per skill per project</a>
+          <a class="dropdown-item" href="/reports/1">Hours per skill</a>
+          <a class="dropdown-item" href="/reports/2">Hours per project</a>
         </div>
       </li>
       </c:if>
