@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.resourcemanager.model.Allocation;
+import com.resourcemanager.model.Notification;
 import com.resourcemanager.model.Project;
 import com.resourcemanager.model.Resource;
 import com.resourcemanager.model.User;
 import com.resourcemanager.service.AllocationService;
+import com.resourcemanager.service.NotificationService;
 import com.resourcemanager.service.ProjectService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
@@ -58,6 +60,10 @@ public class ProjectController {
 	/** The user service. */
 	@Autowired
 	private UserService			userService;
+	
+	/** The notification service. */
+	@Autowired
+	private NotificationService	notificationService;
 
 	/**
 	 * Adds the project.
@@ -222,6 +228,14 @@ public class ProjectController {
 						LocalDate.parse(endDate, dateTimeFormatter), Integer.parseInt(hours), resource);
 				if (resource != null) {
 					resource.addAllocation(allocation);
+					
+					User user = resource.getUser();
+					Notification notification = new Notification(
+							"Your have been assigned a new allocation");
+					notificationService.addNotification(notification);
+					user.addNotification(notification);
+					userService.updateUser(user);
+					
 				}
 				project.addAllocation(allocation);
 
