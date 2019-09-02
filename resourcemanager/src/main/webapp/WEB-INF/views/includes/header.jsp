@@ -52,8 +52,6 @@
 
 <c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
-<html>
-   <body>
       <!-- Alert modal -->
       <div class="modal fade" id="alertModal" role="dialog">
          <div class="modal-dialog">
@@ -92,5 +90,4 @@
             </div>
          </div>
       </div>
-   </body>
-</html>
+   
