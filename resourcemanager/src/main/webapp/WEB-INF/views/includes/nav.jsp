@@ -14,6 +14,7 @@
     <c:if test="${admin}"><a class="navSingleLine" href="/skills">Skills</a></c:if>
     <c:if test="${admin}"><a class="navSingleLine" href="/users">Users</a></c:if>
     <c:if test="${admin}"><a class="navSingleLine" href="/allocations/listrequired">Organisational Requirements</a></c:if>
+    <c:if test="${admin}"><a class="navSingleLine" href="/reports">Reports</a></c:if>
     <div class="topnav-right">
     	<form action="/logout" method="post">
 			<button type="submit" class="btn btn-danger">Log Out</button>
