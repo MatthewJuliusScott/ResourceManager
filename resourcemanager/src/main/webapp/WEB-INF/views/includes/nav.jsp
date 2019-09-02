@@ -4,8 +4,6 @@
 <%@page import="com.resourcemanager.model.User"%>
 <c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 
-<html>
-   <body>
       <!-- nav bar -->
       <div class="topnav">
       	<a class="navMultiLine" href="/">Resource<br />Manager</a>
@@ -23,5 +21,3 @@
       		</form>
           </div>
       </div>
-   </body>
-</html>
