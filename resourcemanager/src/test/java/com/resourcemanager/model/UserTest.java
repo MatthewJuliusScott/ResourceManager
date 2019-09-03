@@ -66,10 +66,10 @@ public class UserTest {
 
 	@Test
 	public void testGetId() throws Exception {
-		User userdetails = new User();
+		User user = new User();
 		Long id = new Random().nextLong();
-		userdetails.setId(id);
-		assertTrue(Long.valueOf(userdetails.getId()).equals(id));
+		user.setId(id);
+		assertTrue(Long.valueOf(user.getId()).equals(id));
 	}
 
 	@Test
@@ -260,26 +260,28 @@ public class UserTest {
 
 	@Test
 	public void testSetId() throws Exception {
-		User userdetails = new User();
+		User user = new User();
 		Long id = new Random().nextLong();
-		userdetails.setId(id);
-		assertTrue(Long.valueOf(userdetails.getId()).equals(id));
+		user.setId(id);
+		assertTrue(Long.valueOf(user.getId()).equals(id));
 	}
 
 	@Test
 	public void testToString() throws Exception {
-		User userDetails = new User();
-		userDetails.setId(1L);
-		userDetails.setEmail("test@email.com");
-		userDetails.setName("Test Name");
-		userDetails.setPassword("password");
-		assertTrue(userDetails.toString()
-			.equals("UserDetails [id=1, name=Test Name, email=test@email.com, password=password]"));
+		User user = new User();
+		user.setId(1L);
+		user.setEmail("test@email.com");
+		user.setName("Test Name");
+		user.setPassword("password");
+		System.out.println(user);
+		assertTrue(user.toString()
+			.equals(
+				"User [id=1, name=Test Name, email=test@email.com, password=password, authorityStrings=[], resource=null, notifications=null]"));
 	}
 
 	@Test
 	public void testUserDetails() throws Exception {
-		User userdetails = new User();
-		assertTrue(userdetails != null);
+		User user = new User();
+		assertTrue(user != null);
 	}
 }

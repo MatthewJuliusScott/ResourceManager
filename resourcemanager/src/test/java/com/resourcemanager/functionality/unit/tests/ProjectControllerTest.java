@@ -87,17 +87,6 @@ public class ProjectControllerTest {
 		params.add("id", "0");
 		params.add("name", "Test Project");
 
-		// allocations
-		params.add("allocation_0_startDate", "21/01/2019");
-		params.add("allocation_0_endDate", "28/01/2019");
-		params.add("allocation_0_hours", "20");
-		params.add("allocation_0_skillId", "1");
-
-		params.add("allocation_1_startDate", "21/02/2019");
-		params.add("allocation_1_endDate", "28/02/2019");
-		params.add("allocation_1_hours", "40");
-		params.add("allocation_1_skillId", "2");
-
 		mvc.perform(post("/projects/save")
 			.params(params))
 			.andExpect(status().is3xxRedirection())
@@ -113,6 +102,17 @@ public class ProjectControllerTest {
 		params.add("id", "1");
 		params.add("name", "Test Project");
 
+		// allocations
+		params.add("allocation_0_startDate", "21/01/2019");
+		params.add("allocation_0_endDate", "28/01/2019");
+		params.add("allocation_0_hours", "20");
+		params.add("allocation_0_skillId", "1");
+
+		params.add("allocation_1_startDate", "21/02/2019");
+		params.add("allocation_1_endDate", "28/02/2019");
+		params.add("allocation_1_hours", "40");
+		params.add("allocation_1_skillId", "2");
+
 		mvc.perform(post("/projects/save")
 			.params(params))
 			.andExpect(status().is3xxRedirection())
@@ -126,28 +126,5 @@ public class ProjectControllerTest {
 			.apply(springSecurity())
 			.build();
 	}
-	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
-	public void givenRequestMapping_whenGetViewProjects_thenForwardToViewProjectsJSP()
-		throws Exception {
 
-		mvc.perform(get("/ViewProjects")
-			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/ViewProjects.jsp"));
-	}
-	@Test
-	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
-	public void givenRequestMapping_whenjoinProjects_thenForwardTojoinProjectsJSP()
-		throws Exception {
-
-		mvc.perform(get("/ViewProjects")
-			.contentType(MediaType.TEXT_HTML))
-			.andExpect(status().isOk())
-			.andExpect(forwardedUrl("/WEB-INF/views/ViewProjects.jsp"));
-	}
-	
-	
-	
-	
 }
