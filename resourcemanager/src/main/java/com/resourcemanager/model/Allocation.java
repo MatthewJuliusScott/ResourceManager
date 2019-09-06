@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.model;
 
@@ -324,8 +327,8 @@ public class Allocation implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		return "Allocation [id=" + id + ", project=" + project + ", skill="
+		return "Allocation [id=" + id + ", project=" + (project != null ? String.valueOf(project.getId()) : "null") + ", skill="
 			+ skill + ", startDate=" + startDate + ", endDate=" + endDate
-			+ ", hours=" + hours + ", resource=" + resource + "]";
+			+ ", hours=" + hours + ", resource=" + (resource != null ? String.valueOf(resource.getId()) : "null") + "]";
 	}
 }

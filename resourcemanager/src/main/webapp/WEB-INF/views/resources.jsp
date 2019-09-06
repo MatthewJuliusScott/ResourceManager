@@ -1,7 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
+
+<script>
+   function confirmDelete(resourceId){
+      BAMJConfirm("Are you sure you want to delete resource " + resourceId + "?", "/resources/delete/" + resourceId);
+   }
+</script>
+
 <html>
 	<head>
 		<title>Resources</title>
@@ -41,7 +48,7 @@
 										<td style="width: 300px;" class="tblDefCenter">${resource.id}</td>
 										<td style="width: 65%;" class="tblDef">${resource.name}</td>
 										<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/resources/edit/${resource.id}" role="button"><i class="far fa-edit"></i></a></td>
-										<td style="width: 10%;" class="tblDefCenter"><a class="btn btn-danger btn-sm" href="/resources/delete/${resource.id}" role="button"><i class="fas fa-trash"></i></a></td>
+										<td style="width: 10%;" class="tblDefCenter"><a onclick="confirmDelete(${resource.id})" class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash"></i></a></td>
 									</tr>
 							</c:forEach>
 						</table>
@@ -49,5 +56,9 @@
 				</c:if>		
 			</div>	
 		</div>
+		
+		<div style="padding:10px;">
+         <button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+      </div>
 	</body>	
 </html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="java" project="ResourceManager" tests="126" started="126" failures="0" errors="0" ignored="0">
+  <testsuite name="com.resourcemanager.service.impl.SkillServiceImplTest" time="24.67">
+    <testcase name="testGetClass" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="4.116"/>
+    <testcase name="givenRepository_whenAddSkill_thenSkillAdded" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="4.196"/>
+    <testcase name="givenRepository_whenUpdateSkill_thenSkillUpdated" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="3.959"/>
+    <testcase name="givenRepository_whenGetSkillByID_thenSkillReturned" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="4.161"/>
+    <testcase name="givenRepository_whenDeleteSkill_thenSkillDeleted" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="3.258"/>
+    <testcase name="givenRepository_whenListSkill_thenSkillsReturned" classname="com.resourcemanager.service.impl.SkillServiceImplTest" time="4.98"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="3.762">
+    <testcase name="givenAuthenticationAndGetProject_whenUpdateProject_thenProjectModified" classname="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="0.039"/>
+    <testcase name="givenAuthentication_whenAddProjectAndListProjects_thenAllProjectsContainsProject" classname="com.resourcemanager.functionality.integration.tests.ProjectServiceTest" time="3.723"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="24.986">
+    <testcase name="givenValidRequest_whenAddResource_thenResourceSaved" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="4.164"/>
+    <testcase name="givenValidRequest_whenSaveResource_thenResourceSaved" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.982"/>
+    <testcase name="givenValidRequest_whenSearchResource_thenResourceReturned" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.516"/>
+    <testcase name="givenRequestMapping_whenDeleteProject0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.565"/>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.414"/>
+    <testcase name="givenRequestMapping_whenGetResources_thenForwardToResourcesJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.147"/>
+    <testcase name="givenRequestMapping_whenAddProject_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ResourceControllerTest" time="3.198"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.AllocationTest" time="0.0">
+    <testcase name="testGetEndDateAsString" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetHours" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetSkill" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetEndDate" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testPreRemove" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetStartDate" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetProject" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testAllocationString" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testJoinProject" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testSetResource" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetResource" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testAllocationLongProjectSkillLocalDateLocalDateIntResource" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testAllocation" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testSetProject" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testGetStartDateAsString" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testSetHours" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+    <testcase name="testSetSkill" classname="com.resourcemanager.model.AllocationTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="1.282">
+    <testcase name="givenAuthenticationAndGetResource_whenUpdateResource_thenResourceModified" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.265"/>
+    <testcase name="givenUnallocatedResourceWithMatchingSkillAndSufficientHours_whenFindResource_thenReturnResource" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.109"/>
+    <testcase name="givenAuthentication_whenAddResourceAndListResources_thenAllResourcesContainsResource" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.094"/>
+    <testcase name="givenOnlyAllocatedResourceWithMatchingSkillAndSufficientHours_whenFindResource_thenNoResourceReturned" classname="com.resourcemanager.functionality.integration.tests.ResourceServiceTest" time="0.814"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.ProjectTest" time="2.837">
+    <testcase name="testRemoveAllocation" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetAllocations" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testProject" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testGetName" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testAddAllocation" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testProjectString" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.ProjectTest" time="0.016"/>
+    <testcase name="testSetAllocations" classname="com.resourcemanager.model.ProjectTest" time="0.0"/>
+    <testcase name="testSetName" classname="com.resourcemanager.model.ProjectTest" time="2.821"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.578">
+    <testcase name="givenRequestMapping_whenGetProjects_thenForwardToProjectsJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.047"/>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.11"/>
+    <testcase name="givenValidRequest_whenAddProject_thenProjectSaved" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.0"/>
+    <testcase name="givenRequestMapping_whenEditProject0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.062"/>
+    <testcase name="givenValidRequest_whenSaveProject_thenProjectSaved" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.344"/>
+    <testcase name="givenRequestMapping_whenDeleteProject0_thenRedirectToEditJSP" classname="com.resourcemanager.functionality.unit.tests.ProjectControllerTest" time="0.015"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.security.unit.tests.SecurityTest" time="0.328">
+    <testcase name="givenAuthenticated_whenCallSkillServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.125"/>
+    <testcase name="givenUnauthenticated_whenCallSkillService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.016"/>
+    <testcase name="givenAuthenticated_whenCallResourceServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.047"/>
+    <testcase name="givenAuthenticated_whenCallProjectServiceWithSecured_thenOk" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.125"/>
+    <testcase name="givenUnauthenticated_whenCallProjectService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.0"/>
+    <testcase name="givenUnauthenticated_whenCallResourceService_thenThrowsException" classname="com.resourcemanager.security.unit.tests.SecurityTest" time="0.015"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.ResourceTest" time="0.0">
+    <testcase name="testRemoveAllocation" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testAddAllocation" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testResource" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.ResourceTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.32">
+    <testcase name="givenRequestMapping_whenEditSkill0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.102"/>
+    <testcase name="givenRequestMapping_whenGetSkills_thenForwardToSkillsJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.047"/>
+    <testcase name="givenRequestMapping_whenEditResource0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.093"/>
+    <testcase name="givenRequestMapping_whenDeleteSkill0_thenForwardToEditJSP" classname="com.resourcemanager.functionality.unit.tests.SkillControllerTest" time="0.078"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.service.impl.UserServiceImplTest" time="12.855">
+    <testcase name="testGetClass" classname="com.resourcemanager.service.impl.UserServiceImplTest" time="2.91"/>
+    <testcase name="givenRepository_whenStressTestLoadUsersById_thenUsersReturned" classname="com.resourcemanager.service.impl.UserServiceImplTest" time="4.195"/>
+    <testcase name="givenRepository_whenLoadUserByUsername_thenUserReturned" classname="com.resourcemanager.service.impl.UserServiceImplTest" time="3.144"/>
+    <testcase name="givenRepository_whenGetUsers_thenUsersReturned" classname="com.resourcemanager.service.impl.UserServiceImplTest" time="2.606"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.UserTest" time="0.0">
+    <testcase name="testNotEqualsOtherNameNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsEmailNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsPassword" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testGetAuthorities" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsEmail" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsNameNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsOtherPasswordNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsId" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testUserDetails" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsName" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsPasswordNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+    <testcase name="testNotEqualsOtherEmailNull" classname="com.resourcemanager.model.UserTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.model.SkillTest" time="0.0">
+    <testcase name="testRemoveAllocation" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetClass" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testClone" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetId" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testPreRemove" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSetId" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSkill" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testToString" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetResources" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testGetName" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testHashCode" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testEquals" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSkillString" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+    <testcase name="testSetName" classname="com.resourcemanager.model.SkillTest" time="0.0"/>
+  </testsuite>
+  <testsuite name="com.resourcemanager.service.impl.AllocationServiceImplTest" time="14.01">
+    <testcase name="givenRepository_whenUpdateAllocation_thenAllocationUpdated" classname="com.resourcemanager.service.impl.AllocationServiceImplTest" time="2.643"/>
+    <testcase name="givenRepository_whenListAllocations_thenReturnAllocations" classname="com.resourcemanager.service.impl.AllocationServiceImplTest" time="3.055"/>
+    <testcase name="givenRepository_whenDeleteAllocation_thenDeleteAllocation" classname="com.resourcemanager.service.impl.AllocationServiceImplTest" time="2.856"/>
+    <testcase name="givenRepository_whenAddAllocation_thenAllocationAdded" classname="com.resourcemanager.service.impl.AllocationServiceImplTest" time="2.719"/>
+    <testcase name="givenRepository_whenGetAllocationByID_thenReturnAllocation" classname="com.resourcemanager.service.impl.AllocationServiceImplTest" time="2.737"/>
+  </testsuite>
+</testrun>

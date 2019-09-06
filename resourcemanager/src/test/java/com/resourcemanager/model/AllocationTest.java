@@ -208,6 +208,19 @@ public class AllocationTest {
 	}
 
 	@Test
+	public void testJoinProject() throws Exception {
+		Skill expected = new Skill();
+
+		Resource testResource = new Resource();
+		testResource.addSkill(expected);
+		User testuser = new User();
+		testuser.setResource(testResource);
+		Allocation allocation =
+			new Allocation(1L, new Project(), expected, LocalDate.now(), LocalDate.now().plusDays(7), 40, testuser.getResource());
+
+	}
+
+	@Test
 	public void testPreRemove() throws Exception {
 		Allocation expected = new Allocation();
 
@@ -295,10 +308,11 @@ public class AllocationTest {
 	public void testToString() throws Exception {
 		Allocation allocation =
 			new Allocation(1L, new Project(), new Skill(), LocalDate.now(), LocalDate.now().plusDays(7), 40, new Resource());
+		System.out.println(allocation);
 		assertTrue(allocation.toString()
-			.startsWith("Allocation [id=1, project=Project [id=0, name=null], skill=Skill [id=0, name=null], startDate="));
+			.startsWith("Allocation [id=1, project=0, skill=Skill [id=0, name=null], startDate="));
 		assertTrue(allocation.toString()
-			.endsWith(", hours=40, resource=Resource [id=0, name=null, skills=[], allocations=[], hours=0]]"));
+			.endsWith(", hours=40, resource=0]"));
 	}
 
 }

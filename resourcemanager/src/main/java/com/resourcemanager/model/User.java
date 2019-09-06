@@ -1,8 +1,16 @@
+/*
+ *
+ */
+
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,8 +19,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalIdCache;
@@ -20,40 +30,63 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
- * The Class UserDetails.
+ * The Class User.
  */
-@Entity(name = "UserDetails")
-@Table(name = "userdetails")
+@Entity(name = "User")
+@Table(name = "user")
 @NaturalIdCache
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name = "user_id")) })
 public class User implements Cloneable {
 
 	/** The id. */
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long			id;
+	private long				id;
 
 	/** The name. */
 	@Column
-	private String			name;
+	private String				name;
 
 	/** The email. */
 	@Column
-	private String			email;
+	private String				email;
 
 	/** The password. */
 	@Column
-	private String			password;
+	private String				password;
 
 	/** The authority strings. */
-	@ElementCollection
-	private List<String>	authorityStrings	= new ArrayList<String>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Set<String>			authorityStrings	= new HashSet<String>();
 
-	/** The resource associated with this user. Usually only for a ROLE_USER authority. */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "resource_id")
+	/**
+	 * The resource associated with this user. Usually only for a ROLE_USER authority.
+	 */
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "resource_id", nullable = true)
 	@OrderColumn(name = "order_col")
-	private Resource		resource;
+	private Resource			resource;
+
+	/** The notifications. */
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	@OrderColumn(name = "order_col")
+	private List<Notification>	notifications;
+
+	/**
+	 * Adds the notification.
+	 *
+	 * @param notification
+	 *            the notification
+	 */
+	public void addNotification(Notification notification) {
+		if (notifications == null) {
+			notifications = new ArrayList<Notification>();
+		}
+		notifications.add(notification);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -126,7 +159,7 @@ public class User implements Cloneable {
 	 *
 	 * @return the authority strings
 	 */
-	public List<String> getAuthorityStrings() {
+	public Set<String> getAuthorityStrings() {
 		return authorityStrings;
 	}
 
@@ -158,12 +191,30 @@ public class User implements Cloneable {
 	}
 
 	/**
+	 * Gets the notifications.
+	 *
+	 * @return the notifications
+	 */
+	public List<Notification> getNotifications() {
+		return notifications;
+	}
+
+	/**
 	 * Gets the password.
 	 *
 	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
+	}
+
+	/**
+	 * Gets the resource.
+	 *
+	 * @return the resource
+	 */
+	public Resource getResource() {
+		return resource;
 	}
 
 	/*
@@ -177,8 +228,19 @@ public class User implements Cloneable {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+			+ ((password == null) ? 0 : password.hashCode());
 		return result;
+	}
+
+	/**
+	 * Pre remove.
+	 */
+	@PreRemove
+	public void preRemove() {
+		if (resource != null) {
+			resource.setUser(null);
+		}
 	}
 
 	/**
@@ -187,7 +249,7 @@ public class User implements Cloneable {
 	 * @param authorityStrings
 	 *            the new authority strings
 	 */
-	public void setAuthorityStrings(List<String> authorityStrings) {
+	public void setAuthorityStrings(Set<String> authorityStrings) {
 		this.authorityStrings = authorityStrings;
 	}
 
@@ -222,6 +284,16 @@ public class User implements Cloneable {
 	}
 
 	/**
+	 * Sets the notifications.
+	 *
+	 * @param notifications
+	 *            the new notifications
+	 */
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	/**
 	 * Sets the password.
 	 *
 	 * @param password
@@ -231,13 +303,21 @@ public class User implements Cloneable {
 		this.password = password;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * Sets the resource.
+	 *
+	 * @param resource
+	 *            the resource to set
 	 */
-	@Override
-	public String toString() {
-		return "UserDetails [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+	public void setResource(Resource resource) {
+		this.resource = resource;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", authorityStrings="
+			+ authorityStrings + ", resource=" + (resource != null ? String.valueOf(resource.getId())
+				: "null")
+			+ ", notifications=" + notifications + "]";
+	}
 }

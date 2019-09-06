@@ -1,0 +1,6 @@
+deploy instructions:
+
+run mvn clean package (best to turn off automatic build to prevent issues with target folder being written to while maven cleans)
+stop service tomcat on production
+rename generated war file in target directory to ROOT.war and copy to webapps on production.
+start service tomcat on production

@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
+
 <html>
 	<head>
 		<title>Skill Page</title>
@@ -69,8 +70,12 @@
 						</table>
 					</form:form>
 				</tr>
-			</table>									
-		</div>		
+			</table>
+		</div>
+
+      <div style="padding:10px;">
+         <button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+      </div>
 	</body>
 	
 	<footer>

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.model;
 
@@ -51,6 +54,9 @@ public class Skill implements Cloneable {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Allocation>	allocations	= new ArrayList<>();
 
+	/**
+	 * Instantiates a new skill.
+	 */
 	public Skill() {
 		super();
 	}

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager.config;
 
@@ -6,9 +9,17 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The Class TomcatConfig.
+ */
 @Configuration
 public class TomcatConfig {
 
+	/**
+	 * Servlet container.
+	 *
+	 * @return the tomcat servlet web server factory
+	 */
 	@Bean
 	public TomcatServletWebServerFactory servletContainer() {
 

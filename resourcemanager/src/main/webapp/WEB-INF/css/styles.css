@@ -1,3 +1,15 @@
+a.btn.btn-danger.btn-sm {
+    color: white;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 1.0);
+}
+
+.navbar-dark .navbar-brand {
+    color: #ddd;
+}
+
 input[type="text"], input[type="password"] {
 	width: 100%;
 	border: 2px solid #aaa;
@@ -92,7 +104,7 @@ body {
 	width: 100%;
 	display: block;
 	overflow-y: scroll;
-	height: 70%;
+	height: 60%;
 }
 
 .tblHeaderScroll {

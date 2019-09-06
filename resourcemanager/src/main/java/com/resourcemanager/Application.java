@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 
 package com.resourcemanager;
 
@@ -30,49 +33,74 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.google.common.base.Preconditions;
 import com.resourcemanager.converter.SkillConverter;
 
+/**
+ * The Class Application.
+ */
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
+	/**
+	 * The Class WebConfig.
+	 */
 	@Configuration
 	@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 	@EnableTransactionManagement
 	public class WebConfig implements WebMvcConfigurer {
 
+		/** The skill converter. */
 		@Lazy
 		@Autowired
 		SkillConverter	skillConverter;
 
+		/** The jdbc driver class name. */
 		@Value("${spring.datasource.driver-class-name}")
 		private String	jdbcDriverClassName;
 
+		/** The jdbc U rl. */
 		@Value("${spring.datasource.url}")
 		private String	jdbcURl;
 
+		/** The db username. */
 		@Value("${spring.datasource.username}")
 		private String	dbUsername;
 
+		/** The db password. */
 		@Value("${spring.datasource.password}")
 		private String	dbPassword;
 
+		/** The hbm 2 ddl auto. */
 		@Value("${hibernate.hbm2ddl.auto}")
 		private String	hbm2ddlAuto;
 
+		/** The hbm 2 ddl import files. */
 		@Value("${hibernate.hbm2ddl.import_files}")
 		private String	hbm2ddlImport_files;
 
+		/** The dialect. */
 		@Value("${hibernate.dialect}")
 		private String	dialect;
 
+		/* (non-Javadoc)
+		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addFormatters(org.springframework.format.FormatterRegistry)
+		 */
 		@Override
 		public void addFormatters(FormatterRegistry registry) {
 			registry.addConverter(skillConverter);
 		}
 
+		/* (non-Javadoc)
+		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
+		 */
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController("/login").setViewName("login");
 		}
 
+		/**
+		 * Data source.
+		 *
+		 * @return the data source
+		 */
 		@Bean
 		public DataSource dataSource() {
 			final BasicDataSource dataSource = new BasicDataSource();
@@ -84,6 +112,11 @@ public class Application extends SpringBootServletInitializer {
 			return dataSource;
 		}
 
+		/**
+		 * Hibernate properties.
+		 *
+		 * @return the properties
+		 */
 		private final Properties hibernateProperties() {
 			final Properties hibernateProperties = new Properties();
 			hibernateProperties.setProperty("hibernate.hbm2ddl.auto", Preconditions.checkNotNull(hbm2ddlAuto));
@@ -93,6 +126,11 @@ public class Application extends SpringBootServletInitializer {
 			return hibernateProperties;
 		}
 
+		/**
+		 * Hibernate transaction manager.
+		 *
+		 * @return the platform transaction manager
+		 */
 		@Bean
 		public PlatformTransactionManager hibernateTransactionManager() {
 			HibernateTransactionManager transactionManager = new HibernateTransactionManager();
@@ -100,6 +138,11 @@ public class Application extends SpringBootServletInitializer {
 			return transactionManager;
 		}
 
+		/**
+		 * Session factory.
+		 *
+		 * @return the local session factory bean
+		 */
 		@Bean
 		public LocalSessionFactoryBean sessionFactory() {
 			LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -112,6 +155,11 @@ public class Application extends SpringBootServletInitializer {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		String password = "password";
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -120,6 +168,9 @@ public class Application extends SpringBootServletInitializer {
 		SpringApplication.run(Application.class, args);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.boot.web.servlet.support.SpringBootServletInitializer#configure(org.springframework.boot.builder.SpringApplicationBuilder)
+	 */
 	@Override
 	protected SpringApplicationBuilder configure(
 		SpringApplicationBuilder application) {

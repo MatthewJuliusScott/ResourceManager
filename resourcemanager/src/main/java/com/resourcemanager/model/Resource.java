@@ -1,3 +1,6 @@
+/*
+ *
+ */
 
 package com.resourcemanager.model;
 
@@ -17,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -53,6 +57,14 @@ public class Resource implements Cloneable {
 	/** The hours. */
 	@Basic
 	private int					hours;
+
+	/**
+	 * The user associated with this resource. Usually only for a user with ROLE_USER authority.
+	 */
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "user_id", nullable = true)
+	@OrderColumn(name = "order_col")
+	private User				user;
 
 	/**
 	 * Instantiates a new resource.
@@ -209,6 +221,15 @@ public class Resource implements Cloneable {
 		return skills;
 	}
 
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -235,6 +256,9 @@ public class Resource implements Cloneable {
 		}
 		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
 			removeAllocation(allocation);
+		}
+		if (user != null) {
+			user.setResource(null);
 		}
 	}
 
@@ -325,10 +349,20 @@ public class Resource implements Cloneable {
 		this.skills = skills;
 	}
 
+	/**
+	 * Sets the user.
+	 *
+	 * @param user
+	 *            the new user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="
-			+ hours + "]";
+			+ hours + ", user=" + (user != null ? String.valueOf(user.getId()) : "null") + "]";
 	}
 
 }
