@@ -5,12 +5,15 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
@@ -39,7 +43,7 @@ public class Project implements Cloneable {
 
 	/** The allocations. */
 	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
-	private List<Allocation>	allocations	= new ArrayList<Allocation>();
+	private Set<Allocation>	allocations	= new HashSet<Allocation>();
 
 	/**
 	 * Instantiates a new project.
@@ -76,7 +80,7 @@ public class Project implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Project clone = (Project) super.clone();
-		clone.allocations = new ArrayList<Allocation>();
+		clone.allocations = new HashSet<Allocation>();
 		if (allocations != null) {
 			for (Allocation allocation : allocations) {
 				clone.getAllocations().add(allocation);
@@ -108,7 +112,7 @@ public class Project implements Cloneable {
 	 *
 	 * @return the skills
 	 */
-	public List<Allocation> getAllocations() {
+	public Set<Allocation> getAllocations() {
 		return allocations;
 	}
 
@@ -156,14 +160,14 @@ public class Project implements Cloneable {
 			}
 		}
 	}
-
+	
 	/**
 	 * Sets the allocations.
 	 *
 	 * @param allocations
 	 *            the new allocations
 	 */
-	public void setAllocations(List<Allocation> allocations) {
+	public void setAllocations(Set<Allocation> allocations) {
 		this.allocations = allocations;
 	}
 

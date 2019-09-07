@@ -7,6 +7,7 @@ package com.resourcemanager.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -86,8 +87,14 @@ public class ProjectController {
 	@RequestMapping(value = {
 	        "/projects/delete/{id}"}, method = RequestMethod.GET)
 	public String deleteProject(@PathVariable("id") Long id) {
-
-		this.projectService.deleteProject(id);
+		Project project = projectService.getProjectById(id);
+		Iterator<Allocation> i = project.getAllocations().iterator();
+		while (i.hasNext()) {
+			Allocation allocation = i.next();
+			allocationService.deleteAllocation(allocation);
+			i.remove();
+		}
+		this.projectService.deleteProject(project);
 		return "redirect:/projects";
 	}
 
@@ -102,7 +109,7 @@ public class ProjectController {
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project",
-			        this.projectService.getProjectByID(id));
+			        this.projectService.getProjectById(id));
 		} else {
 			model.addAttribute("project", new Project());
 		}
@@ -121,7 +128,7 @@ public class ProjectController {
 	public String joinProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project",
-			        this.projectService.getProjectByID(id));
+			        this.projectService.getProjectById(id));
 		} else {
 			return "projects";
 		}
@@ -208,7 +215,7 @@ public class ProjectController {
 		// delete allocation ids no longer in list
 		Set<Long> deleteIds = new HashSet<Long>();
 		if (project.getId() > 0) {
-			Project oldProject = projectService.getProjectByID(project.getId());
+			Project oldProject = projectService.getProjectById(project.getId());
 			
 			for (Allocation allocation : oldProject.getAllocations()) {
 				deleteIds.add(allocation.getId());

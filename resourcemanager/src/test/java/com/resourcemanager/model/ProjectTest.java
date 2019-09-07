@@ -3,8 +3,10 @@ package com.resourcemanager.model;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -16,12 +18,12 @@ public class ProjectTest {
 		Allocation allocation = new Allocation();
 		allocation.setId(new Random().nextLong());
 
-		List<Allocation> expected = new ArrayList<Allocation>();
+		Set<Allocation> expected = new HashSet<Allocation>();
 		expected.add(allocation);
 		Project project = new Project();
 		project.addAllocation(allocation);
 
-		List<Allocation> actual = project.getAllocations();
+		Set<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -87,7 +89,7 @@ public class ProjectTest {
 		Project project = new Project();
 		project.addAllocation(allocation);
 
-		List<Allocation> actual = project.getAllocations();
+		Set<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -147,7 +149,7 @@ public class ProjectTest {
 		project.addAllocation(allocation);
 		project.removeAllocation(allocation);
 
-		List<Allocation> actual = project.getAllocations();
+		Set<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -157,12 +159,12 @@ public class ProjectTest {
 		Allocation allocation = new Allocation();
 		allocation.setId(new Random().nextLong());
 
-		List<Allocation> expected = new ArrayList<Allocation>();
+		Set<Allocation> expected = new HashSet<Allocation>();
 		expected.add(allocation);
 		Project project = new Project();
 		project.setAllocations(expected);
 
-		List<Allocation> actual = project.getAllocations();
+		Set<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
