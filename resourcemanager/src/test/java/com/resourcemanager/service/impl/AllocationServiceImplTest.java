@@ -55,7 +55,7 @@ public class AllocationServiceImplTest {
 		try {
 			Allocation allocation = allocationDAO.getAllocationByID(1L);
 			if (allocation != null) {
-				allocationDAO.deleteAllocation(1L);
+				allocationDAO.deleteAllocation(allocation);
 			}
 		} catch (Exception e) {
 			fail(e.getMessage());

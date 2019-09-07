@@ -151,6 +151,7 @@ public class Project implements Cloneable {
 			Allocation i = iterator.next();
 
 			if (i.getProject().equals(this) && i.equals(allocation)) {
+				i.setProject(null);
 				iterator.remove();
 			}
 		}
