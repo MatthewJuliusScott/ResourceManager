@@ -38,8 +38,8 @@ public class AllocationServiceImpl implements AllocationService {
 	 */
 	@Override
 	@Transactional
-	public void deleteAllocation(Long id) {
-		this.allocationDAO.deleteAllocation(id);
+	public void deleteAllocation(Allocation allocation) {
+		this.allocationDAO.deleteAllocation(allocation);
 	}
 
 	/* (non-Javadoc)
@@ -47,7 +47,7 @@ public class AllocationServiceImpl implements AllocationService {
 	 */
 	@Override
 	@Transactional
-	public Allocation getAllocationByID(Long id) {
+	public Allocation getAllocationById(Long id) {
 		return this.allocationDAO.getAllocationByID(id);
 	}
 

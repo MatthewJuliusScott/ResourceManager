@@ -45,7 +45,7 @@ public class ProjectServiceTest {
 	@WithMockUser(username = "user@gmail.com", password = "password", roles = { "USER", "ADMIN" })
 	public void givenAuthenticationAndGetProject_whenUpdateProject_thenProjectModified() throws Exception {
 
-		Project expected = projectService.getProjectByID(1L);
+		Project expected = projectService.getProjectById(1L);
 
 		// prove first project name is not currently "Some other name"
 		assertFalse(expected.getName().equals("Some other name"));
@@ -55,7 +55,7 @@ public class ProjectServiceTest {
 		projectService.updateProject(expected);
 
 		// Assert the name has changed in the persistence layer
-		Project actual = projectService.getProjectByID(1L);
+		Project actual = projectService.getProjectById(1L);
 		assertEquals(expected, actual);
 	}
 }

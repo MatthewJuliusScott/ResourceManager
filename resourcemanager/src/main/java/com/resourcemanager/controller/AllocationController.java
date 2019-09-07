@@ -72,8 +72,8 @@ public class AllocationController {
 	@RequestMapping(value = {
 	        "/allocations/delete/{id}"}, method = RequestMethod.GET)
 	public String deleteAllocation(@PathVariable("id") Long id) {
-
-		this.allocationService.deleteAllocation(id);
+		Allocation allocation = allocationService.getAllocationById(id);
+		allocationService.deleteAllocation(allocation);
 		return "redirect:/allocations";
 	}
 
@@ -89,7 +89,7 @@ public class AllocationController {
 	public String editAllocation(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("allocation",
-			        this.allocationService.getAllocationByID(id));
+			        this.allocationService.getAllocationById(id));
 		} else {
 			model.addAttribute("allocation", new Allocation());
 		}
@@ -152,7 +152,7 @@ public class AllocationController {
 		
 		long resourceid = Long.parseLong(request.getParameter("resourceId"));
 		long allocationid = Long.parseLong(request.getParameter("allocationId"));
-		Allocation allocation = this.allocationService.getAllocationByID(allocationid);
+		Allocation allocation = this.allocationService.getAllocationById(allocationid);
 		allocation.setResource(this.resourceService.getResourceByID(resourceid));
 		this.allocationService.updateAllocation(allocation);
 

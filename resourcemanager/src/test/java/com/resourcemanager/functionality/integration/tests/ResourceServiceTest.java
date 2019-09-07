@@ -83,7 +83,7 @@ public class ResourceServiceTest {
 
 		Skill skill = skillService.getSkillByID(1L);
 
-		Project project = projectService.getProjectByID(1L);
+		Project project = projectService.getProjectById(1L);
 
 		LocalDate startDate = LocalDate.now();
 		LocalDate endDate = LocalDate.now().plusDays(7);
