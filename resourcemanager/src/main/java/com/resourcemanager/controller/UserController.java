@@ -313,6 +313,15 @@ public class UserController {
 		if (user.getId() == 0) {
 			// new user, add it
 			this.userService.addUser(user);
+
+			// add welcome notification
+			Notification notification = new Notification("Welcome "
+			        + user.getName()
+			        + "! Your account has now been created, you may now start managing resources.");
+			notificationService.addNotification(notification);
+			user.addNotification(notification);
+			userService.updateUser(user);
+
 		} else {
 			// existing user, call update
 			this.userService.updateUser(user);
