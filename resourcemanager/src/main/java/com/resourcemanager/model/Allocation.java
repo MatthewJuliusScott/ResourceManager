@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -42,7 +43,6 @@ public class Allocation implements Cloneable {
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id")
 	private Project							project;
 
 	/** The skill. */

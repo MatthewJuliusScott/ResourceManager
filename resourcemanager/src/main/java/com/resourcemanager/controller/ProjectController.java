@@ -210,19 +210,6 @@ public class ProjectController {
 				}
 			}
 		}
-
-		// delete allocation ids no longer in list
-		Set<Long> deleteIds = new HashSet<Long>();
-		if (project.getId() > 0) {
-			Project oldProject = projectService.getProjectById(project.getId());
-			
-			for (Allocation allocation : oldProject.getAllocations()) {
-				deleteIds.add(allocation.getId());
-			}
-			for (String id : ids) {
-				deleteIds.remove(Long.valueOf(id));
-			}
-		}
 		
 		for (String id : ids) {
 
@@ -295,10 +282,6 @@ public class ProjectController {
 		
 		for (Allocation allocation : project.getAllocations()) {
 			allocationService.updateAllocation(allocation);
-		}
-		for (Long id : deleteIds) {
-			Allocation allocation = allocationService.getAllocationById(id);
-			allocationService.deleteAllocation(allocation);
 		}
 		
 		return "redirect:/projects/edit/" + project.getId();
