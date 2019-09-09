@@ -25,7 +25,7 @@ public interface AllocationDAO {
 	 *
 	 * @param id the id
 	 */
-	public void deleteAllocation(Long id);
+	public void deleteAllocation(Allocation allocation);
 
 	/**
 	 * Gets the allocation by ID.

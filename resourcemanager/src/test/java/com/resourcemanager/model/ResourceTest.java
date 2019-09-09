@@ -153,7 +153,7 @@ public class ResourceTest {
 		resource.setHours(40);
 		System.out.println(resource);
 		assertTrue(resource.toString()
-			.equals("Resource [id=1, name=null, skills=[], allocations=[], hours=40]"));
+			.equals("Resource [id=1, name=null, skills=[], allocations=[], hours=40, user=null]"));
 	}
 
 }

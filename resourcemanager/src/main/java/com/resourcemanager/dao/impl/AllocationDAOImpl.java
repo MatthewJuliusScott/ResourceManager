@@ -51,8 +51,7 @@ public class AllocationDAOImpl implements AllocationDAO {
 	 * @see com.resourcemanager.dao.AllocationDAO#deleteAllocation(java.lang.Long)
 	 */
 	@Override
-	public void deleteAllocation(Long id) {
-		Allocation allocation = getCurrentSession().find(Allocation.class, id);
+	public void deleteAllocation(Allocation allocation) {
 		getCurrentSession().remove(allocation);
 		logger.info("Allocation deleted successfully, allocation details=" + allocation);
 	}

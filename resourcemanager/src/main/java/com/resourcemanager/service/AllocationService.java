@@ -29,7 +29,7 @@ public interface AllocationService {
 	 * @param id the id
 	 */
 	@Secured("ROLE_ADMIN")
-	public void deleteAllocation(Long id);
+	public void deleteAllocation(Allocation allocation);
 
 	/**
 	 * Gets the allocation by ID.
@@ -38,7 +38,7 @@ public interface AllocationService {
 	 * @return the allocation by ID
 	 */
 	@Secured("ROLE_ADMIN")
-	public Allocation getAllocationByID(Long id);
+	public Allocation getAllocationById(Long id);
 
 	/**
 	 * List allocations.

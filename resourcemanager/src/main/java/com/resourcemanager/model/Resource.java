@@ -275,6 +275,7 @@ public class Resource implements Cloneable {
 
 			if (i.getResource() != null && i.getResource().equals(this)
 				&& i.equals(allocation)) {
+				i.setResource(null);
 				iterator.remove();
 			}
 		}

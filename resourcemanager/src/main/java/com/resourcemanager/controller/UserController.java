@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.controller;
@@ -65,15 +65,12 @@ public class UserController {
 	/**
 	 * Delete notification.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-			"/users/notifications/delete/{id}" },
-		method = RequestMethod.POST)
+	        "/users/notifications/delete/{id}"}, method = RequestMethod.POST)
 	public String deleteNotification(@PathVariable("id") Long id, Model model) {
 		User user = getLoggedInUser();
 		Iterator<Notification> i = user.getNotifications().iterator();
@@ -91,8 +88,7 @@ public class UserController {
 	/**
 	 * Edits the my profile.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {"/users/myprofile"}, method = RequestMethod.GET)
@@ -114,10 +110,8 @@ public class UserController {
 	/**
 	 * Edits the user.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {"/users/edit/{id}"}, method = RequestMethod.GET)
@@ -130,8 +124,8 @@ public class UserController {
 
 		User loggedInUser = getLoggedInUser();
 		if (loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN")) {
-		model.addAttribute("listResources",
-		        this.resourceService.listResources());
+			model.addAttribute("listResources",
+			        this.resourceService.listResources());
 		}
 		return "users/edit";
 	}
@@ -159,13 +153,11 @@ public class UserController {
 	/**
 	 * Gets the notifications.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the notifications
 	 */
 	@RequestMapping(value = {
-			"/users/notifications" },
-		method = RequestMethod.GET)
+	        "/users/notifications"}, method = RequestMethod.GET)
 	public String getNotifications(Model model) {
 		User user = getLoggedInUser();
 		model.addAttribute("user", user);
@@ -175,8 +167,7 @@ public class UserController {
 	/**
 	 * List users.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {"/users"}, method = RequestMethod.GET)
@@ -188,15 +179,12 @@ public class UserController {
 	/**
 	 * Mark notification as seen.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-			"/users/notifications/seen/{id}" },
-		method = RequestMethod.POST)
+	        "/users/notifications/seen/{id}"}, method = RequestMethod.POST)
 	public String markNotificationAsSeen(@PathVariable("id") Long id,
 	        Model model) {
 		User user = getLoggedInUser();
@@ -216,8 +204,7 @@ public class UserController {
 	/**
 	 * Removes the user.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the string
 	 */
 	@RequestMapping(value = {"/users/delete/{id}"}, method = RequestMethod.GET)
@@ -230,12 +217,9 @@ public class UserController {
 	/**
 	 * Save user.
 	 *
-	 * @param user
-	 *            the user
-	 * @param result
-	 *            the result
-	 * @param request
-	 *            the request
+	 * @param user    the user
+	 * @param result  the result
+	 * @param request the request
 	 * @return the string
 	 */
 	// For add and update user both
@@ -265,7 +249,8 @@ public class UserController {
 			user.setPassword(oldUser.getPassword());
 			user.setEmail(oldUser.getEmail());
 
-			if (user.getId() == loggedInUser.getId()) {
+			if (user.getId() == loggedInUser.getId()
+			        && newPassword.length() > 0) {
 				// if old password is correct
 				if (encoder.matches(oldPassword, user.getPassword())) {
 					// if a new password has been set, encrypt it and assign to
@@ -305,7 +290,7 @@ public class UserController {
 		        && !resourceId.equals("0")) {
 			resource = resourceService
 			        .getResourceByID(Long.parseLong(resourceId));
-			
+
 		}
 		user.setResource(resource);
 
@@ -331,6 +316,11 @@ public class UserController {
 		} else {
 			// existing user, call update
 			this.userService.updateUser(user);
+		}
+
+		if (resource != null) {
+			resource.setUser(user);
+			resourceService.updateResource(resource);
 		}
 
 		if (loggedInUser.getId() == user.getId()) {

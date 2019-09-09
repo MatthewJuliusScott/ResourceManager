@@ -58,7 +58,7 @@
 								<td style="width: 15%;" class="tblDef">${allocation.startDateAsString}</td>
 								<td style="width: 15%;" class="tblDef">${allocation.endDateAsString}</td>
 								<td style="width: 20%;" class="tblDef">${allocation.skill.name}</td>
-								<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="allocations/edit/${allocation.id}" role="button"><i class="far fa-edit"></i></a></td>
+								<td style="width: 10%;" class="tblDefCenter"><a style="background: deepskyblue;" class="btn btn-primary btn-sm" href="/projects/edit/${allocation.project.id}" role="button"><i class="far fa-edit"></i></a></td>
 								<td style="width: 10%;" class="tblDefCenter"><a onclick="confirmDelete(${allocation.id})" class="btn btn-danger btn-sm" role="button"><i class="fas fa-trash"></i></a></td>
 							</tr>
 					</c:forEach>
