@@ -23,7 +23,6 @@ import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
-import com.resourcemanager.service.UserService;
 
 /**
  * The Class AllocationController.
@@ -42,14 +41,6 @@ public class AllocationController {
 	/** The resource service. */
 	@Autowired
 	private ResourceService		resourceService;
-
-	/** The project service. */
-	@Autowired
-	private AllocationService	projectService;
-	
-	/** The user service. */
-	@Autowired
-    private UserService        userService;
 	
 	/**
 	 * Adds the allocation.

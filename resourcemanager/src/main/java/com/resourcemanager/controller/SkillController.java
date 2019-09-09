@@ -7,7 +7,6 @@ package com.resourcemanager.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestDecorator;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
