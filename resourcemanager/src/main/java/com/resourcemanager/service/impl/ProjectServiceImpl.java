@@ -37,8 +37,8 @@ public class ProjectServiceImpl implements ProjectService {
 	 */
 	@Override
 	@Transactional
-	public void deleteProject(Long id) {
-		this.projectDAO.removeProject(id);
+	public void deleteProject(Project project) {
+		this.projectDAO.removeProject(project);
 	}
 
 	/* (non-Javadoc)
@@ -46,7 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
 	 */
 	@Override
 	@Transactional
-	public Project getProjectByID(Long id) {
+	public Project getProjectById(Long id) {
 		return this.projectDAO.getProjectByID(id);
 	}
 

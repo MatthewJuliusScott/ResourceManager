@@ -100,8 +100,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	 * @see com.resourcemanager.dao.ProjectDAO#removeProject(java.lang.Long)
 	 */
 	@Override
-	public void removeProject(Long id) {
-		Project project = getCurrentSession().find(Project.class, id);
+	public void removeProject(Project project) {
 		getCurrentSession().remove(project);
 		logger.info("Project deleted successfully, project details=" + project);
 	}

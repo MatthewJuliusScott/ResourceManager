@@ -65,15 +65,12 @@ public class UserController {
 	/**
 	 * Delete notification.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-			"/users/notifications/delete/{id}" },
-		method = RequestMethod.POST)
+	        "/users/notifications/delete/{id}"}, method = RequestMethod.POST)
 	public String deleteNotification(@PathVariable("id") Long id, Model model) {
 		User user = getLoggedInUser();
 		Iterator<Notification> i = user.getNotifications().iterator();
@@ -91,15 +88,14 @@ public class UserController {
 	/**
 	 * Edits the my profile.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the string
 	 */
-	@RequestMapping(value = { "/users/myprofile" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/users/myprofile"}, method = RequestMethod.GET)
 	public String editMyProfile(Model model) {
 
 		Object principal = SecurityContextHolder.getContext()
-			.getAuthentication().getPrincipal();
+		        .getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
@@ -114,13 +110,11 @@ public class UserController {
 	/**
 	 * Edits the user.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
-	@RequestMapping(value = { "/users/edit/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/users/edit/{id}"}, method = RequestMethod.GET)
 	public String editUser(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("user", this.userService.getUserByID(id));
@@ -131,7 +125,7 @@ public class UserController {
 		User loggedInUser = getLoggedInUser();
 		if (loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN")) {
 			model.addAttribute("listResources",
-				this.resourceService.listResources());
+			        this.resourceService.listResources());
 		}
 		return "users/edit";
 	}
@@ -144,7 +138,7 @@ public class UserController {
 	private User getLoggedInUser() {
 		// get the currently logged in username
 		Object principal = SecurityContextHolder.getContext()
-			.getAuthentication().getPrincipal();
+		        .getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
@@ -159,13 +153,11 @@ public class UserController {
 	/**
 	 * Gets the notifications.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the notifications
 	 */
 	@RequestMapping(value = {
-			"/users/notifications" },
-		method = RequestMethod.GET)
+	        "/users/notifications"}, method = RequestMethod.GET)
 	public String getNotifications(Model model) {
 		User user = getLoggedInUser();
 		model.addAttribute("user", user);
@@ -175,11 +167,10 @@ public class UserController {
 	/**
 	 * List users.
 	 *
-	 * @param model
-	 *            the model
+	 * @param model the model
 	 * @return the string
 	 */
-	@RequestMapping(value = { "/users" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/users"}, method = RequestMethod.GET)
 	public String listUsers(Model model) {
 		model.addAttribute("listUsers", this.userService.listUsers());
 		return "users";
@@ -188,17 +179,14 @@ public class UserController {
 	/**
 	 * Mark notification as seen.
 	 *
-	 * @param id
-	 *            the id
-	 * @param model
-	 *            the model
+	 * @param id    the id
+	 * @param model the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-			"/users/notifications/seen/{id}" },
-		method = RequestMethod.POST)
+	        "/users/notifications/seen/{id}"}, method = RequestMethod.POST)
 	public String markNotificationAsSeen(@PathVariable("id") Long id,
-		Model model) {
+	        Model model) {
 		User user = getLoggedInUser();
 		Iterator<Notification> i = user.getNotifications().iterator();
 		while (i.hasNext()) {
@@ -216,11 +204,10 @@ public class UserController {
 	/**
 	 * Removes the user.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id the id
 	 * @return the string
 	 */
-	@RequestMapping(value = { "/users/delete/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/users/delete/{id}"}, method = RequestMethod.GET)
 	public String removeUser(@PathVariable("id") Long id) {
 
 		this.userService.deleteUser(id);
@@ -230,29 +217,26 @@ public class UserController {
 	/**
 	 * Save user.
 	 *
-	 * @param user
-	 *            the user
-	 * @param result
-	 *            the result
-	 * @param request
-	 *            the request
+	 * @param user    the user
+	 * @param result  the result
+	 * @param request the request
 	 * @return the string
 	 */
 	// For add and update user both
 	@RequestMapping(value = "/users/save", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute("user") User user,
-		BindingResult result, HttpServletRequest request) {
+	        BindingResult result, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
 
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
-			? request.getParameter("oldPassword")
-			: "";
+		        ? request.getParameter("oldPassword")
+		        : "";
 		String newPassword = request.getParameter("password") != null
-			? request.getParameter("password")
-			: "";
+		        ? request.getParameter("password")
+		        : "";
 
 		User loggedInUser = getLoggedInUser();
 
@@ -265,7 +249,8 @@ public class UserController {
 			user.setPassword(oldUser.getPassword());
 			user.setEmail(oldUser.getEmail());
 
-			if (user.getId() == loggedInUser.getId() && newPassword.length() > 0) {
+			if (user.getId() == loggedInUser.getId()
+			        && newPassword.length() > 0) {
 				// if old password is correct
 				if (encoder.matches(oldPassword, user.getPassword())) {
 					// if a new password has been set, encrypt it and assign to
@@ -277,7 +262,7 @@ public class UserController {
 					}
 				} else {
 					HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-						request);
+					        request);
 					req.addMessage("Old password was incorrect.");
 					return "redirect:/users/myprofile";
 				}
@@ -287,7 +272,7 @@ public class UserController {
 			// logged in user has admin privileges we can just update their
 			// password.
 		} else if (user.getId() == 0 || (user.getId() != loggedInUser.getId()
-			&& loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
+		        && loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
 
 			// The front end validation will already have checked a password
 			// field matches a re-enter your password field, just set value
@@ -302,9 +287,9 @@ public class UserController {
 
 		Resource resource = null;
 		if (resourceId != null && !resourceId.equals("")
-			&& !resourceId.equals("0")) {
+		        && !resourceId.equals("0")) {
 			resource = resourceService
-				.getResourceByID(Long.parseLong(resourceId));
+			        .getResourceByID(Long.parseLong(resourceId));
 
 		}
 		user.setResource(resource);
@@ -331,6 +316,11 @@ public class UserController {
 		} else {
 			// existing user, call update
 			this.userService.updateUser(user);
+		}
+
+		if (resource != null) {
+			resource.setUser(user);
+			resourceService.updateResource(resource);
 		}
 
 		if (loggedInUser.getId() == user.getId()) {
