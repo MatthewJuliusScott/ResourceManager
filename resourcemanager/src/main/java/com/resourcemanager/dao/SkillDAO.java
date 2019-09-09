@@ -1,9 +1,12 @@
 /*
  * 
  */
+
 package com.resourcemanager.dao;
 
 import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.resourcemanager.model.Skill;
 
@@ -16,8 +19,12 @@ public interface SkillDAO {
 	 * Adds the skill.
 	 *
 	 * @param skill the skill
+	 * @throws DataIntegrityViolationException the SQL integrity
+	 *                                                  constraint violation
+	 *                                                  exception
 	 */
-	public void addSkill(Skill skill);
+	public void addSkill(Skill skill)
+	        throws DataIntegrityViolationException;
 
 	/**
 	 * Delete skill.
@@ -53,7 +60,11 @@ public interface SkillDAO {
 	 * Update skill.
 	 *
 	 * @param skill the skill
+	 * @throws DataIntegrityViolationException the SQL integrity
+	 *                                                  constraint violation
+	 *                                                  exception
 	 */
-	public void updateSkill(Skill skill);
-	
+	public void updateSkill(Skill skill)
+	        throws DataIntegrityViolationException;
+
 }

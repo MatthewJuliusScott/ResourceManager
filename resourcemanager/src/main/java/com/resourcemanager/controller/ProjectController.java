@@ -29,7 +29,6 @@ import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Notification;
 import com.resourcemanager.model.Project;
 import com.resourcemanager.model.Resource;
-import com.resourcemanager.model.Skill;
 import com.resourcemanager.model.User;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.NotificationService;

@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
-import com.resourcemanager.model.Project;
 import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.AllocationService;
 import com.resourcemanager.service.ResourceService;

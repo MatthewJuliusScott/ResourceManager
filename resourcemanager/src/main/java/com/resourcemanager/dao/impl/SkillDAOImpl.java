@@ -1,6 +1,7 @@
 /*
  * 
  */
+
 package com.resourcemanager.dao.impl;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,22 +33,29 @@ import com.resourcemanager.model.Skill;
 public class SkillDAOImpl implements SkillDAO {
 
 	/** The Constant logger. */
-	private static final Logger		logger	= LoggerFactory.getLogger(SkillDAOImpl.class);
+	private static final Logger		logger	= LoggerFactory
+	        .getLogger(SkillDAOImpl.class);
 
 	/** The entity manager. */
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
-	 * @see com.resourcemanager.dao.SkillDAO#addSkill(com.resourcemanager.model.Skill)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.resourcemanager.dao.SkillDAO#addSkill(com.resourcemanager.model.
+	 * Skill)
 	 */
 	@Override
-	public void addSkill(Skill skill) {
+	public void addSkill(Skill skill)
+	        throws ConstraintViolationException {
 		getCurrentSession().persist(skill);
 		logger.info("Skill saved successfully, Skill details=" + skill);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#deleteSkill(java.lang.Long)
 	 */
 	@Override
@@ -64,7 +73,8 @@ public class SkillDAOImpl implements SkillDAO {
 	protected Session getCurrentSession() {
 		Session session;
 		try {
-			session = entityManager.unwrap(SessionFactory.class).getCurrentSession();
+			session = entityManager.unwrap(SessionFactory.class)
+			        .getCurrentSession();
 		} catch (HibernateException e) {
 			session = entityManager.unwrap(SessionFactory.class).openSession();
 		}
@@ -80,7 +90,9 @@ public class SkillDAOImpl implements SkillDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#getSkillByID(java.lang.Long)
 	 */
 	@Override
@@ -90,13 +102,16 @@ public class SkillDAOImpl implements SkillDAO {
 		return skill;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#getSkillByName(java.lang.String)
 	 */
 	@Override
 	public Skill getSkillByName(String name) {
 		Skill skill = null;
-		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaBuilder builder = getCurrentSessionFactory()
+		        .getCriteriaBuilder();
 		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
 		Root<Skill> root = criteria.from(Skill.class);
 		criteria.select(root).where(builder.equal(root.get("name"), name));
@@ -108,27 +123,36 @@ public class SkillDAOImpl implements SkillDAO {
 		return skill;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#listSkills()
 	 */
 	@Override
 	public List<Skill> listSkills() {
-		CriteriaBuilder builder = getCurrentSessionFactory().getCriteriaBuilder();
+		CriteriaBuilder builder = getCurrentSessionFactory()
+		        .getCriteriaBuilder();
 		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
 		Root<Skill> root = criteria.from(Skill.class);
 		criteria.select(root);
-		List<Skill> skillsList = getCurrentSession().createQuery(criteria).getResultList();
+		List<Skill> skillsList = getCurrentSession().createQuery(criteria)
+		        .getResultList();
 		for (Skill skill : skillsList) {
 			logger.info("Skill List::" + skill);
 		}
 		return skillsList;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.resourcemanager.dao.SkillDAO#updateSkill(com.resourcemanager.model.Skill)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.resourcemanager.dao.SkillDAO#updateSkill(com.resourcemanager.model.
+	 * Skill)
 	 */
 	@Override
-	public void updateSkill(Skill skill) {
+	public void updateSkill(Skill skill)
+	        throws ConstraintViolationException {
 		getCurrentSession().merge(skill);
 		logger.info("Skill updated successfully, Skill details=" + skill);
 	}

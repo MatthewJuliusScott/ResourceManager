@@ -5,6 +5,7 @@ package com.resourcemanager.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.annotation.Secured;
 
 import com.resourcemanager.model.Skill;
@@ -20,7 +21,7 @@ public interface SkillService {
 	 * @param skill the skill
 	 */
 	@Secured("ROLE_USER")
-	public void addSkill(Skill skill);
+	public void addSkill(Skill skill) throws DataIntegrityViolationException;
 
 	/**
 	 * Delete skill.
@@ -53,7 +54,7 @@ public interface SkillService {
 	 * @param skill the skill
 	 */
 	@Secured("ROLE_USER")
-	public void updateSkill(Skill skill);
+	public void updateSkill(Skill skill) throws DataIntegrityViolationException;
 	
 
 	
