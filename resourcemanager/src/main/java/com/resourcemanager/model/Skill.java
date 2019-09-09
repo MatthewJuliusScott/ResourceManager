@@ -41,7 +41,6 @@ public class Skill implements Cloneable {
 	private long				id;
 
 	/** The name. */
-	@NaturalId
 	private String				name;
 
 	/** The resources. */
