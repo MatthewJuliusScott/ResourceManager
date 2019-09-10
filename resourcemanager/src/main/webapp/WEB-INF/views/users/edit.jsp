@@ -132,7 +132,7 @@
 															<option value="" selected>-- none --</option>
 														</c:if>
 														<c:forEach items="${listResources}" var="resource">
-															<c:if test = "${empty user.resource || user.resource.id != resource.id}">
+															<c:if test = "${empty resource.user && (empty user.resource || user.resource.id != resource.id)}">
 																<option value="${resource.id}">${resource.name}</option>
 															</c:if>
 								                  		</c:forEach>
