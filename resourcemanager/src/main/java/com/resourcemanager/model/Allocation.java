@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -18,7 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -138,7 +137,7 @@ public class Allocation implements Cloneable {
 		}
 
 		Allocation that = (Allocation) o;
-		return Objects.equals(project, that.project)
+		return id == that.id && Objects.equals(project, that.project)
 			&& Objects.equals(skill, that.skill);
 	}
 
@@ -229,7 +228,7 @@ public class Allocation implements Cloneable {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(project, skill);
+		return Objects.hash(id, project, skill);
 	}
 
 	/**

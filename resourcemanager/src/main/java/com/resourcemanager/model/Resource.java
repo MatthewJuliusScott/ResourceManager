@@ -5,8 +5,10 @@
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -48,7 +50,7 @@ public class Resource implements Cloneable {
 		inverseJoinColumns = {
 				@JoinColumn(name = "skill_id") })
 	@OrderColumn(name = "order_col")
-	private List<Skill>			skills		= new ArrayList<>();
+	private Set<Skill>			skills		= new HashSet<Skill>();
 
 	/** The allocations. */
 	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -121,7 +123,7 @@ public class Resource implements Cloneable {
 				clone.getAllocations().add(allocation);
 			}
 		}
-		clone.skills = new ArrayList<Skill>();
+		clone.skills = new HashSet<Skill>();
 		if (skills != null) {
 			for (Skill skill : skills) {
 				clone.getSkills().add(skill);
@@ -217,7 +219,7 @@ public class Resource implements Cloneable {
 	 *
 	 * @return the skills
 	 */
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
@@ -346,7 +348,7 @@ public class Resource implements Cloneable {
 	 * @param skills
 	 *            the new skills
 	 */
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 

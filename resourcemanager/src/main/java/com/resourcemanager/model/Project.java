@@ -1,13 +1,13 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -19,7 +19,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -43,7 +42,7 @@ public class Project implements Cloneable {
 	/** The allocations. */
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_id")
-	private Set<Allocation>	allocations	= new HashSet<Allocation>();
+	private List<Allocation>	allocations	= new ArrayList<Allocation>();
 
 	/**
 	 * Instantiates a new project.
@@ -54,7 +53,8 @@ public class Project implements Cloneable {
 	/**
 	 * Instantiates a new project.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
 	public Project(String name) {
 		this.name = name;
@@ -80,7 +80,7 @@ public class Project implements Cloneable {
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Project clone = (Project) super.clone();
-		clone.allocations = new HashSet<Allocation>();
+		clone.allocations = new ArrayList<Allocation>();
 		if (allocations != null) {
 			for (Allocation allocation : allocations) {
 				clone.getAllocations().add(allocation);
@@ -112,7 +112,7 @@ public class Project implements Cloneable {
 	 *
 	 * @return the skills
 	 */
-	public Set<Allocation> getAllocations() {
+	public List<Allocation> getAllocations() {
 		return allocations;
 	}
 
@@ -160,14 +160,14 @@ public class Project implements Cloneable {
 			}
 		}
 	}
-	
+
 	/**
 	 * Sets the allocations.
 	 *
 	 * @param allocations
 	 *            the new allocations
 	 */
-	public void setAllocations(Set<Allocation> allocations) {
+	public void setAllocations(List<Allocation> allocations) {
 		this.allocations = allocations;
 	}
 

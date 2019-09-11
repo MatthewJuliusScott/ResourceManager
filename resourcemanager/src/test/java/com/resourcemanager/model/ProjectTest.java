@@ -23,7 +23,7 @@ public class ProjectTest {
 		Project project = new Project();
 		project.addAllocation(allocation);
 
-		Set<Allocation> actual = project.getAllocations();
+		List<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -89,7 +89,7 @@ public class ProjectTest {
 		Project project = new Project();
 		project.addAllocation(allocation);
 
-		Set<Allocation> actual = project.getAllocations();
+		List<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -149,7 +149,7 @@ public class ProjectTest {
 		project.addAllocation(allocation);
 		project.removeAllocation(allocation);
 
-		Set<Allocation> actual = project.getAllocations();
+		List<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
@@ -159,12 +159,12 @@ public class ProjectTest {
 		Allocation allocation = new Allocation();
 		allocation.setId(new Random().nextLong());
 
-		Set<Allocation> expected = new HashSet<Allocation>();
+		List<Allocation> expected = new ArrayList<Allocation>();
 		expected.add(allocation);
 		Project project = new Project();
 		project.setAllocations(expected);
 
-		Set<Allocation> actual = project.getAllocations();
+		List<Allocation> actual = project.getAllocations();
 
 		assertTrue(expected.equals(actual));
 	}
