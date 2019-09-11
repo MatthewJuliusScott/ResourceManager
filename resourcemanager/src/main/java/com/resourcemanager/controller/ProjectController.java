@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.controller;
@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +71,7 @@ public class ProjectController {
 	 *
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/projects/add"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/projects/add" }, method = RequestMethod.GET)
 	public String addProject() {
 		return "redirect:/projects/edit/0";
 	}
@@ -80,11 +79,13 @@ public class ProjectController {
 	/**
 	 * Delete project.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-	        "/projects/delete/{id}"}, method = RequestMethod.GET)
+			"/projects/delete/{id}" },
+		method = RequestMethod.GET)
 	public String deleteProject(@PathVariable("id") Long id) {
 		Project project = projectService.getProjectById(id);
 		Iterator<Allocation> i = project.getAllocations().iterator();
@@ -100,15 +101,17 @@ public class ProjectController {
 	/**
 	 * Edits the project.
 	 *
-	 * @param id    the id
-	 * @param model the model
+	 * @param id
+	 *            the id
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/projects/edit/{id}"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/projects/edit/{id}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project",
-			        this.projectService.getProjectById(id));
+				this.projectService.getProjectById(id));
 		} else {
 			model.addAttribute("project", new Project());
 		}
@@ -119,20 +122,22 @@ public class ProjectController {
 	/**
 	 * Join project.
 	 *
-	 * @param id    the id
-	 * @param model the model
+	 * @param id
+	 *            the id
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/projects/join/{id}"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/projects/join/{id}" }, method = RequestMethod.GET)
 	public String joinProject(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("project",
-			        this.projectService.getProjectById(id));
+				this.projectService.getProjectById(id));
 		} else {
 			return "projects";
 		}
 		Object principal = SecurityContextHolder.getContext()
-		        .getAuthentication().getPrincipal();
+			.getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
@@ -151,14 +156,15 @@ public class ProjectController {
 	/**
 	 * List projects.
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/projects"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/projects" }, method = RequestMethod.GET)
 	public String listProjects(Model model) {
 		model.addAttribute("listProjects", this.projectService.listProjects());
 		Object principal = SecurityContextHolder.getContext()
-		        .getAuthentication().getPrincipal();
+			.getAuthentication().getPrincipal();
 		String username;
 		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
@@ -167,9 +173,9 @@ public class ProjectController {
 		}
 
 		model.addAttribute("user",
-		        this.userService.getUserByUserName(username));
+			this.userService.getUserByUserName(username));
 		model.addAttribute("roles", this.userService.getUserByUserName(username)
-		        .getAuthorityStrings());
+			.getAuthorityStrings());
 
 		return "projects";
 	}
@@ -177,27 +183,30 @@ public class ProjectController {
 	/**
 	 * Save project.
 	 *
-	 * @param project the project
-	 * @param result  the result
-	 * @param request the request
+	 * @param project
+	 *            the project
+	 * @param result
+	 *            the result
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	// For add and update project both
 	@RequestMapping(value = "/projects/save", method = RequestMethod.POST)
 	public String saveProject(@ModelAttribute("project") Project project,
-	        BindingResult result, HttpServletRequest request) {
+		BindingResult result, HttpServletRequest request) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
 
 		// if adding a new skill requirement, add that to the project
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-		        .ofPattern("dd/MM/uuuu");
+			.ofPattern("dd/MM/uuuu");
 
 		// extract each id, and store in a set so we don't have duplicates
 		HashSet<String> ids = new HashSet<String>();
 		for (Entry<String, String[]> entry : request.getParameterMap()
-		        .entrySet()) {
+			.entrySet()) {
 			String key = entry.getKey();
 
 			if (Pattern.compile("allocation_\\d_\\w*").matcher(key).matches()) {
@@ -210,26 +219,26 @@ public class ProjectController {
 				}
 			}
 		}
-		
+
 		for (String id : ids) {
 
 			String[] skillIds = request
-			        .getParameterValues("allocation_" + id + "_skillId");
+				.getParameterValues("allocation_" + id + "_skillId");
 			String[] startDates = request
-			        .getParameterValues("allocation_" + id + "_startDate");
+				.getParameterValues("allocation_" + id + "_startDate");
 			String[] endDates = request
-			        .getParameterValues("allocation_" + id + "_endDate");
+				.getParameterValues("allocation_" + id + "_endDate");
 			String[] hourss = request
-			        .getParameterValues("allocation_" + id + "_hours");
+				.getParameterValues("allocation_" + id + "_hours");
 			String[] resourceIds = request
-			        .getParameterValues("allocation_" + id + "_resourceId");
+				.getParameterValues("allocation_" + id + "_resourceId");
 
 			// Assert that all required form data was submitted, prevent saving
 			// corrupt data
 			if (skillIds == null || startDates == null || endDates == null
-			        || hourss == null || skillIds.length != startDates.length
-			        || startDates.length != endDates.length
-			        || endDates.length != hourss.length) {
+				|| hourss == null || skillIds.length != startDates.length
+				|| startDates.length != endDates.length
+				|| endDates.length != hourss.length) {
 				continue;
 			}
 
@@ -244,27 +253,33 @@ public class ProjectController {
 
 				Resource resource = null;
 				if (resourceId != null && !resourceId.equals("")
-				        && !resourceId.equals("0")) {
+					&& !resourceId.equals("0")) {
 					resource = resourceService
-					        .getResourceByID(Long.parseLong(resourceId));
+						.getResourceByID(Long.parseLong(resourceId));
 				}
 
 				Allocation allocation = new Allocation(Long.parseLong(id),
-				        project,
-				        skillService.getSkillByID(Long.parseLong(skillId)),
-				        LocalDate.parse(startDate, dateTimeFormatter),
-				        LocalDate.parse(endDate, dateTimeFormatter),
-				        Integer.parseInt(hours), resource);
+					project,
+					skillService.getSkillByID(Long.parseLong(skillId)),
+					LocalDate.parse(startDate, dateTimeFormatter),
+					LocalDate.parse(endDate, dateTimeFormatter),
+					Integer.parseInt(hours), resource);
 				if (resource != null) {
+
+					Resource oldResource = resourceService.getResourceByID(resource.getId());
+
 					resource.addAllocation(allocation);
 
-					User user = resource.getUser();
-					if (user != null) {
-						Notification notification = new Notification(
-						        "Your have been assigned a new allocation");
-						notificationService.addNotification(notification);
-						user.addNotification(notification);
-						userService.updateUser(user);
+					// if its a new allocation for this resource add a notification
+					if (!oldResource.getAllocations().contains(allocation)) {
+						User user = resource.getUser();
+						if (user != null) {
+							Notification notification = new Notification(
+								"Your have been assigned a new allocation");
+							notificationService.addNotification(notification);
+							user.addNotification(notification);
+							userService.updateUser(user);
+						}
 					}
 
 				}
@@ -279,11 +294,11 @@ public class ProjectController {
 			// existing project, call update
 			this.projectService.updateProject(project);
 		}
-		
+
 		for (Allocation allocation : project.getAllocations()) {
 			allocationService.updateAllocation(allocation);
 		}
-		
+
 		return "redirect:/projects/edit/" + project.getId();
 	}
 }

@@ -51,7 +51,7 @@ public class Resource implements Cloneable {
 	private List<Skill>			skills		= new ArrayList<>();
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/** The hours. */
