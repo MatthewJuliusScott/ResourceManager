@@ -63,7 +63,7 @@ public class AllocationController {
 	public String deleteAllocation(@PathVariable("id") Long id) {
 		Allocation allocation = allocationService.getAllocationById(id);
 		allocationService.deleteAllocation(allocation);
-		return "redirect:/allocations";
+		return "redirect:/allocations/listrequired";
 	}
 
 	/**
