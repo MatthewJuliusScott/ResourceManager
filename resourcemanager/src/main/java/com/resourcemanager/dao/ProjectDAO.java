@@ -39,7 +39,7 @@ public interface ProjectDAO {
 	 *
 	 * @param id the id
 	 */
-	public void removeProject(Long id);
+	public void removeProject(Project project);
 
 	/**
 	 * Update project.

@@ -42,10 +42,9 @@
 				</c:if>		
 			</div>	
 		</div>
-		
-		<div>
-        	<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
-        </div>
-        
+
+      <div style="padding:10px;">
+         <button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
+      </div>
 	</body>	
 </html>

@@ -36,19 +36,6 @@
 							<tr>
 								<td>
 									<table cellpadding="0" cellspacing="0">
-										<c:if test="${user.id == 0}">
-											<tr>
-												<td style="width: 150px;">
-													<form:label path="id" style="font-weight: bold; width: 5px;">
-														<spring:message text="ID"/>
-													</form:label>
-												</td>
-												<td style="width: 500px;">
-													<form:input path="id" readonly="true" size="8" disabled="true"/>
-													<form:hidden path="id" />
-												</td> 
-											</tr>
-										</c:if>
 										<tr>
 											<td style="width: 150px;">
 												<form:label path="name" style="font-weight: bold;">
@@ -66,7 +53,12 @@
 												</form:label>
 											</td>
 											<td style="width: 500px;">
-												<form:input path="email" readonly="true" class="form-control" />
+													<c:if test="${user.id == 0}">
+														<form:input path="email" class="form-control" />
+													</c:if>
+													<c:if test="${user.id != 0}">
+														<form:input path="email" readonly="true" class="form-control" />
+													</c:if>
 											</td> 
 										</tr>
 										<c:if test="${user.id == 0}">
@@ -140,7 +132,7 @@
 															<option value="" selected>-- none --</option>
 														</c:if>
 														<c:forEach items="${listResources}" var="resource">
-															<c:if test = "${empty user.resource || user.resource.id != resource.id}">
+															<c:if test = "${empty resource.user && (empty user.resource || user.resource.id != resource.id)}">
 																<option value="${resource.id}">${resource.name}</option>
 															</c:if>
 								                  		</c:forEach>

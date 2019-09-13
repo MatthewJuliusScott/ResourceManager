@@ -68,12 +68,7 @@
 					</td>	
 				</tr>
 			</table>
-		</div>
-		
-		<div>
-        	<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
-        </div>
-           		
+		</div>          		
     	
 	</body>
 	

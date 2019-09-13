@@ -1,10 +1,11 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager;
 
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.sql.DataSource;
 
@@ -23,8 +24,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -80,16 +79,21 @@ public class Application extends SpringBootServletInitializer {
 		@Value("${hibernate.dialect}")
 		private String	dialect;
 
-		/* (non-Javadoc)
-		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addFormatters(org.springframework.format.FormatterRegistry)
+		/*
+		 * (non-Javadoc)
+		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addFormatters(org.springframework.format.
+		 * FormatterRegistry)
 		 */
 		@Override
 		public void addFormatters(FormatterRegistry registry) {
 			registry.addConverter(skillConverter);
 		}
 
-		/* (non-Javadoc)
-		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)
+		/*
+		 * (non-Javadoc)
+		 * @see
+		 * org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addViewControllers(org.springframework.web.servlet.
+		 * config.annotation.ViewControllerRegistry)
 		 */
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
@@ -158,18 +162,18 @@ public class Application extends SpringBootServletInitializer {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
 	public static void main(String[] args) {
-		String password = "password";
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-		System.out.println(hashedPassword);
+		TimeZone.setDefault(TimeZone.getTimeZone("Australia/NSW"));
 		SpringApplication.run(Application.class, args);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.boot.web.servlet.support.SpringBootServletInitializer#configure(org.springframework.boot.builder.SpringApplicationBuilder)
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.boot.web.servlet.support.SpringBootServletInitializer#configure(org.springframework.boot.builder.
+	 * SpringApplicationBuilder)
 	 */
 	@Override
 	protected SpringApplicationBuilder configure(

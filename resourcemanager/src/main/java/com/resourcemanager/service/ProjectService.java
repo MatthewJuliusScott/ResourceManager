@@ -28,7 +28,7 @@ public interface ProjectService {
 	 * @param id the id
 	 */
 	@Secured("ROLE_ADMIN")
-	public void deleteProject(Long id);
+	public void deleteProject(Project project);
 
 	/**
 	 * Gets the project by ID.
@@ -37,7 +37,7 @@ public interface ProjectService {
 	 * @return the project by ID
 	 */
 	@Secured("ROLE_USER")
-	public Project getProjectByID(Long id);
+	public Project getProjectById(Long id);
 
 	/**
 	 * List projects.

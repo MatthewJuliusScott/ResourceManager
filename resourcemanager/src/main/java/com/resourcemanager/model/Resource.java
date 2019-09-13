@@ -1,12 +1,14 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.PreRemove;
 import javax.persistence.Table;
@@ -47,15 +50,23 @@ public class Resource implements Cloneable {
 		inverseJoinColumns = {
 				@JoinColumn(name = "skill_id") })
 	@OrderColumn(name = "order_col")
-	private List<Skill>			skills		= new ArrayList<>();
+	private Set<Skill>			skills		= new HashSet<Skill>();
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Allocation>	allocations	= new ArrayList<>();
 
 	/** The hours. */
 	@Basic
 	private int					hours;
+
+	/**
+	 * The user associated with this resource. Usually only for a user with ROLE_USER authority.
+	 */
+	@OneToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "user_id", nullable = true)
+	@OrderColumn(name = "order_col")
+	private User				user;
 
 	/**
 	 * Instantiates a new resource.
@@ -112,7 +123,7 @@ public class Resource implements Cloneable {
 				clone.getAllocations().add(allocation);
 			}
 		}
-		clone.skills = new ArrayList<Skill>();
+		clone.skills = new HashSet<Skill>();
 		if (skills != null) {
 			for (Skill skill : skills) {
 				clone.getSkills().add(skill);
@@ -208,8 +219,17 @@ public class Resource implements Cloneable {
 	 *
 	 * @return the skills
 	 */
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
+	}
+
+	/**
+	 * Gets the user.
+	 *
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
 	}
 
 	/*
@@ -239,6 +259,9 @@ public class Resource implements Cloneable {
 		for (Allocation allocation : new ArrayList<Allocation>(allocations)) {
 			removeAllocation(allocation);
 		}
+		if (user != null) {
+			user.setResource(null);
+		}
 	}
 
 	/**
@@ -254,6 +277,7 @@ public class Resource implements Cloneable {
 
 			if (i.getResource() != null && i.getResource().equals(this)
 				&& i.equals(allocation)) {
+				i.setResource(null);
 				iterator.remove();
 			}
 		}
@@ -324,17 +348,24 @@ public class Resource implements Cloneable {
 	 * @param skills
 	 *            the new skills
 	 */
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * Sets the user.
+	 *
+	 * @param user
+	 *            the new user
 	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", hours="
-			+ hours + "]";
+		return "Resource [id=" + id + ", name=" + name + ", skills=" + skills + ", allocations=" + allocations + ", hours="
+			+ hours + ", user=" + (user != null ? String.valueOf(user.getId()) : "null") + "]";
 	}
 
 }

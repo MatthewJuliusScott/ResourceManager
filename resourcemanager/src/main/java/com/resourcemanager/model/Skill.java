@@ -22,7 +22,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
 /**
@@ -41,7 +40,7 @@ public class Skill implements Cloneable {
 	private long				id;
 
 	/** The name. */
-	@NaturalId
+	@Column(unique = true)
 	private String				name;
 
 	/** The resources. */

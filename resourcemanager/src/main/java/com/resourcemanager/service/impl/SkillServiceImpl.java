@@ -6,6 +6,7 @@ package com.resourcemanager.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,7 @@ public class SkillServiceImpl implements SkillService {
 	 */
 	@Override
 	@Transactional
-	public void addSkill(Skill skill) {
+	public void addSkill(Skill skill) throws DataIntegrityViolationException {
 		this.skillDAO.addSkill(skill);
 	}
 
@@ -73,7 +74,7 @@ public class SkillServiceImpl implements SkillService {
 	 */
 	@Override
 	@Transactional
-	public void updateSkill(Skill skill) {
+	public void updateSkill(Skill skill) throws DataIntegrityViolationException {
 		this.skillDAO.updateSkill(skill);
 	}
 }

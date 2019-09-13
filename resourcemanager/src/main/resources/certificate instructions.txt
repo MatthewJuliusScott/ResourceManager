@@ -2,7 +2,7 @@ Get new domain-crt.txt and domain-key.txt from www.zerossl.com using the account
 
 Install OpenSSL
 Generate a pkcs12 file (combination of crt and key) with the following (use the password 'password'):
-openssl pkcs12 -export -in domain.pem -inkey domain-key.txt -out domain.p12 -name ResourceManager
+openssl pkcs12 -export -in domain-crt.txt -inkey domain-key.txt -out domain.p12 -name ResourceManager
 
 
 Run the following from the java/bin directory (where you installed the JRE):

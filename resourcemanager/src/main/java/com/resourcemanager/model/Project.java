@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -11,12 +11,14 @@ import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,7 +40,8 @@ public class Project implements Cloneable {
 	private String				name;
 
 	/** The allocations. */
-	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "project_id")
 	private List<Allocation>	allocations	= new ArrayList<Allocation>();
 
 	/**
@@ -50,7 +53,8 @@ public class Project implements Cloneable {
 	/**
 	 * Instantiates a new project.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
 	public Project(String name) {
 		this.name = name;
@@ -151,6 +155,7 @@ public class Project implements Cloneable {
 			Allocation i = iterator.next();
 
 			if (i.getProject().equals(this) && i.equals(allocation)) {
+				i.setProject(null);
 				iterator.remove();
 			}
 		}

@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -42,7 +42,6 @@ public class Allocation implements Cloneable {
 
 	/** The project. */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id")
 	private Project							project;
 
 	/** The skill. */
@@ -138,7 +137,7 @@ public class Allocation implements Cloneable {
 		}
 
 		Allocation that = (Allocation) o;
-		return Objects.equals(project, that.project)
+		return id == that.id && Objects.equals(project, that.project)
 			&& Objects.equals(skill, that.skill);
 	}
 
@@ -229,7 +228,7 @@ public class Allocation implements Cloneable {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(project, skill);
+		return Objects.hash(id, project, skill);
 	}
 
 	/**
@@ -327,8 +326,8 @@ public class Allocation implements Cloneable {
 	 */
 	@Override
 	public String toString() {
-		return "Allocation [id=" + id + ", project=" + project + ", skill="
+		return "Allocation [id=" + id + ", project=" + (project != null ? String.valueOf(project.getId()) : "null") + ", skill="
 			+ skill + ", startDate=" + startDate + ", endDate=" + endDate
-			+ ", hours=" + hours + ", resource=" + resource + "]";
+			+ ", hours=" + hours + ", resource=" + (resource != null ? String.valueOf(resource.getId()) : "null") + "]";
 	}
 }
