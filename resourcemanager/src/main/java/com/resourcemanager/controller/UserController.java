@@ -257,7 +257,9 @@ public class UserController {
 		User loggedInUser = getLoggedInUser();
 
 		User oldUser = userService.getUserByID(user.getId());
-		user.setNotifications(oldUser.getNotifications());
+		if (oldUser != null) {
+			user.setNotifications(oldUser.getNotifications());
+		}
 
 		// When changing our own password only change the password if the old
 		// password field matches the old password.
