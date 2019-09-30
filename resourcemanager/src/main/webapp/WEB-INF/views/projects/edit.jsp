@@ -147,6 +147,7 @@
 			    $( ".startDate" ).datepicker({   
 			      defaultDate: "+1w",  
 			      changeMonth: true,
+			      changeYear: true,
 			      dateFormat: 'dd/mm/yy',
 			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {
@@ -156,6 +157,7 @@
 			    $( ".endDate" ).datepicker({
 			      defaultDate: "+1w",
 			      changeMonth: true,
+			      changeYear: true,
 			      dateFormat: 'dd/mm/yy',
 			      numberOfMonths: 1,
 			      onClose: function( selectedDate ) {
