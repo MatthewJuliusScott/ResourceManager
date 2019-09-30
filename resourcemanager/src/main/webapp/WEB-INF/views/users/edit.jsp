@@ -119,7 +119,7 @@
 											<tr>
 												<td style="width: 150px;">
 														<label style="font-weight: bold;">
-															<spring:message text="Resource"/>
+															<spring:message text="Link to Resource"/>
 														</label>
 													</td>
 												<td>
