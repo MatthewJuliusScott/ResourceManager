@@ -4,6 +4,8 @@
 package com.resourcemanager.dao.impl;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.resourcemanager.dao.ResourceDAO;
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Resource;
+import com.resourcemanager.model.User;
 
 /**
  * The Class ResourceDAOImpl.
@@ -98,6 +101,12 @@ public class ResourceDAOImpl implements ResourceDAO {
 		for (Resource resource : resourcesList) {
 			logger.info("Resource List::" + resource);
 		}
+		 
+		Collections.sort(resourcesList, new Comparator<Resource>() {
+			public int compare(Resource r1, Resource r2) {
+				return r1.getName().compareTo(r2.getName());
+			}
+		});
 		return resourcesList;
 	}
 

@@ -3,6 +3,8 @@
  */
 package com.resourcemanager.dao.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -119,7 +121,14 @@ public class UserDAOImpl implements UserDAO {
 		Root<User> root = criteria.from(User.class);
 		criteria.select(root);
 		Query<User> query = getCurrentSession().createQuery(criteria);
-		return query.getResultList();
+		List<User> users = query.getResultList();  
+		Collections.sort(users, new Comparator<User>() {
+			public int compare(User u1, User u2) {
+				return u1.getName().compareTo(u2.getName());
+			}
+		});
+		
+		return users;
 	}
 
 	/* (non-Javadoc)
