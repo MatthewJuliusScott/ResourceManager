@@ -295,10 +295,6 @@ public class ProjectController {
 			this.projectService.updateProject(project);
 		}
 
-//		for (Allocation allocation : project.getAllocations()) {
-//			allocationService.updateAllocation(allocation);
-//		}
-
 		return "redirect:/projects/edit/" + project.getId();
 	}
 }

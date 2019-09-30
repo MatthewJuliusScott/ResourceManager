@@ -37,22 +37,22 @@
 								<td>
 									<table cellpadding="0" cellspacing="0">
 										<tr>
-											<td style="width: 150px;">
+											<td style="width: 20%;">
 												<form:label path="name" style="font-weight: bold;">
 													<spring:message text="Name"/>
 												</form:label>
 											</td>
-											<td style="width: 500px;">
+											<td style="width: 80%;">
 												<form:input path="name" />
 											</td> 
 										</tr>
 										<tr>
-											<td style="width: 150px;">
+											<td style="width: 20%;">
 												<form:label path="Email" style="font-weight: bold;">
 													<spring:message text="Email"/>
 												</form:label>
 											</td>
-											<td style="width: 500px;">
+											<td style="width: 80%;">
 													<c:if test="${user.id == 0}">
 														<form:input path="email" class="form-control" />
 													</c:if>
@@ -63,67 +63,67 @@
 										</tr>
 										<c:if test="${user.id == 0}">
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 													<label style="font-weight: bold;">
 														<spring:message text="Password"/>
 													</label>
 												</td>
-												<td style="width: 500px;">
+												<td style="width: 80%;">
 													<input type="password" name="password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 													<label style="font-weight: bold;">
 														<spring:message text="Confirm Password"/>
 													</label>
 												</td>
-												<td style="width: 500px;">
+												<td style="width: 80%;">
 													<input type="password" name="confirmPassword" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
 										<c:if test="${user.id != 0}">
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 													<label style="font-weight: bold;">
 														<spring:message text="Old Password"/>
 													</label>
 												</td>
-												<td style="width: 500px;">
+												<td style="width: 80%;">
 													<input type="password" name="oldPassword" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 													<label style="font-weight: bold;">
 														<spring:message text="New Password"/>
 													</label>
 												</td>
-												<td style="width: 500px;">
+												<td style="width: 80%;">
 													<input type="password" name="password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 													<label style="font-weight: bold;">
 														<spring:message text="Confirm New Password"/>
 													</label>
 												</td>
-												<td style="width: 500px;">
+												<td style="width: 80%;">
 													<input type="password" name="confirmPassword" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
 										<c:if test="${admin}">
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 														<label style="font-weight: bold;">
 															<spring:message text="Link to Resource"/>
 														</label>
 													</td>
 												<td>
-													<select name="resourceId" id="resourceId" class="form-control" style="width: 500px;">
+													<select name="resourceId" id="resourceId" class="form-control" style="width: 80%;">
 														<c:if test = "${not empty user.resource}">
 															<option value="${user.resource.id}" selected>${user.resource.name}</option>
 															<option value="">-- none --</option>
@@ -140,13 +140,13 @@
 												</td>
 											</tr>
 											<tr>
-												<td style="width: 150px;">
+												<td style="width: 20%;">
 														<label style="font-weight: bold;">
 															<spring:message text="Authority"/>
 														</label>
 												</td>
 												<td>
-													<select name="authority" id="authority" class="form-control" style="width: 500px;">
+													<select name="authority" id="authority" class="form-control" style="width: 80%;">
 														<c:if test = "${user.authorityStrings.contains('ROLE_ADMIN')}">
 															<option value="ROLE_USER">User</option>
 															<option value="ROLE_ADMIN" selected>Admin</option>
