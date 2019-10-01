@@ -352,8 +352,17 @@ public class UserController {
 		}
 
 		if (loggedInUser.getId() == user.getId()) {
+			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
+					request);
+				req.addMessage("Password was updated sucessfully");
+				
 			return "redirect:/users/myprofile";
+			
 		} else {
+			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
+					request);
+				req.addMessage("Password was updated successfully");
+			
 			return "redirect:/users";
 		}
 
