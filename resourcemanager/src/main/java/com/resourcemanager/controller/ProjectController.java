@@ -257,7 +257,19 @@ public class ProjectController {
 					resource = resourceService
 						.getResourceByID(Long.parseLong(resourceId));
 				}
-
+				// if hours are less than 0 or not an int change to 0
+				try 
+				{
+					if (Integer.parseInt(hours)<0) {
+					hours = "0";
+					
+					}
+				}
+				catch (Exception e) {
+					
+					hours = "0";
+				} 
+				
 				Allocation allocation = new Allocation(Long.parseLong(id),
 					project,
 					skillService.getSkillByID(Long.parseLong(skillId)),
