@@ -1,6 +1,7 @@
 package com.resourcemanager.model;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,20 +19,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Report {
 
-	public final static int	HOURS_PER_SKILL		= 1;
+	/** The Constant HOURS_PER_SKILL. */
+	public final static int		HOURS_PER_SKILL		= 1;
 
-	public final static int	HOURS_PER_PROJECT	= 2;
+	/** The Constant HOURS_PER_PROJECT. */
+	public final static int		HOURS_PER_PROJECT	= 2;
 
 	/** The labels. */
 	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String>		labels				= new LinkedHashSet<String>();
+	private Set<String>			labels				= new LinkedHashSet<String>();
 
 	/** The data. */
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String>	data				= new LinkedList<String>();
+	private List<List<String>>	data				= new LinkedList<List<String>>();
+
+	/** The dataset labels. */
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String>		dataLabels			= new ArrayList<String>();
 
 	/** The name. */
-	private String			name				= "";
+	private String				name				= "";
+
+	/**
+	 * Adds the data.
+	 *
+	 * @param data
+	 *            the data
+	 */
+	public void addData(List<String> data) {
+		this.data.add(data);
+	}
 
 	/**
 	 * Labels JSON.
@@ -46,6 +63,11 @@ public class Report {
 		return objectMapper.writeValueAsString(this);
 	}
 
+	/**
+	 * Gets the border colours.
+	 *
+	 * @return the border colours
+	 */
 	public String[] getBorderColours() {
 		String[] colours = new String[labels.size()];
 		int i = 0;
@@ -58,6 +80,11 @@ public class Report {
 		return colours;
 	}
 
+	/**
+	 * Gets the colours.
+	 *
+	 * @return the colours
+	 */
 	public String[] getColours() {
 		String[] colours = new String[labels.size()];
 		int i = 0;
@@ -75,8 +102,17 @@ public class Report {
 	 *
 	 * @return the data
 	 */
-	public List<String> getData() {
+	public List<List<String>> getData() {
 		return data;
+	}
+
+	/**
+	 * Gets the dataLabels.
+	 *
+	 * @return the dataLabels
+	 */
+	public List<String> getDataLabels() {
+		return dataLabels;
 	}
 
 	/**
@@ -103,8 +139,18 @@ public class Report {
 	 * @param data
 	 *            the new data
 	 */
-	public void setData(List<String> data) {
+	public void setData(List<List<String>> data) {
 		this.data = data;
+	}
+
+	/**
+	 * Sets the dataLabels.
+	 *
+	 * @param dataLabels
+	 *            the new dataLabels
+	 */
+	public void setDataLabels(List<String> dataLabels) {
+		this.dataLabels = dataLabels;
 	}
 
 	/**
