@@ -74,6 +74,7 @@
 			                }
 			            }]
 			        },
+			        responsive: true,
 			        title: {
 			            display: true,
 			            text: report.name
