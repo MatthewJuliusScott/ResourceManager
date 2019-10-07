@@ -106,7 +106,7 @@
 												</td> 
 											</tr>
 											<tr>
-												<td style="width: 20%;">
+												<td style="width: 20%; padding-right: 5px;">
 													<label style="font-weight: bold;">
 														<spring:message text="Confirm New Password"/>
 													</label>
@@ -118,12 +118,12 @@
 										</c:if>
 										<c:if test="${admin}">
 											<tr>
-												<td style="width: 20%;">
+												<td style="width: 20%; padding-bottom: 10px;">
 														<label style="font-weight: bold;">
 															<spring:message text="Link to Resource"/>
 														</label>
 													</td>
-												<td>
+												<td style="padding-bottom: 10px;">
 													<select name="resourceId" id="resourceId" class="form-control" style="width: 80%;">
 														<c:if test = "${not empty user.resource}">
 															<option value="${user.resource.id}" selected>${user.resource.name}</option>
