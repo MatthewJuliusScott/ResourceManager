@@ -6,11 +6,11 @@ package com.resourcemanager.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,64 +61,70 @@ public class ReportController {
 		List<Allocation> allocations = allocationService.listAllocations();
 
 		if (type == Report.HOURS_PER_PROJECT) {
-			report.setName("# of hours per project");
+			report.setName("Number of hours per project, per month");
+
+			HashMap<String, HashMap<String, Integer>> tempData =
+				new HashMap<String, HashMap<String, Integer>>();
 			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)) {
-				HashMap<String, Integer> tempMap = new HashMap<String, Integer>();
 				for (Allocation allocation : allocations) {
-					if ((allocation.getStartDate().isAfter(startDate) || allocation.getStartDate().isEqual(startDate))
-						&& (allocation.getEndDate().isBefore(endDate) || allocation.getEndDate().isEqual(endDate))) {
-						String key = allocation.getProject().getName();
-						Integer value =
-							tempMap.get(key) != null ? tempMap.get(key)
-								: new Integer(0);
-						value += allocation.getHours();
-						tempMap.put(key, value);
+
+					String month = date.getMonth().name();
+					String key = allocation.getProject().getName();
+					if (tempData.get(key) == null) {
+						tempData.put(key, new HashMap<String, Integer>());
 					}
+					Integer value =
+						tempData.get(key) != null && tempData.get(key).get(month) != null ? tempData.get(key).get(month)
+							: new Integer(0);
+
+					if ((allocation.getStartDate().isAfter(date) || allocation.getStartDate().isEqual(date))
+						&& (allocation.getEndDate().isBefore(date.plusMonths(1))
+							|| allocation.getEndDate().isEqual(date.plusMonths(1)))) {
+						value += allocation.getHours();
+					}
+					tempData.get(key).put(month, value);
 				}
-
-				Set<String> labels = new LinkedHashSet<String>();
-				labels.addAll(tempMap.keySet());
-
-				/* Specify the size of the list up front to prevent resizing. */
-				List<String> data = new ArrayList<String>(tempMap.size());
-				for (Integer myInt : tempMap.values()) {
-					data.add(String.valueOf(myInt));
-				}
-
-				report.setLabels(labels);
-				report.addData(data);
 			}
+			ArrayList<Entry<String, ArrayList<Integer>>> data = new ArrayList<Entry<String, ArrayList<Integer>>>();
+			for (Entry<String, HashMap<String, Integer>> mapEntry : tempData.entrySet()) {
+				SimpleEntry<String, ArrayList<Integer>> entry =
+					new SimpleEntry<String, ArrayList<Integer>>(mapEntry.getKey(), new ArrayList<>(mapEntry.getValue().values()));
+				data.add(entry);
+			}
+			report.setData(data);
 		} else if (type == Report.HOURS_PER_SKILL) {
-			report.setName("# of hours per skill");
+			report.setName("Number of hours per skill, per month");
+			HashMap<String, HashMap<String, Integer>> tempData = new HashMap<String, HashMap<String, Integer>>();
 			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)) {
-				HashMap<String, Integer> tempMap = new HashMap<String, Integer>();
 				for (Allocation allocation : allocations) {
-					if ((allocation.getStartDate().isAfter(startDate) || allocation.getStartDate().isEqual(startDate))
-						&& (allocation.getEndDate().isBefore(endDate) || allocation.getEndDate().isEqual(endDate))) {
-						String key = allocation.getSkill().getName();
-						Integer value =
-							tempMap.get(key) != null ? tempMap.get(key)
-								: new Integer(0);
-						value += allocation.getHours();
-						tempMap.put(key, value);
+
+					String month = date.getMonth().name();
+					String key = allocation.getSkill().getName();
+					if (tempData.get(key) == null) {
+						tempData.put(key, new HashMap<String, Integer>());
 					}
+					Integer value =
+						tempData.get(key) != null && tempData.get(key).get(month) != null ? tempData.get(key).get(month)
+							: new Integer(0);
+
+					if ((allocation.getStartDate().isAfter(date) || allocation.getStartDate().isEqual(date))
+						&& (allocation.getEndDate().isBefore(date.plusMonths(1))
+							|| allocation.getEndDate().isEqual(date.plusMonths(1)))) {
+						value += allocation.getHours();
+					}
+					tempData.get(key).put(month, value);
 				}
-
-				Set<String> labels = new LinkedHashSet<String>();
-				labels.addAll(tempMap.keySet());
-
-				/* Specify the size of the list up front to prevent resizing. */
-				List<String> data = new ArrayList<String>(tempMap.size());
-				for (Integer myInt : tempMap.values()) {
-					data.add(String.valueOf(myInt));
-				}
-
-				report.setLabels(labels);
-				report.addData(data);
 			}
+			ArrayList<Entry<String, ArrayList<Integer>>> data = new ArrayList<Entry<String, ArrayList<Integer>>>();
+			for (Entry<String, HashMap<String, Integer>> mapEntry : tempData.entrySet()) {
+				SimpleEntry<String, ArrayList<Integer>> entry =
+					new SimpleEntry<String, ArrayList<Integer>>(mapEntry.getKey(), new ArrayList<>(mapEntry.getValue().values()));
+				data.add(entry);
+			}
+			report.setData(data);
 		}
 
-		report.setDataLabels(Utils.getMonthNamesInbetweenDates(startDate, endDate));
+		report.setLabels(Utils.getMonthNamesInbetweenDates(startDate, endDate));
 		model.addAttribute("report", report);
 		request.setAttribute("startDate", dateTimeFormatter.format(startDate));
 		request.setAttribute("endDate", dateTimeFormatter.format(endDate));

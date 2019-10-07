@@ -3,7 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var = "admin" scope = "page" value = "#{loggedInUser != null and loggedInUser.authorityStrings.contains('ROLE_ADMIN')}"/>
 <%@ page import="com.resourcemanager.model.Report" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map.Entry" %>
 <% Report report = (Report)request.getAttribute("report"); %>
 
 <html>
@@ -41,27 +42,27 @@
 	
 	<footer>
 		<script>
-			var report = JSON.parse('${report.asJSON}');
+			var report = ${report.asJSON};
 
 			var ctx = document.getElementById('myChart').getContext('2d');
 			var config = {
 			   type: 'bar',
 			   data: {
-			      labels: report.dataLabels,
+			      labels: report.labels,
 			      datasets: [
-			      <% int count = 0; %>
-			      <% for (List<String> dataset : report.getData()) { %>
-			    	{
-			         label: report.labels[<%=count%>],
-			         data: report.data[<%=count++%>],
+			     <% int count = 0; %>
+			     <% for (Entry<String, ArrayList<Integer>> dataset : report.getData()) { %>
+			      {
+			         label: Object.keys(report.data[<%=count%>]),
+			         data: Object.values(report.data[<%=count%>])[0],
 			         backgroundColor: report.colours[<%=count%>],
-			         borderColor: report.borderColours[<%=count%>],
+			         borderColor: report.borderColours[<%=count++%>],
 			         borderWidth: 1
 			         
 			      }
-			    	 <% if (report.getData().size() > count) { %>
-			         ,
-			         <% } %>
+		    	  <% if (report.getData().size() > count) { %>
+		          ,
+		          <% } %>
 			     <% } %>
 			    ]
 			   },
@@ -72,6 +73,10 @@
 			                    beginAtZero: true
 			                }
 			            }]
+			        },
+			        title: {
+			            display: true,
+			            text: report.name
 			        }
 			    }
 			};

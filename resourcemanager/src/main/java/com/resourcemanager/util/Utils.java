@@ -3,15 +3,15 @@ package com.resourcemanager.util;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class Utils {
 
-	public static List<String> getMonthNamesInbetweenDates(LocalDate startDate, LocalDate endDate) {
+	public static Set<String> getMonthNamesInbetweenDates(LocalDate startDate, LocalDate endDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH);
-		List<String> outputs = new ArrayList<>();
+		Set<String> outputs = new LinkedHashSet<String>();
 		YearMonth yearMonth = YearMonth.from(startDate);
 
 		// Repeat while the current year-month is *not* after (is before or is equal) the ending year-month.
