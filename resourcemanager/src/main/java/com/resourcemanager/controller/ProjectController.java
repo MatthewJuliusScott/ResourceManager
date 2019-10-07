@@ -287,7 +287,8 @@ public class ProjectController {
 						User user = resource.getUser();
 						if (user != null) {
 							Notification notification = new Notification(
-								"Your have been assigned a new allocation");
+								"You have been assigned to " + project.getName() + " for "
+								+ hours + " hours between " + startDate + " and " + endDate);
 							notificationService.addNotification(notification);
 							user.addNotification(notification);
 							userService.updateUser(user);
