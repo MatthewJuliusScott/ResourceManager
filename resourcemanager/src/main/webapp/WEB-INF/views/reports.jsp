@@ -50,17 +50,16 @@
 			   data: {
 			      labels: report.labels,
 			      datasets: [
-			     <% int count = 0; %>
-			     <% for (Entry<String, ArrayList<Integer>> dataset : report.getData()) { %>
+			     <% for (int i = 0; i < report.getData().size(); i++) { %>
 			      {
-			         label: Object.keys(report.data[<%=count%>]),
-			         data: Object.values(report.data[<%=count%>])[0],
-			         backgroundColor: report.colours[<%=count%>],
-			         borderColor: report.borderColours[<%=count++%>],
+			         label: Object.keys(report.data[<%=i%>]),
+			         data: Object.values(report.data[<%=i%>])[0],
+			         backgroundColor: report.colours[<%=i%>],
+			         borderColor: report.borderColours[<%=i%>],
 			         borderWidth: 1
 			         
 			      }
-		    	  <% if (report.getData().size() > count) { %>
+		    	  <% if (report.getData().size() > i) { %>
 		          ,
 		          <% } %>
 			     <% } %>
@@ -70,7 +69,7 @@
 			        scales: {
 			            yAxes: [{
 			                ticks: {
-			                    beginAtZero: true
+			                    beginAtZero: true,
 			                }
 			            }]
 			        },

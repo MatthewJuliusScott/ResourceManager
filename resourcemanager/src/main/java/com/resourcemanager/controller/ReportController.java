@@ -8,9 +8,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Report;
+import com.resourcemanager.model.Resource;
+import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.AllocationService;
+import com.resourcemanager.service.ProjectService;
+import com.resourcemanager.service.ResourceService;
+import com.resourcemanager.service.SkillService;
 import com.resourcemanager.util.Utils;
 
 /**
@@ -34,7 +41,19 @@ public class ReportController {
 
 	/** The allocation service. */
 	@Autowired
-	private AllocationService allocationService;
+	private AllocationService	allocationService;
+
+	/** The resource service. */
+	@Autowired
+	private ResourceService		resourceService;
+
+	/** The skill service. */
+	@Autowired
+	private SkillService		skillService;
+
+	/** The project service. */
+	@Autowired
+	private ProjectService		projectService;
 
 	/**
 	 * List reports.
@@ -58,10 +77,9 @@ public class ReportController {
 			endDate = LocalDate.now().plusDays(28);
 		}
 
-		List<Allocation> allocations = allocationService.listAllocations();
-
-		if (type == Report.HOURS_PER_PROJECT) {
+		if (type == Report.HOURS_PER_PROJECT_REQUIRED_PER_MONTH) {
 			report.setName("Number of hours per project, per month");
+			List<Allocation> allocations = allocationService.listAllocations();
 
 			HashMap<String, HashMap<String, Integer>> tempData =
 				new HashMap<String, HashMap<String, Integer>>();
@@ -92,8 +110,12 @@ public class ReportController {
 				data.add(entry);
 			}
 			report.setData(data);
-		} else if (type == Report.HOURS_PER_SKILL) {
+			report.setLabels(Utils.getMonthNamesInbetweenDates(startDate, endDate));
+
+		} else if (type == Report.HOURS_PER_SKILL_REQUIRED_PER_MONTH) {
 			report.setName("Number of hours per skill, per month");
+			List<Allocation> allocations = allocationService.listAllocations();
+
 			HashMap<String, HashMap<String, Integer>> tempData = new HashMap<String, HashMap<String, Integer>>();
 			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusMonths(1)) {
 				for (Allocation allocation : allocations) {
@@ -122,9 +144,38 @@ public class ReportController {
 				data.add(entry);
 			}
 			report.setData(data);
+			report.setLabels(Utils.getMonthNamesInbetweenDates(startDate, endDate));
+
+		} else if (type == Report.POTENTIAL_HOURS_PER_SKILL_FROM_RESOURCES) {
+			report.setName("Potential number of hours per skill from resources");
+			List<Resource> resources = resourceService.listResources();
+			HashMap<String, Integer> tempData = new HashMap<String, Integer>();
+
+			for (Resource resource : resources) {
+				Set<Skill> skills = resource.getSkills();
+				for (Skill skill : skills) {
+					String key = skill.getName();
+					if (tempData.get(key) == null) {
+						tempData.put(key, new Integer(0));
+					}
+					Integer value = tempData.get(key) != null ? tempData.get(key) : new Integer(0);
+					value += resource.getHours();
+					tempData.put(key, value);
+				}
+			}
+
+			ArrayList<Entry<String, ArrayList<Integer>>> data = new ArrayList<Entry<String, ArrayList<Integer>>>();
+			for (Entry<String, Integer> mapEntry : tempData.entrySet()) {
+				SimpleEntry<String, ArrayList<Integer>> entry =
+					new SimpleEntry<String, ArrayList<Integer>>(mapEntry.getKey(),
+						new ArrayList<>(Arrays.asList(mapEntry.getValue())));
+				data.add(entry);
+			}
+			report.setData(data);
+			report.setLabels(tempData.keySet());
+
 		}
 
-		report.setLabels(Utils.getMonthNamesInbetweenDates(startDate, endDate));
 		model.addAttribute("report", report);
 		request.setAttribute("startDate", dateTimeFormatter.format(startDate));
 		request.setAttribute("endDate", dateTimeFormatter.format(endDate));

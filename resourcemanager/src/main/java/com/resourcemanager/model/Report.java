@@ -14,21 +14,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class Report {
 
-	/** The Constant HOURS_PER_SKILL. */
-	public final static int									HOURS_PER_SKILL		= 1;
+	/** The Constant HOURS_PER_SKILL_REQUIRED. */
+	public final static int									HOURS_PER_SKILL_REQUIRED_PER_MONTH					= 1;
 
-	/** The Constant HOURS_PER_PROJECT. */
-	public final static int									HOURS_PER_PROJECT	= 2;
+	/** The Constant HOURS_PER_PROJECT_REQUIRED. */
+	public final static int									HOURS_PER_PROJECT_REQUIRED_PER_MONTH					= 2;
+
+	/** The Constant POTENTIAL_HOURS_PER_SKILL_FROM_RESOURCES. */
+	public static final int									POTENTIAL_HOURS_PER_SKILL_FROM_RESOURCES	= 3;
 
 	/** The labels. */
-	private Set<String>										labels				= new HashSet<String>();
+	private Set<String>										labels										= new HashSet<String>();
 
 	/** The data. */
-	private ArrayList<Entry<String, ArrayList<Integer>>>	data				=
+	private ArrayList<Entry<String, ArrayList<Integer>>>	data										=
 		new ArrayList<Entry<String, ArrayList<Integer>>>();
 
 	/** The name. */
-	private String											name				= "";
+	private String											name										= "";
 
 	/**
 	 * Labels JSON.
