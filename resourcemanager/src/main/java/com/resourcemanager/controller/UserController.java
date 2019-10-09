@@ -246,6 +246,9 @@ public class UserController {
 			System.err.println(result.toString());
 		}
 
+		HttpServletRequestDecorator req = new HttpServletRequestDecorator(
+			request);
+
 		// extract extra parameters
 		String oldPassword = request.getParameter("oldPassword") != null
 			? request.getParameter("oldPassword")
@@ -254,16 +257,16 @@ public class UserController {
 			? request.getParameter("password")
 			: "";
 		String confirmPassword = request.getParameter("confirmPassword") != null
-					? request.getParameter("confirmPassword")
-					: "";
-		
+			? request.getParameter("confirmPassword")
+			: "";
+
 		User loggedInUser = getLoggedInUser();
 
 		User oldUser = userService.getUserByID(user.getId());
 		if (oldUser != null) {
 			user.setNotifications(oldUser.getNotifications());
 		}
-		
+
 		// When changing our own password only change the password if the old
 		// password field matches the old password.
 		if (user.getId() != 0 || user.getId() == loggedInUser.getId()) {
@@ -275,41 +278,31 @@ public class UserController {
 				&& newPassword.length() > 0) {
 				// if old password is correct
 				if (encoder.matches(oldPassword, user.getPassword())) {
-					if (!newPassword.equals(confirmPassword))
-					{
-					HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-						request);
-					req.addMessage("Passwords did not match, password not saved");
-					return "redirect:/users/myprofile";
+					if (!newPassword.equals(confirmPassword)) {
+						req.addMessage("Passwords did not match, password not saved");
+						return "redirect:/users/myprofile";
 					}
 					// if a new password has been set, encrypt it and assign to
-					// user
-					// object
+					// user object
 					if (newPassword.length() > 0) {
 						String encryptedPassword = encoder.encode(newPassword);
 						user.setPassword(encryptedPassword);
+						req.addMessage("Password was updated sucessfully");
 					}
-					
+
 				} else {
-					
-					HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-						request);
 					req.addMessage("Old password was incorrect.");
 					return "redirect:/users/myprofile";
 				}
-				
+
 			}
-			
 
 			// If it is not an existing user, or if editing another user and the
 			// logged in user has admin privileges we can just update their
 			// password.
 		} else if (user.getId() == 0 || (user.getId() != loggedInUser.getId()
 			&& loggedInUser.getAuthorityStrings().contains("ROLE_ADMIN"))) {
-			if (!newPassword.equals(confirmPassword))
-			{
-			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-					request);
+			if (!newPassword.equals(confirmPassword)) {
 				req.addMessage("Passwords did not match, password not saved");
 				return "redirect:/users";
 			}
@@ -317,8 +310,8 @@ public class UserController {
 			// field matches a re-enter your password field, just set value
 			String encryptedPassword = encoder.encode(newPassword);
 			user.setPassword(encryptedPassword);
+			req.addMessage("User was created sucessfully.");
 		}
-		
 
 		// this will need to be set on the front end, can't pass back whole
 		// POJO, but we can send back just the resourceId for this user, and
@@ -373,17 +366,8 @@ public class UserController {
 		}
 
 		if (loggedInUser.getId() == user.getId()) {
-			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-					request);
-				req.addMessage("Password was updated sucessfully");
-				
 			return "redirect:/users/myprofile";
-			
 		} else {
-			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
-					request);
-				req.addMessage("Password was updated successfully");
-			
 			return "redirect:/users";
 		}
 

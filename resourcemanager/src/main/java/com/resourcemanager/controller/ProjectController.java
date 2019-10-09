@@ -12,8 +12,10 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestDecorator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -258,18 +260,16 @@ public class ProjectController {
 						.getResourceByID(Long.parseLong(resourceId));
 				}
 				// if hours are less than 0 or not an int change to 0
-				try 
-				{
-					if (Integer.parseInt(hours)<0) {
-					hours = "0";
-					
+				try {
+					if (Integer.parseInt(hours) < 0) {
+						hours = "0";
+
 					}
-				}
-				catch (Exception e) {
-					
+				} catch (Exception e) {
+
 					hours = "0";
-				} 
-				
+				}
+
 				Allocation allocation = new Allocation(Long.parseLong(id),
 					project,
 					skillService.getSkillByID(Long.parseLong(skillId)),
@@ -299,12 +299,19 @@ public class ProjectController {
 			}
 		}
 
-		if (project.getId() == 0) {
-			// new project, add it
-			this.projectService.addProject(project);
-		} else {
-			// existing project, call update
-			this.projectService.updateProject(project);
+		try {
+			if (project.getId() == 0) {
+				// new project, add it
+				this.projectService.addProject(project);
+			} else {
+				// existing project, call update
+				this.projectService.updateProject(project);
+			}
+		} catch (DataIntegrityViolationException dive) {
+			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
+				request);
+			req.addMessage("POB " + project.getPob() + " already exists.");
+			return "redirect:/projects/edit/" + project.getId();
 		}
 
 		return "redirect:/projects/edit/" + project.getId();

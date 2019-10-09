@@ -1,0 +1,37 @@
+Aaron, I actually got a chance to go in the app and test it. Couple of high-level feedback. I didn’t try creating new resource.
+
+ 
+
+-          Very clear and precise links
+
+-          Self-explanatory and seamless process from one tab to another.
+
+ 
+
+But
+
+-          Couldn’t allocate resources to the Projects despite having required skills
+
+-          Also resource availability tab could be good to have as resource might not be available despite having the required skill
+
+ 
+
+Happy to discuss.
+
+ 
+
+Regards,
+
+ 
+
+Vaishali Goel
+
+Delivery Optimisation Manager, Professional Services
+
+Micro Focus
+
+Level 2, Building 4 Equinox
+
+70 Kent Street
+
+Deakin ACT 2600

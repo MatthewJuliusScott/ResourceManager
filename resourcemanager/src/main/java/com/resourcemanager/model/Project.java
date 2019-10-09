@@ -39,6 +39,10 @@ public class Project implements Cloneable {
 	/** The name. */
 	private String				name;
 
+	/** The pob. */
+	@Column(unique = true)
+	private String				pob;
+
 	/** The allocations. */
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_id")
@@ -134,6 +138,15 @@ public class Project implements Cloneable {
 		return name;
 	}
 
+	/**
+	 * Gets the pob.
+	 *
+	 * @return the pob
+	 */
+	public String getPob() {
+		return pob;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -189,6 +202,16 @@ public class Project implements Cloneable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Sets the pob.
+	 *
+	 * @param pob
+	 *            the new pob
+	 */
+	public void setPob(String pob) {
+		this.pob = pob;
 	}
 
 	/*
