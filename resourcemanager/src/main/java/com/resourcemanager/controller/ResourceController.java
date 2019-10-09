@@ -24,7 +24,10 @@ import com.resourcemanager.service.SkillService;
 import com.resourcemanager.service.UserService;
 
 /**
- * The Class ResourceController.
+ * This controller responds to the user input and performs interactions on the Resource data model objects. This controller
+ * receives the input, optionally validates it and then passes the input to the model and directs the user back to a view to
+ * display the model and accept further user input. Handles basic CRUD (create, read, update and delete) operations requested
+ * through views for the Resource data model objects, as well as any advanced inputs.
  */
 @Controller
 public class ResourceController {
@@ -42,7 +45,7 @@ public class ResourceController {
 	private UserService		userService;
 
 	/**
-	 * Adds the resource.
+	 * Directs the user to the edit Resource view but with an id of 0 in order to create a new Resource only.
 	 *
 	 * @return the string
 	 */
@@ -52,7 +55,8 @@ public class ResourceController {
 	}
 
 	/**
-	 * Delete resource.
+	 * Deletes a particular Resource from the application cache and persistence layer, updating the associated Allocations, Skills
+	 * and Projects.
 	 *
 	 * @param id
 	 *            the id
@@ -72,7 +76,7 @@ public class ResourceController {
 	}
 
 	/**
-	 * Edits the resource.
+	 * Passes the data model to the edit Resource view, and redirects the user to that view to respond to their input.
 	 *
 	 * @param id
 	 *            the id
@@ -93,7 +97,8 @@ public class ResourceController {
 	}
 
 	/**
-	 * List resources.
+	 * Retrieves all Resources from the persistence layer and passes them to the Resources view to display them to the user and
+	 * respond to their input.
 	 *
 	 * @param model
 	 *            the model
@@ -107,32 +112,34 @@ public class ResourceController {
 	}
 
 	/**
-	 * Save resource.
+	 * Takes the user input submitted via the edit Resource view and merges changes to the data model for the Resource and
+	 * associated Allocations and Skills before passing that to the persistence layer.
 	 *
-	 * @param p
-	 *            the p
+	 * @param resource
+	 *            the resource
 	 * @param result
 	 *            the result
 	 * @return the string
 	 */
 	// For add and update resource both
 	@RequestMapping(value = "/resources/save", method = RequestMethod.POST)
-	public String saveResource(@ModelAttribute("resource") Resource p, BindingResult result) {
+	public String saveResource(@ModelAttribute("resource") Resource resource, BindingResult result) {
 		if (result.hasErrors()) {
 			System.err.println(result.toString());
 		}
-		if (p.getId() == 0) {
+		if (resource.getId() == 0) {
 			// new resource, add it
-			this.resourceService.addResource(p);
+			this.resourceService.addResource(resource);
 		} else {
 			// existing resource, call update
-			this.resourceService.updateResource(p);
+			this.resourceService.updateResource(resource);
 		}
 		return "redirect:/resources";
 	}
 
 	/**
-	 * Search resources.
+	 * Retrieves all Resources that match the search criteria of Skill, hours and no allocations during the specified time period
+	 * from the persistence layer and passes them to the Resources view to display them to the user and respond to their input.
 	 *
 	 * @param model
 	 *            the model

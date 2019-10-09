@@ -33,13 +33,15 @@ import com.google.common.base.Preconditions;
 import com.resourcemanager.converter.SkillConverter;
 
 /**
- * The Class Application.
+ * The Class Application. This is the entry point for this Spring Boot Application, it contains the main method and initial
+ * configuration.
  */
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
 	/**
-	 * The Class WebConfig.
+	 * The Class WebConfig. Configures the Spring Boot Application for the Model View Controller pattern and loads the properties
+	 * to initialize it.
 	 */
 	@Configuration
 	@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
@@ -51,31 +53,31 @@ public class Application extends SpringBootServletInitializer {
 		@Autowired
 		SkillConverter	skillConverter;
 
-		/** The jdbc driver class name. */
+		/** The Java Database Connector driver class name. */
 		@Value("${spring.datasource.driver-class-name}")
 		private String	jdbcDriverClassName;
 
-		/** The jdbc U rl. */
+		/** The Java Database Connector Url. */
 		@Value("${spring.datasource.url}")
 		private String	jdbcURl;
 
-		/** The db username. */
+		/** The database username. */
 		@Value("${spring.datasource.username}")
 		private String	dbUsername;
 
-		/** The db password. */
+		/** The database password. */
 		@Value("${spring.datasource.password}")
 		private String	dbPassword;
 
-		/** The hbm 2 ddl auto. */
+		/** The hibernate schema generator setting. */
 		@Value("${hibernate.hbm2ddl.auto}")
 		private String	hbm2ddlAuto;
 
-		/** The hbm 2 ddl import files. */
+		/** The hibernate database import script setting. */
 		@Value("${hibernate.hbm2ddl.import_files}")
 		private String	hbm2ddlImport_files;
 
-		/** The dialect. */
+		/** The hibernate dialect. InnoDB etc. */
 		@Value("${hibernate.dialect}")
 		private String	dialect;
 
@@ -101,7 +103,7 @@ public class Application extends SpringBootServletInitializer {
 		}
 
 		/**
-		 * Data source.
+		 * The data source, i.e database layer.
 		 *
 		 * @return the data source
 		 */
@@ -160,7 +162,7 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	/**
-	 * The main method.
+	 * The main method. Entry point for the application.
 	 *
 	 * @param args
 	 *            the arguments

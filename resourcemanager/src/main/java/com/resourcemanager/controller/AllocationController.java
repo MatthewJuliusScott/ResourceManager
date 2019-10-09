@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.controller;
@@ -25,7 +25,10 @@ import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 
 /**
- * The Class AllocationController.
+ * This controller responds to the user input and performs interactions on the Allocation data model objects. This controller
+ * receives the input, optionally validates it and then passes the input to the model and directs the user back to a view to
+ * display the model and accept further user input. Handles basic CRUD (create, read, update and delete) operations requested
+ * through views for the Allocation data model objects, as well as any advanced inputs.
  */
 @Controller
 public class AllocationController {
@@ -41,25 +44,50 @@ public class AllocationController {
 	/** The resource service. */
 	@Autowired
 	private ResourceService		resourceService;
-	
+
 	/**
-	 * Adds the allocation.
+	 * Directs the user to the edit Allocation view but with an id of 0 in order to create a new Allocation only.
 	 *
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/allocations/add"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/allocations/add" }, method = RequestMethod.GET)
 	public String addAllocation() {
 		return "redirect:/allocations/edit/0";
 	}
 
 	/**
-	 * Delete allocation.
+	 * Allows a resource to join a particular allocation and passes that to the application cache and persistence layer, updating
+	 * the associated Project and Resource.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
+	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
+	public String allocate(@ModelAttribute("resource") Resource p, BindingResult result, HttpServletRequest request) {
+
+		long resourceid = Long.parseLong(request.getParameter("resourceId"));
+		long allocationid = Long.parseLong(request.getParameter("allocationId"));
+		Allocation allocation = this.allocationService.getAllocationById(allocationid);
+		allocation.setResource(this.resourceService.getResourceByID(resourceid));
+		this.allocationService.updateAllocation(allocation);
+
+		return "projects";
+	}
+
+	/**
+	 * Deletes a particular Allocation from the application cache and persistence layer, updating the Project and Resource
+	 * involved in the allocation.
+	 *
+	 * @param id
+	 *            the id
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-	        "/allocations/delete/{id}"}, method = RequestMethod.GET)
+			"/allocations/delete/{id}" },
+		method = RequestMethod.GET)
 	public String deleteAllocation(@PathVariable("id") Long id) {
 		Allocation allocation = allocationService.getAllocationById(id);
 		allocationService.deleteAllocation(allocation);
@@ -67,18 +95,21 @@ public class AllocationController {
 	}
 
 	/**
-	 * Edits the allocation.
+	 * Passes the data model to the edit Allocation view, and redirects the user to that view to respond to their input.
 	 *
-	 * @param id the id
-	 * @param model the model
+	 * @param id
+	 *            the id
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-	        "/allocations/edit/{id}"}, method = RequestMethod.GET)
+			"/allocations/edit/{id}" },
+		method = RequestMethod.GET)
 	public String editAllocation(@PathVariable("id") Long id, Model model) {
 		if (id > 0) {
 			model.addAttribute("allocation",
-			        this.allocationService.getAllocationById(id));
+				this.allocationService.getAllocationById(id));
 		} else {
 			model.addAttribute("allocation", new Allocation());
 		}
@@ -87,29 +118,35 @@ public class AllocationController {
 	}
 
 	/**
-	 * List allocations.
+	 * Retrieves all Allocations from the persistence layer and passes them to the Allocations view to display them to the user
+	 * and respond to their input.
 	 *
-	 * @param model the model
+	 * @param model
+	 *            the model
 	 * @return the string
 	 */
-	@RequestMapping(value = {"/allocations"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/allocations" }, method = RequestMethod.GET)
 	public String listAllocations(Model model) {
 		model.addAttribute("listAllocations",
-		        this.allocationService.listAllocations());
+			this.allocationService.listAllocations());
 		return "allocations";
 	}
 
 	/**
-	 * List required allocations.
+	 * Retrieves all Allocations that have not yet been allocated a resource from the persistence layer and passes them to the
+	 * Allocations view to display them to the user and respond to their input.
 	 *
-	 * @param model the model
-	 * @param request the request
+	 * @param model
+	 *            the model
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping(value = {
-	        "/allocations/listrequired"}, method = RequestMethod.GET)
+			"/allocations/listrequired" },
+		method = RequestMethod.GET)
 	public String listRequiredAllocations(Model model,
-	        HttpServletRequest request) {
+		HttpServletRequest request) {
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 		LocalDate startDate;
@@ -122,32 +159,11 @@ public class AllocationController {
 			endDate = LocalDate.now().plusDays(28);
 		}
 		model.addAttribute("listAllocations",
-		        this.allocationService.listRequiredAllocations(startDate,
-		                endDate));
+			this.allocationService.listRequiredAllocations(startDate,
+				endDate));
 		request.setAttribute("startDate", dateTimeFormatter.format(startDate));
 		request.setAttribute("endDate", dateTimeFormatter.format(endDate));
 		return "allocations";
 	}
-	
-	/**
-	 * Join allocation.
-	 *
-	 * @param id the id
-	 * @param model the model
-	 * @return the string
-	 */
-	@RequestMapping(value = "/allocations/join", method = RequestMethod.POST)
-	public String allocate(@ModelAttribute("resource") Resource p, BindingResult result, HttpServletRequest request) {
-		
-		long resourceid = Long.parseLong(request.getParameter("resourceId"));
-		long allocationid = Long.parseLong(request.getParameter("allocationId"));
-		Allocation allocation = this.allocationService.getAllocationById(allocationid);
-		allocation.setResource(this.resourceService.getResourceByID(resourceid));
-		this.allocationService.updateAllocation(allocation);
 
-		return "projects";
-	}
-	
-	
-	
 }
