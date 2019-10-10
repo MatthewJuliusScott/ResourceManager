@@ -33,15 +33,13 @@ import com.google.common.base.Preconditions;
 import com.resourcemanager.converter.SkillConverter;
 
 /**
- * The Class Application. This is the entry point for this Spring Boot Application, it contains the main method and initial
- * configuration.
+ * This is the entry point for this Spring Boot Application, it contains the main method and initial configuration.
  */
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
 	/**
-	 * The Class WebConfig. Configures the Spring Boot Application for the Model View Controller pattern and loads the properties
-	 * to initialize it.
+	 * Configures the Spring Boot Application for the Model View Controller pattern and loads the properties to initialize it.
 	 */
 	@Configuration
 	@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)

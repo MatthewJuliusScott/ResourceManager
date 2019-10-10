@@ -21,8 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.resourcemanager.handler.CustomAuthenticationSuccessHandler;
 
 /**
- * The Class SpringSecurityConfig. Configures the Spring security component of the application. Spring Security is used to
- * authenticate sessions and user accounts, secure protected urls, and even protect invocation of secured methods.
+ * Configures the Spring security component of the application. Spring Security is used to authenticate sessions and user
+ * accounts, secure protected urls, and even protect invocation of secured methods.
  */
 @Configuration
 @EnableWebSecurity
@@ -88,7 +88,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Configure global. The global authentication configuration.
+	 * The global authentication configuration.
 	 *
 	 * @param auth
 	 *            the auth
@@ -101,7 +101,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Encoder. What encryption algorithm is used to encrypt user passwords. Passwords are never stored in plaintext.
+	 * The encryption algorithm is used to encrypt user passwords. Passwords are never stored in plaintext.
 	 *
 	 * @return the password encoder
 	 */
