@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.handler;
 
@@ -20,7 +20,8 @@ import com.resourcemanager.model.User;
 import com.resourcemanager.service.UserService;
 
 /**
- * The Class CustomAuthenticationSuccessHandler.
+ * Custom AuthenticationSuccessHandler that upon successful login gets the authenticated user and puts it on the session as an
+ * attribute.
  */
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -29,8 +30,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	@Autowired
 	private UserService userService;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.springframework.security.web.authentication.AuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
 	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)

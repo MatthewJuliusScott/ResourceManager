@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao.impl;
 
@@ -25,7 +25,8 @@ import com.resourcemanager.dao.AllocationDAO;
 import com.resourcemanager.model.Allocation;
 
 /**
- * The Class AllocationDAOImpl.
+ * Concrete implementation of AllocationDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not specific
+ * to any particular relational database technology or dialect.
  */
 @Repository
 @Transactional
@@ -38,7 +39,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#addAllocation(com.resourcemanager.model.Allocation)
 	 */
 	@Override
@@ -47,7 +49,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 		logger.info("Allocation saved successfully, Allocation Details=" + allocation);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#deleteAllocation(java.lang.Long)
 	 */
 	@Override
@@ -56,7 +59,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 		logger.info("Allocation deleted successfully, allocation details=" + allocation);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#getAllocationByID(java.lang.Long)
 	 */
 	@Override
@@ -90,7 +94,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#listAllocations()
 	 */
 	@Override
@@ -106,7 +111,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return allocationsList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#listRequiredAllocations(java.time.LocalDate, java.time.LocalDate)
 	 */
 	@Override
@@ -126,7 +132,8 @@ public class AllocationDAOImpl implements AllocationDAO {
 		return allocationsList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.AllocationDAO#updateAllocation(com.resourcemanager.model.Allocation)
 	 */
 	@Override

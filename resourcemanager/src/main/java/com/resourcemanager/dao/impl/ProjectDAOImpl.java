@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao.impl;
 
@@ -23,7 +23,8 @@ import com.resourcemanager.dao.ProjectDAO;
 import com.resourcemanager.model.Project;
 
 /**
- * The Class ProjectDAOImpl.
+ * Concrete implementation of ProjectDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not specific to
+ * any particular relational database technology or dialect.
  */
 @Repository
 @Transactional
@@ -36,7 +37,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ProjectDAO#addProject(com.resourcemanager.model.Project)
 	 */
 	@Override
@@ -69,7 +71,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ProjectDAO#getProjectByID(java.lang.Long)
 	 */
 	@Override
@@ -79,7 +82,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return project;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ProjectDAO#listProjects()
 	 */
 	@Override
@@ -96,7 +100,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return projectsList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ProjectDAO#removeProject(java.lang.Long)
 	 */
 	@Override
@@ -105,7 +110,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 		logger.info("Project deleted successfully, project details=" + project);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ProjectDAO#updateProject(com.resourcemanager.model.Project)
 	 */
 	@Override
