@@ -25,10 +25,9 @@ import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.SkillService;
 
 /**
- * This controller responds to the user input and performs interactions on the Allocation data model objects. This controller
- * receives the input, optionally validates it and then passes the input to the model and directs the user back to a view to
- * display the model and accept further user input. Handles basic CRUD (create, read, update and delete) operations requested
- * through views for the Allocation data model objects, as well as any advanced inputs.
+ * This controller responds to the user input and uses the service layer to create, read, update or delete the Allocation data
+ * model objects. This controller receives the input, optionally validates it and then passes the input to the model and directs
+ * the user back to a view to display the model and accept further user input.
  */
 @Controller
 public class AllocationController {

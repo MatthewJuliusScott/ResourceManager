@@ -11,21 +11,22 @@ import org.springframework.security.access.annotation.Secured;
 import com.resourcemanager.model.Resource;
 
 /**
- * The Interface ResourceService.
+ * Provides an abstract interface for a single service layer for Resources. The services do all the logic and data manipulation on
+ * the data model and pass the updated model to the persistence layer.
  */
 public interface ResourceService {
 
 	/**
-	 * Adds the resource.
+	 * Persists a new Resource in the data source.
 	 *
-	 * @param p
-	 *            the p
+	 * @param resource
+	 *            the resource
 	 */
 	@Secured("ROLE_ADMIN")
-	public void addResource(Resource p);
+	public void addResource(Resource resource);
 
 	/**
-	 * Delete resource.
+	 * Removes the Resource from the data source.
 	 *
 	 * @param id
 	 *            the id
@@ -34,7 +35,7 @@ public interface ResourceService {
 	public void deleteResource(Long id);
 
 	/**
-	 * Gets the resource by ID.
+	 * Optionally retrieves a Resource from the data source by Id if it exists.
 	 *
 	 * @param id
 	 *            the id
@@ -44,7 +45,7 @@ public interface ResourceService {
 	public Resource getResourceByID(Long id);
 
 	/**
-	 * List resources.
+	 * Retrieves all Resources from the data source.
 	 *
 	 * @return the list
 	 */
@@ -52,7 +53,9 @@ public interface ResourceService {
 	public List<Resource> listResources();
 
 	/**
-	 * Search resources.
+	 * Retrieves all Resources from the data source that match the search criteria of Skill, hours and no allocations during the
+	 * specified time period from the persistence layer and passes them to the Resources view to display them to the user and
+	 * respond to their input.
 	 *
 	 * @param skillId
 	 *            the skill id
@@ -68,12 +71,12 @@ public interface ResourceService {
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours);
 
 	/**
-	 * Update resource.
+	 * Updates an existing Resource in the data source.
 	 *
-	 * @param p
-	 *            the p
+	 * @param resource
+	 *            the resource
 	 */
 	@Secured("ROLE_ADMIN")
-	public void updateResource(Resource p);
+	public void updateResource(Resource resource);
 
 }

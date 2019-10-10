@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service;
 
@@ -10,37 +10,41 @@ import org.springframework.security.access.annotation.Secured;
 import com.resourcemanager.model.Notification;
 
 /**
- * The Interface NotificationService.
+ * Provides an abstract interface for a single service layer for Notifications. The services do all the logic and data
+ * manipulation on the data model and pass the updated model to the persistence layer.
  */
 public interface NotificationService {
 
 	/**
-	 * Adds the notification.
+	 * Persists a new Notification in the data source.
 	 *
-	 * @param notification the notification
+	 * @param notification
+	 *            the notification
 	 */
 	@Secured("ROLE_USER")
 	public void addNotification(Notification notification);
 
 	/**
-	 * Delete notification.
+	 * Removes the Notification from the data source.
 	 *
-	 * @param notificationID the notification ID
+	 * @param notificationID
+	 *            the notification ID
 	 */
 	@Secured("ROLE_USER")
 	public void deleteNotification(Long notificationID);
 
 	/**
-	 * Gets the notification by ID.
+	 * Optionally retrieves a Notification from the data source by Id if it exists.
 	 *
-	 * @param notificationID the notification ID
+	 * @param notificationID
+	 *            the notification ID
 	 * @return the notification by ID
 	 */
 	@Secured("ROLE_USER")
 	public Notification getNotificationByID(Long notificationID);
 
 	/**
-	 * List notifications.
+	 * Retrieves all Notifications from the data source.
 	 *
 	 * @return the list
 	 */
@@ -48,9 +52,10 @@ public interface NotificationService {
 	public List<Notification> listNotifications();
 
 	/**
-	 * Update notification.
+	 * Updates an existing Notification in the data source.
 	 *
-	 * @param notification the notification
+	 * @param notification
+	 *            the notification
 	 */
 	@Secured("ROLE_USER")
 	public void updateNotification(Notification notification);
