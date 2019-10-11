@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.config;
 
@@ -21,7 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.resourcemanager.handler.CustomAuthenticationSuccessHandler;
 
 /**
- * The Class SpringSecurityConfig.
+ * Configures the Spring security component of the application. Spring Security is used to authenticate sessions and user
+ * accounts, secure protected urls, and even protect invocation of secured methods.
  */
 @Configuration
 @EnableWebSecurity
@@ -37,7 +38,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService					userDetailsService;
 
 	/**
-	 * Authentication provider.
+	 * Authentication provider. Indicates the datasource and service used that stores usernames and passwords to authenticate
+	 * against.
 	 *
 	 * @return the dao authentication provider
 	 */
@@ -49,8 +51,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework
+	 * .security.config.annotation.authentication.builders.AuthenticationManagerBuilder)
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
@@ -58,8 +63,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework
+	 * .security.config.annotation.web.builders.HttpSecurity)
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -80,10 +88,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Configure global.
+	 * The global authentication configuration.
 	 *
-	 * @param auth the auth
-	 * @throws Exception the exception
+	 * @param auth
+	 *            the auth
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -91,7 +101,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Encoder.
+	 * The encryption algorithm is used to encrypt user passwords. Passwords are never stored in plaintext.
 	 *
 	 * @return the password encoder
 	 */

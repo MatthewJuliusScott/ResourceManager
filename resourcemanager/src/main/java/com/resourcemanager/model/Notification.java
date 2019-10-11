@@ -19,7 +19,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NaturalIdCache;
 
 /**
- * The Class Notification.
+ * Notification data model. Represents a message for a user, created on a specific date and time, and whether or not it has been
+ * seen or not.
  */
 @Entity(name = "Notification")
 @Table(name = "notification")

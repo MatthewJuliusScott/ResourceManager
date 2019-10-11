@@ -1,8 +1,7 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.converter;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -12,7 +11,7 @@ import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.SkillService;
 
 /**
- * The Class SkillConverter.
+ * Converts between a String representation of a Skill Id and the data model Skill.
  */
 @Component
 public class SkillConverter implements Converter<String, Skill> {

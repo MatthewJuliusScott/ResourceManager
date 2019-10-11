@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package javax.servlet.http;
 
@@ -25,7 +25,7 @@ import javax.servlet.ServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * The Class HttpServletRequestDecorator.
+ * HttpServletRequest Decorator pattern for convenience. Customer methods are for extracting parameters from the request.
  */
 public class HttpServletRequestDecorator implements HttpServletRequest {
 
@@ -35,7 +35,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Instantiates a new http servlet request decorator.
 	 *
-	 * @param request the request
+	 * @param request
+	 *            the request
 	 */
 	public HttpServletRequestDecorator(HttpServletRequest request) {
 		this.request = request;
@@ -44,7 +45,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Adds the message.
 	 *
-	 * @param string the string
+	 * @param string
+	 *            the string
 	 */
 	@SuppressWarnings("unchecked")
 	public void addMessage(String string) {
@@ -59,7 +61,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		session.setAttribute("messages", messages);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#authenticate(javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
@@ -67,7 +70,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.authenticate(response);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#changeSessionId()
 	 */
 	@Override
@@ -75,7 +79,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.changeSessionId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getAsyncContext()
 	 */
 	@Override
@@ -83,7 +88,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getAsyncContext();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getAttribute(java.lang.String)
 	 */
 	@Override
@@ -91,7 +97,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getAttribute(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getAttributeNames()
 	 */
 	@Override
@@ -99,7 +106,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getAttributeNames();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getAuthType()
 	 */
 	@Override
@@ -107,7 +115,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getAuthType();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getCharacterEncoding()
 	 */
 	@Override
@@ -115,7 +124,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getCharacterEncoding();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getContentLength()
 	 */
 	@Override
@@ -123,7 +133,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getContentLength();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getContentLengthLong()
 	 */
 	@Override
@@ -131,7 +142,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getContentLengthLong();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getContentType()
 	 */
 	@Override
@@ -139,7 +151,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getContentType();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getContextPath()
 	 */
 	@Override
@@ -147,7 +160,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getContextPath();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getCookies()
 	 */
 	@Override
@@ -155,7 +169,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getCookies();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getDateHeader(java.lang.String)
 	 */
 	@Override
@@ -163,7 +178,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getDateHeader(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getDispatcherType()
 	 */
 	@Override
@@ -171,7 +187,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getDispatcherType();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getHeader(java.lang.String)
 	 */
 	@Override
@@ -179,7 +196,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getHeader(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getHeaderNames()
 	 */
 	@Override
@@ -187,7 +205,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getHeaderNames();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getHeaders(java.lang.String)
 	 */
 	@Override
@@ -195,7 +214,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getHeaders(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getInputStream()
 	 */
 	@Override
@@ -206,7 +226,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Gets an int from the request parameters or attributes if possible, or 0.
 	 *
-	 * @param parameter            the parameter
+	 * @param parameter
+	 *            the parameter
 	 * @return the int
 	 */
 	public int getInt(String parameter) {
@@ -217,7 +238,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Gets an integer from the request parameters or attributes if possible, or null.
 	 *
-	 * @param parameter            the parameter
+	 * @param parameter
+	 *            the parameter
 	 * @return the integer
 	 */
 	public Integer getInteger(String parameter) {
@@ -230,7 +252,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return integer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getIntHeader(java.lang.String)
 	 */
 	@Override
@@ -238,7 +261,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getIntHeader(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getLocalAddr()
 	 */
 	@Override
@@ -246,7 +270,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getLocalAddr();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getLocale()
 	 */
 	@Override
@@ -254,7 +279,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getLocale();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getLocales()
 	 */
 	@Override
@@ -262,7 +288,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getLocales();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getLocalName()
 	 */
 	@Override
@@ -270,7 +297,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getLocalName();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getLocalPort()
 	 */
 	@Override
@@ -278,7 +306,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getLocalPort();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getMethod()
 	 */
 	@Override
@@ -286,7 +315,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getMethod();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getParameter(java.lang.String)
 	 */
 	@Override
@@ -294,7 +324,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getParameter(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getParameterMap()
 	 */
 	@Override
@@ -302,7 +333,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getParameterMap();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getParameterNames()
 	 */
 	@Override
@@ -310,7 +342,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getParameterNames();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getParameterValues(java.lang.String)
 	 */
 	@Override
@@ -318,7 +351,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getParameterValues(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getPart(java.lang.String)
 	 */
 	@Override
@@ -326,7 +360,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getPart(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getParts()
 	 */
 	@Override
@@ -334,7 +369,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getParts();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getPathInfo()
 	 */
 	@Override
@@ -342,7 +378,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getPathInfo();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getPathTranslated()
 	 */
 	@Override
@@ -350,7 +387,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getPathTranslated();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getProtocol()
 	 */
 	@Override
@@ -358,7 +396,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getProtocol();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getQueryString()
 	 */
 	@Override
@@ -366,7 +405,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getQueryString();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getReader()
 	 */
 	@Override
@@ -374,7 +414,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getReader();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getRealPath(java.lang.String)
 	 */
 	@Override
@@ -382,7 +423,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRealPath(path);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getRemoteAddr()
 	 */
 	@Override
@@ -390,7 +432,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRemoteAddr();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getRemoteHost()
 	 */
 	@Override
@@ -398,7 +441,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRemoteHost();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getRemotePort()
 	 */
 	@Override
@@ -406,7 +450,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRemotePort();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getRemoteUser()
 	 */
 	@Override
@@ -414,7 +459,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRemoteUser();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getRequestDispatcher(java.lang.String)
 	 */
 	@Override
@@ -422,7 +468,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRequestDispatcher(path);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getRequestedSessionId()
 	 */
 	@Override
@@ -430,7 +477,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRequestedSessionId();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getRequestURI()
 	 */
 	@Override
@@ -438,7 +486,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getRequestURI();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getRequestURL()
 	 */
 	@Override
@@ -449,9 +498,11 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Gets an int from the request parameters or attributes, throws an NumberFormatException if not possible.
 	 *
-	 * @param parameter            the parameter
+	 * @param parameter
+	 *            the parameter
 	 * @return the int
-	 * @throws NumberFormatException the number format exception
+	 * @throws NumberFormatException
+	 *             the number format exception
 	 */
 	public int getRequiredInt(String parameter) throws NumberFormatException {
 		return Integer.valueOf(getString(parameter)).intValue();
@@ -460,7 +511,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 	/**
 	 * Gets the required string.
 	 *
-	 * @param parameter the parameter
+	 * @param parameter
+	 *            the parameter
 	 * @return the required string
 	 */
 	public String getRequiredString(String parameter) {
@@ -472,7 +524,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getScheme()
 	 */
 	@Override
@@ -480,7 +533,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getScheme();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getServerName()
 	 */
 	@Override
@@ -488,7 +542,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getServerName();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getServerPort()
 	 */
 	@Override
@@ -496,7 +551,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getServerPort();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#getServletContext()
 	 */
 	@Override
@@ -504,7 +560,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getServletContext();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getServletPath()
 	 */
 	@Override
@@ -512,7 +569,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getServletPath();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getSession()
 	 */
 	@Override
@@ -520,7 +578,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getSession();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getSession(boolean)
 	 */
 	@Override
@@ -546,7 +605,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return string;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#getUserPrincipal()
 	 */
 	@Override
@@ -554,7 +614,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.getUserPrincipal();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#isAsyncStarted()
 	 */
 	@Override
@@ -562,7 +623,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isAsyncStarted();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#isAsyncSupported()
 	 */
 	@Override
@@ -570,7 +632,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isAsyncSupported();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#isRequestedSessionIdFromCookie()
 	 */
 	@Override
@@ -578,7 +641,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isRequestedSessionIdFromCookie();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#isRequestedSessionIdFromUrl()
 	 */
 	@Override
@@ -586,7 +650,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isRequestedSessionIdFromUrl();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#isRequestedSessionIdFromURL()
 	 */
 	@Override
@@ -594,7 +659,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isRequestedSessionIdFromURL();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#isRequestedSessionIdValid()
 	 */
 	@Override
@@ -602,7 +668,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isRequestedSessionIdValid();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#isSecure()
 	 */
 	@Override
@@ -610,7 +677,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isSecure();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#isUserInRole(java.lang.String)
 	 */
 	@Override
@@ -618,7 +686,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.isUserInRole(role);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#login(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -626,7 +695,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		request.login(username, password);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#logout()
 	 */
 	@Override
@@ -634,7 +704,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		request.logout();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#removeAttribute(java.lang.String)
 	 */
 	@Override
@@ -642,7 +713,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		request.removeAttribute(name);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#setAttribute(java.lang.String, java.lang.Object)
 	 */
 	@Override
@@ -650,7 +722,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		request.setAttribute(name, o);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#setCharacterEncoding(java.lang.String)
 	 */
 	@Override
@@ -658,7 +731,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		request.setCharacterEncoding(env);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#startAsync()
 	 */
 	@Override
@@ -666,7 +740,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.startAsync();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.ServletRequest#startAsync(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
 	 */
 	@Override
@@ -674,7 +749,8 @@ public class HttpServletRequestDecorator implements HttpServletRequest {
 		return request.startAsync(servletRequest, servletResponse);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.servlet.http.HttpServletRequest#upgrade(java.lang.Class)
 	 */
 	@Override
