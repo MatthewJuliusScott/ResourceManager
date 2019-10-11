@@ -257,7 +257,7 @@ public class ProjectController {
 					resource = resourceService
 						.getResourceByID(Long.parseLong(resourceId));
 				}
-				// if hours are less than 0 or not an int change to 0
+				// if hours are less than 0 or not an int change to a 0
 				try 
 				{
 					if (Integer.parseInt(hours)<0) {
