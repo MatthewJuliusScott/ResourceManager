@@ -70,6 +70,6 @@ public interface AllocationService {
 	 * @param allocation
 	 *            the allocation
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public void updateAllocation(Allocation allocation);
 }
