@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * The Class Project.
+ * Project data model. Represents a goal with a set of requirements that need to be fulfilled in order to be completed.
  */
 @Entity(name = "Project")
 @Table(name = "project")
@@ -38,6 +38,10 @@ public class Project implements Cloneable {
 
 	/** The name. */
 	private String				name;
+
+	/** The Performance Obligation. */
+	@Column(unique = true)
+	private String				pob;
 
 	/** The allocations. */
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -134,6 +138,15 @@ public class Project implements Cloneable {
 		return name;
 	}
 
+	/**
+	 * Gets the pob.
+	 *
+	 * @return the pob
+	 */
+	public String getPob() {
+		return pob;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -189,6 +202,16 @@ public class Project implements Cloneable {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * Sets the pob.
+	 *
+	 * @param pob
+	 *            the new pob
+	 */
+	public void setPob(String pob) {
+		this.pob = pob;
 	}
 
 	/*

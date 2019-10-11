@@ -38,6 +38,16 @@
 										<form:input path="name" style="margin-bottom: 15px; margin-left: 5px;"/>
 									</td>
 								</tr>
+								<tr>
+									<td>
+										<form:label path="name" style="font-weight: bold;">
+											<spring:message text="POB:"/>
+										</form:label>
+									</td>
+									<td>
+										<form:input path="pob" style="margin-bottom: 15px; margin-left: 5px;"/>
+									</td>
+								</tr>
 							</table>							
 							
 							<h2>Requirements</h2>

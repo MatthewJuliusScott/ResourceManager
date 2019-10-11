@@ -1,37 +1,34 @@
 package com.resourcemanager.model;
 
-import java.nio.ByteBuffer;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * The Class Report.
+ * Report data model. abstract set of data and labels to displayed graphically.
  */
 public class Report {
 
-	public final static int	HOURS_PER_SKILL		= 1;
+	/** The Constant HOURS_PER_SKILL. */
+	public final static int									HOURS_PER_SKILL		= 1;
 
-	public final static int	HOURS_PER_PROJECT	= 2;
+	/** The Constant HOURS_PER_PROJECT. */
+	public final static int									HOURS_PER_PROJECT	= 2;
 
 	/** The labels. */
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<String>		labels				= new LinkedHashSet<String>();
+	private Set<String>										labels				= new HashSet<String>();
 
 	/** The data. */
-	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String>	data				= new LinkedList<String>();
+	private ArrayList<Entry<String, ArrayList<Integer>>>	data				=
+		new ArrayList<Entry<String, ArrayList<Integer>>>();
 
 	/** The name. */
-	private String			name				= "";
+	private String											name				= "";
 
 	/**
 	 * Labels JSON.
@@ -46,26 +43,28 @@ public class Report {
 		return objectMapper.writeValueAsString(this);
 	}
 
+	/**
+	 * Gets the border colours.
+	 *
+	 * @return the border colours
+	 */
 	public String[] getBorderColours() {
-		String[] colours = new String[labels.size()];
-		int i = 0;
-		for (String label : labels) {
-			byte[] bytes = ByteBuffer.allocate(4).putInt(label.hashCode()).array();
-			colours[i++] = "rgba(" + String.valueOf(bytes[0] & 0xFF) + "," + String.valueOf(bytes[1] & 0xFF) + ","
-				+ String.valueOf(bytes[2] & 0xFF)
-				+ "," + "1" + ")";
+		String[] colours = new String[data.size()];
+		for (int i = 0; i < data.size(); i++) {
+			colours[i] = "hsla(" + (i * (255 / data.size())) % 255 + "," + 60 + "%," + 60 + "%," + 1.0 + ")";
 		}
 		return colours;
 	}
 
+	/**
+	 * Gets the colours.
+	 *
+	 * @return the colours
+	 */
 	public String[] getColours() {
-		String[] colours = new String[labels.size()];
-		int i = 0;
-		for (String label : labels) {
-			byte[] bytes = ByteBuffer.allocate(4).putInt(label.hashCode()).array();
-			colours[i++] = "rgba(" + String.valueOf(bytes[0] & 0xFF) + "," + String.valueOf(bytes[1] & 0xFF) + ","
-				+ String.valueOf(bytes[2] & 0xFF)
-				+ "," + "0.3" + ")";
+		String[] colours = new String[data.size()];
+		for (int i = 0; i < data.size(); i++) {
+			colours[i] = "hsla(" + (i * (255 / data.size())) % 255 + "," + 60 + "%," + 60 + "%," + 0.3 + ")";
 		}
 		return colours;
 	}
@@ -75,7 +74,7 @@ public class Report {
 	 *
 	 * @return the data
 	 */
-	public List<String> getData() {
+	public ArrayList<Entry<String, ArrayList<Integer>>> getData() {
 		return data;
 	}
 
@@ -103,7 +102,7 @@ public class Report {
 	 * @param data
 	 *            the new data
 	 */
-	public void setData(List<String> data) {
+	public void setData(ArrayList<Entry<String, ArrayList<Integer>>> data) {
 		this.data = data;
 	}
 
