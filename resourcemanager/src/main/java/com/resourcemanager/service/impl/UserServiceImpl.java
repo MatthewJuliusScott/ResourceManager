@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -15,7 +15,7 @@ import com.resourcemanager.model.User;
 import com.resourcemanager.service.UserService;
 
 /**
- * The Class UserServiceImpl.
+ * The Concrete implementation of UserService and UserDetailsService.
  */
 @Component(value = "userDetailService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -24,7 +24,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Autowired
 	private UserDAO userDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#addUser(com.resourcemanager.model.User)
 	 */
 	@Override
@@ -32,7 +33,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userDao.addUser(user);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#deleteUser(java.lang.Long)
 	 */
 	@Override
@@ -40,7 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userDao.deleteUser(userID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#getUserByID(java.lang.Long)
 	 */
 	@Override
@@ -48,7 +51,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDao.findUserByID(userID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#getUserByUserName(java.lang.String)
 	 */
 	@Override
@@ -56,7 +60,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDao.findUserByEmail(userName);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#listUsers()
 	 */
 	@Override
@@ -64,7 +69,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userDao.listUsers();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
 	 */
 	@Override
@@ -76,7 +82,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthorities());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.UserService#updateUser(com.resourcemanager.model.User)
 	 */
 	@Override

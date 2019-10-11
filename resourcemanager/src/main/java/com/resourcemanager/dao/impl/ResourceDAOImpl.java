@@ -1,9 +1,11 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao.impl;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -29,7 +31,8 @@ import com.resourcemanager.model.Allocation;
 import com.resourcemanager.model.Resource;
 
 /**
- * The Class ResourceDAOImpl.
+ * Concrete implementation of ResourceDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not specific
+ * to any particular relational database technology or dialect.
  */
 @Repository
 @Transactional
@@ -42,7 +45,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#addResource(com.resourcemanager.model.Resource)
 	 */
 	@Override
@@ -75,7 +79,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#getResourceByID(java.lang.Long)
 	 */
 	@Override
@@ -85,7 +90,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return resource;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#listResources()
 	 */
 	@Override
@@ -98,10 +104,18 @@ public class ResourceDAOImpl implements ResourceDAO {
 		for (Resource resource : resourcesList) {
 			logger.info("Resource List::" + resource);
 		}
+
+		Collections.sort(resourcesList, new Comparator<Resource>() {
+			@Override
+			public int compare(Resource r1, Resource r2) {
+				return r1.getName().compareTo(r2.getName());
+			}
+		});
 		return resourcesList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#removeResource(java.lang.Long)
 	 */
 	@Override
@@ -111,7 +125,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 		logger.info("Resource deleted successfully, resource details=" + resource);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#searchResources(long, java.time.LocalDate, java.time.LocalDate, int)
 	 */
 	@Override
@@ -154,7 +169,8 @@ public class ResourceDAOImpl implements ResourceDAO {
 		return resourcesList;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.ResourceDAO#updateResource(com.resourcemanager.model.Resource)
 	 */
 	@Override

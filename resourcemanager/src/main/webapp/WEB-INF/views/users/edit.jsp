@@ -15,8 +15,9 @@
 		
 		<div class="formContent">
 			<c:url var="addAction" value="/users/save" ></c:url>
-			<form:form action="${addAction}" modelAttribute="user" method="POST">
-			<form:hidden path="id" />
+			<form:form action="${addAction}" modelAttribute="user" method="POST" class="pure-form">
+				<fieldset>
+				<form:hidden path="id" />
 				<table cellpadding="0" cellspacing="0" class="tbl">
 					<tr>
 						<td>
@@ -43,7 +44,7 @@
 												</form:label>
 											</td>
 											<td style="width: 80%;">
-												<form:input path="name" />
+												<form:input path="name" required="true" />
 											</td> 
 										</tr>
 										<tr>
@@ -54,7 +55,7 @@
 											</td>
 											<td style="width: 80%;">
 													<c:if test="${user.id == 0}">
-														<form:input path="email" class="form-control" />
+														<form:input path="email" autocomplete="username" required="true" class="form-control" />
 													</c:if>
 													<c:if test="${user.id != 0}">
 														<form:input path="email" readonly="true" class="form-control" />
@@ -69,7 +70,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="password" class="form-control" />
+													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" required="true" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
@@ -79,7 +80,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="confirmPassword" class="form-control" />
+													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" required="true" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
@@ -101,28 +102,28 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="password" class="form-control" />
+													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" required="true" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
-												<td style="width: 20%;">
+												<td style="width: 20%; padding-right: 5px;">
 													<label style="font-weight: bold;">
 														<spring:message text="Confirm New Password"/>
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="confirmPassword" class="form-control" />
+													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" required="true" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
 										<c:if test="${admin}">
 											<tr>
-												<td style="width: 20%;">
+												<td style="width: 20%; padding-bottom: 10px;">
 														<label style="font-weight: bold;">
-															<spring:message text="Resource"/>
+															<spring:message text="Link to Resource"/>
 														</label>
 													</td>
-												<td>
+												<td style="padding-bottom: 10px;">
 													<select name="resourceId" id="resourceId" class="form-control" style="width: 80%;">
 														<c:if test = "${not empty user.resource}">
 															<option value="${user.resource.id}" selected>${user.resource.name}</option>
@@ -165,19 +166,19 @@
 							<tr>
 								<td colspan="2" style="padding-top: 20px;">
 									<button type="button" onclick="history.back()" class="btn btn-danger"><i class="fas fa-ban"></i> Cancel</button>
-									<button type="submit" class="btn btn-success"><i class="far fa-save"></i> Save</button>
+									<button type="submit" class="btn btn-success pure-button pure-button-primary"><i class="far fa-save"></i> Save</button>
 								</td>
 							</tr>
 						</table>
 					</tr>
 				</table>
+				</fieldset>
 			</form:form>
 		</div>		
 	</body>
 	
 	<footer>
 		<script>
-			
 		</script>
 	</footer>
 	

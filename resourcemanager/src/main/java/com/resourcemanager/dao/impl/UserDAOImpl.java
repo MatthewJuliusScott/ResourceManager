@@ -1,8 +1,10 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
@@ -24,7 +26,8 @@ import com.resourcemanager.dao.UserDAO;
 import com.resourcemanager.model.User;
 
 /**
- * The Class UserDAOImpl.
+ * Concrete implementation of UserDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not specific to
+ * any particular relational database technology or dialect.
  */
 @Repository
 @Transactional
@@ -37,7 +40,8 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private EntityManagerFactory	entityManager;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#addUser(com.resourcemanager.model.User)
 	 */
 	@Override
@@ -46,7 +50,8 @@ public class UserDAOImpl implements UserDAO {
 		logger.info("User saved successfully, User details=" + user);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#deleteUser(java.lang.Long)
 	 */
 	@Override
@@ -56,7 +61,8 @@ public class UserDAOImpl implements UserDAO {
 		logger.info("User deleted successfully, User details=" + user);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#findUserByEmail(java.lang.String)
 	 */
 	@Override
@@ -75,7 +81,8 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#findUserByID(long)
 	 */
 	@Override
@@ -109,7 +116,8 @@ public class UserDAOImpl implements UserDAO {
 		return entityManager.unwrap(SessionFactory.class);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#listUsers()
 	 */
 	@Override
@@ -119,10 +127,19 @@ public class UserDAOImpl implements UserDAO {
 		Root<User> root = criteria.from(User.class);
 		criteria.select(root);
 		Query<User> query = getCurrentSession().createQuery(criteria);
-		return query.getResultList();
+		List<User> users = query.getResultList();
+		Collections.sort(users, new Comparator<User>() {
+			@Override
+			public int compare(User u1, User u2) {
+				return u1.getName().compareTo(u2.getName());
+			}
+		});
+
+		return users;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.dao.UserDAO#updateUser(com.resourcemanager.model.User)
 	 */
 	@Override

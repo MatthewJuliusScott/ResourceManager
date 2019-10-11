@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -15,7 +15,7 @@ import com.resourcemanager.model.Skill;
 import com.resourcemanager.service.SkillService;
 
 /**
- * The Class SkillServiceImpl.
+ * The Concrete implementation of SkillService.
  */
 @Service
 public class SkillServiceImpl implements SkillService {
@@ -24,7 +24,8 @@ public class SkillServiceImpl implements SkillService {
 	@Autowired
 	private SkillDAO skillDAO;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.SkillService#addSkill(com.resourcemanager.model.Skill)
 	 */
 	@Override
@@ -33,7 +34,8 @@ public class SkillServiceImpl implements SkillService {
 		this.skillDAO.addSkill(skill);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.SkillService#deleteSkill(java.lang.Long)
 	 */
 	@Override
@@ -42,7 +44,8 @@ public class SkillServiceImpl implements SkillService {
 		this.skillDAO.deleteSkill(lngSkillID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.SkillService#getSkillByID(java.lang.Long)
 	 */
 	@Override
@@ -51,7 +54,8 @@ public class SkillServiceImpl implements SkillService {
 		return this.skillDAO.getSkillByID(lngSkillID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.SkillService#listSkills()
 	 */
 	@Override
@@ -63,13 +67,15 @@ public class SkillServiceImpl implements SkillService {
 	/**
 	 * Sets the skill DAO.
 	 *
-	 * @param skillDAO the new skill DAO
+	 * @param skillDAO
+	 *            the new skill DAO
 	 */
 	public void setSkillDAO(SkillDAO skillDAO) {
 		this.skillDAO = skillDAO;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.SkillService#updateSkill(com.resourcemanager.model.Skill)
 	 */
 	@Override

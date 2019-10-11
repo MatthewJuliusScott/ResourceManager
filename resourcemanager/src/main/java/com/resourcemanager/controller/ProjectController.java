@@ -12,8 +12,10 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestDecorator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,9 @@ import com.resourcemanager.service.SkillService;
 import com.resourcemanager.service.UserService;
 
 /**
- * The Class ProjectController.
+ * This controller responds to the user input and uses the service layer to create, read, update or delete the Project data model
+ * objects. This controller receives the input, optionally validates it and then passes the input to the model and directs the
+ * user back to a view to display the model and accept further user input.
  */
 @Controller
 public class ProjectController {
@@ -67,7 +71,7 @@ public class ProjectController {
 	private NotificationService	notificationService;
 
 	/**
-	 * Adds the project.
+	 * Directs the user to the edit Project view but with an id of 0 in order to create a new Project only.
 	 *
 	 * @return the string
 	 */
@@ -77,7 +81,8 @@ public class ProjectController {
 	}
 
 	/**
-	 * Delete project.
+	 * Deletes a particular Project from the application cache and persistence layer, updating the associated Allocations and
+	 * Resources.
 	 *
 	 * @param id
 	 *            the id
@@ -99,7 +104,7 @@ public class ProjectController {
 	}
 
 	/**
-	 * Edits the project.
+	 * Passes the data model to the edit Project view, and redirects the user to that view to respond to their input.
 	 *
 	 * @param id
 	 *            the id
@@ -120,7 +125,7 @@ public class ProjectController {
 	}
 
 	/**
-	 * Join project.
+	 * Redirects a Resource linked user to a version of the edit Project view for joining an Allocation only.
 	 *
 	 * @param id
 	 *            the id
@@ -154,7 +159,8 @@ public class ProjectController {
 	}
 
 	/**
-	 * List projects.
+	 * Retrieves all Projects from the persistence layer and passes them to the Projects view to display them to the user and
+	 * respond to their input.
 	 *
 	 * @param model
 	 *            the model
@@ -181,7 +187,8 @@ public class ProjectController {
 	}
 
 	/**
-	 * Save project.
+	 * Takes the user input submitted via the edit Project view and merges changes to the data model for the Project and
+	 * associated Allocations and Resources before passing that to the persistence layer.
 	 *
 	 * @param project
 	 *            the project
@@ -257,6 +264,16 @@ public class ProjectController {
 					resource = resourceService
 						.getResourceByID(Long.parseLong(resourceId));
 				}
+				// if hours are less than 0 or not an int change to 0
+				try {
+					if (Integer.parseInt(hours) < 0) {
+						hours = "0";
+
+					}
+				} catch (Exception e) {
+
+					hours = "0";
+				}
 
 				Allocation allocation = new Allocation(Long.parseLong(id),
 					project,
@@ -287,12 +304,19 @@ public class ProjectController {
 			}
 		}
 
-		if (project.getId() == 0) {
-			// new project, add it
-			this.projectService.addProject(project);
-		} else {
-			// existing project, call update
-			this.projectService.updateProject(project);
+		try {
+			if (project.getId() == 0) {
+				// new project, add it
+				this.projectService.addProject(project);
+			} else {
+				// existing project, call update
+				this.projectService.updateProject(project);
+			}
+		} catch (DataIntegrityViolationException dive) {
+			HttpServletRequestDecorator req = new HttpServletRequestDecorator(
+				request);
+			req.addMessage("POB " + project.getPob() + " already exists.");
+			return "redirect:/projects/edit/" + project.getId();
 		}
 
 		return "redirect:/projects/edit/" + project.getId();

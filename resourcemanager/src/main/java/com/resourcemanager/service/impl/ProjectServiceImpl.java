@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -14,7 +14,7 @@ import com.resourcemanager.model.Project;
 import com.resourcemanager.service.ProjectService;
 
 /**
- * The Class ProjectServiceImpl.
+ * Concrete implementation of ProjectService.
  */
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -23,7 +23,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ProjectDAO projectDAO;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ProjectService#addProject(com.resourcemanager.model.Project)
 	 */
 	@Override
@@ -32,7 +33,8 @@ public class ProjectServiceImpl implements ProjectService {
 		this.projectDAO.addProject(project);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ProjectService#deleteProject(java.lang.Long)
 	 */
 	@Override
@@ -41,7 +43,8 @@ public class ProjectServiceImpl implements ProjectService {
 		this.projectDAO.removeProject(project);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ProjectService#getProjectByID(java.lang.Long)
 	 */
 	@Override
@@ -50,7 +53,8 @@ public class ProjectServiceImpl implements ProjectService {
 		return this.projectDAO.getProjectByID(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ProjectService#listProjects()
 	 */
 	@Override
@@ -62,13 +66,15 @@ public class ProjectServiceImpl implements ProjectService {
 	/**
 	 * Sets the person DAO.
 	 *
-	 * @param resourceDAO the new person DAO
+	 * @param resourceDAO
+	 *            the new person DAO
 	 */
 	public void setPersonDAO(ProjectDAO resourceDAO) {
 		this.projectDAO = resourceDAO;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ProjectService#updateProject(com.resourcemanager.model.Project)
 	 */
 	@Override
@@ -76,7 +82,5 @@ public class ProjectServiceImpl implements ProjectService {
 	public void updateProject(Project p) {
 		this.projectDAO.updateProject(p);
 	}
-	
-	
 
 }

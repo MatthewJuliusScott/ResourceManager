@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.dao;
 
@@ -11,55 +11,69 @@ import org.springframework.stereotype.Repository;
 import com.resourcemanager.model.Resource;
 
 /**
- * The Interface ResourceDAO.
+ * Resource Data Access Object provides an abstract interface to some type of database or other persistence mechanism. It maps
+ * application calls to the persistence layer, the DAO provides some specific data operations without exposing details of the
+ * database. This isolation supports the single responsibility principle. It separates what data access the application needs, in
+ * terms of domain-specific objects and data types (the public interface of the DAO), from how these needs can be satisfied with a
+ * specific DBMS, database schema, etc. (the implementation of the DAO).
  */
 @Repository
 public interface ResourceDAO {
 
 	/**
-	 * Adds the resource.
+	 * Persists a new Resource in the data source.
 	 *
-	 * @param p the p
+	 * @param resource
+	 *            the resource
 	 */
-	public void addResource(Resource p);
+	public void addResource(Resource resource);
 
 	/**
-	 * Gets the resource by ID.
+	 * Optionally retrieves a Resource from the data source by Id if it exists.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the resource by ID
 	 */
 	public Resource getResourceByID(Long id);
 
 	/**
-	 * List resources.
+	 * Retrieves all Resources from the data source.
 	 *
 	 * @return the list
 	 */
 	public List<Resource> listResources();
 
 	/**
-	 * Removes the resource.
+	 * Removes the Resource from the data source.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	public void removeResource(Long id);
 
 	/**
-	 * Search resources.
+	 * Retrieves all Resources from the data source that match the search criteria of Skill, hours and no allocations during the
+	 * specified time period from the persistence layer and passes them to the Resources view to display them to the user and
+	 * respond to their input.
 	 *
-	 * @param skillId the skill id
-	 * @param startDate the start date
-	 * @param endDate the end date
-	 * @param hours the hours
+	 * @param skillId
+	 *            the skill id
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
+	 * @param hours
+	 *            the hours
 	 * @return the list
 	 */
 	public List<Resource> searchResources(long skillId, LocalDate startDate, LocalDate endDate, int hours);
 
 	/**
-	 * Update resource.
+	 * Updates an existing Resource in the data source.
 	 *
-	 * @param p the p
+	 * @param resource
+	 *            the resource
 	 */
-	public void updateResource(Resource p);
+	public void updateResource(Resource resource);
 }

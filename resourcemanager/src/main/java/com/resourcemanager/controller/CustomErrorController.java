@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.controller;
 
@@ -10,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * The Class CustomErrorController.
+ * The Class CustomErrorController. A basic controller for defining how to direct HTTP errors to custom views with user friendly
+ * error messages.
  */
 @Controller
 public class CustomErrorController implements ErrorController {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see org.springframework.boot.web.servlet.error.ErrorController#getErrorPath()
 	 */
 	@Override
@@ -24,9 +26,10 @@ public class CustomErrorController implements ErrorController {
 	}
 
 	/**
-	 * Handle error.
+	 * Handle error. Redirects the user to our custom error pages.
 	 *
-	 * @param request the request
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping("/error")
