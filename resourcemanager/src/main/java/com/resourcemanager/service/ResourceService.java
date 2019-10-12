@@ -76,7 +76,7 @@ public interface ResourceService {
 	 * @param resource
 	 *            the resource
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public void updateResource(Resource resource);
 
 }
