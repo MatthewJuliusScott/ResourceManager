@@ -41,7 +41,7 @@ public interface AllocationService {
 	 *            the id
 	 * @return the allocation by ID
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public Allocation getAllocationById(Long id);
 
 	/**
