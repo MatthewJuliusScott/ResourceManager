@@ -62,7 +62,7 @@
 											</form:label>
 										</td>
 										<td style="width: 500px;">
-											<form:input path="hours" />
+											<form:input path="hours" type="number" min="1" />
 										</td> 
 									</tr>
 								</table>
