@@ -28,7 +28,7 @@ import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
- * The Class Resource.
+ * Resource data model. Represents a person that has a set of skills and can be allocated to a project's requirements.
  */
 @Entity
 @Table(name = "resource")

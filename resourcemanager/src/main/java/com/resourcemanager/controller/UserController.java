@@ -31,7 +31,9 @@ import com.resourcemanager.service.ResourceService;
 import com.resourcemanager.service.UserService;
 
 /**
- * The Class UserController.
+ * This controller responds to the user input and uses the service layer to create, read, update or delete the User data model
+ * objects. This controller receives the input, optionally validates it and then passes the input to the model and directs the
+ * user back to a view to display the model and accept further user input.
  */
 @Controller
 public class UserController {

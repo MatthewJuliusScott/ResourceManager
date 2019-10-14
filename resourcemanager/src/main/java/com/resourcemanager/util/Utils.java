@@ -7,8 +7,20 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
+/**
+ * Abstract Utils class to centralize where utility methods are kept.
+ */
 public class Utils {
 
+	/**
+	 * Gets the month names in between two dates.
+	 *
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
+	 * @return the month names inbetween dates
+	 */
 	public static Set<String> getMonthNamesInbetweenDates(LocalDate startDate, LocalDate endDate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM yyyy", Locale.ENGLISH);
 		Set<String> outputs = new LinkedHashSet<String>();

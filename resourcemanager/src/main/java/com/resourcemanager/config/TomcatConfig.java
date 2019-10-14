@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.config;
@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * The Class TomcatConfig.
+ * Configures the internal Apache Tomcat / Jasper container launched by the Spring Boot Application.
  */
 @Configuration
 public class TomcatConfig {
 
 	/**
-	 * Servlet container.
+	 * Servlet container. Configures port, protocol and connector.
 	 *
 	 * @return the tomcat servlet web server factory
 	 */

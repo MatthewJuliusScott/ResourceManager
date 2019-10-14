@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -13,7 +13,7 @@ import com.resourcemanager.model.Notification;
 import com.resourcemanager.service.NotificationService;
 
 /**
- * The Class NofiticationServiceImpl.
+ * Concrete implementation of NotificationService.
  */
 @Service
 public class NofiticationServiceImpl implements NotificationService {
@@ -22,7 +22,8 @@ public class NofiticationServiceImpl implements NotificationService {
 	@Autowired
 	private NotificationDAO notificationDao;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.NotificationService#addNotification(com.resourcemanager.model.Notification)
 	 */
 	@Override
@@ -30,7 +31,8 @@ public class NofiticationServiceImpl implements NotificationService {
 		notificationDao.addNotification(notification);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.NotificationService#deleteNotification(java.lang.Long)
 	 */
 	@Override
@@ -38,7 +40,8 @@ public class NofiticationServiceImpl implements NotificationService {
 		notificationDao.deleteNotification(notificationID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.NotificationService#getNotificationByID(java.lang.Long)
 	 */
 	@Override
@@ -46,7 +49,8 @@ public class NofiticationServiceImpl implements NotificationService {
 		return notificationDao.findNotificationByID(notificationID);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.NotificationService#listNotifications()
 	 */
 	@Override
@@ -54,7 +58,8 @@ public class NofiticationServiceImpl implements NotificationService {
 		return notificationDao.listNotifications();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.NotificationService#updateNotification(com.resourcemanager.model.Notification)
 	 */
 	@Override

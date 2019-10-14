@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * The Class Project.
+ * Project data model. Represents a goal with a set of requirements that need to be fulfilled in order to be completed.
  */
 @Entity(name = "Project")
 @Table(name = "project")
@@ -39,7 +39,7 @@ public class Project implements Cloneable {
 	/** The name. */
 	private String				name;
 
-	/** The pob. */
+	/** The Performance Obligation. */
 	@Column(unique = true)
 	private String				pob;
 

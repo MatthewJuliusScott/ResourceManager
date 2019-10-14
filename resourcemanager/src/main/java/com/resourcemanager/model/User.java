@@ -30,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
- * The Class User.
+ * User data model. Represents an authority with some set of permissions and access levels.
  */
 @Entity(name = "User")
 @Table(name = "user")

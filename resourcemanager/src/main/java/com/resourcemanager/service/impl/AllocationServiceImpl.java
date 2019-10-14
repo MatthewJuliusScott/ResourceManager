@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -15,7 +15,7 @@ import com.resourcemanager.model.Allocation;
 import com.resourcemanager.service.AllocationService;
 
 /**
- * The Class AllocationServiceImpl.
+ * Concrete implementation of AllocationService.
  */
 @Service
 public class AllocationServiceImpl implements AllocationService {
@@ -24,7 +24,8 @@ public class AllocationServiceImpl implements AllocationService {
 	@Autowired
 	private AllocationDAO allocationDAO;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#addAllocation(com.resourcemanager.model.Allocation)
 	 */
 	@Override
@@ -33,7 +34,8 @@ public class AllocationServiceImpl implements AllocationService {
 		this.allocationDAO.addAllocation(allocation);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#deleteAllocation(java.lang.Long)
 	 */
 	@Override
@@ -42,7 +44,8 @@ public class AllocationServiceImpl implements AllocationService {
 		this.allocationDAO.deleteAllocation(allocation);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#getAllocationByID(java.lang.Long)
 	 */
 	@Override
@@ -51,7 +54,8 @@ public class AllocationServiceImpl implements AllocationService {
 		return this.allocationDAO.getAllocationByID(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#listAllocations()
 	 */
 	@Override
@@ -60,7 +64,8 @@ public class AllocationServiceImpl implements AllocationService {
 		return this.allocationDAO.listAllocations();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#listRequiredAllocations(java.time.LocalDate, java.time.LocalDate)
 	 */
 	@Override
@@ -72,13 +77,15 @@ public class AllocationServiceImpl implements AllocationService {
 	/**
 	 * Sets the allocation DAO.
 	 *
-	 * @param allocationDAO the new allocation DAO
+	 * @param allocationDAO
+	 *            the new allocation DAO
 	 */
 	public void setAllocationDAO(AllocationDAO allocationDAO) {
 		this.allocationDAO = allocationDAO;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.AllocationService#updateAllocation(com.resourcemanager.model.Allocation)
 	 */
 	@Override
@@ -86,14 +93,4 @@ public class AllocationServiceImpl implements AllocationService {
 	public void updateAllocation(Allocation allocation) {
 		this.allocationDAO.updateAllocation(allocation);
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.resourcemanager.service.AllocationService#allocateUser(com.resourcemanager.model.Allocation)
-	 */
-	@Override
-	@Transactional
-	public void allocateUser(Allocation allocation) {
-		this.allocationDAO.updateAllocation(allocation);
-	}
-
 }
