@@ -4,11 +4,8 @@ com.resourcemanager.controller
 com.resourcemanager.converter
 com.resourcemanager.dao
 com.resourcemanager.dao.impl
-com.resourcemanager.functionality.integration.tests
-com.resourcemanager.functionality.unit.tests
 com.resourcemanager.handler
 com.resourcemanager.model
-com.resourcemanager.security.unit.tests
 com.resourcemanager.service
 com.resourcemanager.service.impl
 com.resourcemanager.util
