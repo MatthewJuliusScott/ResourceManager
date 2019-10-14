@@ -79,11 +79,14 @@
 	<div>
 		It is important when adding new logic, models etc. to maintain this pattern and follow the package declarations to ensure consistency. Models must only represent data (i.e not perform logic or persistence), Controllers accept input from users and present Views, Views are visual representations of data Models and accept user input (but perform no processing or persistence themselves). Persistence is performed as a Service via a Data Access Object, and that interface / implementation model must remain as to keep the actual implementation completely agnostic. This lets us change the actual persistence mechanism or technology as needed, should one fall out of use or reach end of life for support or even have found major security flaws the entire implementation is not built around that one technology.  
 	</div>
+	<h3>Technologies</h3>
+	<div>
+		The Application at the highest level is a Java EE <a href="https://en.wikipedia.org/wiki/Java_servlet">servlet</a>. Each of the below technologies is a Java Framework or seperate technology with integration with Java or our development environment IDE <a href="https://www.eclipse.org/downloads/">Eclipse</a>.
+	</div>
 	<br>
 	<div>
-		The main driving philosophies driving the project are to use well known, well tested, secure, industry standard technologies that are easy to test, maintain and find support for. They make it easy to on-board new staff members to the project, or find hires that are familiar with the technology used, and they also avoid the pitfall of reinventing the wheel, especially for something like security which often leaves the application open to security exploits. Likewise the philosophy behind the design of the application is to use well known patterns that are familiar to most programmers to make it easy to understand at a glance how things work and where new classes fit in to the package structure. Lastly we made the decision to write agnostic code where possible i.e avoid a specific implementation or reliance on a single piece of technology such as Apache Tomcat, or Oracle MySQL. This is done to make the application easier to maintain in the future, as technology changes and certain specific implementations fall out of use they will not form a part of a legacy that becomes difficult or impossible to maintain or support.    
+		The main philosophies driving the project are to use well known, well tested, secure, industry standard technologies that are easy to test, maintain and find support for. They make it easy to on-board new staff members to the project, or find hires that are familiar with the technology used, and they also avoid the pitfall of reinventing the wheel, especially for something like security which often leaves the application open to security exploits. Likewise the philosophy behind the design of the application is to use well known patterns that are familiar to most programmers to make it easy to understand at a glance how things work and where new classes fit in to the package structure. Lastly we made the decision to write agnostic code where possible i.e avoid a specific implementation or reliance on a single piece of technology such as Apache Tomcat, or Oracle MySQL. This is done to make the application easier to maintain in the future, as technology changes and certain specific implementations fall out of use they will not form a part of a legacy that becomes difficult or impossible to maintain or support.    
 	</div>
-	<h3>Technologies</h3>
 	<h4>JPA Hibernate</h4>
 	<div>
 		Resource Manager makes use of the <a href="https://en.wikipedia.org/wiki/Hibernate_(framework)">Hibernate</a> implementation of the <a href="https://en.wikipedia.org/wiki/Java_Persistence_API">Java Persistence API</a> to abstract the persistence layer. It does this to make sure it meets a well-known, tried and tested industry standard, and so that it does not rely on any specific database technology or dialect. To maintain this level of technology agnostic implementation future programmers should continue to use CriteriaBuilder queries, and not write any specific JDBC database statements such as MySQL. This is currently used for example to use an in memory H2 database for tests, and a disk-based MySQL Server for a production environment. Leveraging the strengths of either technology in their respective use-cases gives Resource Manager a lot of flexibility and strength.
@@ -104,6 +107,14 @@
 	<div>
 		Automated Unit and Integration testing is done using the <a href="https://junit.org/junit5/">JUnit</a> package. This is again because it is a well known, industry standard tool with wide acceptance and a built-up knowledge base.
 	</div>
+	<h4>JavaServer Pages</h4>
+	<div>
+		Our Views are <a href="https://en.wikipedia.org/wiki/JavaServer_Pages">JavaServer Pages</a> (JSP) that are rendered by Tomcat's Jasper engine in our demonstration. They also make use of Spring Web MVC and <a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnake.html">JSTL</a> in the markup to bind the Model to the View. That model is a one-way bind, HTTP POST back to the server to be read and deserialized by the Controller.
+	</div>
+	<h4>Chart.js</h4>
+	<div>
+		We use <a href="https://www.chartjs.org/">Chart.js</a> as our visual library to graphically represent data in our reports. It is a simple yet flexible JavaScript library for charts.
+	</div>
 	<h4>Apache Maven</h4>
 	<div>
 		Dependencies and builds are managed by <a href="https://maven.apache.org/">Apache Maven</a>. This lets us avoid having to manually download dependencies and configure the development environment. It also ensures all programmers have the same environment, making it easy to onboard new staff and ensures that no bugs arise from one developer having a different version or set up of a dependency to another.
@@ -112,32 +123,32 @@
 	<div>
 		While not a technology used by the project itself, the project has been developed using Git. The repository is available at the time of demonstration at <a href="https://github.com/MatthewJuliusScott/ResourceManager">https://github.com/MatthewJuliusScott/ResourceManager</a>. Full version history, branches, issues and commits are available here and any future work should be done with version control.
 	</div>
-	<h3>Glossary</h3>
-	<h4>Allocation</h4>
+	<h2>Glossary</h2>
+	<h3>Allocation</h3>
 	<div>
 		Represents a project's requirement specific period of dates requiring a certain number of hours per week and a specific Skill. Can be assigned to a resource representing fulfilling that requirement.
 	</div>
-	<h4>Notification</h4>
+	<h3>Notification</h3>
 	<div>
 		Represents a message for a user, created on a specific date and time, and whether or not it has been seen or not.
 	</div>
-	<h4>Project</h4>
+	<h3>Project</h3>
 	<div>
 		Represents a goal with a set of requirements that need to be fulfilled in order to be completed.
 	</div>
-	<h4>Report</h4>
+	<h3>Report</h3>
 	<div>
 		Represents an abstract set of data and labels to displayed graphically.
 	</div>
-	<h4>Resource</h4>
+	<h3>Resource</h3>
 	<div>
 		Represents a person that has a set of skills and can be allocated to a project's requirements.
 	</div>
-	<h4>Skill</h4>
+	<h3>Skill</h3>
 	<div>
 		Represents a quality a resource can have and that a project can require. Having a certain skill allows a resource to fulfill a requirement.
 	</div>
-	<h4>User</h4>
+	<h3>User</h3>
 	<div>
 		Represents an authority with some set of permissions and access levels.
 	</div>
