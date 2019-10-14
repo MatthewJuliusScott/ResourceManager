@@ -56,6 +56,12 @@
 		&emsp;keystoreFile="webapps/ROOT/WEB-INF/classes/KeyStore.jks" keystorePass="password"<br>
 		&emsp;clientAuth="false" sslProtocol="TLS"/&gt;<br>
 	</div>
+	<h3>Database</h3>
+	<div>
+		Install MySQL server from <a href="https://www.mysql.com/">https://www.mysql.com/</a> and for demonstration purposes create a user "root" with the password "admin". It is important this is not used in production with real data. Create a database with the name testdb, with the following statement:<br>
+		&emsp;CREATE DATABASE testdb;<br>
+		This can be changed also and is a key value pair in application.properties located with the application source.
+	</div>
 	<h2>Configuration</h2>
 	<div>
 		The project has two configuration files, application.properties under src/main/resources and another for testing under src/test/resources. This is a standard <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Properties.html">Java Properties File</a> and will be read upon execution of the main method. See the application.java file for how to read these values. These configuration files contain hibernate specific properties for example, and could for that matter have any other properties a programmer might need to pass to any other compoent, logging for example.
