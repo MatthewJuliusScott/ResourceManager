@@ -70,7 +70,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" required="true" autocomplete="new-password" class="form-control" />
+													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
@@ -80,7 +80,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" required="true" autocomplete="new-password" class="form-control" />
+													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
@@ -102,7 +102,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" required="true" autocomplete="new-password" class="form-control" />
+													<input type="password" name="password" id="password" onchange="form.confirmPassword.pattern = this.value;" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 											<tr>
@@ -112,7 +112,7 @@
 													</label>
 												</td>
 												<td style="width: 80%;">
-													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" required="true" autocomplete="new-password" class="form-control" />
+													<input type="password" name="confirmPassword" id="confirmPassword" pattern="" autocomplete="new-password" class="form-control" />
 												</td> 
 											</tr>
 										</c:if>
