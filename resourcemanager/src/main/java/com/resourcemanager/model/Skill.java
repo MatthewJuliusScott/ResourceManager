@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.model;
@@ -25,7 +25,8 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalIdCache;
 
 /**
- * The Class Skill.
+ * Skill data model. Represents a quality a resource can have and that a project can require. Having a certain skill allows a
+ * resource to fulfill a requirement.
  */
 @Entity(name = "Skill")
 @Table(name = "skill")

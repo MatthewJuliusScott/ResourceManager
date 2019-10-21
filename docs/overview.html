@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Resource Manager</title>
+</head>
+<body>
+	<h1>ResourceManager : Manage resources and prevent scheduling short-fall and conflicts</h1>
+	<h2>Introduction</h2>
+	<div>
+		Resource Manager is web-based application which allows consultants to enter their skill-set and have project managers and team leaders look up a skill set to identify availability of the skills to map onto a project time line.
+	</div>
+	<h2>How to use</h2>
+	<div>
+		Import the project in to eclipse and run Application.java as a Java Application. It will then launch an embedded Apache Tomcat server which you can access in your web browser at https://localhost
+	</div>
+	<h2>Production Deployment</h2>
+	<div>
+		To deploy to production install a Java EE servlet container such as Apache Tomcat or GlassFish and export the project as a WAR file using Maven. E.g "mvn clean package" which will deploy a WAR file to the "/target" directory in the source file location. That file can then be copied to the WebApps folder of the servlet container to be mounted when that service is run.
+	</div>
+	<h3>HTTPS</h3>
+	<div>
+		The project at the time of demonstration has a TLS security certificate provided by <a href="https://letsencrypt.org/">Let's Encrypt</a> which is compiled as a Java Keystore and included with the servlet container for a seamless deploy to a secure browsing environment.
+	</div>
+	<h3>Certificate</h3>
+	<div>
+		The following steps were followed to retrieve a certificate for demonstration:
+	</div>
+	<div>
+		Get new domain-crt.txt and domain-key.txt from www.zerossl.com using the account-key.txt, domain-csr.txt.
+	</div>
+	<br>
+	<div>
+		Install <a href="https://www.openssl.org/">OpenSSL</a>
+	</div>
+	<div>
+		Generate a pkcs12 file (combination of crt and key) with the following (use the password 'password'):<br>
+		&emsp;openssl pkcs12 -export -in domain-crt.txt -inkey domain-key.txt -out domain.p12 -name ResourceManager
+	</div>
+	<br>
+	<div>
+		Run the following from the java/bin directory (where you installed the JRE):<br>
+		&emsp;keytool -importkeystore -deststorepass password -destkeypass password -destkeystore KeyStore.jks -srckeystore "location/domain.p12" -srcstoretype PKCS12 -srcstorepass password
+	</div>
+	<br>
+	<div>
+		Copy KeyStore.jks from java/bin directory (where you installed the JRE) to the classes folder in project.
+	</div>
+	<br>
+	<div>
+		Add this to server.xml as a connector<br>
+		&emsp;&lt;Connector<br>
+		&emsp;protocol="org.apache.coyote.http11.Http11NioProtocol"<br>
+		&emsp;port="443" maxThreads="200"<br>
+		&emsp;scheme="https" secure="true" SSLEnabled="true"<br>
+		&emsp;keystoreFile="webapps/ROOT/WEB-INF/classes/KeyStore.jks" keystorePass="password"<br>
+		&emsp;clientAuth="false" sslProtocol="TLS"/&gt;<br>
+	</div>
+	<h3>Database</h3>
+	<div>
+		Install MySQL server from <a href="https://www.mysql.com/">https://www.mysql.com/</a> and for demonstration purposes create a user "root" with the password "admin". It is important this is not used in production with real data. Create a database with the name testdb, with the following statement:<br>
+		&emsp;CREATE DATABASE testdb;<br>
+		This can be changed also and is a key value pair in application.properties located with the application source.
+	</div>
+	<h2>Configuration</h2>
+	<div>
+		The project has two configuration files, application.properties under src/main/resources and another for testing under src/test/resources. This is a standard <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Properties.html">Java Properties File</a> and will be read upon execution of the main method. See the application.java file for how to read these values. These configuration files contain hibernate specific properties for example, and could for that matter have any other properties a programmer might need to pass to any other compoent, logging for example.
+	</div>
+	<h2>Troubleshooting</h2>
+	<div>
+		If you have any errors you might need to right click on the project > Maven > update project to download required library files. Using the default application.properties file it does require that MySQL server is installed and running using the default settings, and that a database has been created called testDB. Otherwise another properties file has been created for integration tests and is not for use in a production environment. Replacing application.properties under src/main/resources with the contents of application-integrationtest.properties from src/test/resources will instead launch the application using an embedded H2 database and not require an installation of MySQL server.
+	</div>
+	<h2>How it works</h2>
+	<h3>Design Patterns</h3>
+	<div>
+		The project makes use of a <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a> to model the internal representation of information from the ways information is presented to and accepted from the user. It also makes use of <a href="https://en.wikipedia.org/wiki/Service_layer_pattern">Service layer pattern</a> and <a href="https://en.wikipedia.org/wiki/Data_access_object">Data Access Object pattern</a> to abstract the persistence layer. 
+	</div>
+	<br>
+	<div>
+		It is important when adding new logic, models etc. to maintain this pattern and follow the package declarations to ensure consistency. Models must only represent data (i.e not perform logic or persistence), Controllers accept input from users and present Views, Views are visual representations of data Models and accept user input (but perform no processing or persistence themselves). Persistence is performed as a Service via a Data Access Object, and that interface / implementation model must remain as to keep the actual implementation completely agnostic. This lets us change the actual persistence mechanism or technology as needed, should one fall out of use or reach end of life for support or even have found major security flaws the entire implementation is not built around that one technology.  
+	</div>
+	<h3>Technologies</h3>
+	<div>
+		The Application at the highest level is a Java EE <a href="https://en.wikipedia.org/wiki/Java_servlet">servlet</a>. Each of the below technologies is a Java Framework or seperate technology with integration with Java or our development environment IDE <a href="https://www.eclipse.org/downloads/">Eclipse</a>.
+	</div>
+	<br>
+	<div>
+		The main philosophies driving the project are to use well known, well tested, secure, industry standard technologies that are easy to test, maintain and find support for. They make it easy to on-board new staff members to the project, or find hires that are familiar with the technology used, and they also avoid the pitfall of reinventing the wheel, especially for something like security which often leaves the application open to security exploits. Likewise the philosophy behind the design of the application is to use well known patterns that are familiar to most programmers to make it easy to understand at a glance how things work and where new classes fit in to the package structure. Lastly we made the decision to write agnostic code where possible i.e avoid a specific implementation or reliance on a single piece of technology such as Apache Tomcat, or Oracle MySQL. This is done to make the application easier to maintain in the future, as technology changes and certain specific implementations fall out of use they will not form a part of a legacy that becomes difficult or impossible to maintain or support.    
+	</div>
+	<h4>JPA Hibernate</h4>
+	<div>
+		Resource Manager makes use of the <a href="https://en.wikipedia.org/wiki/Hibernate_(framework)">Hibernate</a> implementation of the <a href="https://en.wikipedia.org/wiki/Java_Persistence_API">Java Persistence API</a> to abstract the persistence layer. It does this to make sure it meets a well-known, tried and tested industry standard, and so that it does not rely on any specific database technology or dialect. To maintain this level of technology agnostic implementation future programmers should continue to use CriteriaBuilder queries, and not write any specific JDBC database statements such as MySQL. This is currently used for example to use an in memory H2 database for tests, and a disk-based MySQL Server for a production environment. Leveraging the strengths of either technology in their respective use-cases gives Resource Manager a lot of flexibility and strength.
+	</div>
+	<h4>Spring Boot</h4>
+	<div>
+		We use <a href="https://en.wikipedia.org/wiki/Spring_Framework">Spring Boot</a> as a Java EE application framework again to have a well known and consistent model, as well as being completely stand-alone, secure, tested and production ready. Spring Boot specifically cuts down the work required for setting up the application as it can deploy a built in Tomcat container. Spring itself does not impose any specifc programming model it does have great support for the <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-View-Controller pattern</a> as well as having the <a href="https://spring.io/projects/spring-security">Spring Security</a> package available to authenticate sessions and user accounts, secure protected URLs, and even protect invocation of secured methods. It was especially important that it be a well tested and industry standard security implementation, as writing a new security system especially encryption is likely to result in many holes and flaws unless designed carefully by security experts and well tested by industry professionals. Spring Security also has integration with Spring Web MVC out of the box, providing another easy solution fit for this project.
+	</div>
+	<h4>Apache Tomcat</h4>
+	<div>
+		Resource Manager is currently designed to be deployed in an embedded <a href="http://tomcat.apache.org/">Apache Tomcat</a> Java EE container during tests, however again the decision was made not to rely on any specific technology which may become out-dated or redundant. There is no reason for example GlassFish or any other Java EE container couldn't be used to deploy the application. To continue to maintain this standard, programmers shouldn't add Tomcat implementation specific code or helpers to Resource Manager.
+	</div>
+	<h4>Oracle MySQL</h4>
+	<div>
+		Resource Manger is currently using <a href="https://www.mysql.com/">Oracle MySQL</a> as the relational database management system for our persistence layer. Again this is not a required specific implementation, so note the use of Criteria Builder Queries or even HQL statements over MySQL specific statements.
+	</div>
+	<h4>JUnit</h4>
+	<div>
+		Automated Unit and Integration testing is done using the <a href="https://junit.org/junit5/">JUnit</a> package. This is again because it is a well known, industry standard tool with wide acceptance and a built-up knowledge base.
+	</div>
+	<h4>JavaServer Pages</h4>
+	<div>
+		Our Views are <a href="https://en.wikipedia.org/wiki/JavaServer_Pages">JavaServer Pages</a> (JSP) that are rendered by Tomcat's Jasper engine in our demonstration. They also make use of Spring Web MVC and <a href="https://docs.oracle.com/javaee/5/tutorial/doc/bnake.html">JSTL</a> in the markup to bind the Model to the View. That model is a one-way bind, HTTP POST back to the server to be read and deserialized by the Controller.
+		<br>
+		The views are generated as HTML, utilizing JavaScript for some controls and features and CSS for styling.
+	</div>
+	<h4>Chart.js</h4>
+	<div>
+		We use <a href="https://www.chartjs.org/">Chart.js</a> as our visual library to graphically represent data in our reports. It is a simple yet flexible JavaScript library for charts.
+	</div>
+	<h4>Apache Maven</h4>
+	<div>
+		Dependencies and builds are managed by <a href="https://maven.apache.org/">Apache Maven</a>. This lets us avoid having to manually download dependencies and configure the development environment. It also ensures all programmers have the same environment, making it easy to onboard new staff and ensures that no bugs arise from one developer having a different version or set up of a dependency to another.
+	</div>
+	<h4>Git</h4>
+	<div>
+		While not a technology used by the project itself, the project has been developed using Git. The repository is available at the time of demonstration at <a href="https://github.com/MatthewJuliusScott/ResourceManager">https://github.com/MatthewJuliusScott/ResourceManager</a>. Full version history, branches, issues and commits are available here and any future work should be done with version control.
+	</div>
+	<h2>Glossary</h2>
+	<h3>Allocation</h3>
+	<div>
+		Represents a project's requirement specific period of dates requiring a certain number of hours per week and a specific Skill. Can be assigned to a resource representing fulfilling that requirement.
+	</div>
+	<h3>Notification</h3>
+	<div>
+		Represents a message for a user, created on a specific date and time, and whether or not it has been seen or not.
+	</div>
+	<h3>Project</h3>
+	<div>
+		Represents a goal with a set of requirements that need to be fulfilled in order to be completed.
+	</div>
+	<h3>Report</h3>
+	<div>
+		Represents an abstract set of data and labels to displayed graphically.
+	</div>
+	<h3>Resource</h3>
+	<div>
+		Represents a person that has a set of skills and can be allocated to a project's requirements.
+	</div>
+	<h3>Skill</h3>
+	<div>
+		Represents a quality a resource can have and that a project can require. Having a certain skill allows a resource to fulfill a requirement.
+	</div>
+	<h3>User</h3>
+	<div>
+		Represents an authority with some set of permissions and access levels.
+	</div>
+</body>
+</html>

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * The Class Report.
+ * Report data model. abstract set of data and labels to displayed graphically.
  */
 public class Report {
 

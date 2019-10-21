@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service;
 
@@ -11,37 +11,41 @@ import org.springframework.security.access.annotation.Secured;
 import com.resourcemanager.model.Allocation;
 
 /**
- * The Interface AllocationService.
+ * Provides an abstract interface for a single service layer for Allocations. The services do all the logic and data manipulation
+ * on the data model and pass the updated model to the persistence layer.
  */
 public interface AllocationService {
 
 	/**
-	 * Adds the allocation.
+	 * Persists a new Allocation in the data source.
 	 *
-	 * @param allocation the allocation
+	 * @param allocation
+	 *            the allocation
 	 */
 	@Secured("ROLE_ADMIN")
 	public void addAllocation(Allocation allocation);
 
 	/**
-	 * Delete allocation.
+	 * Removes the Allocation from the data source.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	@Secured("ROLE_ADMIN")
 	public void deleteAllocation(Allocation allocation);
 
 	/**
-	 * Gets the allocation by ID.
+	 * Optionally retrieves an Allocation from the data source by Id if it exists.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the allocation by ID
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_USER")
 	public Allocation getAllocationById(Long id);
 
 	/**
-	 * List allocations.
+	 * Retrieves all Allocations from the data source.
 	 *
 	 * @return the list
 	 */
@@ -49,28 +53,23 @@ public interface AllocationService {
 	public List<Allocation> listAllocations();
 
 	/**
-	 * List required allocations.
+	 * Retrieves all Allocations from the data source that do not have an associated Resource.
 	 *
-	 * @param startDate the start date
-	 * @param endDate the end date
+	 * @param startDate
+	 *            the start date
+	 * @param endDate
+	 *            the end date
 	 * @return the list
 	 */
 	@Secured("ROLE_ADMIN")
 	public List<Allocation> listRequiredAllocations(LocalDate startDate, LocalDate endDate);
 
 	/**
-	 * Update allocation.
+	 * Updates an existing Allocation in the data source.
 	 *
-	 * @param allocation the allocation
-	 */
-	@Secured("ROLE_ADMIN")
-	public void updateAllocation(Allocation allocation);
-	
-	/**
-	 * Allocate user.
-	 *
-	 * @param allocation the allocation
+	 * @param allocation
+	 *            the allocation
 	 */
 	@Secured("ROLE_USER")
-	public void allocateUser(Allocation allocation);
+	public void updateAllocation(Allocation allocation);
 }

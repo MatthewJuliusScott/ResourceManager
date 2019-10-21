@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.converter;
 
@@ -10,12 +10,13 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- * The Class LocalDateAttributeConverter.
+ * Converts between java.time.LocalDate and java.sql.Date.
  */
 @Converter(autoApply = true)
 public class LocalDateAttributeConverter implements AttributeConverter<LocalDate, Date> {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.persistence.AttributeConverter#convertToDatabaseColumn(java.lang.Object)
 	 */
 	@Override
@@ -23,7 +24,8 @@ public class LocalDateAttributeConverter implements AttributeConverter<LocalDate
 		return locDate == null ? null : Date.valueOf(locDate);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see javax.persistence.AttributeConverter#convertToEntityAttribute(java.lang.Object)
 	 */
 	@Override

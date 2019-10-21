@@ -24,7 +24,8 @@ import com.resourcemanager.dao.NotificationDAO;
 import com.resourcemanager.model.Notification;
 
 /**
- * The Class NotificationDAOImpl.
+ * Concrete implementation of NotificationDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not
+ * specific to any particular relational database technology or dialect.
  */
 @Repository
 @Transactional

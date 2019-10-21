@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package com.resourcemanager.dao.impl;
@@ -26,7 +26,8 @@ import com.resourcemanager.dao.SkillDAO;
 import com.resourcemanager.model.Skill;
 
 /**
- * The Class SkillDAOImpl.
+ * Concrete implementation of SkillDAO. Uses Hibernate and JPA to provide a data source agnostic implementation, not specific to
+ * any particular relational database technology or dialect.
  */
 @Repository
 @Transactional
@@ -34,7 +35,7 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/** The Constant logger. */
 	private static final Logger		logger	= LoggerFactory
-	        .getLogger(SkillDAOImpl.class);
+		.getLogger(SkillDAOImpl.class);
 
 	/** The entity manager. */
 	@Autowired
@@ -42,20 +43,17 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see com.resourcemanager.dao.SkillDAO#addSkill(com.resourcemanager.model.
-	 * Skill)
+	 * @see com.resourcemanager.dao.SkillDAO#addSkill(com.resourcemanager.model. Skill)
 	 */
 	@Override
 	public void addSkill(Skill skill)
-	        throws ConstraintViolationException {
+		throws ConstraintViolationException {
 		getCurrentSession().persist(skill);
 		logger.info("Skill saved successfully, Skill details=" + skill);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#deleteSkill(java.lang.Long)
 	 */
 	@Override
@@ -74,7 +72,7 @@ public class SkillDAOImpl implements SkillDAO {
 		Session session;
 		try {
 			session = entityManager.unwrap(SessionFactory.class)
-			        .getCurrentSession();
+				.getCurrentSession();
 		} catch (HibernateException e) {
 			session = entityManager.unwrap(SessionFactory.class).openSession();
 		}
@@ -92,7 +90,6 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#getSkillByID(java.lang.Long)
 	 */
 	@Override
@@ -104,14 +101,13 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#getSkillByName(java.lang.String)
 	 */
 	@Override
 	public Skill getSkillByName(String name) {
 		Skill skill = null;
 		CriteriaBuilder builder = getCurrentSessionFactory()
-		        .getCriteriaBuilder();
+			.getCriteriaBuilder();
 		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
 		Root<Skill> root = criteria.from(Skill.class);
 		criteria.select(root).where(builder.equal(root.get("name"), name));
@@ -125,18 +121,17 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.resourcemanager.dao.SkillDAO#listSkills()
 	 */
 	@Override
 	public List<Skill> listSkills() {
 		CriteriaBuilder builder = getCurrentSessionFactory()
-		        .getCriteriaBuilder();
+			.getCriteriaBuilder();
 		CriteriaQuery<Skill> criteria = builder.createQuery(Skill.class);
 		Root<Skill> root = criteria.from(Skill.class);
 		criteria.select(root);
 		List<Skill> skillsList = getCurrentSession().createQuery(criteria)
-		        .getResultList();
+			.getResultList();
 		for (Skill skill : skillsList) {
 			logger.info("Skill List::" + skill);
 		}
@@ -145,14 +140,11 @@ public class SkillDAOImpl implements SkillDAO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.resourcemanager.dao.SkillDAO#updateSkill(com.resourcemanager.model.
-	 * Skill)
+	 * @see com.resourcemanager.dao.SkillDAO#updateSkill(com.resourcemanager.model. Skill)
 	 */
 	@Override
 	public void updateSkill(Skill skill)
-	        throws ConstraintViolationException {
+		throws ConstraintViolationException {
 		getCurrentSession().merge(skill);
 		logger.info("Skill updated successfully, Skill details=" + skill);
 	}

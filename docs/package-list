@@ -1,0 +1,12 @@
+com.resourcemanager
+com.resourcemanager.config
+com.resourcemanager.controller
+com.resourcemanager.converter
+com.resourcemanager.dao
+com.resourcemanager.dao.impl
+com.resourcemanager.handler
+com.resourcemanager.model
+com.resourcemanager.service
+com.resourcemanager.service.impl
+com.resourcemanager.util
+javax.servlet.http

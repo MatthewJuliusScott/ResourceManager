@@ -23,7 +23,8 @@ import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 /**
- * The Class Allocation.
+ * Allocation data model. Represents a project's requirement specific period of dates requiring a certain number of hours per week
+ * and a specific Skill. Can be assigned to a resource representing fulfilling that requirement.
  */
 @Entity(name = "Allocation")
 @Table(name = "allocation")

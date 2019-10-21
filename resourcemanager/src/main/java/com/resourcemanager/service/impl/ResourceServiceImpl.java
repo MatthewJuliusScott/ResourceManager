@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package com.resourcemanager.service.impl;
 
@@ -15,7 +15,7 @@ import com.resourcemanager.model.Resource;
 import com.resourcemanager.service.ResourceService;
 
 /**
- * The Class ResourceServiceImpl.
+ * Concrete implementation of ResourceService.
  */
 @Service
 public class ResourceServiceImpl implements ResourceService {
@@ -24,7 +24,8 @@ public class ResourceServiceImpl implements ResourceService {
 	@Autowired
 	private ResourceDAO resourceDAO;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#addResource(com.resourcemanager.model.Resource)
 	 */
 	@Override
@@ -33,7 +34,8 @@ public class ResourceServiceImpl implements ResourceService {
 		this.resourceDAO.addResource(p);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#deleteResource(java.lang.Long)
 	 */
 	@Override
@@ -42,7 +44,8 @@ public class ResourceServiceImpl implements ResourceService {
 		this.resourceDAO.removeResource(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#getResourceByID(java.lang.Long)
 	 */
 	@Override
@@ -51,7 +54,8 @@ public class ResourceServiceImpl implements ResourceService {
 		return this.resourceDAO.getResourceByID(id);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#listResources()
 	 */
 	@Override
@@ -60,7 +64,8 @@ public class ResourceServiceImpl implements ResourceService {
 		return this.resourceDAO.listResources();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#searchResources(long, java.time.LocalDate, java.time.LocalDate, int)
 	 */
 	@Override
@@ -72,13 +77,15 @@ public class ResourceServiceImpl implements ResourceService {
 	/**
 	 * Sets the resource DAO.
 	 *
-	 * @param resourceDAO the new resource DAO
+	 * @param resourceDAO
+	 *            the new resource DAO
 	 */
 	public void setResourceDAO(ResourceDAO resourceDAO) {
 		this.resourceDAO = resourceDAO;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see com.resourcemanager.service.ResourceService#updateResource(com.resourcemanager.model.Resource)
 	 */
 	@Override
